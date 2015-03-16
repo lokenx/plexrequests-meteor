@@ -6,7 +6,8 @@ Template.search.events({
          (function() {   
          $.getJSON(u)
             .done(function(data) {
-
+             
+            MovieSearch._collection.remove({}); 
             document.getElementById("search").blur();
              try {
                  var len = data['Search'].length;
@@ -64,7 +65,14 @@ Template.search.events({
                 document.getElementById("info").setAttribute("class", "info");
                 document.getElementById("info").innerHTML = info;
 
-             }
+             //Attempting to input results into collection
+                MovieSearch._collection.insert({
+                    title: data['Search'][i]['Title'],
+                    year: data['Search'][i]['Year'],
+                    imdb: data['Search'][i]['imdbID'],
+                });
+                        
+            }
              var s = document.createElement("input");
              s.setAttribute("type", "submit")
              s.setAttribute("value", "Request Movie!")
