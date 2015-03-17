@@ -1,62 +1,76 @@
 <head>
     <title>Plex Requests!</title>
-    
     <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
     <style>
-    @media (min-width: 768px) {
-        body {
-            padding-top: 60px;
+        @media (min-width: 768px) {
+            body {
+                padding-top: 60px;
+            }
         }
-    }
-    h1 {
-        font-size: 3.5em;
-    }
-    p {
-        font-size: 1.2em;
-    }
-    #results {
-        padding-left: 15px;
-    }
+        h1 {
+            font-size: 3.5em;
+        }
+        p {
+            font-size: 1.2em;
+        }
+        #results {
+            padding-left: 15px;
+        }
     </style>
-    </head>
+</head>
 <body>
     <div class="container">
-    <div class="row col-md-offset-3 col-md-7">
-    <a href="javascript:window.location.reload();"><h1>Plex Requests!</h1></a>
-       <p class="lead">Want to watch a movie but it's not currently on Plex?<br>
-           Use the search box below to do a quick <a href="http://www.omdbapi.com/">OMDB</a> search for a movie!</p>
-           <br>
-    {{> search}}
-    <div class="overview" id="overview"></div>
-    {{> results}}
-    </div>
-    <div class="row col-md-offset-3 col-sm-6">
-    <div class="alert" role="alert" id="info"></div>
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">Requested Movies</h4>
-          </div>
-          <div class="modal-body">
-              <ul>{{#each movie}}
-                  {{> movies}}
-                  {{/each}}
-              </ul>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
+        <div class="row col-md-offset-3 col-md-7">
+            <a href="javascript:window.location.reload();"><h1>Plex Requests!</h1></a>
+            <p class="lead">Want to watch a movie but it's not currently on Plex?<br>
+                Use the search box below to do a quick <a href="http://www.omdbapi.com/">OMDB</a> search for a movie!</p>
+            <br>
+            {{> search}}
+            <div class="overview" id="overview"></div>
+            {{#if resultsloaded}}
+                <br>
+                <h3>Results from the OMDB:</h3>
+                <form name="results" id="results" action="" method="get" class="results form-group">
+                    {{#each moviesearched}}
+                        {{> moviesearch}}
+                    {{/each}}
+                    <input type="submit" value="Request Movie!" class="btn btn-primary">
+                </form>
+                <br>
+                <p>Not find what you were looking for? <a href="javascript:document.getElementById(\'search\').focus()">Click here to search again!</a></p>
+            {{/if}}
+        </div>    
+        {{#if searchingresults}}
+            <div class="row col-md-offset-3 col-md-2" style="min-height: 100px">{{> spinner}}</div>
+        {{/if}}
+        
+        <div class="row col-md-offset-3 col-sm-6">
+            <br>
+            <div class="alert" role="alert" id="info"></div>
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Requested Movies</h4>
+                        </div>
+                        <div class="modal-body">
+                            <ul>{{#each movie}}
+                                    {{> movies}}
+                                {{/each}}
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-</div>
-</div>
-</div>
+    </div>
 </body>
