@@ -1,15 +1,16 @@
 Meteor.methods({
-    'addMovie' : function(movie){
+    'addMovie' : function (movie, id) {
         Movies.insert({
-            text: movie,
+            title: movie,
+            imdb: id,
             createdAt: new Date()
-        })
+        });
     },
-    'pushBullet' : function(movie){
-        var pbAPI = "abcdefg12345"
+    'pushBullet' : function (movie) {
+        var pbAPI = "abcdefg12345";
         Meteor.http.call("POST", "https://api.pushbullet.com/v2/pushes",
                          {auth: pbAPI + ":",
                           params: {"type": "note", "title": "Plex Requests", "body": movie}
-                         })
+                         });
     }
-})
+});
