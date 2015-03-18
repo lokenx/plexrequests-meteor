@@ -3,14 +3,28 @@ Meteor.methods({
         Movies.insert({
             title: movie,
             imdb: id,
-            createdAt: new Date()
+            downloaded: false,
+            createdAt: new Date(),
+            downloadedAt: false
         });
     },
     'pushBullet' : function (movie) {
-        var pbAPI = "abcdefg12345";
+        var pbAPI = "abcdef0123456789";
         Meteor.http.call("POST", "https://api.pushbullet.com/v2/pushes",
                          {auth: pbAPI + ":",
                           params: {"type": "note", "title": "Plex Requests", "body": movie}
                          });
+    },
+    'searchCP' : function (id) {
+        var cpAPI = "http://yourcpip:5050/api/abcdef0123456789/" + "media.get/";
+        var cp = Meteor.http.call("GET", cpAPI,
+                                    {params: {"id": id}
+                                    });
+        if (cp['data']['media']['status'] === "done") {
+            Movies.update({
+                imdb: id
+                }, {
+                $set: {downloaded: true}});
+        };
     }
 });

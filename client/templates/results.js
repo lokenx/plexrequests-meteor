@@ -13,7 +13,7 @@ Template.body.events({
             
             Meteor.call('addMovie', movie, id);
             Meteor.call('pushBullet', movie);
-            
+            Meteor.call('searchCP', id);
             return false;
         } else {
             document.getElementById("info").setAttribute("class", "alert alert-warning");
