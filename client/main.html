@@ -31,27 +31,36 @@
                 Use the search box below to do a quick <a href="http://www.omdbapi.com/">OMDB</a> search for a movie!</p>
             <br>
             {{> search}}
-            <div class="overview" id="overview"></div>
+            <div class="overview" id="overview">
             {{#if resultsloaded}}
                 <br>
                 <h3>Results from the OMDB:</h3>
-                <form name="results" id="results" action="" method="get" class="results form-group">
+                <form name="results" id="results" action="" method="get" class="results form-inline">
                     {{#each moviesearched}}
                         {{> moviesearch}}
                     {{/each}}
+                    <div class="form-group">
                     <input type="submit" value="Request Movie!" class="btn btn-primary">
+                    <input type="button" class="btn btn-info" value="Search again!" onclick="getElementById('search').focus()">
+                    </div>
                 </form>
+                <script>document.getElementById('overview').scrollIntoView({block: "end", behavior: "smooth"});</script>
                 <br>
-                <p>Not find what you were looking for? <a href="javascript:document.getElementById(\'search\').focus()">Click here to search again!</a></p>
             {{/if}}
-        </div>    
+            </div>
+        </div>
         {{#if searchingresults}}
             <div class="row col-md-offset-3 col-md-2" style="min-height: 100px">{{> spinner}}</div>
         {{/if}}
-        
         <div class="row col-md-offset-3 col-sm-6">
             <br>
-            <div class="alert" role="alert" id="info"></div>
+            {{#if noresults}}
+                <input type="button" value="Hmm we got no results...search again?" class="btn btn-warning" onclick="getElementById('search').focus()">
+            {{/if}}
+            {{#if searcherror}}
+                <input type="button" value="Hmmm something went wrong with your search...search again?" class="btn btn-danger" onclick="getElementById('search').focus()">
+            {{/if}}
+            <div class="info" id="info"></div>
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">

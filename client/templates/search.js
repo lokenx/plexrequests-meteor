@@ -2,27 +2,25 @@ Template.search.events({
     'submit form': function (event) {
         Session.set('searchingresults', true);
         Session.set('resultsloaded', false);
-        document.getElementById("info").innerHTML = "";
-        document.getElementById("info").setAttribute("class", "");
- 
+        Session.set('noresults', false);
+        Session.set('searcherror', false);
         var url = "http://www.omdbapi.com/?type=movie&s=" + document.getElementById("search").value;
-        
+
         (function () {
             $.getJSON(url)
                 .done(function (data) {
                     MovieSearch._collection.remove({});
                     document.getElementById("search").blur();
-                
+
                     try {
                         var len = data['Search'].length;
                     } catch (err) {
                         Session.set('searchingresults', false);
-                        document.getElementById("info").setAttribute("class", "alert alert-warning");
-                        document.getElementById("info").innerHTML = '<p>Hmm we got no results...<a href="javascript:document.getElementById(\'search\').focus()" class="alert-link">try again!</a></p>';
+                        Session.set('noresults', true);
                         document.getElementById("overview").innerHTML = "";
                         return;
                     }
-                
+
                     for (i = 0; i < data['Search'].length; i++) {
                         MovieSearch._collection.insert({
                             title: data['Search'][i]['Title'],
@@ -32,12 +30,12 @@ Template.search.events({
                     }
                     Session.set('searchingresults', false);
                     Session.set('resultsloaded', true);
+                    Session.set('noresults', false);
                 })
                 .fail(function () {
                     Session.set('searchingresults', false);
-                    var msg = '<p>Hmmm something went wrong with your search...<a href="javascript:document.getElementById(\'search\').focus()" class="alert-link">try again in a few moments!</a></p>';
-                    document.getElementById("info").setAttribute("class", "alert alert-danger");
-                    document.getElementById("info").innerHTML = msg;
+                    Session.set('noresults', false);
+                    Session.set('searcherror', true);
                 });
         }());
         return false;
