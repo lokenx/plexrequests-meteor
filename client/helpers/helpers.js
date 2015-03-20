@@ -17,3 +17,11 @@ UI.registerHelper('searcherror',function(input){
 UI.registerHelper('requests',function(input){
   return Session.get("requests");
 });
+
+UI.registerHelper('movieexists',function(input){
+  return Session.get("movieexists");
+});
+
+UI.registerHelper('movieadded',function(input){
+  return Session.get("movieadded");
+});

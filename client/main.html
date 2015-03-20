@@ -45,7 +45,6 @@
                     </div>
                 </form>
                 <script>document.getElementById('overview').scrollIntoView({block: "end", behavior: "smooth"});</script>
-                <br>
             {{/if}}
             </div>
         </div>
@@ -60,9 +59,14 @@
             {{#if searcherror}}
                 <input type="button" value="Hmmm something went wrong with your search...search again?" class="btn btn-danger" onclick="getElementById('search').focus()">
             {{/if}}
-            <div class="info" id="info"></div>
+            {{#if movieadded}}
+                <input type="button" value="Movie added! Search again?" class="btn btn-success" onclick="getElementById('search').focus()">  
+            {{/if}}
+            {{#if movieexists}}
+                <input type="button" value="Movie already requested...search again?" class="btn btn-warning" onclick="getElementById('search').focus()">
+            {{/if}}
             {{#if requests}}
-            <div id="requests">
+            <div class="info" id="requests">
                 <h3>Requested Movies:</h3>
                 <ul>
                     {{#each movie}}

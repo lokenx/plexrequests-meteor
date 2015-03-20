@@ -5,9 +5,9 @@ Template.search.events({
         Session.set('noresults', false);
         Session.set('searcherror', false);
         Session.set('requests', false);
+        Session.set('movieadded', false);
+        Session.set('movieexists', false);
         var url = "http://www.omdbapi.com/?type=movie&s=" + document.getElementById("search").value;
-        document.getElementById("info").innerHTML = "";
-        document.getElementById("info").setAttribute("class", "");
 
         (function () {
             $.getJSON(url)
@@ -20,7 +20,6 @@ Template.search.events({
                     } catch (err) {
                         Session.set('searchingresults', false);
                         Session.set('noresults', true);
-                        document.getElementById("overview").innerHTML = "";
                         return;
                     }
 

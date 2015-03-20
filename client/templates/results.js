@@ -7,17 +7,13 @@ Template.body.events({
         var id = document.querySelector('input[name="movie"]:checked').id;
 
         if (Movies.findOne({imdb: id}) === undefined) {
-            document.getElementById("info").setAttribute("class", "col-md-8 alert alert-success");
-            document.getElementById("info").innerHTML = '<p>Movie was successfully requested!</p>';
-
+            Session.set('movieadded', true);
             Meteor.call('addMovie', movie, id);
             Meteor.call('pushBullet', movie);
             Meteor.call('searchCP', id);
             return false;
         } else {
-            document.getElementById("info").setAttribute("class", "col-md-8 alert alert-warning");
-            document.getElementById("info").innerHTML = '<p>Movie has alrady been requested!</p>';
-
+            Session.set('movieexists', true);
             return false;
         }
     }
