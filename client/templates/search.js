@@ -4,7 +4,10 @@ Template.search.events({
         Session.set('resultsloaded', false);
         Session.set('noresults', false);
         Session.set('searcherror', false);
+        Session.set('requests', false);
         var url = "http://www.omdbapi.com/?type=movie&s=" + document.getElementById("search").value;
+        document.getElementById("info").innerHTML = "";
+        document.getElementById("info").setAttribute("class", "");
 
         (function () {
             $.getJSON(url)

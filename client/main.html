@@ -61,25 +61,17 @@
                 <input type="button" value="Hmmm something went wrong with your search...search again?" class="btn btn-danger" onclick="getElementById('search').focus()">
             {{/if}}
             <div class="info" id="info"></div>
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">Requested Movies</h4>
-                        </div>
-                        <div class="modal-body">
-                            <ul>{{#each movie}}
-                                    {{> movies}}
-                                {{/each}}
-                            </ul>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
+            {{#if requests}}
+            <div id="requests">
+                <h3>Requested Movies:</h3>
+                <ul>
+                    {{#each movie}}
+                        {{> movies}}
+                    {{/each}}
+                </ul>
+                <script>document.getElementById('requests').scrollIntoView({block: "end", behavior: "smooth"});</script>
             </div>
+            {{/if}}
         </div>
     </div>
 </body>

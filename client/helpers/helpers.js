@@ -13,3 +13,7 @@ UI.registerHelper('noresults',function(input){
 UI.registerHelper('searcherror',function(input){
   return Session.get("searcherror");
 });
+
+UI.registerHelper('requests',function(input){
+  return Session.get("requests");
+});
