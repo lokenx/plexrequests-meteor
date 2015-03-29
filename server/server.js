@@ -19,12 +19,18 @@ Meteor.methods({
         var cpAPI = "http://yourcpip:5050/api/abcdef0123456789/" + "media.get/";
         var cp = Meteor.http.call("GET", cpAPI,
                                     {params: {"id": id}
-                                    });
-        if (cp['data']['media']['status'] === "done") {
-            Movies.update({
-                imdb: id
-                }, {
+                                    });        
+        if (cp['data']['media'] == null) { 
+            console.log("Media " + id + " not in CP database");            
+        } else if (cp['data']['media']['status'] === "done") {
+            Movies.update({imdb: id}, {
                 $set: {downloaded: true}});
         };
+    },
+    'updateCP' : function () {
+        var allMovies = Movies.find({downloaded: false});
+        allMovies.forEach(function (movie) {
+            Meteor.call('searchCP', movie.imdb);
+        });
     }
 });

@@ -7,6 +7,7 @@
             <input type="submit" value="Search for movie!" class="btn btn-primary">
             {{#if requests}}
             <button type="button" class="btn btn-default" onclick="Session.set('requests', false);">Hide requests!</button>
+            <button type="button" class="btn btn-info" onclick="javascript:Meteor.call('updateCP');">Update requests</button>
             {{else}}
             <button type="button" class="btn btn-default" onclick="Session.set('requests', true);">View requests!</button>
             {{/if}}
