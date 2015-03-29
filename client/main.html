@@ -21,6 +21,12 @@
         #results {
             padding-left: 15px;
         }
+        .btn {
+            margin: 2px;
+        }
+        .well {
+            padding: 7px;
+        }
     </style>
 </head>
 <body>
@@ -29,12 +35,14 @@
             <a href="javascript:window.location.reload();"><h1>Plex Requests!</h1></a>
             <p class="lead">Want to watch a movie but it's not currently on Plex?<br>
                 Use the search box below to do a quick <a href="http://www.omdbapi.com/">OMDB</a> search for a movie!</p>
-            <br>
+        </div>
+        <div class="row col-md-offset-3 col-md-7">
             {{> search}}
+        </div>
+        <div class="row col-md-offset-3 col-md-7">
             <div class="overview" id="overview">
             {{#if resultsloaded}}
-                <br>
-                <h3>Results from the OMDB:</h3>
+            <h3>Results from the OMDB:</h3>
                 <form name="results" id="results" action="" method="get" class="results form">
                     {{#each moviesearched}}
                         {{> moviesearch}}
@@ -52,7 +60,6 @@
             <div class="row col-md-offset-3 col-md-2" style="min-height: 100px">{{> spinner}}</div>
         {{/if}}
         <div class="row col-md-offset-3 col-md-7">
-            <br>
             {{#if noresults}}
                 <input type="button" value="Hmm we got no results...search again?" class="btn btn-warning" onclick="getElementById('search').focus()">
             {{/if}}
