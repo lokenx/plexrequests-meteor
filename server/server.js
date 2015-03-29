@@ -16,15 +16,23 @@ Meteor.methods({
                          });
     },
     'searchCP' : function (id) {
-        var cpAPI = "http://yourcpip:5050/api/abcdef0123456789/" + "media.get/";
-        var cp = Meteor.http.call("GET", cpAPI,
+        var cpAPI = "http://yourcpip:5050/api/abcdef0123456789/";
+        var cp = Meteor.http.call("GET", cpAPI  + "media.get/",
                                     {params: {"id": id}
+                                    });        
+        if (cp['data']['media'] === null) { 
+            Meteor.http.call("POST", cpAPI  + "movie.add/",
+                                    {params: {"identifier": id}
                                     });
-        if (cp['data']['media']['status'] === "done") {
-            Movies.update({
-                imdb: id
-                }, {
+        } else if (cp['data']['media']['status'] === "done") {
+            Movies.update({imdb: id}, {
                 $set: {downloaded: true}});
         };
+    },
+    'updateCP' : function () {
+        var allMovies = Movies.find({downloaded: false});
+        allMovies.forEach(function (movie) {
+            Meteor.call('searchCP', movie.imdb);
+        });
     }
 });
