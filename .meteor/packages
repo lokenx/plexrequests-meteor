@@ -8,3 +8,5 @@ meteor-platform
 autopublish
 http
 sacha:spin
+iron:router
+houston:admin

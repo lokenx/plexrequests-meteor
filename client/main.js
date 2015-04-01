@@ -12,3 +12,16 @@ $("#showmodal").on("click", function() {
     $('#myModal').modal('show');
     return false;
 });
+
+Router.configure({
+  loadingTemplate: 'loading'
+});
+
+
+Router.configure({
+  notFoundTemplate: "NotFound"
+});
+
+Router.map(function(){
+    this.route('home', {path: '/'} );
+});
