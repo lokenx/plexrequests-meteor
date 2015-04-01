@@ -1,3 +1,7 @@
+Meteor.publish('movies', function (){
+    return Movies.find({});
+});
+
 Meteor.methods({
     'addMovie' : function (movie, id) {
         Movies.insert({
