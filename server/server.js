@@ -20,13 +20,11 @@ Meteor.methods({
         
         //Workaround to allow self-signed SSL certs, however can be dangerous and should not be used in production, looking into better way
         //But it's possible there's nothing much I can do
-        //process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+        process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
         
         var cp = Meteor.http.call("GET", cpAPI  + "media.get/",
                                     {params: {"id": id}
-                                    },
-                                  {rejectUnauthorized: false} 
-                                 );        
+                                    });        
         if (cp['data']['media'] === null) { 
             Meteor.http.call("POST", cpAPI  + "movie.add/",
                                     {params: {"identifier": id}
