@@ -25,7 +25,7 @@ Meteor.methods({
         var cp = Meteor.http.call("GET", cpAPI  + "media.get/",
                                     {params: {"id": id}
                                     },
-                                  {rejectUnauthorized: false} 
+                                    rejectUnauthorized: false   
                                  );        
         if (cp['data']['media'] === null) { 
             Meteor.http.call("POST", cpAPI  + "movie.add/",
