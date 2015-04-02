@@ -13,6 +13,6 @@ To enable this, you need to enter your CP IP and API key into the plexrequests-m
 
 Admin interfaces! A basic admin interface is now available at /admin for removing requests if required. On first nagivation you will get prompted to create an account with an email and password. This email isn't used for anything besides logging in.
 
-![admin view](Screenshot05.jpg)
+![admin view](Screenshot06.jpg)
 
 For more details regarding Plex Requests view the original Django repo [here](https://github.com/lokenx/plexrequests) and a demo of this version is hosted on Meteor at [http://plexrequests.meteor.com](http://plexrequests.meteor.com).
