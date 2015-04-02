@@ -14,9 +14,9 @@ Demo of this version is hosted on Meteor at [http://plexrequests.meteor.com](htt
  * PushBullet notifications can also be sent to give you a notification when a movie is requested
 
 ##Installation
-Installation is straightforward, clone the repo, `cd` into directory, and run `meteor`
+Installation is straightforward. Please update to Meteor 1.1, clone the repo, `cd` into directory, and run `meteor`
 
-On first run navigate to `http://localhost:3000/admin` and create an admin account with a username and password. This account is only used for logging in, email integration isn't enabled. Once logged in, go to the `setting` collection and enable either of the services if desired.
+On first run navigate to `http://localhost:3000/admin` and create an admin account with a username and password. **If this isn't done someone else can create the admin account to your applications.** This account is only used for logging in, email integration isn't enabled. Once logged in, go to the `setting` collection and enable either of the services if desired.
 
 For PushBullet just your API key is required. For CouchPotao you need to enter the full IP address of your server, including port and API. Please see below for an example:  
 
