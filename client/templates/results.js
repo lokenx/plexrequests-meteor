@@ -1,4 +1,4 @@
-Template.body.events({
+Template.home.events({
     "submit .results": function (event) {
         Session.set('searchingresults', false);
         Session.set('resultsloaded', false);
