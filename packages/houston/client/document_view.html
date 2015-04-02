@@ -1,0 +1,54 @@
+<template name="_houston_document_view">
+  <ul class="breadcrumb">
+    <li>
+      <a href="{{pathFor 'houston_home'}}" class="houston-home"><i
+          class="fa fa-home"></i>Home</a>
+    </li>
+    <li>
+      <a href="{{pathFor 'houston_collection' collection_name=name}}" class="houston-collection"><i
+          class="fa fa-database"></i>{{name}}</a>
+    </li>
+    <li class="active"><i class="fa fa-file"></i>{{document_id}}</li>
+  </ul>
+  <h1>{{name}}
+    <small>{{document_id}}</small>
+  </h1>
+
+  <form class="form-horizontal" role="form">
+    {{# each fields }}
+    {{> _houston_document_field}}
+    {{/each}}
+
+    <div id="houston-doc-actions" class="form-group">
+      <div class="col-sm-offset-3 col-sm-9">
+        <a href="{{pathFor 'houston_collection' collection_name=name }}" id="houston-back" class="btn btn-primary"><i
+            class="fa fa-reply"></i>Back
+        </a>
+        <button type="button" id="houston-save" class="btn btn-success"><i
+            class="fa fa-save"></i>Save
+        </button>
+        <button type="button" id="houston-delete"
+                class="btn btn-danger pull-right"><i
+            class="fa fa-trash-o"></i>Delete
+        </button>
+        <div class="pull-right">
+          {{> _houston_custom_actions document=document collection_info=collection_info size="md" }}
+        </div>
+      </div>
+    </div>
+  </form>
+
+</template>
+
+<template name="_houston_document_field"> <div class="form-group">
+
+    <label for="{{ name_id }}" class="col-sm-3 control-label">{{ name_id
+      }}</label>
+
+    <div class="col-sm-9">
+      <textarea class="houston-field form-control" name="{{ name_id }}">{{ value }}</textarea>
+      <p class="help-block">Please enter a {{ type }}</p>
+    </div>
+
+  </div>
+</template>
