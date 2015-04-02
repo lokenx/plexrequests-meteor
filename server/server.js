@@ -12,7 +12,7 @@ if (!(Settings.findOne({_id: "couchpotatosetting"}))) {
         _id: "couchpotatosetting",
         service: "CouchPotato",
         api: "http://192.168.0.1/api/abcdef0123456789",
-        use: false
+        enabled: false
     });
 };
 
@@ -21,7 +21,7 @@ if (!(Settings.findOne({_id: "pushbulletsetting"}))) {
         _id: "pushbulletsetting",
         service: "PushBullet",
         api: "abcdef0123456789",
-        use: false
+        enabled: false
     });
 };
 
@@ -36,7 +36,7 @@ Meteor.methods({
         });
     },
     'pushBullet' : function (movie) {
-        if (Settings.findOne({_id:"pushbulletsetting"}).use) {
+        if (Settings.findOne({_id:"pushbulletsetting"}).enabled) {
             var pbAPI = Settings.findOne({_id:"pushbulletsetting"}).api; 
             Meteor.http.call("POST", "https://api.pushbullet.com/v2/pushes",
                              {auth: pbAPI + ":",
@@ -45,7 +45,7 @@ Meteor.methods({
         }
     },
     'searchCP' : function (id) {
-        if (Settings.findOne({_id:"couchpotatosetting"}).use) {
+        if (Settings.findOne({_id:"couchpotatosetting"}).enabled) {
             var cpAPI = Settings.findOne({_id:"couchpotatosetting"}).api;
 
             //Workaround to allow self-signed SSL certs, however can be dangerous and should not be used in production, looking into better way
@@ -66,7 +66,7 @@ Meteor.methods({
         }
     },
     'updateCP' : function () {
-        if (Settings.findOne({_id:"couchpotatosetting"}).use) {
+        if (Settings.findOne({_id:"couchpotatosetting"}).enabled) {
             var allMovies = Movies.find({downloaded: false});
             allMovies.forEach(function (movie) {
                 Meteor.call('searchCP', movie.imdb);
