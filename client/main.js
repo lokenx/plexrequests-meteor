@@ -22,9 +22,12 @@ Router.configure({
   notFoundTemplate: "NotFound"
 });
 
-Router.map(function(){
-    this.route('home', {path: '/'} );
-    this.route('couchpotato', {path: '/couchpotato/'} );
+Router.route('/', function () {
+  this.render('home');
+});
+
+Router.route('/couchpotato', function () {
+  this.render('couchpotato');
 });
 
 Meteor.subscribe('movies');
