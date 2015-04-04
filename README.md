@@ -12,7 +12,7 @@ Demo of this version is hosted on Meteor at [http://plexrequests.meteor.com](htt
 * Couch Potato and PushBullet can be integrated via the admin interface
  * With CP enabled, movies are added to CP Wanted List if not present already, and an option to update movies download status is provided to users
  * PushBullet notifications can also be sent to give you a notification when a movie is requested
-* **NEW** A CP test page is now setup at `/couchpotato` that should help diagnose and troubleshoot connectivity issues, it requires you to be logged in to the admin interface to access
+* **NEW** A CP test page is now setup at `/couchpotato` that should help diagnose and troubleshoot connectivity issues
 
 ![Couch Potato Test](Screenshot08.png)
 
@@ -28,7 +28,7 @@ For PushBullet just your API key is required. For CouchPotao you need to enter t
 ![admin view](Screenshot07.jpg)
 
 ##Additional Information
-If you're having trouble with Couch Potato please visit `http://localhost:3000/couchpotato` (or your own URL) for some assistance. If you still require any assistance or have questions please option an issue. Some good info is also available on the Plex forums [here](https://forums.plex.tv/index.php/topic/151899-plex-movie-requests/).
+If you're having trouble with Couch Potato please visit `http://localhost:3000/couchpotato` (or your own URL) for some assistance, it requires you to be logged in to the admin interface to access. If you still require any assistance or have questions please option an issue. Some good info is also available on the Plex forums [here](https://forums.plex.tv/index.php/topic/151899-plex-movie-requests/).
 
 ##License
 This application is licensed under The MIT License. The Plex logo, and name are copyright of Plex Inc.
