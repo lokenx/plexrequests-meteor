@@ -1,0 +1,51 @@
+<template name="couchpotato">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                {{#if currentUser }}
+                    <h1>Couch Potato Test Page</h1>
+                    <p class="lead">This page is to help confirm that you can successfully communicate with Couch Potato,
+                        if you still have issues please post on the <a href="https://forums.plex.tv/index.php/topic/151899-plex-movie-requests/">forums</a> or the <a href="https://github.com/lokenx/plexrequests-meteor">GitHub repo</a>.</p>
+                {{#each tests}}
+                    <p><strong>Service: </strong> {{service}}</p>
+                    <p><strong>API/URL: </strong> <span class="api">{{api}}</span> &nbsp; <span class="missingSlash" style="display:none;"><i class="fa fa-arrow-circle-left"></i> You're missing a <kbd>/</kbd> at the end</span></p>
+                    <p><strong>Connection status: </strong> <span class="cpInfo">Attempting to connect...please be patient</span> <span class="cpSuccess" style="display:none;"><i class="fa fa-check-circle"></i></span> <span class="cpError" style="display:none;"><i class="fa fa-exclamation-circle"></i></span> </p>
+                <br>
+                <br>
+                <div class="commonIssues" style="display:none;">
+                <h3>Common Issues</h3>
+                <ol>
+                    <li><strong>URL: </strong> Please ensure you have typed the URL correctly, it should follow the below format and must contain a <kbd>/</kbd> at the end <br><br><pre><code>http://192.168.0.1:5050/api/abcdef0123456789/</code></pre><br></li>
+                    <li><strong>LAN: </strong>Plex Requests has only been tested when running on the same LAN as Couch Potato. If you would like to run it in a different location you will have to configure router firewall rules as well as port forwarding, and use your router/public IP instead of Couch Potato's<br><br></li>
+                    <li><strong>Manual test: </strong> You can try a manual call to the Couch Potato API via a web browser to confirm connectivity. Simply copy and paste the below URL into your browser, if things are working you should get a message displayed that says <kbd>{ "success" : true }</kbd><br><br>
+                    <pre><code>{{api}}app.available</code></pre><br></li>
+                    <li><strong>Wrong API key used: </strong> If this is the message you receive when trying the Manual test, please confirm that you have a <kbd>/</kbd> slash at the end of your API</li>
+                </ol>
+                </div>
+                {{/each}}
+
+                {{else}}
+                    <h1>You are not authorized to view this page.</h1>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        $(document).ready(function () {
+            Meteor.call('checkCP', function(err, data) {
+                if (err) {
+                    $('.cpInfo').text("connection error");
+                    $('.cpError').removeAttr('style');
+                    $('.commonIssues').removeAttr('style');
+                    if ($('.api').text().substr(-1) !== "/") {
+                        $('.missingSlash').removeAttr('style');
+                    };
+                } else {
+                    $('.cpInfo').text(data);
+                    $('.cpSuccess').removeAttr('style');
+                }
+              });
+        });
+    </script>
+</template>

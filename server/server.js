@@ -1,7 +1,9 @@
-Settings = new Mongo.Collection("settings");
-
 Meteor.publish('movies', function (){
     return Movies.find({});
+});
+
+Meteor.publish('settings', function () {
+    if(this.userId) return Settings.find({_id: "couchpotatosetting"});
 });
 
 Houston.add_collection(Settings);
@@ -11,7 +13,7 @@ if (!(Settings.findOne({_id: "couchpotatosetting"}))) {
     Settings.insert({
         _id: "couchpotatosetting",
         service: "CouchPotato",
-        api: "http://192.168.0.1/api/abcdef0123456789",
+        api: "http://192.168.0.1:5050/api/abcdef0123456789/",
         enabled: false
     });
 };
@@ -72,5 +74,16 @@ Meteor.methods({
                 Meteor.call('searchCP', movie.imdb);
             });
         };
+    },
+    'checkCP' : function () {
+        var cpAPI = Settings.findOne({_id:"couchpotatosetting"}).api;
+        var status = Meteor.http.call("GET", cpAPI  + "app.available", {timeout:5000});
+
+        //Workaround to allow self-signed SSL certs, however can be dangerous and should not be used in production, looking into better way
+        //But it's possible there's nothing much I can do
+        process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
+        return (status['data']['success']);    
+        
     }
 });
