@@ -24,7 +24,7 @@ Router.configure({
 
 Router.map(function(){
     this.route('home', {path: '/'} );
-    this.route('couchpotato', {path: '/couchpotato'} );
+    this.route('couchpotato', {path: '/couchpotato/'} );
 });
 
 Meteor.subscribe('movies');
