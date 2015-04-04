@@ -18,9 +18,9 @@ Installation is straightforward. Please update to Meteor 1.1, clone the repo, `c
 
 On first run navigate to `http://localhost:3000/admin` and create an admin account with a username and password. **If this isn't done someone else can create the admin account to your applications.** This account is only used for logging in, email integration isn't enabled. Once logged in, go to the `setting` collection and enable either of the services if desired.
 
-For PushBullet just your API key is required. For CouchPotao you need to enter the full IP address of your server, including port and API. Please see below for an example:  
+For PushBullet just your API key is required. For CouchPotao you need to enter the full IP address of your server, including port and API. **Please ensure there's a trailing `/` at the end of the URL.** Please see below for an example:  
 
-    http://192.168.0.0:5050/api/abcdef1234567890
+    http://192.168.0.0:5050/api/abcdef1234567890/
 
 ![admin view](Screenshot07.jpg)
 
