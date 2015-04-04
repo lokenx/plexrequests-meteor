@@ -11,7 +11,7 @@ if (!(Settings.findOne({_id: "couchpotatosetting"}))) {
     Settings.insert({
         _id: "couchpotatosetting",
         service: "CouchPotato",
-        api: "http://192.168.0.1/api/abcdef0123456789",
+        api: "http://192.168.0.1/api/abcdef0123456789/",
         enabled: false
     });
 };
