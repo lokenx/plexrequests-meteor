@@ -11,13 +11,14 @@ Demo of this version is hosted on Meteor at [http://plexrequests.meteor.com](htt
 * Adminitrators can view and edit requested movies using the admin interface, as well as configure settings
 * Couch Potato and PushBullet can be integrated via the admin interface
  * With CP enabled, movies are added to CP Wanted List if not present already, and an option to update movies download status is provided to users
- * PushBullet notifications can also be sent to give you a notification when a movie is requested
+ * **NEW** Movies are also first checked to see if they're already downloaded in CP and let's the users know as such
+ * PushBullet notifications can be sent to give you a notification when a movie is requested
 * **NEW** A CP test page is now setup at `/couchpotato` that should help diagnose and troubleshoot connectivity issues
 
 ![Couch Potato Test](Screenshot08.png)
 
 ##Installation
-Installation is straightforward. Please update to Meteor 1.1, clone the repo, `cd` into directory, and run `meteor`
+Installation is straightforward: please update to Meteor 1.1 (for Windows support), clone the repo, `cd` into the directory, and run `meteor`
 
 On first run navigate to `http://localhost:3000/admin` and create an admin account with a username and password. **If this isn't done someone else can create the admin account to your applications.** This account is only used for logging in, email integration isn't enabled. Once logged in, go to the `setting` collection and enable either of the services if desired.
 
