@@ -15,7 +15,6 @@ Template.home.events({
                     Session.set('movieadded', true);
                     Meteor.call('pushBullet', movie);
                 } else if (results === "downloaded") {
-                    console.log(results);
                     Session.set('searchingresults', false);
                     Session.set('moviedownloaded', true);
                 }
