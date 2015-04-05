@@ -94,11 +94,10 @@ Meteor.methods({
                     imdb: id,
                     released: "",
                     downloaded: false,
-                    createdAt: new Date(),
-                    downloadedAt: false
-                });
+                    createdAt: new Date()
+            });
             return "added";
-        }
+        };
     },
     'updateCP' : function () {
         if (Settings.findOne({_id:"couchpotatosetting"}).enabled) {
