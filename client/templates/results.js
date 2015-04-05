@@ -4,7 +4,6 @@ Template.home.events({
         Session.set('resultsloaded', false);
 
         var movie = document.querySelector('input[name="movie"]:checked').nextSibling.innerHTML;
-        console.log(movie);
         var id = document.querySelector('input[name="movie"]:checked').id;
 
         if (Movies.findOne({imdb: id}) === undefined) {
