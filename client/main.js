@@ -6,6 +6,7 @@ Session.set('searcherror', false);
 Session.set('requests', false);
 Session.set('movieadded', false);
 Session.set('movieexists', false);
+Session.set('moviedownloaded', false);
 Meteor.Spinner.options = {color: "#DD6928"};
 
 $("#showmodal").on("click", function() {
