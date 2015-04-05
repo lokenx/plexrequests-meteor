@@ -28,50 +28,83 @@ if (!(Settings.findOne({_id: "pushbulletsetting"}))) {
 };
 
 Meteor.methods({
-    'addMovie' : function (movie, id) {
-        Movies.insert({
-            title: movie,
-            imdb: id,
-            downloaded: false,
-            createdAt: new Date(),
-            downloadedAt: false
-        });
-    },
     'pushBullet' : function (movie) {
         if (Settings.findOne({_id:"pushbulletsetting"}).enabled) {
-            var pbAPI = Settings.findOne({_id:"pushbulletsetting"}).api; 
+            var pbAPI = Settings.findOne({_id:"pushbulletsetting"}).api;
             Meteor.http.call("POST", "https://api.pushbullet.com/v2/pushes",
                              {auth: pbAPI + ":",
                               params: {"type": "note", "title": "Plex Requests", "body": movie}
                              });
         }
     },
-    'searchCP' : function (id) {
+    'searchCP' : function (id, movie) {
         if (Settings.findOne({_id:"couchpotatosetting"}).enabled) {
             var cpAPI = Settings.findOne({_id:"couchpotatosetting"}).api;
 
             //Workaround to allow self-signed SSL certs, however can be dangerous and should not be used in production, looking into better way
             //But it's possible there's nothing much I can do
             process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+            var imdb = id;
+            var initSearch = Meteor.http.call("GET", cpAPI  + "media.get/", {params: {"id": imdb}});
 
-            var cp = Meteor.http.call("GET", cpAPI  + "media.get/",
-                                        {params: {"id": id}
-                                        });        
-            if (cp['data']['media'] === null) { 
-                Meteor.http.call("POST", cpAPI  + "movie.add/",
-                                        {params: {"identifier": id}
-                                        });
-            } else if (cp['data']['media']['status'] === "done") {
-                Movies.update({imdb: id}, {
-                    $set: {downloaded: true}});
-            };
+            if (initSearch['data']['media'] === null) {
+                //Movie is not in CP
+                Meteor.http.call("POST", cpAPI  + "movie.add/", {params: {"identifier": imdb}});
+                var postAdd = Meteor.http.call("GET", cpAPI  + "media.get/", {params: {"id": imdb}});
+                var json = JSON.parse(postAdd.content);
+                var movie = json['media']['title'];
+                var released = json['media']['info']['released'];
+                Movies.insert({
+                    title: movie,
+                    imdb: imdb,
+                    released: released,
+                    downloaded: false,
+                    createdAt: new Date()
+                });
+                return "added"
+            } else if (initSearch['data']['media']['status'] === "active") {
+                //Movie is on the wanted list already
+                var json = JSON.parse(initSearch.content);
+                var id = json['media']['info']['imdb'];
+                if (Movies.findOne({imdb: id}) === undefined) {
+                    var movie = json['media']['title'];
+                    var released = json['media']['info']['released'];
+                    Movies.insert({
+                        title: movie,
+                        imdb: id,
+                        released: released,
+                        downloaded: false,
+                        createdAt: new Date()
+                    });
+                }
+                return "active";
+            } else if (initSearch['data']['media']['status'] === "done") {
+                //Movie is downloaded already
+                var json = JSON.parse(initSearch.content);
+                var id = json['media']['info']['imdb'];
+                if (Movies.findOne({imdb: id}) !== undefined) {
+                    Movies.update({imdb: id}, {$set: {downloaded: true}});
+                }
+                return "downloaded";
+            }
+        } else {
+            //CP not being used so just add to list of requested movies
+            Movies.insert({
+                    title: movie,
+                    imdb: id,
+                    released: "",
+                    downloaded: false,
+                    createdAt: new Date(),
+                    downloadedAt: false
+                });
+            return "added";
         }
     },
     'updateCP' : function () {
         if (Settings.findOne({_id:"couchpotatosetting"}).enabled) {
             var allMovies = Movies.find({downloaded: false});
             allMovies.forEach(function (movie) {
-                Meteor.call('searchCP', movie.imdb);
+                Meteor.call('searchCP', movie.imdb, movie.title);
             });
         };
     },
@@ -83,7 +116,7 @@ Meteor.methods({
         //But it's possible there's nothing much I can do
         process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
-        return (status['data']['success']);    
-        
+        return (status['data']['success']);
+
     }
 });

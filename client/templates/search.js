@@ -7,6 +7,7 @@ Template.search.events({
         Session.set('requests', false);
         Session.set('movieadded', false);
         Session.set('movieexists', false);
+        Session.set('moviedownloaded', false);
         var url = "http://www.omdbapi.com/?type=movie&s=" + document.getElementById("search").value;
 
         (function () {

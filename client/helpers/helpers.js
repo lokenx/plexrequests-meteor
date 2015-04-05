@@ -25,3 +25,7 @@ UI.registerHelper('movieexists',function(input){
 UI.registerHelper('movieadded',function(input){
   return Session.get("movieadded");
 });
+
+UI.registerHelper('moviedownloaded',function(input){
+  return Session.get("moviedownloaded");
+});
