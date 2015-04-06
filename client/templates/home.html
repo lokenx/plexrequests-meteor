@@ -1,8 +1,8 @@
 <template name="home">
 <div class="container">
         <div class="row col-md-offset-2 col-md-8">
-            <a href="javascript:window.location.reload();"><h1>Plex Requests!</h1></a>
-            <p class="lead">Want to watch a movie but it's not currently on Plex?<br>
+            <a href="javascript:window.location.reload();"><h1>Geet's Plex Requests!</h1></a>
+            <p class="lead">Want to watch a movie but it's not currently on Geet's Plex?<br>
                 Use the search box below to do a quick <a href="http://www.omdbapi.com/">OMDB</a> search for a movie!</p>
         </div>
         <div class="row col-md-offset-2 col-md-8">
@@ -36,7 +36,7 @@
                 <input type="button" value="Hmmm something went wrong with your search...search again?" class="btn btn-danger" onclick="getElementById('search').focus()">
             {{/if}}
             {{#if movieadded}}
-                <input type="button" value="Movie added! Search again?" class="btn btn-success" onclick="getElementById('search').focus()">  
+                <input type="button" value="Movie added! Search again?" class="btn btn-success" onclick="getElementById('search').focus()">
             {{/if}}
             {{#if movieexists}}
                 <input type="button" value="Movie already requested...search again?" class="btn btn-warning" onclick="getElementById('search').focus()">
