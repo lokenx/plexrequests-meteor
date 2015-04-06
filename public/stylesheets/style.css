@@ -15,16 +15,16 @@ p {
     padding: 7px;
 }
 
-.info ul {
+/*.info ul {
     max-height: 200px;
     overflow: scroll;
-}
+}*/
 
 @media (min-width: 768px) {
     body {
         padding-top: 60px;
     }
-    .info ul {
+    /*.info ul {
         max-height: 400px
-    }
+    }*/
 }

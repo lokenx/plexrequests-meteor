@@ -1,6 +1,11 @@
 Template.home.helpers({
     movie: function () {
-      return Movies.find({}, {sort:{createdAt:-1}});
+        var date = new Date(+new Date - 12096e5);
+        return Movies.find({$or: [
+            { downloaded : false },
+            { downloaded : true , createdAt: {"$gte": date} }
+        ]},
+            {sort:{createdAt:-1}});
     },
     moviesearched: function () {
       return MovieSearch.find({});
