@@ -21,10 +21,16 @@ Template.home.events({
             });
             return false;
         } else {
-            Session.set('searchingresults', false);
-            Session.set('movieexists', true);
-            return false;
-        }
+            if (Movies.findOne({imdb: id}).downloaded === true) {
+                Session.set('searchingresults', false);
+                Session.set('moviedownloaded', true);
+                return false;
+            } else {                
+                Session.set('searchingresults', false);
+                Session.set('movieexists', true);
+                return false;
+            }
         return false;
+        }
     }
 });
