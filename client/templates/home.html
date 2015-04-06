@@ -26,7 +26,9 @@
             </div>
         </div>
         {{#if searchingresults}}
-            <div class="row col-md-offset-2 col-md-2" style="min-height: 100px">{{> spinner}}</div>
+            <div class="row col-md-offset-2 col-md-2" style="min-height: 100px">
+                <div class="loading"><div class="loader-inner ball-clip-rotate"><div></div></div></div>
+            </div>
         {{/if}}
         <div class="row col-md-offset-2 col-md-8">
             {{#if noresults}}

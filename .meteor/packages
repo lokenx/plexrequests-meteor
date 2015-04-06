@@ -6,6 +6,5 @@
 
 meteor-platform
 http
-sacha:spin
 iron:router
 houston:admin
