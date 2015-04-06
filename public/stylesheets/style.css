@@ -52,7 +52,6 @@ label, .radio label {
 .loading {
     text-align: center;
     margin: auto;
-    padding: 5%;
 }
 
 .loading > div > div{
