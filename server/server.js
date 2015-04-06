@@ -117,5 +117,8 @@ Meteor.methods({
 
         return (status['data']['success']);
 
+    },
+    'checkCPEnabled' : function () {
+        return Settings.findOne({_id:"couchpotatosetting"}).enabled;
     }
 });
