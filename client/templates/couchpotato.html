@@ -3,9 +3,10 @@
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
                 {{#if currentUser }}
+                {{urls}}
                     <h1>Couch Potato Test Page</h1>
                     <p class="lead">This page is to help confirm that you can successfully communicate with Couch Potato,
-                        if you still have issues please post on the <a href="https://forums.plex.tv/index.php/topic/151899-plex-movie-requests/">forums</a> or the <a href="https://github.com/lokenx/plexrequests-meteor">GitHub repo</a>.</p>
+                        if you still have issues please post on the <a href="https://forums.plex.tv/index.php/topic/151899-plex-movie-requests/">forums</a> or the <a href="https://github.com/lokenx/plexrequests-meteor">GitHub repo</a>. You can return to the <a href="{{url}}">application</a>, or the <a href="{{url}}admin">admin</a> interface once done.</p>
                 {{#each tests}}
                     <p><strong>Service: </strong> {{service}}</p>
                     <p><strong>API/URL: </strong> <span class="api">{{api}}</span> &nbsp; <span class="missingSlash" style="display:none;"><i class="fa fa-arrow-circle-left"></i> You're missing a <kbd>/</kbd> at the end</span></p>
@@ -27,9 +28,11 @@
                 </ol>
                 </div>
                 {{/each}}
-
                 {{else}}
-                    <h1>You are not authorized to view this page.</h1>
+                    <div class="unauthorized">
+                    <h2>You are not authorized to view this page <i class="fa fa-exclamation-triangle"></i></h2>
+                    <h3><a href="{{url}}">Return to the main page!</a></h3>
+                    </div>
                 {{/if}}
             </div>
         </div>

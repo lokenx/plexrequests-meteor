@@ -69,3 +69,7 @@ label, .radio label {
     color: #2ecc71;
     font-weight: 700;
 }
+
+.unauthorized {
+    text-align: center;
+}
