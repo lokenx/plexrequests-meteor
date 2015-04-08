@@ -4,6 +4,8 @@
 
 This is [Plex Requests](https://github.com/lokenx/plexrequests) but written with Meteor! It's been updated with [Couch Potato](https://github.com/RuudBurger/CouchPotatoServer) intergration and includes a new admin interface courtesy of the [Houston](https://github.com/gterrono/houston) package.
 
+A project website has been setup using [GitHub pages](http://8bits.ca/plexrequests-meteor)!
+
 Demo of this version is hosted on Meteor at [http://plexrequests.meteor.com](http://plexrequests.meteor.com). I'll look into adding a demo admin account for viewing that too.
 
 ##Features
