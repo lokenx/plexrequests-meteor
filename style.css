@@ -1,0 +1,21 @@
+h1 {
+    font-size: 3.5em;   
+}
+
+h1, h2 {
+    font-weight: 500;   
+}
+
+.intro {
+    font-size: 1.2em;
+}
+
+p, li {
+    font-size: 1.1em;
+}
+
+footer {
+    margin: 2%;
+    text-align: center;
+    font-size: 0.9em;
+}
