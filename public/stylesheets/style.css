@@ -1,18 +1,26 @@
 h1 {
     font-size: 3.5em;
 }
-p {
-    font-size: 1.2em;
+
+label, .radio label {
+    font-size: 1em;
 }
+
 #results {
     padding-left: 15px;
 }
+
 .btn {
     margin: 2px 0px;
     white-space: normal;
 }
+
 .well {
     padding: 7px;
+}
+
+.commonIssues {
+    padding-bottom: 10%;
 }
 
 /*.info ul {
@@ -27,4 +35,41 @@ p {
     /*.info ul {
         max-height: 400px
     }*/
+}
+
+
+
+.enabledError {
+    color: #c0392b;
+    font-weight: 700;
+}
+
+.cpError {
+    color: #c0392b;
+    font-weight: 700;
+}
+
+.loading {
+    text-align: center;
+    margin: auto;
+    padding: 7%;
+}
+
+.loadingCP > div > div{
+    height: 3em;
+    width: 3em;
+}
+
+.enabledSuccess {
+    color: #2ecc71;
+    font-weight: 700;
+}
+
+.cpSuccess {
+    color: #2ecc71;
+    font-weight: 700;
+}
+
+.unauthorized {
+    text-align: center;
 }
