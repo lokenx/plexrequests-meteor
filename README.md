@@ -1,5 +1,7 @@
 #Plex Requests - Meteor Style!
 
+#### &#10006; The current build has an issue with a particular type of search/request, please use the master if it occurs for you!
+
 ![plexrequestshomepage](Screenshot03.png)
 
 This is [Plex Requests](https://github.com/lokenx/plexrequests) but written with Meteor! It's been updated with [Couch Potato](https://github.com/RuudBurger/CouchPotatoServer) intergration and includes a new admin interface courtesy of the [Houston](https://github.com/gterrono/houston) package.
