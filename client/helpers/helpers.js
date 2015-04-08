@@ -29,3 +29,6 @@ UI.registerHelper('movieadded',function(input){
 UI.registerHelper('moviedownloaded',function(input){
   return Session.get("moviedownloaded");
 });
+UI.registerHelper('plexauthuser',function(input){
+  return Session.get("plexauthuser");
+});

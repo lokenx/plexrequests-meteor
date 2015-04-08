@@ -1,5 +1,6 @@
 accounts-base@1.2.0
 accounts-password@1.1.1
+amplify@1.0.0
 autoupdate@1.2.1
 base64@1.0.3
 binary-heap@1.0.3
@@ -44,6 +45,8 @@ mongo@1.1.0
 npm-bcrypt@0.7.8_2
 observe-sequence@1.0.6
 ordered-dict@1.0.3
+peerlibrary:blocking@0.5.2
+peerlibrary:xml2js@0.4.5_2
 random@1.0.3
 reactive-dict@1.1.0
 reactive-var@1.0.5
@@ -60,6 +63,7 @@ srp@1.0.3
 templating@1.1.1
 tmeasday:paginated-subscription@0.2.4
 tracker@1.0.7
+u2622:persistent-session@0.3.2
 ui@1.0.6
 underscore@1.0.3
 url@1.0.4
