@@ -21,7 +21,7 @@
 
 })();
 
-
+//Clean up this javascript call
 (function(){Template.home.events({
     "submit #plex-user-form": function (event) {
 	    plexUsername = document.getElementById("plex-username").value;
