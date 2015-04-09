@@ -18,7 +18,8 @@ if (!(Settings.findOne({_id: "couchpotatosetting"}))) {
         enabled: false
     });
 };
-
+//I am using the default settings, but it is a little confusing since its not really an API, only a plex toekn but did not want toc reate a whole new collection for Plex
+//Users do not need to sign into to get thier token, it can be found this way... maybe we let thme know that? https://support.plex.tv/hc/en-us/articles/204059436-Finding-your-account-token-X-Plex-Token
 if (!(Settings.findOne({_id: "plexsetting"}))) {
     Settings.insert({
         _id: "plexsetting",
@@ -136,13 +137,14 @@ Meteor.methods({
     },
     'PlexLogin' : function (pUsername,pPassword) {
 
+		//clean password and username for authentication.
 		function authHeaderVal(username, password) {
 		    var authString = username + ':' + password;
 		    var buffer = new Buffer(authString.toString(), 'binary');
 		    return 'Basic ' + buffer.toString('base64');
 		}
 
-
+		//Likely do not need all the X-Plex headers, I think the only manditory one is X-Plex-Client-Identifier
 	    var plexstatus = Meteor.http.call("POST", "https://plex.tv/users/sign_in.xml",{
 			   headers: {
 				   	'Authorization': authHeaderVal(pUsername, pPassword),
@@ -155,7 +157,7 @@ Meteor.methods({
 					'X-Plex-Provides': 'controller'
 			   }
 			});
-
+			//Need more testing for actual errors when password or username are wrong to let the admin user know...
 			if(plexstatus.statusCode==201){
 					//prase package https://github.com/peerlibrary/meteor-xml2js
 				var results = xml2js.parseStringSync(plexstatus.content);
@@ -181,6 +183,7 @@ Meteor.methods({
 
 			var friendsJSON = xml2js.parseStringSync(friendsXML.content);
 
+			//There is likely a cleaner way to pull out just the users names for the array
 			var friendsList = [];
 
 			//console.dir(friendsJSON.MediaContainer.User);

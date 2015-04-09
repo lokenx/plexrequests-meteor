@@ -8,7 +8,7 @@ Session.set('movieadded', false);
 Session.set('movieexists', false);
 Session.set('moviedownloaded', false);
 
-
+/*Below is commented out as it was overwriting the persistent session*/
 //Session.set('plexauthuser', false);
 
 $("#showmodal").on("click", function() {
