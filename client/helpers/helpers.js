@@ -2,6 +2,10 @@ UI.registerHelper('mresultsloaded',function(input){
   return Session.get("mresultsloaded");
 });
 
+UI.registerHelper('tresultsloaded',function(input){
+  return Session.get("tresultsloaded");
+});
+
 UI.registerHelper('searchingresults',function(input){
   return Session.get("searchingresults");
 });
@@ -16,6 +20,10 @@ UI.registerHelper('searcherror',function(input){
 
 UI.registerHelper('mrequests',function(input){
   return Session.get("mrequests");
+});
+
+UI.registerHelper('trequests',function(input){
+  return Session.get("trequests");
 });
 
 UI.registerHelper('movieexists',function(input){
@@ -34,6 +42,6 @@ UI.registerHelper('searchmovie',function(input){
   return Session.get("searchmovie");
 });
 
-UI.registerHelper('tvsearch',function(input){
-  return Session.get("tvsearch");
+UI.registerHelper('searchtv',function(input){
+  return Session.get("searchtv");
 });

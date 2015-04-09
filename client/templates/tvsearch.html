@@ -1,0 +1,16 @@
+<template name="tvsearch">
+	<form name="tvsearch" id="tvsearch" action="" method="get" class="form-inline">
+        <div class="form-group">
+            <input type="search" id="search" class="form-control" placeholder="Series title" required>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Search for TV Series!" class="btn btn-primary">
+            {{#if trequests}}
+            <button type="button" class="btn btn-default" onclick="Session.set('trequests', false);">Hide requests!</button>
+            <button type="button" class="btn btn-info" onclick="javascript:Meteor.call('updateCP');">Update status requests!</button>
+            {{else}}
+            <button type="button" class="btn btn-default" onclick="Session.set('trequests', true);">View requests!</button>
+            {{/if}}
+        </div>
+    </form>
+</template>

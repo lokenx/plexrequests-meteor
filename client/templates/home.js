@@ -9,5 +9,8 @@ Template.home.helpers({
     },
     moviesearched: function () {
       return MovieResults.find({});
+    },
+    tvsearched: function () {
+      return TVResults.find({});
     }
 });

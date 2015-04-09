@@ -10,6 +10,9 @@
             {{#if searchmovie}}
                 {{> moviesearch}}
             {{/if}}
+            {{#if searchtv}}
+                {{> tvsearch}}
+            {{/if}}
         </div>
         <div class="row col-md-offset-2 col-md-8">
             <div class="overview" id="overview">
@@ -20,8 +23,21 @@
                         {{> movieresults}}
                     {{/each}}
                     <div class="form-group">
-                    <input type="submit" value="Request Movie!" class="btn btn-primary">
-                    <input type="button" class="btn btn-info" value="Search again!" onclick="getElementById('search').focus()">
+                    <input type="submit" value="Request Movie" class="btn btn-primary">
+                    <input type="button" class="btn btn-info" value="Search again" onclick="getElementById('search').focus()">
+                    </div>
+                </form>
+                <script>document.getElementById('overview').scrollIntoView({block: "end", behavior: "smooth"});</script>
+            {{/if}}
+            {{#if tresultsloaded}}
+            <h3>Results from the OMDB:</h3>
+                <form name="results" id="tresults" action="" method="get" class="results form">
+                    {{#each tvsearched}}
+                        {{> tvresults}}
+                    {{/each}}
+                    <div class="form-group">
+                    <input type="submit" value="Request Series" class="btn btn-primary">
+                    <input type="button" class="btn btn-info" value="Search again" onclick="getElementById('search').focus()">
                     </div>
                 </form>
                 <script>document.getElementById('overview').scrollIntoView({block: "end", behavior: "smooth"});</script>
