@@ -15,10 +15,7 @@ $("#showmodal").on("click", function() {
 });
 
 
-Router.configure({
-  loadingTemplate: 'loading'
-});
-
+console.log( Meteor.userId() );
 
 Router.configure({
   notFoundTemplate: "NotFound"
