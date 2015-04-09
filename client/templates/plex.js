@@ -1,8 +1,26 @@
-Template.plex.helpers({
-    plexinfo: function () {
-      return PlexAPI.find({});
+//Need to build a better helper to check if plex token is set, if so, call script
+(function(){Template.plex.events({
+    "submit #plex-login-form": function (event) {
+	    plexUsername = document.getElementById("plex-username").value;
+	    plexPassword = document.getElementById("plex-password").value;
+
+            Meteor.call('PlexLogin', plexUsername, plexPassword,  function (err, data) {
+               console.log(data);
+                if (err) {
+                    console.log(err)
+                } else if (data) {
+                    $('#plex-login-form').hide();
+                    $('.plexauth').removeAttr('style');
+                } else {
+                    //Session.set('plexauthuser', false);
+                }
+            });
+            return false;
     }
 });
+
+})();
+
 
 (function(){Template.home.events({
     "submit #plex-user-form": function (event) {
@@ -24,5 +42,4 @@ Template.plex.helpers({
 });
 
 })();
-
 

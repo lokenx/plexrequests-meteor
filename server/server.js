@@ -6,13 +6,9 @@ Meteor.publish('settings', function () {
     if(this.userId) return Settings.find({_id: "couchpotatosetting"});
 });
 
-Meteor.publish('plex', function () {
-    if(this.userId) return PlexAPI.find({_id: "plexsetting"});
-});
 
 Houston.add_collection(Settings);
 Houston.add_collection(Movies);
-Houston.add_collection(PlexAPI);
 
 if (!(Settings.findOne({_id: "couchpotatosetting"}))) {
     Settings.insert({
@@ -23,11 +19,11 @@ if (!(Settings.findOne({_id: "couchpotatosetting"}))) {
     });
 };
 
-if (!(PlexAPI.findOne({_id: "plexsetting"}))) {
-    PlexAPI.insert({
+if (!(Settings.findOne({_id: "plexsetting"}))) {
+    Settings.insert({
         _id: "plexsetting",
-		username: "username",
-		password: "password",
+        service: "Plex",
+		api: "Plex Token",
         enabled: false
     });
 };
@@ -135,7 +131,10 @@ Meteor.methods({
     'checkCPEnabled' : function () {
         return Settings.findOne({_id:"couchpotatosetting"}).enabled;
     },
-    'checkPlex' : function () {
+    'checkPlexEnabled' : function () {
+        return Settings.findOne({_id:"plexsetting"}).enabled;
+    },
+    'PlexLogin' : function (pUsername,pPassword) {
 
 		function authHeaderVal(username, password) {
 		    var authString = username + ':' + password;
@@ -143,12 +142,10 @@ Meteor.methods({
 		    return 'Basic ' + buffer.toString('base64');
 		}
 
-	    var pUSER = PlexAPI.findOne({_id:"plexsetting"}).username;
-	    var pPW = PlexAPI.findOne({_id:"plexsetting"}).password;
 
 	    var plexstatus = Meteor.http.call("POST", "https://plex.tv/users/sign_in.xml",{
 			   headers: {
-				   	'Authorization': authHeaderVal(pUSER, pPW),
+				   	'Authorization': authHeaderVal(pUsername, pPassword),
 				    'X-Plex-Client-Identifier': 'Request_Users',
 					'X-Plex-Product': 'App',
 					'X-Plex-Version': '1.0',
@@ -159,10 +156,14 @@ Meteor.methods({
 			   }
 			});
 
-
 			if(plexstatus.statusCode==201){
-					//console.log(result.statusCode);
+					//prase package https://github.com/peerlibrary/meteor-xml2js
+				var results = xml2js.parseStringSync(plexstatus.content);
+				var plexAuth = results.user.$.authenticationToken;
+						console.log(plexAuth);
+                    Settings.update({_id: "plexsetting" }, {$set: {api: plexAuth, enabled: true }});
 					return true;
+					//Session.setPersistent('plexuser', plexUsername);
 				}else{
 					return false;
 				}
@@ -170,38 +171,13 @@ Meteor.methods({
     },
     'checkPlexUser' : function (plexUsername) {
 
-		function authHeaderVal(username, password) {
-		    var authString = username + ':' + password;
-		    var buffer = new Buffer(authString.toString(), 'binary');
-		    return 'Basic ' + buffer.toString('base64');
-		}
+			function isInArray(value, array) {
+			  return array.indexOf(value) > -1;
+			}
 
-		function isInArray(value, array) {
-		  return array.indexOf(value) > -1;
-		}
+			var plexToken = Settings.findOne({_id:"plexsetting"}).api;
 
-
-	    var pUSER = PlexAPI.findOne({_id:"plexsetting"}).username;
-	    var pPW = PlexAPI.findOne({_id:"plexsetting"}).password;
-
-	    var status = Meteor.http.call("POST", "https://plex.tv/users/sign_in.xml",{
-			   headers: {
-				   	'Authorization': authHeaderVal(pUSER, pPW),
-				    'X-Plex-Client-Identifier': 'bob',
-					'X-Plex-Product': 'App',
-					'X-Plex-Version': '1.0',
-					'X-Plex-Device': 'App',
-					'X-Plex-Platform': 'Meteor',
-					'X-Plex-Platform-Version': '1.0',
-					'X-Plex-Provides': 'controller'
-			   }
-			});
-			//prase package https://github.com/peerlibrary/meteor-xml2js
-			var results = xml2js.parseStringSync(status.content);
-
-			var plexAuth = results.user.$.authenticationToken;
-
-			var friendsXML = Meteor.http.call("GET", "https://plex.tv/pms/friends/all?X-Plex-Token="+plexAuth);
+			var friendsXML = Meteor.http.call("GET", "https://plex.tv/pms/friends/all?X-Plex-Token="+plexToken);
 
 			var friendsJSON = xml2js.parseStringSync(friendsXML.content);
 
