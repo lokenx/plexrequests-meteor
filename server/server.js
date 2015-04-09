@@ -160,9 +160,9 @@ Meteor.methods({
 					//prase package https://github.com/peerlibrary/meteor-xml2js
 				var results = xml2js.parseStringSync(plexstatus.content);
 				var plexAuth = results.user.$.authenticationToken;
-						console.log(plexAuth);
                     Settings.update({_id: "plexsetting" }, {$set: {api: plexAuth, enabled: true }});
 					return true;
+					//consider setting the plexuser for admin account in a per-session to add to movie requests
 					//Session.setPersistent('plexuser', plexUsername);
 				}else{
 					return false;
