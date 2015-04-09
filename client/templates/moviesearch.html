@@ -1,16 +1,5 @@
 <template name="moviesearch">
-	<form name="moviesearch" id="moviesearch" action="" method="get" class="form-inline">
-        <div class="form-group">
-            <input type="search" id="search" class="form-control" placeholder="Movie title" required>
-        </div>
-        <div class="form-group">
-            <input type="submit" value="Search for Movie!" class="btn btn-primary">
-            {{#if mrequests}}
-            <button type="button" class="btn btn-default" onclick="Session.set('mrequests', false);">Hide requests!</button>
-            <button type="button" class="btn btn-info" onclick="javascript:Meteor.call('updateCP');">Update status requests!</button>
-            {{else}}
-            <button type="button" class="btn btn-default" onclick="Session.set('mrequests', true);">View requests!</button>
-            {{/if}}
-        </div>
-    </form>
+    <div class="radio">
+        <label for="{{imdb}}"><input type="radio" id="{{imdb}}" value="{{title}}" name="movie" class="movie" required><p class="title">{{title}} ({{year}})</p></label>
+    </div>
 </template>

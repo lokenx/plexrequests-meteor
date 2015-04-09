@@ -45,17 +45,8 @@ Meteor.methods({
             //But it's possible there's nothing much I can do
             process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
             var imdb = id;
-            
-            try {
-                var status = Meteor.http.call("GET", cpAPI  + "app.available", {timeout:5000});
-            }
-            catch (error) {
-                console.log(error)
-                return error;
-            }
-            console.log("before");
-            var initSearch = Meteor.http.call("GET", cpAPI  + "media.get/", {params: {"id": imdb, timeout:5000}});
-            console.log("after");
+            var initSearch = Meteor.http.call("GET", cpAPI  + "media.get/", {params: {"id": imdb}});
+
             if (initSearch['data']['media'] === null) {
                 //Movie is not in CP
                 Meteor.http.call("POST", cpAPI  + "movie.add/", {params: {"identifier": imdb}});
