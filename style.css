@@ -6,10 +6,6 @@ h1, h2 {
     font-weight: 500;   
 }
 
-.intro {
-    font-size: 1.2em;
-}
-
 p, li {
     font-size: 1.1em;
 }
@@ -18,4 +14,12 @@ footer {
     margin: 2%;
     text-align: center;
     font-size: 0.9em;
+}
+
+a {
+    font-weight: 400;
+}
+
+.intro {
+    font-size: 1.2em;
 }
