@@ -1,5 +1,7 @@
 #Plex Requests - Meteor Style!
 
+#### &#10006; The current build has an issue with a particular type of search/request, please use the master if it occurs for you!
+
 ![plexrequestshomepage](Screenshot03.png)
 
 This is [Plex Requests](https://github.com/lokenx/plexrequests) but written with Meteor! It's been updated with [Couch Potato](https://github.com/RuudBurger/CouchPotatoServer) intergration and includes a new admin interface courtesy of the [Houston](https://github.com/gterrono/houston) package.
@@ -16,7 +18,7 @@ Demo of this version is hosted on Meteor at [http://plexrequests.meteor.com](htt
  * PushBullet notifications can be sent to give you a notification when a movie is requested
 * **NEW** A CP test page is now setup at `/couchpotato` that should help diagnose and troubleshoot connectivity issues
 
-![Couch Potato Test](Screenshot08.png)
+![Couch Potato Test](Screenshot09.png)
 
 ##Installation
 Installation is straightforward: please update to Meteor 1.1 (for Windows support), clone the repo, `cd` into the directory, and run `meteor`

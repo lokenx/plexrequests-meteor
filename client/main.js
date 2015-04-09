@@ -7,17 +7,15 @@ Session.set('requests', false);
 Session.set('movieadded', false);
 Session.set('movieexists', false);
 Session.set('moviedownloaded', false);
-Meteor.Spinner.options = {color: "#DD6928"};
+//Session.set('plexauthuser', false);
 
 $("#showmodal").on("click", function() {
     $('#myModal').modal('show');
     return false;
 });
 
-Router.configure({
-  loadingTemplate: 'loading'
-});
 
+console.log( Meteor.userId() );
 
 Router.configure({
   notFoundTemplate: "NotFound"
@@ -31,5 +29,10 @@ Router.route('/couchpotato', function () {
   this.render('couchpotato');
 });
 
+Router.route('/plex', function () {
+  this.render('plex');
+});
+
 Meteor.subscribe('movies');
 Meteor.subscribe('settings');
+Meteor.subscribe('plex');
