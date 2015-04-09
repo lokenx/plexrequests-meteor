@@ -1,6 +1,6 @@
 #Plex Requests - Meteor Style!
 
-#### &#10006; The current build has an issue with a particular type of search/request, please use the master if it occurs for you!
+#### &#10006; Building in Plex.tv API call to authorize users.
 
 ![plexrequestshomepage](Screenshot03.png)
 
