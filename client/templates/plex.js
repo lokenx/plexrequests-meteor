@@ -21,7 +21,7 @@
 
 })();
 
-//Clean up this javascript call
+//Clean up this javascript call *maybe move this to the home.js file?
 (function(){Template.home.events({
     "submit #plex-user-form": function (event) {
 	    plexUsername = document.getElementById("plex-username").value;
