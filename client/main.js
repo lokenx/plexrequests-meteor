@@ -7,15 +7,14 @@ Session.set('requests', false);
 Session.set('movieadded', false);
 Session.set('movieexists', false);
 Session.set('moviedownloaded', false);
+
+
 //Session.set('plexauthuser', false);
 
 $("#showmodal").on("click", function() {
     $('#myModal').modal('show');
     return false;
 });
-
-
-console.log( Meteor.userId() );
 
 Router.configure({
   notFoundTemplate: "NotFound"

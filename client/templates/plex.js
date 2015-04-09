@@ -14,6 +14,7 @@ Template.plex.helpers({
                     console.log(err)
                 } else if (data) {
                     Session.setPersistent('plexauthuser', true);
+                    Session.setPersistent('plexuser', plexUsername);
                 } else {
                     Session.set('plexauthuser', false);
                 }
