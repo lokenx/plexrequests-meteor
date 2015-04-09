@@ -14,15 +14,17 @@ Router.route('/couchpotato', function () {
   this.render('couchpotato');
 });
 
-MovieSearch = new Mongo.Collection("moviesearch");
+MovieResults = new Mongo.Collection("movieresults");
 Meteor.subscribe('movies');
 Meteor.subscribe('settings');
 
-Session.set('resultsloaded', false);
+Session.set('mresultsloaded', false);
 Session.set('searchingresults', false);
 Session.set('noresults', false);
 Session.set('searcherror', false);
-Session.set('requests', false);
+Session.set('mrequests', false);
 Session.set('movieadded', false);
 Session.set('movieexists', false);
 Session.set('moviedownloaded', false);
+Session.set('movie', false);
+Session.set('tvsearch', false);

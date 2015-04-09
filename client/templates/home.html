@@ -2,19 +2,22 @@
 <div class="container">
         <div class="row col-md-offset-2 col-md-8">
             <a href="javascript:window.location.reload();"><h1>Plex Requests!</h1></a>
-            <p class="lead">Want to watch a movie but it's not currently on Plex?<br>
-                Use the search box below to do a quick <a href="http://www.omdbapi.com/">OMDB</a> search for a movie!</p>
+            <p class="lead">Want to watch a movie or TV series but it's not currently on Plex?<br>
+                Select an option below, then use the search box below to do a quick <a href="http://www.omdbapi.com/">OMDB</a> search for a movie or TV series!</p>
+            {{> selector}}
         </div>
         <div class="row col-md-offset-2 col-md-8">
-            {{> search}}
+            {{#if searchmovie}}
+                {{> moviesearch}}
+            {{/if}}
         </div>
         <div class="row col-md-offset-2 col-md-8">
             <div class="overview" id="overview">
-            {{#if resultsloaded}}
+            {{#if mresultsloaded}}
             <h3>Results from the OMDB:</h3>
-                <form name="results" id="results" action="" method="get" class="results form">
+                <form name="results" id="mresults" action="" method="get" class="results form">
                     {{#each moviesearched}}
-                        {{> moviesearch}}
+                        {{> movieresults}}
                     {{/each}}
                     <div class="form-group">
                     <input type="submit" value="Request Movie!" class="btn btn-primary">
@@ -38,23 +41,23 @@
                 <input type="button" value="Hmmm something went wrong with your search...search again?" class="btn btn-danger" onclick="getElementById('search').focus()">
             {{/if}}
             {{#if movieadded}}
-                <input type="button" value="Movie added! Search again?" class="btn btn-success" onclick="getElementById('search').focus()">  
+                <input type="button" value="Added successfully! Search again?" class="btn btn-success" onclick="getElementById('search').focus()">  
             {{/if}}
             {{#if movieexists}}
-                <input type="button" value="Movie already requested...search again?" class="btn btn-warning" onclick="getElementById('search').focus()">
+                <input type="button" value="That has already been requested...search again?" class="btn btn-warning" onclick="getElementById('search').focus()">
             {{/if}}
             {{#if moviedownloaded}}
-                <input type="button" value="Movie has alrady been downloaded...search again?" class="btn btn-warning" onclick="getElementById('search').focus()">
+                <input type="button" value="That has alrady been downloaded...search again?" class="btn btn-warning" onclick="getElementById('search').focus()">
             {{/if}}
-            {{#if requests}}
-            <div class="info" id="requests">
+            {{#if mrequests}}
+            <div class="info" id="mrequests">
                 <h3>Requested Movies:</h3>
                 <ul>
                     {{#each movie}}
                         {{> movies}}
                     {{/each}}
                 </ul>
-                <script>document.getElementById('requests').scrollIntoView({block: "end", behavior: "smooth"});</script>
+                <script>document.getElementById('mrequests').scrollIntoView({block: "end", behavior: "smooth"});</script>
             </div>
             {{/if}}
         </div>

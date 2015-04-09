@@ -8,6 +8,6 @@ Template.home.helpers({
             {sort:{createdAt:-1}});
     },
     moviesearched: function () {
-      return MovieSearch.find({});
+      return MovieResults.find({});
     }
 });
