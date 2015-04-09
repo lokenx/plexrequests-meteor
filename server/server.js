@@ -187,7 +187,7 @@ Meteor.methods({
 			var users = friendsJSON.MediaContainer.User;
 
 			   for(var i=0;i<users.length;i++){
-			        friendsList.push(users[i].$.username);
+			        friendsList.push(users[i].$.title);//Using title instead of username since managed users do not have a username: https://plex.tv/pms/friends/all
 			    }
 
 				return (isInArray(plexUsername, friendsList));
