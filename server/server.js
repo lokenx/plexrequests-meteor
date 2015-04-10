@@ -39,16 +39,16 @@ if (!(Settings.findOne({_id: "pushbulletsetting"}))) {
 };
 
 Meteor.methods({
-    'pushBullet' : function (movie) {
+    'pushBullet' : function (movie, puser) {
         if (Settings.findOne({_id:"pushbulletsetting"}).enabled) {
             var pbAPI = Settings.findOne({_id:"pushbulletsetting"}).api;
             Meteor.http.call("POST", "https://api.pushbullet.com/v2/pushes",
                              {auth: pbAPI + ":",
-                              params: {"type": "note", "title": "Plex Requests", "body": movie}
+                              params: {"type": "note", "title": "Plex Requests by" + puser, "body": movie}
                              });
         }
     },
-    'searchCP' : function (id, movie) {
+    'searchCP' : function (id, movie, puser) {
         if (Settings.findOne({_id:"couchpotatosetting"}).enabled) {
             var cpAPI = Settings.findOne({_id:"couchpotatosetting"}).api;
 
@@ -77,6 +77,7 @@ Meteor.methods({
                     title: movie,
                     imdb: imdb,
                     released: released,
+                    user: puser,
                     downloaded: false,
                     createdAt: new Date()
                 });
@@ -92,6 +93,7 @@ Meteor.methods({
                         title: movie,
                         imdb: id,
                         released: released,
+                        user: puser,
                         downloaded: false,
                         createdAt: new Date()
                     });
@@ -112,6 +114,7 @@ Meteor.methods({
                     title: movie,
                     imdb: id,
                     released: "",
+                    user: puser,
                     downloaded: false,
                     createdAt: new Date()
             });
