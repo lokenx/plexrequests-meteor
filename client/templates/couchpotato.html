@@ -28,9 +28,44 @@
                 </ol>
                 </div>
                 {{/each}}
+                
+                <script>
+                    $(document).ready(function () {
+                        Meteor.call('checkCP', function(err, data) {
+                            if (err) {
+                                $('.loading').hide();
+                                $('.cpError').removeAttr('style');
+                                $('.commonIssues').removeAttr('style');
+                                if ($('.api').text().substr(-1) !== "/") {
+                                    $('.missingSlash').removeAttr('style');
+                                };
+                                $('.currentDomain').text(window.location.origin);
+                            } else {
+                                $('.loading').hide();
+                                $('.cpSuccess').removeAttr('style');
+                            }
+                          });
+                        Meteor.call('checkCPEnabled', function(err, data) {
+                            if (err) {
+                                console.log(err);
+                                $('.loading').hide();
+                                $('.enabledError').removeAttr('style');
+                                $('.commonIssues').removeAttr('style');
+                            } else if (data === true) {
+                                $('.loading').hide();
+                                $('.enabledSuccess').removeAttr('style');
+                            } else if (data === false) {
+                                $('.loading').hide();
+                                $('.enabledError').removeAttr('style');
+                                $('.commonIssues').removeAttr('style');
+                                $('.currentDomain').text(window.location.origin);
+                            }
+                        });
+                    });
+                </script>
                 {{else}}
                     <div class="unauthorized">
-                    <h2>You are not authorized to view this page <i class="fa fa-exclamation-triangle"></i></h2>
+                    <h2>You are not authorized to view this page <i class="fa fa-exclamation-triangle enabledError"></i></h2>
                     <h3><a href="{{url}}">Return to the main page!</a></h3>
                     </div>
                 {{/if}}
@@ -38,38 +73,4 @@
         </div>
     </div>
 
-    <script>
-        $(document).ready(function () {
-            Meteor.call('checkCP', function(err, data) {
-                if (err) {
-                    $('.loading').hide();
-                    $('.cpError').removeAttr('style');
-                    $('.commonIssues').removeAttr('style');
-                    if ($('.api').text().substr(-1) !== "/") {
-                        $('.missingSlash').removeAttr('style');
-                    };
-                    $('.currentDomain').text(window.location.origin);
-                } else {
-                    $('.loading').hide();
-                    $('.cpSuccess').removeAttr('style');
-                }
-              });
-            Meteor.call('checkCPEnabled', function(err, data) {
-                if (err) {
-                    console.log(err);
-                    $('.loading').hide();
-                    $('.enabledError').removeAttr('style');
-                    $('.commonIssues').removeAttr('style');
-                } else if (data === true) {
-                    $('.loading').hide();
-                    $('.enabledSuccess').removeAttr('style');
-                } else if (data === false) {
-                    $('.loading').hide();
-                    $('.enabledError').removeAttr('style');
-                    $('.commonIssues').removeAttr('style');
-                    $('.currentDomain').text(window.location.origin);
-                }
-            });
-        });
-    </script>
 </template>

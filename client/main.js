@@ -34,3 +34,9 @@ Router.route('/plex', function () {
 
 Meteor.subscribe('movies');
 Meteor.subscribe('settings');
+
+Template.body.helpers({
+    url: function () {
+    return Meteor.absoluteUrl();
+    }
+});

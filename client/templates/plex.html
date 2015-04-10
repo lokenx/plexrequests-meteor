@@ -1,47 +1,58 @@
 <template name="plex">
     <div class="container">
         <div class="row">
-            <div class="col-md-offset-3 col-md-6">
+            <div class="col-md-offset-2 col-md-8">
 				{{#if currentUser }}
-						<h1 class="plexauth" style="display:none">Your authorized your Plex Account!</h1>
-	                    <form id="plex-login-form" role="form"  style="display:none">
-					        <h1 class="form-heading">
-					          Login to Plex to get your token.
-					        </h1>
-					        <input type="text" class="form-control" placeholder="Plex Username"
-					               name="plex-username"
-					               id='plex-username' required autofocus>
-					        <input type="password" class="form-control" placeholder="Plex Password"
-					               name="plex-password"
-					               id='plex-password' required autofocus>
-
-
-					        <div>
-					          <button
-					              class="btn btn-lg btn-primary btn-block"
-					              type="submit">
-
-					            <i class="fa fa-user"></i> login In
-					          </button>
-					        </div>
-					      </form>
+                <!--Rework so it's more informative and explicit about what's happening
+                    If the user has setup plex already let them know as suc more verbosely
+                    and tell them how to turn it off if they want or to authenticate another
+                    Plex account-->
+                
+                
+                <h1>Plex Authentication Setup</h1>
+                <p class="lead">This page is to setup your Plex Requests site with user authentication. If you are having issues please post on the <a href="https://forums.plex.tv/index.php/topic/151899-plex-movie-requests/">forums</a> or the <a href="https://github.com/lokenx/plexrequests-meteor">GitHub repo</a>. You can return to the <a href="{{url}}">application</a>, or the <a href="{{url}}admin">admin</a> interface once done.</p>
+                <div class="plexAuthEnabled" style="display:none">
+                    <h3 style="font-weight:400;">Plex Authentication is configured <i class="fa fa-check-circle enabledSuccess"></i></h3>
+                </div>
+                <h3>How does it work?</h3>
+                <p>When users visit the main page, they will be prompted to enter their Plex.tv user account names. This username will then get checked against your Plex Library's friends and managed accounts. If they're on the list they're in and can request content!</p>
+                
+                <h3>Setup</h3>
+                <p>To get started you will need your Plex token. The easiest way is to use the form below to login to your Plex.tv account and we'll do the hard work! Alternative there are instructions below showing how to set it up manually.</p>
+                <br>
+                <form id="plex-login-form" class="form-inline">
+                    <input type="text" class="form-control" placeholder="Plex Username" name="plex-username" id='plex-username' required autofocus>
+                    <input type="password" class="form-control" placeholder="Plex Password" name="plex-password" id='plex-password' required autofocus>
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-user"></i> Sign In</button>
+                </form>
+                <br>
+                <br>
+                <h3>Manual setup instructions</h3>
+                <ol>
+                    <li>Visit <a href="https://support.plex.tv/hc/en-us/articles/204059436-Finding-your-account-token-X-Plex-Token" target="_blank">this page</a> to learn how to get your own token manually</li>
+                    <li>Once you have it go to the admin page and the settings collection</li>
+                    <li>Enter your token under the <kbd>API</kbd> field, change the enabled field to <kbd>true</kbd>,
+                    and finally enter your own Plex.tv username field under the <kbd>admin</kbd> field</li>
+                </ol>
+                    
 	<script>
         $(document).ready(function () {
             Meteor.call('checkPlexEnabled', function(err, data) {
                 if (err) {
                     console.log(err);
                 } else if (data === true) {
-                    $('#plex-login-form').hide();
-                    $('.plexauth').removeAttr('style');
+                    $('.plexAuthEnabled').removeAttr('style');
                 } else if (data === false) {
-                    $('#plex-login-form').removeAttr('style');
                 }
             });
         });
     </script>
 
                 {{else}}
-                    <h1>You are not authorized to view this page.</h1>
+                <div class="unauthorized">
+                    <h2>You are not authorized to view this page <i class="fa fa-exclamation-triangle enabledError"></i></h2>
+                    <h3><a href="{{url}}">Return to the main page!</a></h3>
+                </div>                
                 {{/if}}
             </div>
         </div>

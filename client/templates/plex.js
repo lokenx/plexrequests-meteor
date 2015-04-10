@@ -1,45 +1,26 @@
 //Need to build a better helper to check if plex token is set, if so, call script
-(function(){Template.plex.events({
+//Not needed -- make the page more explicit e.g. if you want to use plex auth please blah blah
+Template.plex.events({
     "submit #plex-login-form": function (event) {
 	    plexUsername = document.getElementById("plex-username").value;
 	    plexPassword = document.getElementById("plex-password").value;
 
             Meteor.call('PlexLogin', plexUsername, plexPassword,  function (err, data) {
-               console.log(data);
                 if (err) {
-                    console.log(err)
+                    //Basic handling, assuming incorrect details, will expand once server side done
+                    alert("Error connecting to Plex.tv, wrong username or password, please try again");
                 } else if (data) {
-                    $('#plex-login-form').hide();
-                    $('.plexauth').removeAttr('style');
-                } else {
-                    //Session.set('plexauthuser', false);
-                }
-            });
-            return false;
-    }
-});
-
-})();
-
-//Clean up this javascript call *maybe move this to the home.js file?
-(function(){Template.home.events({
-    "submit #plex-user-form": function (event) {
-	    plexUsername = document.getElementById("plex-username").value;
-
-            Meteor.call('checkPlexUser', plexUsername, function (err, data) {
-               console.log(data);
-                if (err) {
-                    console.log(err)
-                } else if (data) {
-                    Session.setPersistent('plexauthuser', true);
+                    $('.plexAuthEnabled').removeAttr('style');
+                    document.getElementById('plex-login-form').reset();
                     Session.setPersistent('plexuser', plexUsername);
-                } else {
-                    Session.set('plexauthuser', false);
                 }
             });
             return false;
     }
 });
 
-})();
-
+Template.plex.helpers({
+    url: function () {
+    return Meteor.absoluteUrl();
+    }
+});

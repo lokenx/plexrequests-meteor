@@ -56,6 +56,14 @@ Meteor.methods({
             //But it's possible there's nothing much I can do
             process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
             var imdb = id;
+            
+            try {
+                var status = Meteor.http.call("GET", cpAPI  + "app.available", {timeout:5000});
+            }
+            catch (error) {
+                console.log(error)
+            }
+
             var initSearch = Meteor.http.call("GET", cpAPI  + "media.get/", {params: {"id": imdb}});
 
             if (initSearch['data']['media'] === null) {
@@ -146,30 +154,31 @@ Meteor.methods({
 
 		//Likely do not need all the X-Plex headers, I think the only manditory one is X-Plex-Client-Identifier
 	    var plexstatus = Meteor.http.call("POST", "https://plex.tv/users/sign_in.xml",{
-			   headers: {
-				   	'Authorization': authHeaderVal(pUsername, pPassword),
-				    'X-Plex-Client-Identifier': 'Request_Users',
-					'X-Plex-Product': 'App',
-					'X-Plex-Version': '1.0',
-					'X-Plex-Device': 'App',
-					'X-Plex-Platform': 'Meteor',
-					'X-Plex-Platform-Version': '1.0',
-					'X-Plex-Provides': 'controller'
-			   }
-			});
-			//Need more testing for actual errors when password or username are wrong to let the admin user know...
-			if(plexstatus.statusCode==201){
-					//prase package https://github.com/peerlibrary/meteor-xml2js
-				var results = xml2js.parseStringSync(plexstatus.content);
-				var plexAuth = results.user.$.authenticationToken;
-                    Settings.update({_id: "plexsetting" }, {$set: {api: plexAuth, enabled: true }});
-					return true;
-					//consider setting the plexuser for admin account in a per-session to add to movie requests
-					//Session.setPersistent('plexuser', plexUsername);
-				}else{
-					return false;
-				}
-
+            headers: {
+                'Authorization': authHeaderVal(pUsername, pPassword),
+                'X-Plex-Client-Identifier': 'Request_Users',
+                'X-Plex-Product': 'App',
+                'X-Plex-Version': '1.0',
+                'X-Plex-Device': 'App',
+                'X-Plex-Platform': 'Meteor',
+                'X-Plex-Platform-Version': '1.0',
+                'X-Plex-Provides': 'controller'
+           }
+        });
+        
+        //Need more testing for actual errors when password or username are wrong to let the admin user know...
+        //Bad authentication comes back as 401, will need to add error handles, for now it just assumes that and lets user know
+        if (plexstatus.statusCode==201) {
+                //prase package https://github.com/peerlibrary/meteor-xml2js
+            var results = xml2js.parseStringSync(plexstatus.content);
+            var plexAuth = results.user.$.authenticationToken;
+            //Now also sets variable of admin username for checkPlexUser below
+            //As well as return the username so it can be set as persistent storage so admin doesn't need to login to admin interface
+                Settings.update({_id: "plexsetting" }, {$set: {api: plexAuth, enabled: true, admin: pUsername }});
+                return pUsername;
+        } else {
+            return false;
+        }
     },
     'checkPlexUser' : function (plexUsername) {
 
@@ -192,8 +201,10 @@ Meteor.methods({
 			   for(var i=0;i<users.length;i++){
 			        friendsList.push(users[i].$.title);//Using title instead of username since managed users do not have a username: https://plex.tv/pms/friends/all
 			    }
+            //Add admin username to the list
+            friendsList.push(Settings.findOne({_id:"plexsetting"}).admin);
 
-				return (isInArray(plexUsername, friendsList));
+            return (isInArray(plexUsername, friendsList));
     }
 
 });
