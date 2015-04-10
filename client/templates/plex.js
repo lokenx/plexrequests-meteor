@@ -14,8 +14,8 @@ Template.plex.events({
                     $('#plex-login-form button').html('<i class="fa fa-user fa-fw"></i> Sign In');
                 } else if (data) {
                     $('.plexAuthEnabled').removeAttr('style');
-                    //document.getElementById('plex-login-form').reset();
-                    $('.plexAuthComplete').remove();
+                    $('a.show-plex-form').show();
+                    $('.plexAuth').hide();
                     Session.setPersistent('plexauthuser', true);
                     Session.setPersistent('plexuser', plexUsername);
                 }

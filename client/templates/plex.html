@@ -11,11 +11,15 @@
 
                 <h1>Plex Authentication Setup</h1>
                 <p class="lead">This page is to setup your Plex Requests site with user authentication. If you are having issues please post on the <a href="https://forums.plex.tv/index.php/topic/151899-plex-movie-requests/">forums</a> or the <a href="https://github.com/lokenx/plexrequests-meteor">GitHub repo</a>. You can return to the <a href="{{url}}">application</a>, or the <a href="{{url}}admin">admin</a> interface once done.</p>
+                <div class="plexAuthDisabled">
+                    <h3 style="font-weight:400;">Plex Authentication is not configured <i class="fa fa-exclamation-circle enabledError"></i></h3>
+                </div>
+                
                 <div class="plexAuthEnabled" style="display:none">
                     <h3 style="font-weight:400;">Plex Authentication is configured <i class="fa fa-check-circle enabledSuccess"></i></h3>
                     <a href="#"  class="show-plex-form">Sign in with a different account</a>
                 </div>
-                <div class="plexAuthComplete" style="display:none">
+                <div class="plexAuth" style="display:none">
 	                <h3>How does it work?</h3>
 	                <p>When users visit the main page, they will be prompted to enter their Plex.tv user account names. This username will then get checked against your Plex Library's friends and managed accounts. If they're on the list they're in and can request content!</p>
 
@@ -44,13 +48,14 @@
                 if (err) {
                     console.log(err);
                 } else if (data === true) {
+                    $('.plexAuthDisabled').hide();
                     $('.plexAuthEnabled').removeAttr('style');
                 } else if (data === false) {
-	                $('.plexAuthComplete').removeAttr('style');
+	                $('.plexAuth').removeAttr('style');
                 }
             });
             $('a.show-plex-form').click(function(e){
-			    $(".plexAuthComplete").show();
+			    $(".plexAuth").show();
 			    e.preventDefault();
 			    $(this).hide();
 				return false;
