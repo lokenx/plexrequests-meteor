@@ -8,3 +8,5 @@ meteor-platform
 http
 iron:router
 houston:admin
+peerlibrary:xml2js
+u2622:persistent-session

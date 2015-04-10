@@ -6,6 +6,7 @@ Meteor.publish('settings', function () {
     if(this.userId) return Settings.find({_id: "couchpotatosetting"});
 });
 
+
 Houston.add_collection(Settings);
 Houston.add_collection(Movies);
 
@@ -14,6 +15,16 @@ if (!(Settings.findOne({_id: "couchpotatosetting"}))) {
         _id: "couchpotatosetting",
         service: "CouchPotato",
         api: "http://192.168.0.1:5050/api/abcdef0123456789/",
+        enabled: false
+    });
+};
+//I am using the default settings, but it is a little confusing since its not really an API, only a plex toekn but did not want toc reate a whole new collection for Plex
+//Users do not need to sign into to get thier token, it can be found this way... maybe we let thme know that? https://support.plex.tv/hc/en-us/articles/204059436-Finding-your-account-token-X-Plex-Token
+if (!(Settings.findOne({_id: "plexsetting"}))) {
+    Settings.insert({
+        _id: "plexsetting",
+        service: "Plex",
+		api: "Plex Token",
         enabled: false
     });
 };
@@ -128,5 +139,69 @@ Meteor.methods({
     },
     'checkCPEnabled' : function () {
         return Settings.findOne({_id:"couchpotatosetting"}).enabled;
+    },
+    'checkPlexEnabled' : function () {
+        return Settings.findOne({_id:"plexsetting"}).enabled;
+    },
+    'PlexLogin' : function (pUsername,pPassword) {
+
+		//clean password and username for authentication.
+		function authHeaderVal(username, password) {
+		    var authString = username + ':' + password;
+		    var buffer = new Buffer(authString.toString(), 'binary');
+		    return 'Basic ' + buffer.toString('base64');
+		}
+
+		//Likely do not need all the X-Plex headers, I think the only manditory one is X-Plex-Client-Identifier
+	    var plexstatus = Meteor.http.call("POST", "https://plex.tv/users/sign_in.xml",{
+			   headers: {
+				   	'Authorization': authHeaderVal(pUsername, pPassword),
+				    'X-Plex-Client-Identifier': 'Request_Users',
+					'X-Plex-Product': 'App',
+					'X-Plex-Version': '1.0',
+					'X-Plex-Device': 'App',
+					'X-Plex-Platform': 'Meteor',
+					'X-Plex-Platform-Version': '1.0',
+					'X-Plex-Provides': 'controller'
+			   }
+			});
+			//Need more testing for actual errors when password or username are wrong to let the admin user know...
+			if(plexstatus.statusCode==201){
+					//prase package https://github.com/peerlibrary/meteor-xml2js
+				var results = xml2js.parseStringSync(plexstatus.content);
+				var plexAuth = results.user.$.authenticationToken;
+                    Settings.update({_id: "plexsetting" }, {$set: {api: plexAuth, enabled: true }});
+					return true;
+					//consider setting the plexuser for admin account in a per-session to add to movie requests
+					//Session.setPersistent('plexuser', plexUsername);
+				}else{
+					return false;
+				}
+
+    },
+    'checkPlexUser' : function (plexUsername) {
+
+			function isInArray(value, array) {
+			  return array.indexOf(value) > -1;
+			}
+
+			var plexToken = Settings.findOne({_id:"plexsetting"}).api;
+
+			var friendsXML = Meteor.http.call("GET", "https://plex.tv/pms/friends/all?X-Plex-Token="+plexToken);
+
+			var friendsJSON = xml2js.parseStringSync(friendsXML.content);
+
+			//There is likely a cleaner way to pull out just the users names for the array
+			var friendsList = [];
+
+			//console.dir(friendsJSON.MediaContainer.User);
+			var users = friendsJSON.MediaContainer.User;
+
+			   for(var i=0;i<users.length;i++){
+			        friendsList.push(users[i].$.title);//Using title instead of username since managed users do not have a username: https://plex.tv/pms/friends/all
+			    }
+
+				return (isInArray(plexUsername, friendsList));
     }
+
 });
