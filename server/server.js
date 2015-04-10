@@ -177,7 +177,7 @@ Meteor.methods({
             var plexAuth = results.user.$.authenticationToken;
             //Now also sets variable of admin username for checkPlexUser below
             //As well as return the username so it can be set as persistent storage so admin doesn't need to login to admin interface
-                Settings.update({_id: "plexsetting" }, {$set: {api: plexAuth, enabled: true, admin: pUsername }});
+                Settings.update({_id: "plexsetting" }, {$set: {api: plexAuth, enabled: true}});
                 return pUsername;
         } else {
             return false;
