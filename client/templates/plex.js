@@ -11,7 +11,9 @@ Template.plex.events({
                     alert("Error connecting to Plex.tv, wrong username or password, please try again");
                 } else if (data) {
                     $('.plexAuthEnabled').removeAttr('style');
-                    document.getElementById('plex-login-form').reset();
+                    //document.getElementById('plex-login-form').reset();
+                    $('.plexAuthComplete').remove();
+                    Session.setPersistent('plexauthuser', true);
                     Session.setPersistent('plexuser', plexUsername);
                 }
             });
