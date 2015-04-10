@@ -1,0 +1,49 @@
+<template name="plex">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-3 col-md-6">
+				{{#if currentUser }}
+						<h1 class="plexauth" style="display:none">Your authorized your Plex Account!</h1>
+	                    <form id="plex-login-form" role="form"  style="display:none">
+					        <h1 class="form-heading">
+					          Login to Plex to get your token.
+					        </h1>
+					        <input type="text" class="form-control" placeholder="Plex Username"
+					               name="plex-username"
+					               id='plex-username' required autofocus>
+					        <input type="password" class="form-control" placeholder="Plex Password"
+					               name="plex-password"
+					               id='plex-password' required autofocus>
+
+
+					        <div>
+					          <button
+					              class="btn btn-lg btn-primary btn-block"
+					              type="submit">
+
+					            <i class="fa fa-user"></i> login In
+					          </button>
+					        </div>
+					      </form>
+	<script>
+        $(document).ready(function () {
+            Meteor.call('checkPlexEnabled', function(err, data) {
+                if (err) {
+                    console.log(err);
+                } else if (data === true) {
+                    $('#plex-login-form').hide();
+                    $('.plexauth').removeAttr('style');
+                } else if (data === false) {
+                    $('#plex-login-form').removeAttr('style');
+                }
+            });
+        });
+    </script>
+
+                {{else}}
+                    <h1>You are not authorized to view this page.</h1>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</template>
