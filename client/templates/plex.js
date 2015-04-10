@@ -2,16 +2,21 @@
 //Not needed -- make the page more explicit e.g. if you want to use plex auth please blah blah
 Template.plex.events({
     "submit #plex-login-form": function (event) {
+	    $('#plex-error').hide();
+	    $('#plex-login-form button').html('<i class="fa fa-cog fa-spin  fa-fw"></i>  Signing In');
 	    plexUsername = document.getElementById("plex-username").value;
 	    plexPassword = document.getElementById("plex-password").value;
 
             Meteor.call('PlexLogin', plexUsername, plexPassword,  function (err, data) {
                 if (err) {
                     //Basic handling, assuming incorrect details, will expand once server side done
-                    alert("Error connecting to Plex.tv, wrong username or password, please try again");
+                    $('#plex-error').show();
+                    $('#plex-login-form button').html('<i class="fa fa-user fa-fw"></i> Sign In');
                 } else if (data) {
                     $('.plexAuthEnabled').removeAttr('style');
-                    document.getElementById('plex-login-form').reset();
+                    //document.getElementById('plex-login-form').reset();
+                    $('.plexAuthComplete').remove();
+                    Session.setPersistent('plexauthuser', true);
                     Session.setPersistent('plexuser', plexUsername);
                 }
             });
