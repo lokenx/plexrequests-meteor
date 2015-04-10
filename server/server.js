@@ -44,7 +44,7 @@ Meteor.methods({
             var pbAPI = Settings.findOne({_id:"pushbulletsetting"}).api;
             Meteor.http.call("POST", "https://api.pushbullet.com/v2/pushes",
                              {auth: pbAPI + ":",
-                              params: {"type": "note", "title": "Plex Requests", "body": movie}
+                              params: {"type": "note", "title": "Plex Requests by" + pUsername, "body": movie}
                              });
         }
     },
