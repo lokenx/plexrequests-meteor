@@ -56,7 +56,7 @@ Meteor.methods({
             //But it's possible there's nothing much I can do
             process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
             var imdb = id;
-            
+
             try {
                 var status = Meteor.http.call("GET", cpAPI  + "app.available", {timeout:5000});
             }
@@ -165,7 +165,7 @@ Meteor.methods({
                 'X-Plex-Provides': 'controller'
            }
         });
-        
+
         //Need more testing for actual errors when password or username are wrong to let the admin user know...
         //Bad authentication comes back as 401, will need to add error handles, for now it just assumes that and lets user know
         if (plexstatus.statusCode==201) {
@@ -189,22 +189,27 @@ Meteor.methods({
 			var plexToken = Settings.findOne({_id:"plexsetting"}).api;
 
 			var friendsXML = Meteor.http.call("GET", "https://plex.tv/pms/friends/all?X-Plex-Token="+plexToken);
+			var accountXML = Meteor.http.call("GET", "https://plex.tv/users/account?X-Plex-Token="+plexToken);
 
-			var friendsJSON = xml2js.parseStringSync(friendsXML.content);
+			xml2js.parseString(friendsXML.content, {mergeAttrs : true, explicitArray : false} ,function (err, result) {
+			   		users = result['MediaContainer']['User'];
+			});
+
+			xml2js.parseString(accountXML.content, {mergeAttrs : true, explicitArray : false} ,function (err, result) {
+			   		admintitle = result['user']['title'].toLowerCase();
+			});
 
 			//There is likely a cleaner way to pull out just the users names for the array
 			var friendsList = [];
 
-			//console.dir(friendsJSON.MediaContainer.User);
-			var users = friendsJSON.MediaContainer.User;
+			for (var i = 0, len = users.length; i < len; i++) {
+			 	friendsList.push( users[i].title.toLowerCase() );
+			}
 
-			   for(var i=0;i<users.length;i++){
-			        friendsList.push(users[i].$.title);//Using title instead of username since managed users do not have a username: https://plex.tv/pms/friends/all
-			    }
             //Add admin username to the list
-            friendsList.push(Settings.findOne({_id:"plexsetting"}).admin);
+            friendsList.push(admintitle);
 
-            return (isInArray(plexUsername, friendsList));
+            return (isInArray(plexUsername.toLowerCase(), friendsList));
     }
 
 });
