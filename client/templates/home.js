@@ -20,13 +20,15 @@ Template.home.events({
 
             Meteor.call('checkPlexUser', plexUsername, function (err, data) {
                 if (err) {
-                    console.log(err)
+                    $('#plex-user-form button').html('<i class="fa fa-user  fa-fw"></i> Sign In');
+                    $('#plex-error').show();
+                    Session.set('plexauthuser', false);
                 } else if (data) {
                     Session.setPersistent('plexauthuser', true);
                     Session.setPersistent('plexuser', plexUsername);
                 } else {
-	                 $('#plex-error').show();
-	                 $('#plex-user-form button').html('<i class="fa fa-user  fa-fw"></i> Sign In');
+	                $('#plex-wrong').show();
+                    $('#plex-user-form button').html('<i class="fa fa-user  fa-fw"></i> Sign In');
                     Session.set('plexauthuser', false);
                 }
             });

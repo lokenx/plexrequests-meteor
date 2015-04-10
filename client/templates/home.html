@@ -45,7 +45,7 @@
                 <input type="button" value="Hmm we got no results...search again?" class="btn btn-warning" onclick="getElementById('search').focus()">
             {{/if}}
             {{#if searcherror}}
-                <input type="button" value="Hmmm something went wrong with your search...search again?" class="btn btn-danger" onclick="getElementById('search').focus()">
+                <input type="button" value="Hmm something went wrong with your search...search again?" class="btn btn-danger" onclick="getElementById('search').focus()">
             {{/if}}
             {{#if movieadded}}
                 <input type="button" value="Movie added! Search again?" class="btn btn-success" onclick="getElementById('search').focus()">
@@ -81,12 +81,13 @@
     <div class="row">
         <div class="col-md-offset-2 col-md-8">
             <form id="plex-user-form" role="form">
-                <div class="form-group form-inline">
+                <div class="form-inline">
                     <input type="text" class="form-control" placeholder="Plex Username" name="plex-username" id='plex-username' required autofocus>
                     <button class="btn btn-primary" type="submit"><i class="fa fa-user fa-fw"></i> Sign In</button>
                 </div>
             </form>
-            <input type="button" id="plex-error" value="Hmm that username does not exist...try again?" class="btn btn-warning" style="display:none" onclick="getElementById('plex-username').focus()">
+            <input type="button" id="plex-wrong" value="Hmm that username does not exist...try again?" class="btn btn-warning" style="display:none" onclick="getElementById('plex-username').focus()">
+            <input type="button" id="plex-error" value="Hmm we had trouble checking your username...try again?" class="btn btn-warning" style="display:none" onclick="getElementById('plex-username').focus()">
         </div>
     </div>
         {{/if}}
