@@ -83,9 +83,10 @@
             <form id="plex-user-form" role="form">
                 <div class="form-group form-inline">
                     <input type="text" class="form-control" placeholder="Plex Username" name="plex-username" id='plex-username' required autofocus>
-                    <button class="btn btn-primary" type="submit"><i class="fa fa-user"></i> Sign In</button>
+                    <button class="btn btn-primary" type="submit"><i class="fa fa-user fa-fw"></i> Sign In</button>
                 </div>
             </form>
+            <input type="button" id="plex-error" value="Hmm that username does not exist...try again?" class="btn btn-warning" style="display:none" onclick="getElementById('plex-username').focus()">
         </div>
     </div>
         {{/if}}

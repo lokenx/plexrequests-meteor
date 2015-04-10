@@ -14,6 +14,8 @@ Template.home.helpers({
 
 Template.home.events({
     "submit #plex-user-form": function (event) {
+	    $('#plex-error').hide();
+	    $('#plex-user-form button').html('<i class="fa fa-cog fa-spin  fa-fw"></i>  Signing In');
 	    plexUsername = document.getElementById("plex-username").value;
 
             Meteor.call('checkPlexUser', plexUsername, function (err, data) {
@@ -23,7 +25,8 @@ Template.home.events({
                     Session.setPersistent('plexauthuser', true);
                     Session.setPersistent('plexuser', plexUsername);
                 } else {
-                    alert("Sorry, we don't recognize that username, try again?");
+	                 $('#plex-error').show();
+	                 $('#plex-user-form button').html('<i class="fa fa-user  fa-fw"></i> Sign In');
                     Session.set('plexauthuser', false);
                 }
             });
