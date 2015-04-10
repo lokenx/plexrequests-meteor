@@ -32,9 +32,7 @@ UI.registerHelper('moviedownloaded',function(input){
 
 
 UI.registerHelper('plexauthuser',function(input){
-  if( Session.get("plexauthuser") ||   Meteor.userId() ){
-	  return true;
-  }else{
-	  return false;
-  }
+    //Return whether they're authorized or not, the admin account is now
+    //inserted into the list that is checked so they get their own token set
+    return Session.get("plexauthuser");
 });
