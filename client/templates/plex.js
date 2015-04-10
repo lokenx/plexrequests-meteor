@@ -15,7 +15,8 @@ Template.plex.events({
                 } else if (data) {
                     $('.plexAuthEnabled').removeAttr('style');
                     //document.getElementById('plex-login-form').reset();
-                    $('.plexAuthComplete').remove();
+                    $('a.show-plex-form').show();
+                    $('.plexAuthComplete').hide();
                     Session.setPersistent('plexauthuser', true);
                     Session.setPersistent('plexuser', plexUsername);
                 }
