@@ -18,7 +18,7 @@ if (!(Settings.findOne({_id: "couchpotatosetting"}))) {
         enabled: false
     });
 };
-//I am using the default settings, but it is a little confusing since its not really an API, only a plex toekn but did not want toc reate a whole new collection for Plex
+//I am using the default settings, but it is a little confusing since its not really an API, only a plex toekn but did not want to create a whole new collection for Plex
 //Users do not need to sign into to get thier token, it can be found this way... maybe we let thme know that? https://support.plex.tv/hc/en-us/articles/204059436-Finding-your-account-token-X-Plex-Token
 if (!(Settings.findOne({_id: "plexsetting"}))) {
     Settings.insert({
@@ -39,12 +39,18 @@ if (!(Settings.findOne({_id: "pushbulletsetting"}))) {
 };
 
 Meteor.methods({
-    'pushBullet' : function (movie) {
-        if (Settings.findOne({_id:"pushbulletsetting"}).enabled) {
+    'pushBullet' : function (movie) {        
+	    var MessageTitle = "Plex Request";	
+	    if(Settings.findOne({_id:"plexsetting"}).enabled) {
+			if (Settings.findOne({_id:"plexsetting"}).plexuser) { var whosubmit = Settings.findOne({_id:"plexsetting"}).plexuser; } else {  var whosubmit = Settings.findOne({_id:"plexsetting"}).admin; }
+			var MessageTitle = "Plex Request By " + whosubmit;			  
+	    } 
+		
+		if (Settings.findOne({_id:"pushbulletsetting"}).enabled) {
             var pbAPI = Settings.findOne({_id:"pushbulletsetting"}).api;
             Meteor.http.call("POST", "https://api.pushbullet.com/v2/pushes",
                              {auth: pbAPI + ":",
-                              params: {"type": "note", "title": "Plex Requests by" + pUsername, "body": movie}
+                              params: {"type": "note", "title": MessageTitle, "body": movie}
                              });
         }
     },
@@ -203,7 +209,7 @@ Meteor.methods({
 			    }
             //Add admin username to the list
             friendsList.push(Settings.findOne({_id:"plexsetting"}).admin);
-
+			Settings.update({_id: "plexsetting" }, {$set: {plexuser: plexUsername }});
             return (isInArray(plexUsername, friendsList));
     }
 
