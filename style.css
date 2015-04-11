@@ -60,6 +60,10 @@ li a:hover, h3 a:hover {
     border-color: #fff;
 }
 
+.screenshots {
+    text-align: center;
+}
+
 @media (max-width: 650px) {
     nav ul li span {
         display: none;
