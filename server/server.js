@@ -18,8 +18,7 @@ if (!(Settings.findOne({_id: "couchpotatosetting"}))) {
         enabled: false
     });
 };
-//I am using the default settings, but it is a little confusing since its not really an API, only a plex toekn but did not want toc reate a whole new collection for Plex
-//Users do not need to sign into to get thier token, it can be found this way... maybe we let thme know that? https://support.plex.tv/hc/en-us/articles/204059436-Finding-your-account-token-X-Plex-Token
+
 if (!(Settings.findOne({_id: "plexsetting"}))) {
     Settings.insert({
         _id: "plexsetting",
@@ -191,8 +190,13 @@ Meteor.methods({
 
 			var plexToken = Settings.findOne({_id:"plexsetting"}).api;
 
-			var friendsXML = Meteor.http.call("GET", "https://plex.tv/pms/friends/all?X-Plex-Token="+plexToken);
-			var accountXML = Meteor.http.call("GET", "https://plex.tv/users/account?X-Plex-Token="+plexToken);
+			try {
+                var friendsXML = Meteor.http.call("GET", "https://plex.tv/pms/friends/all?X-Plex-Token="+plexToken);
+                var accountXML = Meteor.http.call("GET", "https://plex.tv/users/account?X-Plex-Token="+plexToken);
+            } catch (error) {
+                console.log(error);
+                return error;
+            }
 
 			xml2js.parseString(friendsXML.content, {mergeAttrs : true, explicitArray : false} ,function (err, result) {
 			   		users = result['MediaContainer']['User'];
