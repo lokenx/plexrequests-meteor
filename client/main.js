@@ -40,3 +40,17 @@ Template.body.helpers({
     return Meteor.absoluteUrl();
     }
 });
+
+Houston.menu({
+  'type': 'link',
+  'use': Meteor.absoluteUrl() + 'plex',
+  'title': 'Plex Auth Setup',
+  'target': '_blank'
+});
+
+Houston.menu({
+  'type': 'link',
+  'use': Meteor.absoluteUrl() + 'couchpotato',
+  'title': 'CouchPotato Status',
+  'target': '_blank'
+});
