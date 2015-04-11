@@ -1,3 +1,5 @@
+
+
 h1 {
     font-size: 3.5em;   
 }
@@ -48,4 +50,18 @@ li a, h3 a {
 
 li a:hover, h3 a:hover {
     text-decoration: none;
+}
+
+.screenshots img {
+    width: 80%;
+    margin: 5%;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #DD6928;
+}
+
+@media (max-width: 650px) {
+    nav ul li span {
+        display: none;
+    }
 }
