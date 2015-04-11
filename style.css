@@ -57,7 +57,7 @@ li a:hover, h3 a:hover {
     margin: 5%;
     border-style: solid;
     border-width: 1px;
-    border-color: #DD6928;
+    border-color: #fff;
 }
 
 @media (max-width: 650px) {
