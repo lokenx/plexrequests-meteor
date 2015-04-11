@@ -2,7 +2,7 @@ h1 {
     font-size: 3.5em;   
 }
 
-h1, h2 {
+h1, h2, h3, h4 {
     font-weight: 500;   
 }
 
@@ -22,4 +22,30 @@ a {
 
 .intro {
     font-size: 1.2em;
+}
+
+nav {
+    font-size: 1.5em;
+    font-weight: 500;
+    padding-top: 3%;
+
+}
+
+nav li {
+    list-style-type: none;
+    display: inline;
+    margin: 0 1em 0 0;
+}
+
+nav ul {
+    margin: 0;
+    padding: 0;
+}
+
+li a, h3 a {
+    color: #fff;
+}
+
+li a:hover, h3 a:hover {
+    text-decoration: none;
 }
