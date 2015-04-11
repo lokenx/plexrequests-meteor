@@ -217,6 +217,18 @@ Meteor.methods({
             friendsList.push(admintitle);
 
             return (isInArray(plexUsername.toLowerCase(), friendsList));
+    },
+    'checkPlex' : function() {
+        var plexToken = Settings.findOne({_id:"plexsetting"}).api;
+
+        try {
+            var friendsXML = Meteor.http.call("GET", "https://plex.tv/pms/friends/all?X-Plex-Token="+plexToken);
+            return true;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+        
     }
 
 });

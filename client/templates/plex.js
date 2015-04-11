@@ -13,6 +13,7 @@ Template.plex.events({
                     $('#plex-error').show();
                     $('#plex-login-form button').html('<i class="fa fa-user fa-fw"></i> Sign In');
                 } else if (data) {
+                    $('.plexAuthDisabled').hide();
                     $('.plexAuthEnabled').removeAttr('style');
                     $('a.show-plex-form').show();
                     $('.plexAuth').hide();
