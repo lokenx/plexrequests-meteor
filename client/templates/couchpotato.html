@@ -3,15 +3,15 @@
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
                 {{#if currentUser }}
-                {{urls}}
+                
                     <h1>Couch Potato Test Page</h1>
                     <p class="lead">This page is to help confirm that you can successfully communicate with Couch Potato,
                         if you still have issues please post on the <a href="https://forums.plex.tv/index.php/topic/151899-plex-movie-requests/">forums</a> or the <a href="https://github.com/lokenx/plexrequests-meteor">GitHub repo</a>. You can return to the <a href="{{url}}">application</a>, or the <a href="{{url}}admin">admin</a> interface once done.</p>
-                {{#each tests}}
-                    <p><strong>Service: </strong> {{service}}</p>
-                    <p><strong>API/URL: </strong> <span class="api">{{api}}</span> &nbsp; <span class="missingSlash" style="display:none;"><i class="fa fa-arrow-circle-left"></i> You're missing a <kbd>/</kbd> at the end</span></p>
-                    <p><strong>Enabled: </strong><span class="enabledSuccess" style="display:none;">true <i class="fa fa-check-circle"></i></span> <span class="enabledError" style="display:none;">false <i class="fa fa-exclamation-circle"></i></span></p>
-                    <p><strong>Connection status: </strong> <span class="cpSuccess" style="display:none;">connection successful <i class="fa fa-check-circle"></i></span> <span class="cpError" style="display:none;">connection error <i class="fa fa-exclamation-circle"></i></span> </p>
+                    <h3 style="font-weight:400;">Enabled: <span class="enabledSuccess" style="display:none;">true <i class="fa fa-check-circle"></i></span> <span class="enabledError" style="display:none;">false <i class="fa fa-exclamation-circle"></i></span></h3>
+                    <h3 style="font-weight:400;">Connection status: <span class="cpSuccess" style="display:none;">connection successful <i class="fa fa-check-circle"></i></span> <span class="cpError" style="display:none;">connection error <i class="fa fa-exclamation-circle"></i></span> </h3>
+                    <h3 style="font-weight:400;">API/URL: <span class="missingSlash plexAuthError" style="display:none;">You're missing a <kbd>/</kbd> at the end</span></h3><br>
+                    <pre><code><span class="api">{{cp}}</span></code></pre>
+
                 <br>
                 <div class="loading loadingCP"><div class="loader-inner ball-clip-rotate"><div></div></div></div>
                 
@@ -27,7 +27,6 @@
                     <li><strong>Wrong API key used: </strong> If this is the message you receive when trying the Manual test, please confirm that you have a <kbd>/</kbd> slash at the end of your API<br><br></li>
                 </ol>
                 </div>
-                {{/each}}
                 
                 <script>
                     $(document).ready(function () {
@@ -37,6 +36,7 @@
                                 $('.cpError').removeAttr('style');
                                 $('.commonIssues').removeAttr('style');
                                 if ($('.api').text().substr(-1) !== "/") {
+                                    console.log($('.api').text().substr(-1));
                                     $('.missingSlash').removeAttr('style');
                                 };
                                 $('.currentDomain').text(window.location.origin);

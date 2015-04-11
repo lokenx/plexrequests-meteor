@@ -2,7 +2,7 @@ Meteor.publish('movies', function (){
     return Movies.find({});
 });
 
-Meteor.publish('settings', function () {
+Meteor.publish('cpapi', function () {
     if(this.userId) return Settings.find({_id: "couchpotatosetting"});
 });
 
