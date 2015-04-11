@@ -2,7 +2,7 @@ Meteor.publish('movies', function (){
     return Movies.find({});
 });
 
-Meteor.publish('settings', function () {
+Meteor.publish('cpapi', function () {
     if(this.userId) return Settings.find({_id: "couchpotatosetting"});
 });
 
@@ -18,8 +18,7 @@ if (!(Settings.findOne({_id: "couchpotatosetting"}))) {
         enabled: false
     });
 };
-//I am using the default settings, but it is a little confusing since its not really an API, only a plex toekn but did not want toc reate a whole new collection for Plex
-//Users do not need to sign into to get thier token, it can be found this way... maybe we let thme know that? https://support.plex.tv/hc/en-us/articles/204059436-Finding-your-account-token-X-Plex-Token
+
 if (!(Settings.findOne({_id: "plexsetting"}))) {
     Settings.insert({
         _id: "plexsetting",
@@ -44,7 +43,7 @@ Meteor.methods({
             var pbAPI = Settings.findOne({_id:"pushbulletsetting"}).api;
             Meteor.http.call("POST", "https://api.pushbullet.com/v2/pushes",
                              {auth: pbAPI + ":",
-                              params: {"type": "note", "title": "Plex Requests by" + puser, "body": movie}
+                              params: {"type": "note", "title": "Plex Requests by " + puser, "body": movie}
                              });
         }
     },
@@ -177,7 +176,7 @@ Meteor.methods({
             var plexAuth = results.user.$.authenticationToken;
             //Now also sets variable of admin username for checkPlexUser below
             //As well as return the username so it can be set as persistent storage so admin doesn't need to login to admin interface
-                Settings.update({_id: "plexsetting" }, {$set: {api: plexAuth, enabled: true, admin: pUsername }});
+                Settings.update({_id: "plexsetting" }, {$set: {api: plexAuth, enabled: true}});
                 return pUsername;
         } else {
             return false;
@@ -191,8 +190,13 @@ Meteor.methods({
 
 			var plexToken = Settings.findOne({_id:"plexsetting"}).api;
 
-			var friendsXML = Meteor.http.call("GET", "https://plex.tv/pms/friends/all?X-Plex-Token="+plexToken);
-			var accountXML = Meteor.http.call("GET", "https://plex.tv/users/account?X-Plex-Token="+plexToken);
+			try {
+                var friendsXML = Meteor.http.call("GET", "https://plex.tv/pms/friends/all?X-Plex-Token="+plexToken);
+                var accountXML = Meteor.http.call("GET", "https://plex.tv/users/account?X-Plex-Token="+plexToken);
+            } catch (error) {
+                console.log(error);
+                return error;
+            }
 
 			xml2js.parseString(friendsXML.content, {mergeAttrs : true, explicitArray : false} ,function (err, result) {
 			   		users = result['MediaContainer']['User'];
@@ -213,6 +217,18 @@ Meteor.methods({
             friendsList.push(admintitle);
 
             return (isInArray(plexUsername.toLowerCase(), friendsList));
+    },
+    'checkPlex' : function() {
+        var plexToken = Settings.findOne({_id:"plexsetting"}).api;
+
+        try {
+            var friendsXML = Meteor.http.call("GET", "https://plex.tv/pms/friends/all?X-Plex-Token="+plexToken);
+            return true;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+        
     }
 
 });

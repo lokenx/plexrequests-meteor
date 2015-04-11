@@ -13,10 +13,12 @@ Template.plex.events({
                     $('#plex-error').show();
                     $('#plex-login-form button').html('<i class="fa fa-user fa-fw"></i> Sign In');
                 } else if (data) {
+                    $('.plexAuthError').hide();
+                    $('.plexAuthSuccess').removeAttr('style');
+                    $('.plexAuthDisabled').hide();
                     $('.plexAuthEnabled').removeAttr('style');
-                    //document.getElementById('plex-login-form').reset();
                     $('a.show-plex-form').show();
-                    $('.plexAuthComplete').hide();
+                    $('.plexAuth').hide();
                     Session.setPersistent('plexauthuser', true);
                     Session.setPersistent('plexuser', plexUsername);
                 }
