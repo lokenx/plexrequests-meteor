@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <!-- Title block allowing child pages to override -->
+        <title>Plex Requests
+- FAQ
+</title>
+        <link rel="shortcut icon" type="image/ico" href="/favicon.ico" />
+        
+        <!-- Styles -->
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.4/superhero/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <link href="/assets/css/style.min.css" rel="stylesheet" type="text/css" media="all"/>
+        
+        <!-- Style block allowing child pages to inject their own styles -->
+        
+    </head>
+    <body>
+        <div class="container">
+            <!-- Include -->
+            <header>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <nav>
+                <ul>
+                    <li><a href="/"><i class="fa fa-home"></i> <span>Home</span></a></li>
+                    <li><a href="/faq/"><i class="fa fa-question"></i> <span>FAQ</span></a></li>
+                    <li><a href="/screenshots/"><i class="fa fa-picture-o"></i> <span>Screenshots</span></a></li>
+                    <li><a href="/changelog/"><i class="fa fa-pencil"></i> <span>Change log</span></a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <a href="https://github.com/lokenx/plexrequests-meteor"><h1>Plex Requests</h1></a>
+            <p class="lead">Simple automated way for users to request new content for Plex</p>
+            <hr>
+        </div>
+    </div>      
+</header>
+            <!-- Content block, child page inject content -->
+             
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <p class="intro">Answers to some frequently asked questions that will hopefully help you get Plex Requests up and running smoothly!</p>
+        <h2>Frequently Asked Questions</h2>
+        <br>
+
+        <h4 id="whats-this-new-account-business">What’s this new account business?</h4>
+        <p>After some thought, and with the help of <a href="https://github.com/Jeradin">@jeradin</a> users now require authentication to make requests. They just need their username so no passwords are require for ease of entry. A local token is also saved for future visits and more integration with user accounts will be coming.</p>
+        <br>
+
+        <h4 id="can-i-turn-authentication-off">Can I turn authentication off?</h4>
+        <p><del>Currently no, it was an all or nothing change to the code. This may change in the future or it may not, we'll see how things go.</del> Yes, authentication is now off by default. Users are asked to enter their Plex.tv username but it does not check them against your friends or managed users, merely shows you who is requesting content.</p>
+        <br>
+
+        <h4 id="how-often-are-movies-removed-from-the-requested-list">How often are movies removed from the requested list?</h4>
+        <p>Movies are kept on the list until their download status gets changed to true. Once their status is true they are removed from the list if their requested date is older than 14 days</p>
+        <br>
+
+        <h4 id="doesnt-that-mean-movies-requested-a-long-time-ago-will-never-show-up-in-the-list-as-downloaded">Doesn’t that mean movies requested a long time ago will never show up in the list as downloaded?</h4>
+        <p>Yes, it does. To combat this, if a user requests a movie that has alerady been requested but has since been downloaded, instead of the typical notice that the movie has already been requested, they will get notified that the movie has already been downloaded.</p>
+        <br>
+
+        <h4 id="why-cant-i-find-the-movie-i-want-the-search-results-suck">Why can’t I find the movie I want? The search results suck!</h4>
+        <p>Currently, I am using the <a href="http://www.omdbapi.com">OMDB API</a> for search results. I’m looking into possibly switching to something else so if you’ve a recommendation let me know!</p>
+        <br>
+
+        <h4 id="can-i-run-this-on-my-synologyqnaprasberry-pi">Can I run this on my Synology/QNAP/Rasberry Pi?</h4>
+        <p>Your deployment options are limited to platforms that <a href="https://www.meteor.com">Meteor</a> supports, so the short answer is no. However, if you’re so inclined, and your platform supports <a href="https://nodejs.org/">Node.js</a> and <a href="https://www.mongodb.org/">MongoDB</a>, you should be able to get it running using the <a href="https://github.com/onmodulus/demeteorizer">demeteorizer</a>.</p>                
+    <hr>
+    </div>
+</div>
+
+
+            <!-- Footer -->
+             <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <footer>
+            <p> This software is licensed under the MIT license.<br>Plex Requests is in no way affiliated with Plex Inc., and they retain full copyright of Plex and it's associated assets.</p>
+        </footer>
+    </div>
+</div>
+        </div>
+        <!-- Script block allowing child pages to inject their own scripts -->
+        
+        <script src="app.js"></script>
+    </body>
+</html>
