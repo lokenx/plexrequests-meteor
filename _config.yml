@@ -1,0 +1,12 @@
+# Site settings
+title: Plex Requests
+email: 
+description: > # this means to ignore newlines until "baseurl:"
+  Website for Plex Requests Meteor application for use with Plex and Couch Potato
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "http://plexrequests.8bits.ca" # the base hostname & protocol for your site
+twitter_username: 
+github_username: 
+
+# Build settings
+markdown: kramdown

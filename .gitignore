@@ -1,2 +1,2 @@
-.meteor/local
-.meteor/meteorite
+_site
+.sass-cache
