@@ -1,11 +1,11 @@
 
 
 h1 {
-    font-size: 3.5em;   
+    font-size: 3.5em;
 }
 
 h1, h2, h3, h4 {
-    font-weight: 500;   
+    font-weight: 500;
 }
 
 p, li {
@@ -44,7 +44,7 @@ nav ul {
     padding: 0;
 }
 
-li a, h3 a {
+nav li a, h3 a {
     color: #fff;
 }
 
