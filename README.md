@@ -4,7 +4,7 @@
 
 This is [Plex Requests](https://github.com/lokenx/plexrequests) but written with Meteor! It's been updated with [Couch Potato](https://github.com/RuudBurger/CouchPotatoServer) intergration, includes a new admin interface courtesy of the [Houston](https://github.com/gterrono/houston) package, and now supports authentication via Plex.tv usernames!
 
-**A project website has been setup using [GitHub pages](http://8bits.ca/plexrequests-meteor), please visit it for more details!**
+**A project website has been setup using [GitHub pages](http://plexrequests.8bits.ca/), please visit it for more details!**
 
 ##Features
 * **NEW** Accounts are here! User's simply need enter their Plex.tv usernames to gain access
@@ -36,8 +36,7 @@ If you're having trouble with Couch Potato please visit `http://localhost:3000/c
 For authentication issues, `http://localhost:3000/plex` provides information regarding the current status of authentication and connectivity.
 
 ##FAQ
-Please visit the projects [GitHub page](http://lokenx.github.io/plexrequests-meteor) for [FAQ page](http://lokenx.github.io/plexrequests-meteor/faq)
-
+Please visit the projects [GitHub page](http://plexrequests.8bits.ca/) for [FAQ page](http://plexrequests.8bits.ca/faq)
 
 ##Contributors
 Plex Authentication: [@jeradin](https://github.com/Jeradin)
