@@ -54,3 +54,10 @@ Houston.menu({
   'title': 'CouchPotato Status',
   'target': '_blank'
 });
+
+Houston.menu({
+  'type': 'link',
+  'use': 'http://plexrequests.8bits.ca',
+  'title': 'Plex Requests Info',
+  'target': '_blank'
+});
