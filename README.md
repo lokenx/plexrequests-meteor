@@ -4,7 +4,7 @@
 
 This is [Plex Requests](https://github.com/lokenx/plexrequests) but written with Meteor! It's been updated with [Couch Potato](https://github.com/RuudBurger/CouchPotatoServer) intergration, includes a new admin interface courtesy of the [Houston](https://github.com/gterrono/houston) package, and now supports authentication via Plex.tv usernames!
 
-A project website has been setup using [GitHub pages](http://8bits.ca/plexrequests-meteor)!
+**A project website has been setup using [GitHub pages](http://plexrequests.8bits.ca/), please visit it for more details!**
 
 ##Features
 * **NEW** Accounts are here! User's simply need enter their Plex.tv usernames to gain access
@@ -20,7 +20,7 @@ A project website has been setup using [GitHub pages](http://8bits.ca/plexreques
 ![Plex Authentication](Screenshot10.png)
 
 ##Installation
-Installation is straightforward: please update to Meteor 1.1 (for Windows support), clone the repo, `cd` into the directory, and run `meteor`
+Installation is straightforward: please update to Meteor 1.1 (for Windows support), clone the repo, `cd` into the directory, and run `meteor`. For Windows users check out this [blog post](http://8bits.ca/blog/installing-plexrequests-windows/) for installation instructions using Git!
 
 On first run navigate to `http://localhost:3000/admin` and create an admin account with an username and password. **If this isn't done someone else can create the admin account to your applications.** This account is only used for logging in, email integration isn't enabled. Once logged in, go to the `setting` collection and enable Couch Potato or PushBullet integration.
 
@@ -36,24 +36,7 @@ If you're having trouble with Couch Potato please visit `http://localhost:3000/c
 For authentication issues, `http://localhost:3000/plex` provides information regarding the current status of authentication and connectivity.
 
 ##FAQ
-####What's this new account business?
-After some thought, and with the help of [@jeradin](https://github.com/Jeradin) users now require authentication to make requests. They just need their username so no passwords are require for ease of entry. A local token is also saved for future visits and more integration with user accounts will be coming.
-
-####Can I turn authentication off?
-~~Currently no, it was an all or nothing change to the code. This may change in the future or it may not, we'll see how things go.~~ Yes, authentication is now off by default. Users are asked to enter their Plex.tv username but it does not check them against your friends or managed users, merely shows you who is requesting content.
-
-####How often are movies removed from the requested list?
-Movies are kept on the list until their download status gets changed to true. Once their status is true they are removed from the list if their requested date is older than 14 days
-
-####Doesn't that mean movies requested a long time ago will never show up in the list as downloaded?
-Yes, it does. To combat this, if a user requests a movie that has alerady been requested but has since been downloaded, instead of the typical notice that the movie has already been requested, they will get notified that the movie has already been downloaded.
-
-####Why can't I find the movie I want? The search results suck!
-Currently, I am using the [OMDB API](http://www.omdbapi.com) for search results. I'm looking into possibly switching to something else so if you've a recommendation let me know!
-
-####Can I run this on my Synology/QNAP/Rasberry Pi?
-Your deployment options are limited to platforms that [Meteor](https://www.meteor.com) supports, so the short answer is no. However, if you're so inclined, and your platform supports [Node.js](https://nodejs.org/) and [MongoDB](https://www.mongodb.org/), you should be able to get it running using the [demeteorizer](https://github.com/onmodulus/demeteorizer).
-
+Please visit the projects [GitHub page](http://plexrequests.8bits.ca/) for [FAQ page](http://plexrequests.8bits.ca/faq)
 
 ##Contributors
 Plex Authentication: [@jeradin](https://github.com/Jeradin)
