@@ -1,0 +1,14 @@
+<template name="results">
+    <h3>Results:</h3>
+    <form name="results" id="results" action="" method="get" class="results form">
+        {{#each contentSearched}}
+            {{> searchresults}}
+        {{/each}}
+        <div class="form-group">
+        <input type="submit" value="Request Movie!" class="btn btn-primary">
+        <input type="button" class="btn btn-info" value="Search again!" onclick="getElementById('search').focus()">
+        </div>
+    </form>
+    
+    <script>document.getElementById('resultsList').scrollIntoView({block: "end", behavior: "smooth"});</script>
+</template>

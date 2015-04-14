@@ -1,12 +1,5 @@
 MovieSearch = new Mongo.Collection("moviesearch");
-Session.set('resultsloaded', false);
-Session.set('searchingresults', false);
-Session.set('noresults', false);
-Session.set('searcherror', false);
-Session.set('requests', false);
-Session.set('movieadded', false);
-Session.set('movieexists', false);
-Session.set('moviedownloaded', false);
+Session.set('searchType', 'movie');
 
 /*Below is commented out as it was overwriting the persistent session*/
 //Session.set('plexauthuser', false);

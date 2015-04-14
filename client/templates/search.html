@@ -1,16 +1,31 @@
 <template name="search">
-	<form name="myform" id="myform" action="" method="get" class="form-inline">
+	   <form name="myform" id="myform" action="" method="get" class="form-inline">
         <div class="form-group">
             <input type="search" id="search" class="form-control" placeholder="Movie title" required>
         </div>
         <div class="form-group">
             <input type="submit" value="Search for movie!" class="btn btn-primary">
-            {{#if requests}}
-            <button type="button" class="btn btn-default" onclick="Session.set('requests', false);">Hide requests!</button>
-            <button type="button" class="btn btn-info" onclick="javascript:Meteor.call('updateCP');">Update status requests!</button>
-            {{else}}
-            <button type="button" class="btn btn-default" onclick="Session.set('requests', true);">View requests!</button>
-            {{/if}}
+            <button id="requestsToggle" type="button" class="btn btn-default">View requests!</button>
+            <button id="updateRequests" type="button" class="btn btn-info" onclick="javascript:Meteor.call('updateCP');" style="display:none;">Update status requests!</button>
         </div>
     </form>
+    <div id="spinner" style="min-height: 100px;display:none" class="col-md-2">
+        <div class="loading"><div class="loader-inner ball-clip-rotate"><div></div></div></div>
+    </div>
+    
+    <div class="searchInfo">
+        <input id="searchInfo" type="button" value="" class="btn btn-warning" onclick="getElementById('search').focus()" style="display:none;">
+    </div>
+
+    <script>
+        $('#requestsToggle').click(function () {
+            $('#requests').toggle();
+            $('#updateRequests').toggle();
+            if ($('#requestsToggle').text() === "View requests!") {
+                $('#requestsToggle').text("Hide requests!");
+            } else {
+                $('#requestsToggle').text("View requests!");
+            }
+        });
+    </script>
 </template>
