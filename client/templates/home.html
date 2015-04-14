@@ -48,13 +48,13 @@
                 <input type="button" value="Hmm something went wrong with your search...search again?" class="btn btn-danger" onclick="getElementById('search').focus()">
             {{/if}}
             {{#if movieadded}}
-                <input type="button" value="Movie added! Search again?" class="btn btn-success" onclick="getElementById('search').focus()">
+                <input type="button" value="Movie added! request another?" class="btn btn-success" onclick="getElementById('search').focus()">
             {{/if}}
             {{#if movieexists}}
-                <input type="button" value="Movie already requested...search again?" class="btn btn-warning" onclick="getElementById('search').focus()">
+                <input type="button" value="Movie already requested...request another" class="btn btn-warning" onclick="getElementById('search').focus()">
             {{/if}}
             {{#if moviedownloaded}}
-                <input type="button" value="Movie is already in Library...search again?" class="btn btn-warning" onclick="getElementById('search').focus()">
+                <input type="button" value="Movie is already in Library...request another?" class="btn btn-warning" onclick="getElementById('search').focus()">
             {{/if}}
             {{#if requests}}
             <div class="info" id="requests">
