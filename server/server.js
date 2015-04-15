@@ -2,6 +2,10 @@ Meteor.publish('movies', function (){
     return Movies.find({});
 });
 
+Meteor.publish('tv', function (){
+    return TV.find({});
+});
+
 Meteor.publish('cpapi', function () {
     if(this.userId) return Settings.find({_id: "couchpotatosetting"});
 });
@@ -9,6 +13,8 @@ Meteor.publish('cpapi', function () {
 
 Houston.add_collection(Settings);
 Houston.add_collection(Movies);
+Houston.add_collection(TV);
+
 
 if (!(Settings.findOne({_id: "couchpotatosetting"}))) {
     Settings.insert({
@@ -23,7 +29,7 @@ if (!(Settings.findOne({_id: "plexsetting"}))) {
     Settings.insert({
         _id: "plexsetting",
         service: "Plex",
-		api: "Plex Token",
+        api: "Plex Token",
         enabled: false
     });
 };
@@ -33,6 +39,15 @@ if (!(Settings.findOne({_id: "pushbulletsetting"}))) {
         _id: "pushbulletsetting",
         service: "PushBullet",
         api: "abcdef0123456789",
+        enabled: false
+    });
+};
+
+if (!(Settings.findOne({_id: "sickragesetting"}))) {
+    Settings.insert({
+        _id: "sickragesetting",
+        service: "SickRage",
+        api: "http://192.168.0.1:8081/api/abcdef0123456789/",
         enabled: false
     });
 };
@@ -229,6 +244,63 @@ Meteor.methods({
             return false;
         }
         
+    },
+    'searchSickRage' : function(id, title, year, puser) {
+        //Check if SickRage service is enabled
+        if (Settings.findOne({_id:"sickragesetting"}).enabled){
+            
+            //If enabled check if can connect to it
+            var srAPI = Settings.findOne({_id:"sickragesetting"}).api;
+            
+            //Workaround to allow self-signed SSL certs, however can be dangerous and should not be used in production, looking into better way
+            //But it's possible there's nothing much I can do
+            process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
+            try {
+                var status = Meteor.http.call("GET", srAPI  + "?cmd=sb.ping", {timeout:5000});
+            }
+            catch (error) {
+                //If can't connect error out
+                console.log(error)
+                return "error";
+            }
+            //If can connect see if series is in DB already
+            if (Meteor.http.call("GET", srAPI + "?cmd=show&tvdbid=" + id)['data']['result'] === "failure") {
+                //If not in DB add to DB
+                var sickRageAdd = Meteor.http.call("GET", srAPI  + "?cmd=show.addnew&tvdbid=" + id + "&status=wanted");
+     
+                if (sickRageAdd['data']['result'] === "success") {
+                    TV.insert({
+                        title: title,
+                        tvdb: id,
+                        released: year,
+                        user: puser,
+                        downloaded: false,
+                        createdAt: new Date()
+                    });
+                    return "added";
+                } else {
+                    return "error"
+                }
+            } else if (Meteor.http.call("GET", srAPI + "?cmd=show&tvdbid=" + id)['data']['result'] === "success") {    
+                //If in DB let user know
+                return "downloaded";
+            } else {
+                return "error";
+            }
+        
+        } else {
+        //If not enabled add to requests lists
+            TV.insert({
+                title: title,
+                tvdb: id,
+                released: year,
+                user: puser,
+                downloaded: false,
+                createdAt: new Date()
+            });
+            return "added";
+        }
     }
 
 });

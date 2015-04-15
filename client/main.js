@@ -1,5 +1,11 @@
 MovieSearch = new Mongo.Collection("moviesearch");
-Session.set('searchType', 'movie');
+TVSearch = new Mongo.Collection("tvsearch");
+
+Meteor.subscribe('movies');
+Meteor.subscribe('tv');
+Meteor.subscribe('cpapi');
+
+Session.set('searchType', 'tv');
 
 /*Below is commented out as it was overwriting the persistent session*/
 //Session.set('plexauthuser', false);
@@ -24,9 +30,6 @@ Router.route('/couchpotato', function () {
 Router.route('/plex', function () {
   this.render('plex');
 });
-
-Meteor.subscribe('movies');
-Meteor.subscribe('cpapi');
 
 Template.body.helpers({
     url: function () {
