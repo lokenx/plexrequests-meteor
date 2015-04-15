@@ -47,7 +47,7 @@ Meteor.methods({
                              });
         }
     },
-    'searchCP' : function (id, movie, puser) {
+    'searchCP' : function (id, movie, year, puser) {
         if (Settings.findOne({_id:"couchpotatosetting"}).enabled) {
             var cpAPI = Settings.findOne({_id:"couchpotatosetting"}).api;
 
@@ -68,14 +68,14 @@ Meteor.methods({
             if (initSearch['data']['media'] === null) {
                 //Movie is not in CP
                 Meteor.http.call("POST", cpAPI  + "movie.add/", {params: {"identifier": imdb}});
-                var postAdd = Meteor.http.call("GET", cpAPI  + "media.get/", {params: {"id": imdb}});
-                var json = JSON.parse(postAdd.content);
-                var movie = json['media']['title'];
-                var released = json['media']['info']['released'];
+                //var postAdd = Meteor.http.call("GET", cpAPI  + "media.get/", {params: {"id": imdb}});
+                //var json = JSON.parse(postAdd.content);
+                //var movie = json['media']['title'];
+                //var released = json['media']['info']['released'];
                 Movies.insert({
                     title: movie,
                     imdb: imdb,
-                    released: released,
+                    released: year,
                     user: puser,
                     downloaded: false,
                     createdAt: new Date()
@@ -83,15 +83,15 @@ Meteor.methods({
                 return "added"
             } else if (initSearch['data']['media']['status'] === "active") {
                 //Movie is on the wanted list already
-                var json = JSON.parse(initSearch.content);
-                var id = json['media']['info']['imdb'];
+                //var json = JSON.parse(initSearch.content);
+                //var id = json['media']['info']['imdb'];
                 if (Movies.findOne({imdb: id}) === undefined) {
-                    var movie = json['media']['title'];
-                    var released = json['media']['info']['released'];
+                    //var movie = json['media']['title'];
+                    //var released = json['media']['info']['released'];
                     Movies.insert({
                         title: movie,
                         imdb: id,
-                        released: released,
+                        released: year,
                         user: puser,
                         downloaded: false,
                         createdAt: new Date()
@@ -100,8 +100,8 @@ Meteor.methods({
                 return "active";
             } else if (initSearch['data']['media']['status'] === "done") {
                 //Movie is downloaded already
-                var json = JSON.parse(initSearch.content);
-                var id = json['media']['info']['imdb'];
+                //var json = JSON.parse(initSearch.content);
+                //var id = json['media']['info']['imdb'];
                 if (Movies.findOne({imdb: id}) !== undefined) {
                     Movies.update({imdb: id}, {$set: {downloaded: true}});
                 }
@@ -112,7 +112,7 @@ Meteor.methods({
             Movies.insert({
                     title: movie,
                     imdb: id,
-                    released: "",
+                    released: year,
                     user: puser,
                     downloaded: false,
                     createdAt: new Date()
@@ -124,7 +124,7 @@ Meteor.methods({
         if (Settings.findOne({_id:"couchpotatosetting"}).enabled) {
             var allMovies = Movies.find({downloaded: false});
             allMovies.forEach(function (movie) {
-                Meteor.call('searchCP', movie.imdb, movie.title);
+                Meteor.call('searchCP', movie.imdb, movie.title, movie.released);
             });
         };
     },

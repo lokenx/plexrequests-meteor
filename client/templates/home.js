@@ -8,11 +8,6 @@ Template.home.helpers({
             ]},
                 {sort:{createdAt:-1}});
         }
-    },
-    contentSearched: function () {
-        if (Session.get('searchType') === 'movie') {
-            return MovieSearch.find({});
-        }
     }
 });
 
