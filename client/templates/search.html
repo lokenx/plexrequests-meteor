@@ -15,9 +15,12 @@
     </form>
     <script>
 	    $(document).ready(function () {
-	        $('#search').click(function() {
-				if($(this).val() != '')
-				$(this).select();
+			$('#search').focus(function () {
+				$('#search').setSelectionRange(0, 9999);
+			    $('#search').select().mouseup(function (e) {
+			        e.preventDefault();
+			        $(this).unbind("mouseup");
+			    });
 			});
 	    });
     </script>
