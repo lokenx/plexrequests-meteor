@@ -15,9 +15,9 @@
     </form>
     <script>
 	    $(document).ready(function () {
-	        $('#search').focus(function() {
+	        $('#search').click(function() {
 				if($(this).val() != '')
-				$(this).val('');
+				$(this).select();
 			});
 	    });
     </script>
