@@ -1,17 +1,23 @@
 <template name="home">
 <div class="container">
-        <div class="row col-md-offset-2 col-md-8">
-            <a href="javascript:window.location.reload();"><h1>Plex Requests!</h1></a>
+	{{#if plexauthuser }}
+    <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+            <h1>Plex Requests!</h1>
             <p class="lead">Want to watch a movie but it's not currently on Plex?<br>
-                Use the search box below to do a quick <a href="http://www.omdbapi.com/">OMDB</a> search for a movie!</p>
+	                       Use the search box below to do a quick <a href="http://www.omdbapi.com/">OMDB</a> search for a movie!</p>
         </div>
-        <div class="row col-md-offset-2 col-md-8">
+    </div>
+    <div class="row">
+        <div class="col-md-offset-2 col-md-8">
             {{> search}}
         </div>
-        <div class="row col-md-offset-2 col-md-8">
+    </div>
+    <div class="row">
+        <div class="col-md-offset-2 col-md-8">
             <div class="overview" id="overview">
             {{#if resultsloaded}}
-            <h3>Results from the OMDB:</h3>
+            <h3>Results:</h3>
                 <form name="results" id="results" action="" method="get" class="results form">
                     {{#each moviesearched}}
                         {{> moviesearch}}
@@ -25,18 +31,24 @@
             {{/if}}
             </div>
         </div>
+    </div>
         {{#if searchingresults}}
-            <div class="row col-md-offset-2 col-md-2" style="min-height: 100px">{{> spinner}}</div>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-2" style="min-height: 100px">
+                <div class="loading"><div class="loader-inner ball-clip-rotate"><div></div></div></div>
+            </div>
+        </div>
         {{/if}}
-        <div class="row col-md-offset-2 col-md-8">
+    <div class="row">
+        <div class="col-md-offset-2 col-md-8">
             {{#if noresults}}
                 <input type="button" value="Hmm we got no results...search again?" class="btn btn-warning" onclick="getElementById('search').focus()">
             {{/if}}
             {{#if searcherror}}
-                <input type="button" value="Hmmm something went wrong with your search...search again?" class="btn btn-danger" onclick="getElementById('search').focus()">
+                <input type="button" value="Hmm something went wrong with your search...search again?" class="btn btn-danger" onclick="getElementById('search').focus()">
             {{/if}}
             {{#if movieadded}}
-                <input type="button" value="Movie added! Search again?" class="btn btn-success" onclick="getElementById('search').focus()">  
+                <input type="button" value="Movie added! Search again?" class="btn btn-success" onclick="getElementById('search').focus()">
             {{/if}}
             {{#if movieexists}}
                 <input type="button" value="Movie already requested...search again?" class="btn btn-warning" onclick="getElementById('search').focus()">
@@ -56,6 +68,29 @@
             </div>
             {{/if}}
         </div>
+    </div>
+     {{else}}
+    <!--Cleaned up to look more in style with the rest of the interface and to let user know what they're logging in for-->
+    <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+            <h1>Plex Requests!</h1>
+            <p class="lead">Want to watch a movie but it's not currently on Plex?<br>
+	                       Enter your Plex account username below to request content!</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+            <form id="plex-user-form" role="form">
+                <div class="form-inline">
+                    <input type="text" class="form-control" placeholder="Plex Username" name="plex-username" id='plex-username' required autofocus>
+                    <button class="btn btn-primary" type="submit"><i class="fa fa-user fa-fw"></i> Sign In</button>
+                </div>
+            </form>
+            <input type="button" id="plex-wrong" value="Hmm that username does not exist...try again?" class="btn btn-warning" style="display:none" onclick="getElementById('plex-username').focus()">
+            <input type="button" id="plex-error" value="Hmm we had trouble checking your username...try again?" class="btn btn-warning" style="display:none" onclick="getElementById('plex-username').focus()">
+        </div>
+    </div>
+        {{/if}}
     </div>
     <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>

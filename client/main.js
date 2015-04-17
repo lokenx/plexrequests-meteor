@@ -7,17 +7,14 @@ Session.set('requests', false);
 Session.set('movieadded', false);
 Session.set('movieexists', false);
 Session.set('moviedownloaded', false);
-Meteor.Spinner.options = {color: "#DD6928"};
+
+/*Below is commented out as it was overwriting the persistent session*/
+//Session.set('plexauthuser', false);
 
 $("#showmodal").on("click", function() {
     $('#myModal').modal('show');
     return false;
 });
-
-Router.configure({
-  loadingTemplate: 'loading'
-});
-
 
 Router.configure({
   notFoundTemplate: "NotFound"
@@ -31,5 +28,36 @@ Router.route('/couchpotato', function () {
   this.render('couchpotato');
 });
 
+Router.route('/plex', function () {
+  this.render('plex');
+});
+
 Meteor.subscribe('movies');
-Meteor.subscribe('settings');
+Meteor.subscribe('cpapi');
+
+Template.body.helpers({
+    url: function () {
+    return Meteor.absoluteUrl();
+    }
+});
+
+Houston.menu({
+  'type': 'link',
+  'use': Meteor.absoluteUrl() + 'plex',
+  'title': 'Plex Auth Setup',
+  'target': '_blank'
+});
+
+Houston.menu({
+  'type': 'link',
+  'use': Meteor.absoluteUrl() + 'couchpotato',
+  'title': 'CouchPotato Status',
+  'target': '_blank'
+});
+
+Houston.menu({
+  'type': 'link',
+  'use': 'http://plexrequests.8bits.ca',
+  'title': 'Plex Requests Info',
+  'target': '_blank'
+});

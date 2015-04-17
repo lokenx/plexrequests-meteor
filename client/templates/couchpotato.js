@@ -1,6 +1,9 @@
 Template.couchpotato.helpers({
-    tests: function () {
-      return Settings.find({});
+    cp: function () {
+      return Settings.findOne({_id: "couchpotatosetting"}).api;
+    },
+    url: function () {
+    return Meteor.absoluteUrl();
     }
 });
 

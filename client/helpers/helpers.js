@@ -29,3 +29,10 @@ UI.registerHelper('movieadded',function(input){
 UI.registerHelper('moviedownloaded',function(input){
   return Session.get("moviedownloaded");
 });
+
+
+UI.registerHelper('plexauthuser',function(input){
+    //Return whether they're authorized or not, the admin account is now
+    //inserted into the list that is checked so they get their own token set
+    return Session.get("plexauthuser");
+});
