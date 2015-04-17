@@ -74,3 +74,21 @@ label, .radio label {
 .unauthorized {
     text-align: center;
 }
+
+.selForm {
+}
+
+.selForm input[type="radio"] {
+    visibility:hidden;
+}
+
+.selForm label {
+    padding: 3%;
+    margin: 3%;
+    font-size: 1.3em;
+    border: 1px solid #fff;
+}
+
+.selForm input[type="radio"]:checked + label {
+    background-color: #DD6928;
+}
