@@ -8,15 +8,15 @@ Template.home.events({
             var year = document.querySelector('input[name="movie"]:checked').nextSibling.childNodes[2].innerHTML;
             var id = document.querySelector('input[name="movie"]:checked').id;
             var puser = Session.get("plexuser");
-            
+
             var imdb;
             var url = "http://api.themoviedb.org/3/movie/" + id + "?api_key=95a281fbdbc2d2b7db59680dade828a6";
-            
+
             (function () {
                 $.getJSON(url)
                     .done(function (data) {
                         imdb = data['imdb_id'];
-                    
+
                         if (Movies.findOne({imdb: imdb}) === undefined) {
                             Meteor.call('searchCP', imdb, movie, year, puser, function (err, data) {
                                 if (err) {
@@ -46,30 +46,30 @@ Template.home.events({
                             }
                         return false;
                         }
-                    
-                    
-                    
+
+
+
                     })
                     .fail(function () {
                         console.log("fail");
                 });
             }());
 
-            
+
         } else if (Session.get('searchType') === 'tv') {
             var title = document.querySelector('input[name="movie"]:checked').nextSibling.childNodes[0].innerHTML;
             var year = document.querySelector('input[name="movie"]:checked').nextSibling.childNodes[2].innerHTML;
             var id = document.querySelector('input[name="movie"]:checked').id;
             var puser = Session.get("plexuser");
-            
+
             var tvdb;
             var url = "http://api.themoviedb.org/3/tv/" + id + "/external_ids?api_key=95a281fbdbc2d2b7db59680dade828a6";
-            
+
             (function () {
                 $.getJSON(url)
                     .done(function (data) {
                         tvdb = data['tvdb_id'];
-                    
+
                         if (TV.findOne({tvdb: tvdb}) === undefined) {
                             Meteor.call('searchSickRage', tvdb, title, year, puser, function (err, data) {
                                 if (err) {
@@ -109,9 +109,9 @@ Template.home.events({
                             }
                         return false;
                         }
-                    
-                    
-                    
+
+
+
                     })
                     .fail(function () {
                         console.log("fail");

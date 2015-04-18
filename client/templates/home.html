@@ -4,54 +4,46 @@
     <div class="row">
         <div class="col-md-offset-2 col-md-8">
             <h1>Plex Requests!</h1>
-            <p class="lead">Want to watch something but it's not currently on Plex?<br>
-	               Select an option and then do a quick <a href="https://www.themoviedb.org/">TMDB</a> search!</p>
+          <p class="lead">Want to watch something but it's not currently on Plex?<br>
+	               Start typing in the search box below to do a quick <a href="https://www.themoviedb.org/">TMDB</a> search!</p>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-3 col-md-offset-2">
-            <form>
-                <div class="selForm">
-                    <input type="radio" id="selMovie" name="radio">
-                    <label for="selMovie">Movies</label>
-                    <input type="radio" id="selTV" name="radio">
-                    <label for="selTV">TV Series</label>
-                </div>
-            </form>
-            <br>
-        </div>
+        <div class="col-md-4 col-md-offset-2">
+			<div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
+			      <a href="#" id="selMovie"  class="btn btn-default" role="button">Movies</a>
+			      <a href="#" id="selTV" class="btn btn-default" role="button">TV Series</a>
+		    </div>
+      	</div>
     </div>
     <div class="row">
         <div class="col-md-offset-2 col-md-8">
-
             {{> search}}
         </div>
     </div>
     <div class="row">
         <div class="col-md-offset-2 col-md-8">
-            <div class="overview" id="resultsList" style="display:none;">
+            <div class="overview" id="results" style="display:none;">
                 {{> results}}
             </div>
         </div>
     </div>
-
     <div class="row">
         <div class="col-md-offset-2 col-md-8">
-
-            <!-- Results messages -->
-            <input id="addedSuccess" type="button" style="display:none;" value="Added successfully! Search again?" class="btn btn-success" onclick="getElementById('search').focus()">
-            <input id="addedError" type="button" style="display:none;" value="" class="btn btn-warning" onclick="getElementById('search').focus()">
-
-
-            <div class="info" id="requests" style="display:none;">
-                <h3>Requests:</h3>
-                <ul>
-                    {{#each content}}
-                        {{> item}}
-                    {{/each}}
-                </ul>
-                <script>document.getElementById('requests').scrollIntoView({block: "end", behavior: "smooth"});</script>
-            </div>
+	        <div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
+			      <a href="#" class="btn btn-default" role="button">View Requested Movies</a>
+			      <a href="#" class="btn btn-default" role="button">View Requested TV Series</a>
+		    </div>
+		    <div class="overview" id="results" style="display:none;">
+		         <h3>Requests:</h3>
+	                <ul>
+	                    {{#each content}}
+	                        {{> item}}
+	                    {{/each}}
+	                </ul>
+	                <script>//document.getElementById('requests').scrollIntoView({block: "end", behavior: "smooth"});
+	                </script>
+		    </div>
         </div>
     </div>
      {{else}}
@@ -81,15 +73,13 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <script>
         $('#selMovie').click(function () {
+	        $(this).addClass('btn-primary');
             Session.set("searchType", "movie");
-            $('#myform').show();
-            $(".overview").hide();
         });
 
         $('#selTV').click(function () {
+	        $(this).addClass('btn-primary');
             Session.set("searchType", "tv");
-            $('#myform').show();
-            $(".overview").hide();
         });
     </script>
 </template>

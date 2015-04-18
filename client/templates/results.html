@@ -1,14 +1,12 @@
 <template name="results">
-    <h3>Results:</h3>
-    <form name="results" id="results" action="" method="get" class="results form">
-        {{#each contentSearched}}
-            {{> searchresults}}
-        {{/each}}
-        <div class="form-group">
-        <input type="submit" value="Request Movie!" class="btn btn-primary">
-        <input type="button" class="btn btn-info" value="Search again!" onclick="getElementById('search').focus()">
-        </div>
-    </form>
-    
-    <script>document.getElementById('resultsList').scrollIntoView({block: "end", behavior: "smooth"});</script>
+<h3><span class="help-block pull-right" style="font-style: italic;opacity: .8;margin-top:15px;">Only 10 results show at a time.</span>
+	            Results: <span id="searchWorking" class="loader-inner ball-clip-rotate" style="display:none"><div></div></span> </h3>
+             <div id="searchError" style="display: none"></div>
+            	<ul class="list-group">
+				{{#each contentSearched}}
+					{{> searchresults}}
+				{{/each}}
+                </ul>
+    <script>//document.getElementById('results').scrollIntoView({block: "end", behavior: "smooth"});
+	    </script>
 </template>

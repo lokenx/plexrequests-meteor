@@ -1,5 +1,6 @@
 var timer = null;
 Template.search.events({
+
 /*
     'submit form': function (event) {
         $('#searchInfo').hide();
@@ -88,7 +89,7 @@ Template.search.events({
 */
 
     'keyup  #search': _.throttle(function (event) {
-	    		$('#searchWorking').html('<i class="fa fa-spinner fa-spin"></i>').removeClass().addClass('alert');
+	    		$('#searchWorking').show();
 	     		var searchterm = $(event.target).val().trim();
 	     if ( searchterm.length >= 2 ){
 		        var url = "http://www.omdbapi.com/?type=movie&s=" + searchterm +'*';
@@ -98,7 +99,7 @@ Template.search.events({
 		                    MovieSearch._collection.remove({});
 			                    clearTimeout(timer);
 								timer = setTimeout(function(){
-									$('#searchWorking').html('').removeClass().addClass('alert');
+									$('#searchWorking').hide();
 								}, 400);
 		                    try {
 		                        var len = data['Search'].length;
@@ -123,7 +124,6 @@ Template.search.events({
 						        console.log(statusText);
 */
 						        //End check status on results
-
 
 		                        MovieSearch._collection.insert({
 		                            title: data['Search'][i]['Title'],
@@ -150,5 +150,3 @@ Template.search.events({
 	    }
     }, 400)
 });
-
-

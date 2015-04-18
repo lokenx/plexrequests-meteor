@@ -1,23 +1,7 @@
 <template name="search">
 	<form name="myform" id="myform" action="" method="get" class="row">
         <div class="col-sm-6">
-            <input type="search" id="search" class="form-control" placeholder="Start typing a title.." required>
+            <input type="search" id="search" class="form-control" placeholder="Start typing a movie title.." required>
         </div>
     </form>
-    <div id="spinner" style="min-height: 100px;display:none" class="col-md-2">
-        <div class="loading"><div class="loader-inner ball-clip-rotate"><div></div></div></div>
-    </div>
-
-    <div class="searchInfo">
-        <input id="searchInfo" type="button" value="" class="btn btn-warning" onclick="getElementById('search').focus()" style="display:none;">
-    </div>
-
-    <script>
-        $('#requestsToggle').click(function () {
-            $('#requests').toggle();
-            $('#updateRequests').toggle();
-            $('#requestsView').toggle();
-            $('#requestsHide').toggle();
-        });
-    </script>
 </template>

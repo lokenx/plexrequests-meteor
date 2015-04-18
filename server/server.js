@@ -153,7 +153,53 @@ Meteor.methods({
 
         return (status['data']['success']);
 
-    },
+    }/*
+,
+    'checkStatus' : function (id) {
+	    if (Movies.findOne({imdb: id}) === undefined) {
+
+	        if (Settings.findOne({_id:"couchpotatosetting"}).enabled) {
+	            var cpAPI = Settings.findOne({_id:"couchpotatosetting"}).api;
+
+	            //Workaround to allow self-signed SSL certs, however can be dangerous and should not be used in production, looking into better way
+	            //But it's possible there's nothing much I can do
+	            process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+	            var imdb = id;
+
+	            try {
+	                var status = Meteor.http.call("GET", cpAPI  + "app.available", {timeout:5000});
+	            }
+	            catch (error) {
+	                console.log(error)
+	            }
+
+	            var initSearch = Meteor.http.call("GET", cpAPI  + "media.get/", {params: {"id": imdb}});
+
+	            if (initSearch['data']['media']['status'] === "active") {
+	                //Movie is on the wanted list already
+	                return 'Already Requested';
+
+	            } else if (initSearch['data']['media']['status'] === "done") {
+	                //Movie is downloaded already
+	                return 'Already in Library';
+	            }else{
+		            return 'Add';
+	            }
+	        } else {
+	            //CP not being used so return false
+	            return 'Add';
+	        };
+
+		} else {
+			if (Movies.findOne({imdb: id}).downloaded === true) {
+				return 'Already in Library';
+			} else {
+				return 'Already Requested';
+			}
+		}
+
+    }
+*/,
     'checkCPEnabled' : function () {
         return Settings.findOne({_id:"couchpotatosetting"}).enabled;
     },
