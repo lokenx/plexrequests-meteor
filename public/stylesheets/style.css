@@ -7,10 +7,6 @@ label, .radio label {
     font-size: 1em;
 }
 
-#results {
-    padding-left: 15px;
-}
-
 .btn {
     margin: 2px 0px;
     white-space: normal;
@@ -29,16 +25,48 @@ label, .radio label {
     overflow: scroll;
 }*/
 
+.list-group-item{
+	border-color: #2b3e50;
+	margin-bottom: 0;
+}
+
+.add-request{
+   position: absolute;
+   right: 8px;
+   top: 8px;
+}
+
+#searchError{
+   position: relative;
+   display: block;
+   padding: 10px 15px;
+   color: #f0ad4e;
+}
+/*
+@media (max-width: 480px) {
+	.add-request {
+		  text-indent: -9999;
+		  white-space: nowrap;
+		  overflow: hidden;
+	}
+	.add-request:after {
+	 	content: "\f067";
+	    display: inline-block;
+	    font: normal normal normal 14px/1 FontAwesome;
+	    font-size: inherit;
+	    text-rendering: auto;
+	    -webkit-font-smoothing: antialiased;
+	    -moz-osx-font-smoothing: grayscale;
+	    transform: translate(0, 0);
+	}
+}
+*/
+
 @media (min-width: 768px) {
     body {
         padding-top: 60px;
     }
-    /*.info ul {
-        max-height: 400px
-    }*/
 }
-
-
 
 .enabledError {
     color: #c0392b;

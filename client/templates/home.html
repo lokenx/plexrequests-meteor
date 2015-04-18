@@ -23,7 +23,7 @@
     </div>
     <div class="row">
         <div class="col-md-offset-2 col-md-8">
-            
+
             {{> search}}
         </div>
     </div>
@@ -34,15 +34,15 @@
             </div>
         </div>
     </div>
-    
+
     <div class="row">
         <div class="col-md-offset-2 col-md-8">
-            
+
             <!-- Results messages -->
             <input id="addedSuccess" type="button" style="display:none;" value="Added successfully! Search again?" class="btn btn-success" onclick="getElementById('search').focus()">
             <input id="addedError" type="button" style="display:none;" value="" class="btn btn-warning" onclick="getElementById('search').focus()">
-            
-            
+
+
             <div class="info" id="requests" style="display:none;">
                 <h3>Requests:</h3>
                 <ul>
@@ -85,7 +85,7 @@
             $('#myform').show();
             $(".overview").hide();
         });
-        
+
         $('#selTV').click(function () {
             Session.set("searchType", "tv");
             $('#myform').show();

@@ -7,9 +7,6 @@ Meteor.subscribe('cpapi');
 
 Session.set('searchType', '');
 
-/*Below is commented out as it was overwriting the persistent session*/
-//Session.set('plexauthuser', false);
-
 $("#showmodal").on("click", function() {
     $('#myModal').modal('show');
     return false;

@@ -22,8 +22,8 @@ Template.home.events({
     "submit #plex-user-form": function (event) {
 	    $('#plex-error').hide();
 	    $('#plex-user-form button').html('<i class="fa fa-cog fa-spin  fa-fw"></i>  Signing In');
-	    plexUsername = document.getElementById("plex-username").value;    
-        
+	    plexUsername = document.getElementById("plex-username").value;
+
         Meteor.call('checkPlexEnabled', function(err, data) {
             if (err) {
                 console.log(err);
@@ -50,7 +50,7 @@ Template.home.events({
                 Session.setPersistent('plexauthuser', true);
                 Session.setPersistent('plexuser', plexUsername);            }
         });
-                        
+
         return false;
     }
 });
