@@ -39,14 +39,14 @@ Template.body.helpers({
 
 Houston.menu({
   'type': 'link',
-  'use': Meteor.absoluteUrl() + 'plex',
+  'use': '/plex',
   'title': 'Plex Auth Setup',
   'target': '_blank'
 });
 
 Houston.menu({
   'type': 'link',
-  'use': Meteor.absoluteUrl() + 'couchpotato',
+  'use': '/couchpotato',
   'title': 'CouchPotato Status',
   'target': '_blank'
 });
