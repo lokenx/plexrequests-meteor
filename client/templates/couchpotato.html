@@ -23,7 +23,7 @@
                     <li><strong>URL: </strong> Please ensure you have typed the URL correctly, it should follow the below format and must contain a <kbd>/</kbd> at the end <br><br><pre><code>http://192.168.0.1:5050/api/abcdef0123456789/</code></pre><br></li>
                     <li><strong>LAN: </strong><s>Plex Requests has only been tested when running on the same LAN as Couch Potato.</s> I've tested hosting Plex Request outside of my LAN and it works. If you would like to run it in a different location you will have to configure router firewall rules as well as port forwarding, and use your router/public IP instead of Couch Potato's. Also don't forget to put a username/password on Couch Potato as it's now opened up to the interwebs<br><br></li>
                     <li><strong>Manual test: </strong> You can try a manual call to the Couch Potato API via a web browser to confirm connectivity. Simply copy and paste the below URL into your browser, if things are working you should get a message displayed that says <kbd>{ "success" : true }</kbd><br><br>
-                    <pre><code>{{api}}app.available</code></pre><br></li>
+                    <pre><code>{{cp}}app.available</code></pre><br></li>
                     <li><strong>Wrong API key used: </strong> If this is the message you receive when trying the Manual test, please confirm that you have a <kbd>/</kbd> slash at the end of your API<br><br></li>
                 </ol>
                 </div>
