@@ -22,14 +22,14 @@ Template.searchresults.events({
 				            Meteor.call('searchCP', imdb, title, year, puser, function (err, data) {
 				                if (err) {
 				                    console.log(err)
-				                    $(event.target).html('Something went wrong, please let the admin know!');
+				                    $(event.target).parent().html('Something went wrong, please let the admin know!');
 				                } else if ((data === "active") || (data ==="added")) {
-					                $(event.target).html('Movie added! <i class="fa fa-check-circle"></i>').addClass('btn-success');
+					                $(event.target).html('Movie added! <i class="fa fa-check-circle"></i>').addClass('btn-success').addClass('disabled');
 				                    Meteor.call('pushBullet', title, puser);
 				                } else if (data === "downloaded") {
-				                    $(event.target).html('Already in Library').addClass('btn-warning');
+				                    $(event.target).html('Already in Library').addClass('btn-warning').addClass('disabled');
 				                } else if (data === "error") {
-			                        $(event.target).html('Something went wrong, try again?').addClass('btn-warning');
+					                $(event.target).html('<i class="fa fa-exclamation-triangle"></i> Error').addClass('btn-danger');
 			                    } else {
 			                        console.log(data);
 			                        console.log("Somethings broken...");
@@ -38,10 +38,10 @@ Template.searchresults.events({
 				            return false;
 				        } else {
 				            if (Movies.findOne({imdb: imdb}).downloaded === true) {
-				                $(event.target).html('Already in Library').addClass('btn-warning');
+				                $(event.target).html('Already in Library').addClass('btn-warning').addClass('disabled');
 				                return false;
 				            } else {
-				                $(event.target).html('Already Requested').addClass('btn-warning');
+				                $(event.target).html('Already Requested').addClass('btn-warning').addClass('disabled');
 				                return false;
 				            }
 				        return false;
@@ -64,14 +64,14 @@ Template.searchresults.events({
 			                Meteor.call('searchSickRage', tvdb, title, year, puser, function (err, data) {
 			                    if (err) {
 			                        console.log(err);
-			                        $(event.target).html('Something went wrong, please let the admin know!');
+			                        $(event.target).parent().html('Something went wrong, please let the admin know!');
 			                    } else if (data ==="added") {
-			                        $(event.target).html('TV Series added! <i class="fa fa-check-circle"></i>').addClass('btn-success');
+			                        $(event.target).html('TV Series added! <i class="fa fa-check-circle"></i>').addClass('btn-success').addClass('disabled');
 			                        Meteor.call('pushBullet', title, puser);
 			                    } else if (data === "downloaded") {
-			                        $(event.target).html('Already in Library').addClass('btn-warning');
+			                        $(event.target).html('Already in Library').addClass('btn-warning').addClass('disabled');
 			                    } else if (data === "error") {
-			                        $(event.target).html('Something went wrong, try again?').addClass('btn-warning');
+				                    $(event.target).html('<i class="fa fa-exclamation-triangle"></i> Error').addClass('btn-danger');
 			                    } else {
 			                        console.log(data);
 			                        console.log("Somethings broken...");
@@ -80,10 +80,10 @@ Template.searchresults.events({
 			                return false;
 			            } else {
 			                if (TV.findOne({tvdb: tvdb}).downloaded === true) {
-			                        $(event.target).html('Already in Library').addClass('btn-warning');
+			                        $(event.target).html('Already in Library').addClass('btn-warning').addClass('disabled');
 			                        return false;
 			                } else {
-			                        $(event.target).html('Already Requested').addClass('btn-warning');
+			                        $(event.target).html('Already Requested').addClass('btn-warning').addClass('disabled');
 			                        return false;
 			                }
 			                return false;

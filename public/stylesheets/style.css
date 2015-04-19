@@ -88,7 +88,10 @@ label, .radio label {
 	width:18px;
 	height: 18px;
 }
-
+#requestError{
+   position: absolute;
+   width: 100%;
+}
 #searchError{
    position: relative;
    display: block;
