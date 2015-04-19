@@ -1,11 +1,66 @@
 <template name="requests">
 	<div class="overview" id="requests" style="display:none;">
 		<h3>{{searchIs}} Requests:</h3>
-	        <ul>
-	            {{#each content}}
-	                {{> item}}
-	            {{/each}}
-	        </ul>
+	        <!-- https://github.com/tsega/filter-collections/ -->
+<!--
+   <a href="#" class="fc-filter" data-fc-filter-field="downloaded" data-fc-filter-value="1" >
+    Show me none downloaded
+  </a>
+-->
+<ul class="list-group">
+	{{#each fcResults}}
+		{{>item}}
+    {{/each}}
+  </ul>
+                <table class="table table-striped">
+	                <thead>
+			        <tr>
+			          <th class="fc-sort" data-fc-sort="title">Title {{#if fcSort.title.desc}} (desc){{/if}}
+  {{#if fcSort.title.asc}} (asc){{/if}}</th>
+			          <th class="fc-sort" data-fc-sort="released">Release Date {{#if fcSort.released.desc}} (desc){{/if}}
+  {{#if fcSort.released.asc}} (asc){{/if}}</th>
+			          <th>Downloaded?</th>
+			          {{#if currentUser }} <th>Requested By</th>{{/if}}
+			        </tr>
+			      </thead>
+			      <tbody>
+				{{#each fcResults}}
+				 <tr class="{{#if downloaded}}downloaded{{/if}}">
+				    <td><a href="http://www.dereferer.org/?http://www.imdb.com/title/{{imdb}}" target="_blank" >{{title}}</a></td>
+				    <td>{{released}} </td>
+				    <td>{{#if downloaded}}<span class="enabledSuccess"><i class="fa fa-check-circle"></i></span>{{/if}} </td>
+				   {{#if currentUser }} <td>{{#if user}}{{user}}{{/if}}</td>{{/if}}
+				  </tr>
+
+				  {{/each}}
+			      </tbody>
+				</table>
+
+
+				  {{#if fcPager.pages}}
+				      <!-- numbered pager -->
+				        <ul class="pagination">
+				          <li><a href="#" class="fc-pager-first">&lt;&lt;</a></li>
+				          <li><a href="#" class="fc-pager-previous">&lt;</a></li>
+				          {{#each fcPager.pages}}
+				            <li class="{{status}}"><a href="#" class="fc-pager-page" data-fc-pager-page="{{page}}">{{page}}</a></li>
+				          {{/each}}
+				          <li><a href="#" class="fc-pager-next">&gt;</a></li>
+				          <li><a href="#" class="fc-pager-last">&gt;&gt;</a></li>
+				        </ul>
+				        <!-- /numbered pager -->
+						 <!-- pager count change -->
+				        <p>
+					       <a href="#" class="fc-pager-option" data-fc-pager-page="10">default (10)</a> | <a href="#" class="fc-pager-option" data-fc-pager-page="20">(20)</a> |
+      <a href="#" class="fc-pager-option" data-fc-pager-page="40">(40)</a>
+				        </p>
+				        <!-- /pager count change -->
+				        <!-- pager status -->
+				        <p>
+				          <strong>{{fcPager.offsetStart}}</strong> to <strong>{{fcPager.offsetEnd}}</strong> of <strong>{{fcPager.totalItems}}</strong> records.
+				        </p>
+				        <!-- /pager status -->
+				  {{/if}}
 	         <button id="updateRequests" type="button" class="btn btn-info" onclick="javascript:Meteor.call('updateCP');">Update status requests!</button>
 	</div>
 </template>

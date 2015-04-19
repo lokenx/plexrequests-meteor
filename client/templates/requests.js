@@ -1,3 +1,32 @@
+MovieFilter = new Meteor.FilterCollections(Movies, {
+  	template: 'requests',
+  	name: 'filter-movies',
+  	sort:{
+	    order: ['desc', 'asc'],
+/*
+	    defaults: [
+	      ['released', 'desc'],
+	      ['title', 'asc']
+	    ]
+*/
+	  },
+	pager: {
+	   //options: [20, 10, 15, 25, 50],
+	   itemsPerPage: 10,
+	   //currentPage: 1,
+	   //showPages: 5,
+	},
+	filters: {
+	     "downloaded": {
+		      title: 'Not Downloaded',
+		     // value: true,
+		      //condition: '$and',
+		      //searchable: 'optional'
+		    }
+    }
+
+});
+/*
 Template.requests.helpers({
     content: function () {
         if (Session.get('searchType') === 'movie') {
@@ -17,3 +46,4 @@ Template.requests.helpers({
         }
     }
 });
+*/

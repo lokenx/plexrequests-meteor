@@ -62,6 +62,7 @@ srp@1.0.3
 templating@1.1.1
 tmeasday:paginated-subscription@0.2.4
 tracker@1.0.7
+tsega:filter-collections@0.1.5
 u2622:persistent-session@0.3.2
 ui@1.0.6
 underscore@1.0.3

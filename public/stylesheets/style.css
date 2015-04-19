@@ -118,3 +118,37 @@ label, .radio label {
 	}
 }
 */
+
+th {
+  background: #333;
+  color: white;
+  font-weight: bold;
+}
+
+/*
+Max width before this PARTICULAR table gets nasty
+This query will take effect for any screen smaller than 760px
+and also iPads specifically.
+*/
+@media
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+
+	/* Force table to not be like tables anymore */
+	table, thead, tbody, th, td, tr {
+		display: block;
+	}
+
+	/* Hide table headers (but not display: none;, for accessibility) */
+	thead tr {
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+
+	.table>tbody>tr>td {
+		position: relative;
+	}
+
+
+}
