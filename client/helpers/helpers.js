@@ -6,3 +6,13 @@ UI.registerHelper('plexauthuser',function(input){
 UI.registerHelper('searchType',function(input){
     return Session.get('searchType');
 });
+
+UI.registerHelper('searchIs',function(input){
+    	if (Session.get('searchType') === 'movie') {
+            return 'Movie';
+        } else if (Session.get('searchType') === 'tv') {
+            return 'TV Series';
+        }else{
+	        return '';
+        }
+});

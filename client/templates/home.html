@@ -5,81 +5,39 @@
         <div class="col-md-offset-2 col-md-8">
             <h1>Plex Requests!</h1>
           <p class="lead">Want to watch something but it's not currently on Plex?<br>
-	               Start typing in the search box below to do a quick <a href="https://www.themoviedb.org/">TMDB</a> search!</p>
+	               Pick a type and start typing in the search box below to do a quick <a href="https://www.themoviedb.org/">TMDB</a> search!</p>
+
         </div>
     </div>
     <div class="row">
-        <div class="col-md-4 col-md-offset-2">
-			<div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
+        <div class="col-md-offset-2 col-sm-8 col-md-7">
+			<div id="picktype" class="btn-group btn-group-justified" role="group" aria-label="Pick the Search">
 			      <a href="#" id="selMovie"  class="btn btn-default" role="button">Movies</a>
 			      <a href="#" id="selTV" class="btn btn-default" role="button">TV Series</a>
 		    </div>
-      	</div>
-    </div>
-    <div class="row">
-        <div class="col-md-offset-2 col-md-8">
             {{> search}}
         </div>
     </div>
     <div class="row">
         <div class="col-md-offset-2 col-md-8">
-            <div class="overview" id="results" style="display:none;">
+            <div class="overview" id="resultsList" style="display:none;">
                 {{> results}}
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-offset-2 col-md-8">
-	        <div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
-			      <a href="#" class="btn btn-default" role="button">View Requested Movies</a>
-			      <a href="#" class="btn btn-default" role="button">View Requested TV Series</a>
-		    </div>
-		    <div class="overview" id="results" style="display:none;">
-		         <h3>Requests:</h3>
-	                <ul>
-	                    {{#each content}}
-	                        {{> item}}
-	                    {{/each}}
-	                </ul>
-	                <script>//document.getElementById('requests').scrollIntoView({block: "end", behavior: "smooth"});
-	                </script>
-		    </div>
+                <div id="requests-block" class="top-buffer" style="display:none;">
+	            <a href="#" id="showRequests" class="btn btn-default" role="button"><i class="fa fa-list-alt"></i> View requests</a>
+	            <a href="#" id="hideRequests" class="btn btn-default" role="button" style="display:none"><i class="fa fa-times-circle-o"></i> Hide requests</a>
+                {{> requests}}
+            </div>
         </div>
     </div>
      {{else}}
-    <!--Cleaned up to look more in style with the rest of the interface and to let user know what they're logging in for-->
-    <div class="row">
-        <div class="col-md-offset-2 col-md-8">
-            <h1>Plex Requests!</h1>
-            <p class="lead">Want to watch a movie but it's not currently on Plex?<br>
-	                       Enter your Plex account username below to request content!</p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-offset-2 col-md-8">
-            <form id="plex-user-form" role="form">
-                <div class="form-inline">
-                    <input type="text" class="form-control" placeholder="Plex Username" name="plex-username" id='plex-username' required autofocus>
-                    <button class="btn btn-primary" type="submit"><i class="fa fa-user fa-fw"></i> Sign In</button>
-                </div>
-            </form>
-            <input type="button" id="plex-wrong" value="Hmm that username does not exist...try again?" class="btn btn-warning" style="display:none" onclick="getElementById('plex-username').focus()">
-            <input type="button" id="plex-error" value="Hmm we had trouble checking your username...try again?" class="btn btn-warning" style="display:none" onclick="getElementById('plex-username').focus()">
-        </div>
-    </div>
-        {{/if}}
+		{{> signin}}
+     {{/if}}
     </div>
     <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-    <script>
-        $('#selMovie').click(function () {
-	        $(this).addClass('btn-primary');
-            Session.set("searchType", "movie");
-        });
-
-        $('#selTV').click(function () {
-	        $(this).addClass('btn-primary');
-            Session.set("searchType", "tv");
-        });
-    </script>
 </template>

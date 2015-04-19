@@ -1,13 +1,3 @@
-Template.results.helpers({
-        contentSearched: function () {
-            if (Session.get('searchType') === 'movie') {
-                return MovieSearch.find({},{limit:10});
-        } else if (Session.get('searchType') === 'tv') {
-                return TVSearch.find({},{limit:10});
-        }
-    }
-});
-
 Template.searchresults.helpers({
   statusIs: function (status) {
     return this.status === status;
@@ -15,31 +5,94 @@ Template.searchresults.helpers({
 });
 Template.searchresults.events({
     "click .add-request": function (event) {
-		$(event.target).html('<i class="fa fa-spinner fa-spin fa-lg"></i>').removeClass('btn-primary');
-        var movie = $(event.target).parent().data( "title" );
-        var id = $(event.target).parent().data( "id" );
-        var puser = Session.get("plexuser");
-        if (Movies.findOne({imdb: id}) === undefined) {
-            Meteor.call('searchCP', id, movie, puser, function (err, data) {
-                if (err) {
-                    console.log(err)
-                } else if ((data === "active") || (data ==="added")) {
-	                $(event.target).html('Movie added! <i class="fa fa-check-circle"></i>').addClass('btn-success');
-                    Meteor.call('pushBullet', movie, puser);
-                } else if (data === "downloaded") {
-                    $(event.target).html('Already in Library').addClass('btn-warning');
-                }
-            });
-            return false;
-        } else {
-            if (Movies.findOne({imdb: id}).downloaded === true) {
-                $(event.target).html('Already in Library').addClass('btn-warning');
-                return false;
-            } else {
-                $(event.target).html('Already Requested').addClass('btn-warning');
-                return false;
-            }
-        return false;
-        }
+	    $(event.target).html('<i class="fa fa-spinner fa-spin fa-lg"></i>').removeClass('btn-primary');
+	    var title = $(event.target).parent().data( "title" );
+	    var year = $(event.target).parent().data( "year" );
+	    var id = $(event.target).parent().data( "id" );
+	    var puser = Session.get("plexuser");
+	    if (Session.get('searchType') === 'movie') {
+		    var imdb;
+	        var url = "http://api.themoviedb.org/3/movie/" + id + "?api_key=95a281fbdbc2d2b7db59680dade828a6";
+
+            (function () {
+                $.getJSON(url)
+                    .done(function (data) {
+                        imdb = data['imdb_id'];
+				        if (Movies.findOne({imdb: imdb}) === undefined) {
+				            Meteor.call('searchCP', imdb, title, year, puser, function (err, data) {
+				                if (err) {
+				                    console.log(err)
+				                    $(event.target).html('Something went wrong, please let the admin know!');
+				                } else if ((data === "active") || (data ==="added")) {
+					                $(event.target).html('Movie added! <i class="fa fa-check-circle"></i>').addClass('btn-success');
+				                    Meteor.call('pushBullet', title, puser);
+				                } else if (data === "downloaded") {
+				                    $(event.target).html('Already in Library').addClass('btn-warning');
+				                } else if (data === "error") {
+			                        $(event.target).html('Something went wrong, try again?').addClass('btn-warning');
+			                    } else {
+			                        console.log(data);
+			                        console.log("Somethings broken...");
+			                    }
+				            });
+				            return false;
+				        } else {
+				            if (Movies.findOne({imdb: imdb}).downloaded === true) {
+				                $(event.target).html('Already in Library').addClass('btn-warning');
+				                return false;
+				            } else {
+				                $(event.target).html('Already Requested').addClass('btn-warning');
+				                return false;
+				            }
+				        return false;
+				        }
+		        	})
+	                .fail(function () {
+	                    console.log("fail");
+	            });
+            }());
+	    } else if (Session.get('searchType') === 'tv') {
+		    var tvdb;
+		    var url = "http://api.themoviedb.org/3/tv/" + id + "/external_ids?api_key=95a281fbdbc2d2b7db59680dade828a6";
+
+            (function () {
+                $.getJSON(url)
+                    .done(function (data) {
+                        tvdb = data['tvdb_id'];
+
+			            if (TV.findOne({tvdb: tvdb}) === undefined) {
+			                Meteor.call('searchSickRage', tvdb, title, year, puser, function (err, data) {
+			                    if (err) {
+			                        console.log(err);
+			                        $(event.target).html('Something went wrong, please let the admin know!');
+			                    } else if (data ==="added") {
+			                        $(event.target).html('TV Series added! <i class="fa fa-check-circle"></i>').addClass('btn-success');
+			                        Meteor.call('pushBullet', title, puser);
+			                    } else if (data === "downloaded") {
+			                        $(event.target).html('Already in Library').addClass('btn-warning');
+			                    } else if (data === "error") {
+			                        $(event.target).html('Something went wrong, try again?').addClass('btn-warning');
+			                    } else {
+			                        console.log(data);
+			                        console.log("Somethings broken...");
+			                    }
+			                });
+			                return false;
+			            } else {
+			                if (TV.findOne({tvdb: tvdb}).downloaded === true) {
+			                        $(event.target).html('Already in Library').addClass('btn-warning');
+			                        return false;
+			                } else {
+			                        $(event.target).html('Already Requested').addClass('btn-warning');
+			                        return false;
+			                }
+			                return false;
+			            }
+                    })
+                    .fail(function () {
+                        console.log("fail");
+                });
+            }());
+		}
     }
 });
