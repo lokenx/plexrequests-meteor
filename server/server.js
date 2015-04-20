@@ -62,14 +62,13 @@ Meteor.methods({
                              });
         }
     },
-    'searchCP' : function (id, movie, year, puser) {
+    'searchCP' : function (id, imdb, movie, year, puser) {
         if (Settings.findOne({_id:"couchpotatosetting"}).enabled) {
             var cpAPI = Settings.findOne({_id:"couchpotatosetting"}).api;
 
             //Workaround to allow self-signed SSL certs, however can be dangerous and should not be used in production, looking into better way
             //But it's possible there's nothing much I can do
             process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-            var imdb = id;
 
             try {
                 var status = Meteor.http.call("GET", cpAPI  + "app.available", {timeout:5000});
@@ -89,6 +88,7 @@ Meteor.methods({
                 //var released = json['media']['info']['released'];
                 Movies.insert({
                     title: movie,
+                    id: id,
                     imdb: imdb,
                     released: year,
                     user: puser,
@@ -105,7 +105,8 @@ Meteor.methods({
                     //var released = json['media']['info']['released'];
                     Movies.insert({
                         title: movie,
-                        imdb: id,
+                        id: id,
+                        imdb: imdb,
                         released: year,
                         user: puser,
                         downloaded: false,
@@ -126,7 +127,8 @@ Meteor.methods({
             //CP not being used so just add to list of requested movies
             Movies.insert({
                     title: movie,
-                    imdb: id,
+                    id: id,
+                    imdb: imdb,
                     released: year,
                     user: puser,
                     downloaded: false,
@@ -245,7 +247,7 @@ Meteor.methods({
         }
 
     },
-    'searchSickRage' : function(id, title, year, puser) {
+    'searchSickRage' : function(id, tvdb, title, year, puser) {
         //Check if SickRage service is enabled
         if (Settings.findOne({_id:"sickragesetting"}).enabled){
 
@@ -272,7 +274,8 @@ Meteor.methods({
                 if (sickRageAdd['data']['result'] === "success") {
                     TV.insert({
                         title: title,
-                        tvdb: id,
+                        id: id,
+                        tvdb: tvdb,
                         released: year,
                         user: puser,
                         downloaded: false,
@@ -293,7 +296,8 @@ Meteor.methods({
         //If not enabled add to requests lists
             TV.insert({
                 title: title,
-                tvdb: id,
+                id: id,
+                tvdb: tvdb,
                 released: year,
                 user: puser,
                 downloaded: false,

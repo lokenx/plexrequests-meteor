@@ -35,8 +35,8 @@ Template.search.events({
 				                            if(Session.get('searchType') === 'movie'){
 					                            title = data['results'][i]['title'];
 					                            year = data['results'][i]['release_date'];
-					                            if (!(Movies.findOne({imdb: id}) === undefined )) {
-						                            if (Movies.findOne({imdb: id}).downloaded === true) {
+					                            if (!(Movies.findOne({id: id}) === undefined )) {
+						                            if (Movies.findOne({id: id}).downloaded === true) {
 										                status = 'Already in Library';
 										            } else {
 										                status = 'Already Requested';
@@ -50,8 +50,8 @@ Template.search.events({
 				                                } else {
 				                                    year = "unknown";
 				                                }
-					                            if (!(TV.findOne({tvdb: id}) === undefined )) {
-						                            if (TV.findOne({tvdb: id}).downloaded === true) {
+					                            if (!(TV.findOne({id: id}) === undefined )) {
+						                            if (TV.findOne({id: id}).downloaded === true) {
 										                status = 'Already in Library';
 										            } else {
 										                status = 'Already Requested';
