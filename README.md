@@ -1,5 +1,13 @@
 #Plex Requests - Meteor Style!
 
+###Support for SickRage/Beard has been added. The application currently will ONLY do TV searches and requests, I'll be adding the ability to switch back and forth shortly. It's currently very alpha so please don't use this on your main install.
+
+###There is no test page setup for SickRage/SickBeard yet so settings must be set and configured in the /admin interface. Please don't forget the `/` at the end!
+
+###If you come accross any issues please open a GitHub issue!
+
+###Again, this is super early stages and it will break...you've been warned!
+
 ![plexrequestshomepage](Screenshot03.png)
 
 This is [Plex Requests](https://github.com/lokenx/plexrequests) but written with Meteor! It's been updated with [Couch Potato](https://github.com/RuudBurger/CouchPotatoServer) intergration, includes a new admin interface courtesy of the [Houston](https://github.com/gterrono/houston) package, and now supports authentication via Plex.tv usernames!
