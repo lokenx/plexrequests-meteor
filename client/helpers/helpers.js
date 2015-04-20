@@ -6,3 +6,11 @@ UI.registerHelper('plexauthuser',function(input){
 UI.registerHelper('searchType',function(input){
     return Session.get('searchType');
 });
+
+UI.registerHelper('isMovie',function(input){
+    	if (Session.get('searchType') === 'movie') {
+            return true;
+		}else{
+	        return false;
+        }
+});

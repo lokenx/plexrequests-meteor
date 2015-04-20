@@ -1,19 +1,10 @@
-MovieSearch = new Mongo.Collection("moviesearch");
-TVSearch = new Mongo.Collection("tvsearch");
+currentSearch = new Mongo.Collection("currentsearch");
 
 Meteor.subscribe('movies');
 Meteor.subscribe('tv');
 Meteor.subscribe('cpapi');
 
 Session.set('searchType', '');
-
-/*Below is commented out as it was overwriting the persistent session*/
-//Session.set('plexauthuser', false);
-
-$("#showmodal").on("click", function() {
-    $('#myModal').modal('show');
-    return false;
-});
 
 Router.configure({
   notFoundTemplate: "NotFound"

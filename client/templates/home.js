@@ -1,56 +1,42 @@
-Template.home.helpers({
-    content: function () {
-        if (Session.get('searchType') === 'movie') {
-            var date = new Date(+new Date - 12096e5);
-            return Movies.find({$or: [
-                { downloaded : false },
-                { downloaded : true , createdAt: {"$gte": date} }
-            ]},
-                {sort:{createdAt:-1}});
-        } else if (Session.get('searchType') === 'tv') {
-            var date = new Date(+new Date - 12096e5);
-            return TV.find({$or: [
-                { downloaded : false },
-                { downloaded : true , createdAt: {"$gte": date} }
-            ]},
-                {sort:{createdAt:-1}});
-        }
-    }
-});
-
 Template.home.events({
-    "submit #plex-user-form": function (event) {
-	    $('#plex-error').hide();
-	    $('#plex-user-form button').html('<i class="fa fa-cog fa-spin  fa-fw"></i>  Signing In');
-	    plexUsername = document.getElementById("plex-username").value;    
-        
-        Meteor.call('checkPlexEnabled', function(err, data) {
-            if (err) {
-                console.log(err);
-            } else if (data === true) {
-                Meteor.call('checkPlexUser', plexUsername, function (err, data) {
-                    if (err) {
-                        $('#plex-user-form button').html('<i class="fa fa-user  fa-fw"></i> Sign In');
-                        $('#plex-error').show();
-                        Session.set('plexauthuser', false);
-                    } else if (data === true) {
-                        Session.setPersistent('plexauthuser', true);
-                        Session.setPersistent('plexuser', plexUsername);
-                    } else if (data === false) {
-                        $('#plex-wrong').show();
-                        $('#plex-user-form button').html('<i class="fa fa-user  fa-fw"></i> Sign In');
-                        Session.set('plexauthuser', false);
-                    } else {
-                        $('#plex-user-form button').html('<i class="fa fa-user  fa-fw"></i> Sign In');
-                        $('#plex-error').show();
-                        Session.set('plexauthuser', false);
-                    }
-                });
-            } else if (data === false) {
-                Session.setPersistent('plexauthuser', true);
-                Session.setPersistent('plexuser', plexUsername);            }
-        });
-                        
-        return false;
+    'click #selMovie': function (event) {
+	   		$('#searchForm').show();
+	   		$('#search').focus().val('');
+	        $('#requests-block').show();
+	        $('#resultsList').hide();
+	        $('#requests').hide();
+			$('#showRequests').show();
+			$('#hideRequests').hide();
+	        $('#selTV').removeClass('btn-primary');
+	        $(event.target).addClass('btn-primary');
+            Session.set("searchType", "movie");
+    },
+    'click #selTV': function (event) {
+	        $('#searchForm').show();
+	        $('#search').focus().val('');
+	        $('#requests-block').show();
+	        $('#resultsList').hide();
+	        $('#requests').hide();
+	        $('#showRequests').show();
+			$('#hideRequests').hide();
+	        $('#selMovie').removeClass('btn-primary');
+	        $(event.target).addClass('btn-primary');
+            Session.set("searchType", "tv");
+    },
+    'click #showRequests': function (event) {
+	        $('#requests').toggle();
+			$('#showRequests').hide();
+			$('#hideRequests').show();
+	        $('html, body').animate({
+				scrollTop: $('#hideRequests').offset().top
+			}, 500);
+    },
+    'click #hideRequests': function (event) {
+	        $('#requests').toggle();
+			$('#showRequests').show();
+			$('#hideRequests').hide();
+	        $('html, body').animate({
+				scrollTop: $('#picktype').offset().top
+			}, 500);
     }
 });

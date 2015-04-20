@@ -1,3 +1,0 @@
-<template name="item">
-    {{#if tvdb}}<li><a href="http://www.dereferer.org/?http://thetvdb.com/?tab=series&id={{tvdb}}" target="_blank" >{{title}} ({{released}}){{#if currentUser }}{{#if user}} Requested by {{user}}{{/if}}{{/if}}</a></li>{{else}}<li><a href="http://www.dereferer.org/?http://www.imdb.com/title/{{imdb}}" target="_blank" >{{#if downloaded}}<s>{{title}} ({{released}})</s> - Downloaded!{{else}}{{title}} ({{released}}){{/if}}{{#if currentUser }}{{#if user}} Requested by {{user}}{{/if}}{{/if}}</a></li>{{/if}}
-</template>

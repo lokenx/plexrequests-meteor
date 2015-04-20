@@ -1,9 +1,9 @@
-Meteor.publish('movies', function (){
-    return Movies.find({});
+Meteor.FilterCollections.publish(Movies, {
+  name: 'filter-movies'
 });
 
-Meteor.publish('tv', function (){
-    return TV.find({});
+Meteor.FilterCollections.publish(TV, {
+  name: 'filter-tv'
 });
 
 Meteor.publish('cpapi', function () {
@@ -243,15 +243,15 @@ Meteor.methods({
             console.log(error);
             return false;
         }
-        
+
     },
     'searchSickRage' : function(id, title, year, puser) {
         //Check if SickRage service is enabled
         if (Settings.findOne({_id:"sickragesetting"}).enabled){
-            
+
             //If enabled check if can connect to it
             var srAPI = Settings.findOne({_id:"sickragesetting"}).api;
-            
+
             //Workaround to allow self-signed SSL certs, however can be dangerous and should not be used in production, looking into better way
             //But it's possible there's nothing much I can do
             process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
@@ -268,7 +268,7 @@ Meteor.methods({
             if (Meteor.http.call("GET", srAPI + "?cmd=show&tvdbid=" + id)['data']['result'] === "failure") {
                 //If not in DB add to DB
                 var sickRageAdd = Meteor.http.call("GET", srAPI  + "?cmd=show.addnew&tvdbid=" + id + "&status=wanted");
-     
+
                 if (sickRageAdd['data']['result'] === "success") {
                     TV.insert({
                         title: title,
@@ -282,13 +282,13 @@ Meteor.methods({
                 } else {
                     return "error"
                 }
-            } else if (Meteor.http.call("GET", srAPI + "?cmd=show&tvdbid=" + id)['data']['result'] === "success") {    
+            } else if (Meteor.http.call("GET", srAPI + "?cmd=show&tvdbid=" + id)['data']['result'] === "success") {
                 //If in DB let user know
                 return "downloaded";
             } else {
                 return "error";
             }
-        
+
         } else {
         //If not enabled add to requests lists
             TV.insert({
@@ -301,6 +301,7 @@ Meteor.methods({
             });
             return "added";
         }
+
     }
 
 });
