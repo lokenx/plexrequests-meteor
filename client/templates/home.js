@@ -1,6 +1,6 @@
 Template.home.events({
     'click #selMovie': function (event) {
-	   		$('#searchForm').show();
+	   		$('#searchField').show();
 	   		$('#search').focus().val('');
 	        $('#requests-block').show();
 	        $('#resultsList').hide();
@@ -12,7 +12,7 @@ Template.home.events({
             Session.set("searchType", "movie");
     },
     'click #selTV': function (event) {
-	        $('#searchForm').show();
+	        $('#searchField').show();
 	        $('#search').focus().val('');
 	        $('#requests-block').show();
 	        $('#resultsList').hide();

@@ -1,13 +1,13 @@
 var timer = null; //timer varible is to turn off search spiner after typing has stopped
 var status;
 Template.search.events({
-	'focus #search': function () {
+	'focus #searchField': function () {
 			    $('#search').select().mouseup(function (e) {
 			        e.preventDefault();
 			        $(this).unbind("mouseup");
 			    });
 	},
-	'keyup  #search': _.throttle(function (event) {
+	'keyup  #searchField': _.throttle(function (event) {
 			$('#searchWorking').show();
 		    var searchterm = $(event.target).val().trim();
 		    var url = "http://api.themoviedb.org/3/search/"+Session.get('searchType')+"?api_key=95a281fbdbc2d2b7db59680dade828a6&query=" + searchterm;
