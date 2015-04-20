@@ -1,0 +1,13 @@
+<template name="itemmovie">
+		<ul class="list-group">
+			{{#each fcResults}}
+				<li class="list-group-item">
+				    <div class="row">
+				    	<div class="col-sm-6"><a href="http://www.dereferer.org/?{{#if tvdb}}http://thetvdb.com/?tab=series&id={{tvdb}}{{else}}http://www.imdb.com/title/{{imdb}}{{/if}}" target="_blank">{{title}}</a></div>
+						<div class="col-sm-3">({{released}})</div>
+						<div class="col-sm-3">{{#if currentUser }}{{#if user}}{{user}}{{/if}}{{/if}}<div class="pull-right item-status">{{#if downloaded}}<span class="enabledSuccess"><i class="fa fa-check-circle"></i></span>{{/if}}</div></div>
+				    </div>
+				</li>
+		    {{/each}}
+		</ul>
+</template>

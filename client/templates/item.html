@@ -1,8 +1,0 @@
-<template name="item">
-    <li class="list-group-item row">
-    	<div class="col-md-6"><a href="http://www.dereferer.org/?{{#if tvdb}}http://thetvdb.com/?tab=series&id={{tvdb}}{{else}}http://www.imdb.com/title/{{imdb}}{{/if}}" target="_blank">{{title}}</a></div>
-		<div class="col-md-2">({{released}})</div>
-		<div class="col-md-3">{{#if currentUser }}{{#if user}} Requested by {{user}}{{/if}}{{/if}}</div>
-		<div class="col-md-1">{{#if downloaded}}<span class="enabledSuccess"><i class="fa fa-check-circle"></i></span>{{/if}}</div>
-	</li>
-</template>

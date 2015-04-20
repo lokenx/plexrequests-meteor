@@ -27,7 +27,7 @@ Template.searchresults.events({
 					                $(event.target).html('Movie added! <i class="fa fa-check-circle"></i>').addClass('btn-success').addClass('disabled');
 				                    Meteor.call('pushBullet', title, puser);
 				                } else if (data === "downloaded") {
-				                    $(event.target).html('Already in Library').addClass('btn-warning').addClass('disabled');
+				                    $(event.target).html('<i class="icon-download-alt"></i> Already in Library').addClass('btn-warning').addClass('disabled');
 				                } else if (data === "error") {
 					                $(event.target).html('<i class="fa fa-exclamation-triangle"></i> Error').addClass('btn-danger');
 			                    } else {
@@ -38,10 +38,10 @@ Template.searchresults.events({
 				            return false;
 				        } else {
 				            if (Movies.findOne({imdb: imdb}).downloaded === true) {
-				                $(event.target).html('Already in Library').addClass('btn-warning').addClass('disabled');
+				                $(event.target).html('<i class="icon-download-alt"></i> Already in Library').addClass('btn-warning').addClass('disabled');
 				                return false;
 				            } else {
-				                $(event.target).html('Already Requested').addClass('btn-warning').addClass('disabled');
+				                $(event.target).html('<i class="icon-share-alt"></i> Already Requested').addClass('btn-warning').addClass('disabled');
 				                return false;
 				            }
 				        return false;
@@ -69,7 +69,7 @@ Template.searchresults.events({
 			                        $(event.target).html('TV Series added! <i class="fa fa-check-circle"></i>').addClass('btn-success').addClass('disabled');
 			                        Meteor.call('pushBullet', title, puser);
 			                    } else if (data === "downloaded") {
-			                        $(event.target).html('Already in Library').addClass('btn-warning').addClass('disabled');
+			                        $(event.target).html('<i class="icon-share-alt"></i> Already in Library').addClass('btn-warning').addClass('disabled');
 			                    } else if (data === "error") {
 				                    $(event.target).html('<i class="fa fa-exclamation-triangle"></i> Error').addClass('btn-danger');
 			                    } else {
@@ -80,10 +80,10 @@ Template.searchresults.events({
 			                return false;
 			            } else {
 			                if (TV.findOne({tvdb: tvdb}).downloaded === true) {
-			                        $(event.target).html('Already in Library').addClass('btn-warning').addClass('disabled');
+			                        $(event.target).html('<i class="icon-download-alt"></i> Already in Library').addClass('btn-warning').addClass('disabled');
 			                        return false;
 			                } else {
-			                        $(event.target).html('Already Requested').addClass('btn-warning').addClass('disabled');
+			                        $(event.target).html('<i class="icon-share-alt"></i> Already Requested').addClass('btn-warning').addClass('disabled');
 			                        return false;
 			                }
 			                return false;

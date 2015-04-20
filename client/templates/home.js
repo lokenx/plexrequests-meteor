@@ -5,6 +5,8 @@ Template.home.events({
 	        $('#requests-block').show();
 	        $('#resultsList').hide();
 	        $('#requests').hide();
+			$('#showRequests').show();
+			$('#hideRequests').hide();
 	        $('#selTV').removeClass('btn-primary');
 	        $(event.target).addClass('btn-primary');
             Session.set("searchType", "movie");
@@ -15,6 +17,8 @@ Template.home.events({
 	        $('#requests-block').show();
 	        $('#resultsList').hide();
 	        $('#requests').hide();
+	        $('#showRequests').show();
+			$('#hideRequests').hide();
 	        $('#selMovie').removeClass('btn-primary');
 	        $(event.target).addClass('btn-primary');
             Session.set("searchType", "tv");
