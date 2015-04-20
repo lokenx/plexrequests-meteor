@@ -18,8 +18,9 @@ Template.searchresults.events({
                 $.getJSON(url)
                     .done(function (data) {
                         imdb = data['imdb_id'];
+                        id = data['id'];
 				        if (Movies.findOne({imdb: imdb}) === undefined) {
-				            Meteor.call('searchCP', imdb, title, year, puser, function (err, data) {
+				            Meteor.call('searchCP', id, imdb, title, year, puser, function (err, data) {
 				                if (err) {
 				                    console.log(err)
 				                    $(event.target).parent().html('Something went wrong, please let the admin know!');
@@ -59,9 +60,9 @@ Template.searchresults.events({
                 $.getJSON(url)
                     .done(function (data) {
                         tvdb = data['tvdb_id'];
-
+                        id = data['id'];
 			            if (TV.findOne({tvdb: tvdb}) === undefined) {
-			                Meteor.call('searchSickRage', tvdb, title, year, puser, function (err, data) {
+			                Meteor.call('searchSickRage', id, tvdb, title, year, puser, function (err, data) {
 			                    if (err) {
 			                        console.log(err);
 			                        $(event.target).parent().html('Something went wrong, please let the admin know!');
