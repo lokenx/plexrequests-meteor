@@ -8,9 +8,9 @@ UI.registerHelper('searchType',function(input){
 });
 
 UI.registerHelper('isMovie',function(input){
-    	if (Session.get('searchType') === 'movie') {
-            return true;
-		}else{
-	        return false;
-        }
+    if (Session.get('searchType') === 'movie') {
+        return true;
+    } else {
+        return false;
+    }
 });

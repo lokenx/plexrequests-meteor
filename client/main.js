@@ -7,19 +7,19 @@ Meteor.subscribe('cpapi');
 Session.set('searchType', '');
 
 Router.configure({
-  notFoundTemplate: "NotFound"
+    notFoundTemplate: "NotFound"
 });
 
 Router.route('/', function () {
-  this.render('home');
+    this.render('home');
 });
 
 Router.route('/couchpotato', function () {
-  this.render('couchpotato');
+    this.render('couchpotato');
 });
 
 Router.route('/plex', function () {
-  this.render('plex');
+    this.render('plex');
 });
 
 Template.body.helpers({
@@ -29,22 +29,22 @@ Template.body.helpers({
 });
 
 Houston.menu({
-  'type': 'link',
-  'use': '/plex',
-  'title': 'Plex Auth Setup',
-  'target': '_blank'
+    'type': 'link',
+    'use': '/plex',
+    'title': 'Plex Auth Setup',
+    'target': '_blank'
 });
 
 Houston.menu({
-  'type': 'link',
-  'use': '/couchpotato',
-  'title': 'CouchPotato Status',
-  'target': '_blank'
+    'type': 'link',
+    'use': '/couchpotato',
+    'title': 'CouchPotato Status',
+    'target': '_blank'
 });
 
 Houston.menu({
-  'type': 'link',
-  'use': 'http://plexrequests.8bits.ca',
-  'title': 'Plex Requests Info',
-  'target': '_blank'
+    'type': 'link',
+    'use': 'http://plexrequests.8bits.ca',
+    'title': 'Plex Requests Info',
+    'target': '_blank'
 });
