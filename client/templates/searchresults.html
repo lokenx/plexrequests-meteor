@@ -1,10 +1,11 @@
 <template name="searchresults">
     <li class="list-group-item" data-id="{{id}}" data-title="{{title}}" data-year="{{year}}">
-        {{title}} ({{year}}) {{#if statusIs "Add"}}
-        	<span class="add-request btn btn-primary pull-right btn-xs">{{status}}</span>
-	    {{else}}
-	    	<span class="btn btn-warning disabled pull-right btn-xs">{{status}}</span>
-	    {{/if}}
-	    <div class="requestError"></div>
+        {{title}} ({{year}})
+        {{#if statusIs "Add"}}
+            <span class="add-request btn btn-primary pull-right btn-xs">{{status}}</span>
+        {{else}}
+            <span class="btn btn-warning disabled pull-right btn-xs">{{status}}</span>
+        {{/if}}
+        <div class="requestError"></div>
     </li>
 </template>

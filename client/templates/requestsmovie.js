@@ -2,13 +2,13 @@ MovieFilter = new Meteor.FilterCollections(Movies, {
 	  	template: 'requestsmovie',
 	  	name: 'filter-movies',
 	  	sort:{
-		    order: ['desc', 'asc'],
-	/*
-		    defaults: [
-		      ['released', 'desc'],
-		      ['title', 'asc']
-		    ]
-	*/
+          order: ['desc', 'asc'],
+          /*
+          defaults: [
+		          ['released', 'desc'],
+		          ['title', 'asc']
+              ]
+          */
 		  },
 		pager: {
 		   //options: [20, 10, 15, 25, 50],
@@ -16,15 +16,14 @@ MovieFilter = new Meteor.FilterCollections(Movies, {
 		   //currentPage: 1,
 		   //showPages: 5,
 		},
-	/* //Can not seme ti get the filter click to only show none downloaded movies
+    /* Can not seme ti get the filter click to only show none downloaded movies
 		filters: {
 		     "downloaded": {
-			      title: 'Not Downloaded',
+            title: 'Not Downloaded',
 			      value: true,
 			      condition: '$and',
 			      searchable: 'optional'
-			    }
-	    }
+            }
+    }
 	*/
-
 });
