@@ -53,12 +53,12 @@ if (!(Settings.findOne({_id: "sickragesetting"}))) {
 };
 
 Meteor.methods({
-    'pushBullet' : function (movie, puser) {
+    'pushBullet' : function (movie, year, puser) {
         if (Settings.findOne({_id:"pushbulletsetting"}).enabled) {
             var pbAPI = Settings.findOne({_id:"pushbulletsetting"}).api;
             Meteor.http.call("POST", "https://api.pushbullet.com/v2/pushes",
                              {auth: pbAPI + ":",
-                              params: {"type": "note", "title": "Plex Requests by " + puser, "body": movie}
+                              params: {"type": "note", "title": "Plex Requests by " + puser, "body": movie + " (" + year + ")"}
                              });
         }
     },
@@ -100,7 +100,7 @@ Meteor.methods({
                 //Movie is on the wanted list already
                 //var json = JSON.parse(initSearch.content);
                 //var id = json['media']['info']['imdb'];
-                if (Movies.findOne({imdb: id}) === undefined) {
+                if (Movies.findOne({imdb: imdb}) === undefined) {
                     //var movie = json['media']['title'];
                     //var released = json['media']['info']['released'];
                     Movies.insert({
@@ -118,8 +118,8 @@ Meteor.methods({
                 //Movie is downloaded already
                 //var json = JSON.parse(initSearch.content);
                 //var id = json['media']['info']['imdb'];
-                if (Movies.findOne({imdb: id}) !== undefined) {
-                    Movies.update({imdb: id}, {$set: {downloaded: true}});
+                if (Movies.findOne({imdb: imdb}) !== undefined) {
+                    Movies.update({imdb: imdb}, {$set: {downloaded: true}});
                 }
                 return "downloaded";
             }
@@ -141,7 +141,7 @@ Meteor.methods({
         if (Settings.findOne({_id:"couchpotatosetting"}).enabled) {
             var allMovies = Movies.find({downloaded: false});
             allMovies.forEach(function (movie) {
-                Meteor.call('searchCP', movie.imdb, movie.title, movie.released);
+                Meteor.call('searchCP', movie.id, movie.imdb, movie.title, movie.released);
             });
         };
     },
