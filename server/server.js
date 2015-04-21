@@ -53,12 +53,12 @@ if (!(Settings.findOne({_id: "sickragesetting"}))) {
 };
 
 Meteor.methods({
-    'pushBullet' : function (movie, puser) {
+    'pushBullet' : function (movie, year, puser) {
         if (Settings.findOne({_id:"pushbulletsetting"}).enabled) {
             var pbAPI = Settings.findOne({_id:"pushbulletsetting"}).api;
             Meteor.http.call("POST", "https://api.pushbullet.com/v2/pushes",
                              {auth: pbAPI + ":",
-                              params: {"type": "note", "title": "Plex Requests by " + puser, "body": movie}
+                              params: {"type": "note", "title": "Plex Requests by " + puser, "body": movie + " (" + year + ")"}
                              });
         }
     },
