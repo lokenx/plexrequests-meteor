@@ -67,7 +67,7 @@ label, .radio label {
 }
 
 .top-buffer {
-	margin-top:60px;
+	margin-top:5%;
 }
 .list-group-item{
 	border-color: #2b3e50;
@@ -117,6 +117,19 @@ label, .radio label {
    display: block;
    padding: 10px 15px;
    color: #f0ad4e;
+}
+
+table, .table {
+    font-size: 1em;
+}
+table td:nth-of-type(1) {
+    width: 50%;
+}
+table td:nth-of-type(2) {
+    width: 30%;
+}
+table td:nth-of-type(3) {
+    width: 20%;
 }
 
 /*
