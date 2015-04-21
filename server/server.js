@@ -1,9 +1,9 @@
-Meteor.FilterCollections.publish(Movies, {
-  name: 'filter-movies'
+Meteor.publish('movies', function (){
+    return Movies.find({});
 });
 
-Meteor.FilterCollections.publish(TV, {
-  name: 'filter-tv'
+Meteor.publish('tv', function (){
+    return TV.find({});
 });
 
 Meteor.publish('cpapi', function () {

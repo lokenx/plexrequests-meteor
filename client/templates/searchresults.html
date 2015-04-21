@@ -4,7 +4,11 @@
         {{#if statusIs "Add"}}
             <span class="add-request btn btn-primary pull-right btn-xs">{{status}}</span>
         {{else}}
+        {{#if statusIs "Already in Library"}}
+            <span class="btn btn-success disabled pull-right btn-xs">{{status}}</span>
+        {{else}}
             <span class="btn btn-warning disabled pull-right btn-xs">{{status}}</span>
+        {{/if}}
         {{/if}}
         <div class="requestError"></div>
     </li>

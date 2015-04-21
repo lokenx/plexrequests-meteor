@@ -1,5 +1,6 @@
 accounts-base@1.2.0
 accounts-password@1.1.1
+aldeed:tabular@1.1.0
 amplify@1.0.0
 autoupdate@1.2.1
 base64@1.0.3
@@ -62,7 +63,6 @@ srp@1.0.3
 templating@1.1.1
 tmeasday:paginated-subscription@0.2.4
 tracker@1.0.7
-tsega:filter-collections@0.1.5
 u2622:persistent-session@0.3.2
 ui@1.0.6
 underscore@1.0.3

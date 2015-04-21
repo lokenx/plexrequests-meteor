@@ -1,56 +1,11 @@
 <template name="requeststv">
     <div class="overview" id="requests" style="display:none;">
         <h3>{{searchIs}} Requests:</h3>
-        <!-- https://github.com/tsega/filter-collections/ -->
-        <!-- Can not get this filter to work yet.
-            <a href="#" class="fc-filter" data-fc-filter-field="downloaded" data-fc-filter-value="true" >Show me none downloaded</a>
-        -->
-        <ul id="filterbar" class="list-group">
-            <li class="list-group-item">
-                <div class="row">
-                    <div class="col-sm-6"><a class="col-sm-6 fc-sort" data-fc-sort="title">Title {{#unless fcSort.title}}<i class="fa fa-sort"></i>{{/unless}}{{#if fcSort.title.desc}}<i class="fa fa-sort-desc"></i>{{/if}} {{#if fcSort.title.asc}}<i class="fa fa-sort-asc"></i>{{/if}}</a></div>
-                    <div class="col-sm-3"><a class="fc-sort" data-fc-sort="released">Release Date {{#unless fcSort.released}}<i class="fa fa-sort"></i>{{/unless}}{{#if fcSort.released.desc}} <i class="fa fa-sort-desc"></i>{{/if}} {{#if fcSort.released.asc}} <i class="fa fa-sort-asc"></i>{{/if}}</a></div>
-                    <div class="col-sm-3">{{#if currentUser }} <a class="fc-sort" data-fc-sort="user">Requested By {{#unless fcSort.user}}<i class="fa fa-sort"></i>{{/unless}}{{#if fcSort.user.desc}} <i class="fa fa-sort-desc"></i>{{/if}} {{#if fcSort.user.asc}} <i class="fa fa-sort-asc"></i>{{/if}}</a>{{/if}}</div>
-                </div>
-            </li>
-        </ul>
-        <ul class="list-group">
-            {{#each fcResults}}
-                <li class="list-group-item">
-                    <div class="row">
-                        <div class="col-sm-6"><a href="http://www.dereferer.org/?{{#if tvdb}}http://thetvdb.com/?tab=series&id={{tvdb}}{{else}}http://www.imdb.com/title/{{imdb}}{{/if}}" target="_blank">{{title}}</a></div>
-                        <div class="col-sm-3">({{released}})</div>
-                        <div class="col-sm-3">{{#if currentUser }}{{#if user}}{{user}}{{/if}}{{/if}}<div class="pull-right item-status">{{#if downloaded}}<span class="enabledSuccess"><i class="fa fa-check-circle"></i></span>{{/if}}</div></div>
-                    </div>
-                </li>
-            {{/each}}
-        </ul>
-
-        <div id="pagination">
-            {{#if fcPager.pages}}
-            <!-- numbered pager -->
-                <ul class="pagination">
-                    <li><a href="#" class="fc-pager-first">&lt;&lt;</a></li>
-                    <li><a href="#" class="fc-pager-previous">&lt;</a></li>
-                    {{#each fcPager.pages}}
-                        <li class="{{status}}"><a href="#" class="fc-pager-page" data-fc-pager-page="{{page}}">{{page}}</a></li>
-                    {{/each}}
-                    <li><a href="#" class="fc-pager-next">&gt;</a></li>
-                    <li><a href="#" class="fc-pager-last">&gt;&gt;</a></li>
-                </ul>
-                <!-- /numbered pager -->
-            
-                <!-- pager count change -->
-                <div class="pagination pull-right text-right">
-                    <a href="#" class="fc-pager-option" data-fc-pager-page="10">default (10)</a> | <a href="#" class="fc-pager-option" data-fc-pager-page="20">(20)</a> | <a href="#" class="fc-pager-option" data-fc-pager-page="40">(40)</a>
-                    <br>
-                    <strong>{{fcPager.offsetStart}}</strong> to <strong>{{fcPager.offsetEnd}}</strong> of <strong>{{fcPager.totalItems}}</strong> records.
-                </div>
-                <!-- /pager status -->
-            {{/if}}
-            <div>
-                <button id="updateRequests" type="button" class="btn btn-info" onclick="javascript:Meteor.call('updateCP');">Update status requests!</button>
-            </div>
+        
+        {{> tabular table=TabularTables.TV class="table table-bordered table-striped"}}
+        
+        <div>
+            <button id="updateRequests" type="button" class="btn btn-info" onclick="javascript:Meteor.call('updateCP');">Update status requests!</button>
         </div>
     </div>
 </template>
