@@ -7,10 +7,6 @@ label, .radio label {
     font-size: 1em;
 }
 
-#results {
-    padding-left: 15px;
-}
-
 .btn {
     margin: 2px 0px;
     white-space: normal;
@@ -24,21 +20,11 @@ label, .radio label {
     padding-bottom: 10%;
 }
 
-/*.info ul {
-    max-height: 200px;
-    overflow: scroll;
-}*/
-
 @media (min-width: 768px) {
     body {
         padding-top: 60px;
     }
-    /*.info ul {
-        max-height: 400px
-    }*/
 }
-
-
 
 .enabledError {
     color: #c0392b;
@@ -74,3 +60,94 @@ label, .radio label {
 .unauthorized {
     text-align: center;
 }
+
+#showRequests.btn-primary:hover,
+.btn-group .btn-primary:hover {
+    background-color: #DD6928;
+}
+
+.top-buffer {
+	margin-top:5%;
+}
+.list-group-item{
+	border-color: #2b3e50;
+	margin-bottom: 0;
+}
+
+#resultsList .list-group-item .btn{
+   position: absolute;
+   right: 8px;
+   top: 8px;
+}
+#resultsList .list-group-item .btn.disabled {
+  opacity: 1.0;
+  filter: alpha(opacity=100);
+}
+
+#searchWorking.ball-clip-rotate>div {
+	width:18px;
+	height: 18px;
+}
+#filterbar {
+  margin-bottom: 0px;
+}
+#filterbar .list-group-item {
+  background-color: transparent;
+}
+#filterbar .list-group-item a {
+  color: #FFF;
+  display: block;
+  cursor: pointer;
+}
+#filterbar .list-group-item a:hover {
+  color: #DF691A;
+  text-decoration: none;
+}
+#requests .list-group-item .item-status {
+   width: 20px;
+   height: 20px;
+}
+/*Figure out the best way to display erors messages for search list*/
+#requestError{
+   position: absolute;
+   width: 100%;
+}
+#searchError{
+   position: relative;
+   display: block;
+   padding: 10px 15px;
+   color: #f0ad4e;
+}
+
+table, .table {
+    font-size: 1em;
+}
+table td:nth-of-type(1) {
+    width: 50%;
+}
+table td:nth-of-type(2) {
+    width: 30%;
+}
+table td:nth-of-type(3) {
+    width: 20%;
+}
+
+/*
+@media (max-width: 480px) {
+	.add-request {
+		  text-indent: -9999;
+		  white-space: nowrap;
+		  overflow: hidden;
+	}
+	.add-request:after {
+	 	content: "\f067";
+	    display: inline-block;
+	    font: normal normal normal 14px/1 FontAwesome;
+	    font-size: inherit;
+	    text-rendering: auto;
+	    -webkit-font-smoothing: antialiased;
+	    -moz-osx-font-smoothing: grayscale;
+	    transform: translate(0, 0);
+	}
+}
+*/

@@ -1,16 +1,5 @@
 <template name="search">
-	<form name="myform" id="myform" action="" method="get" class="form-inline">
-        <div class="form-group">
-            <input type="search" id="search" class="form-control" placeholder="Movie title" required>
-        </div>
-        <div class="form-group">
-            <input type="submit" value="Search for movie!" class="btn btn-primary">
-            {{#if requests}}
-            <button type="button" class="btn btn-default" onclick="Session.set('requests', false);">Hide requests!</button>
-            <button type="button" class="btn btn-info" onclick="javascript:Meteor.call('updateCP');">Update status requests!</button>
-            {{else}}
-            <button type="button" class="btn btn-default" onclick="Session.set('requests', true);">View requests!</button>
-            {{/if}}
-        </div>
+    <form name="myform" id="searchForm" action="" method="get" style="display:none">
+        <input type="search" id="search" class="form-control" placeholder="Start typing the title of a {{#if isMovie}}Movie{{else}}TV Series{{/if}}.." required>
     </form>
 </template>
