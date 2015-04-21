@@ -100,7 +100,7 @@ Meteor.methods({
                 //Movie is on the wanted list already
                 //var json = JSON.parse(initSearch.content);
                 //var id = json['media']['info']['imdb'];
-                if (Movies.findOne({imdb: id}) === undefined) {
+                if (Movies.findOne({imdb: imdb}) === undefined) {
                     //var movie = json['media']['title'];
                     //var released = json['media']['info']['released'];
                     Movies.insert({
