@@ -118,8 +118,8 @@ Meteor.methods({
                 //Movie is downloaded already
                 //var json = JSON.parse(initSearch.content);
                 //var id = json['media']['info']['imdb'];
-                if (Movies.findOne({imdb: id}) !== undefined) {
-                    Movies.update({imdb: id}, {$set: {downloaded: true}});
+                if (Movies.findOne({imdb: imdb}) !== undefined) {
+                    Movies.update({imdb: imdb}, {$set: {downloaded: true}});
                 }
                 return "downloaded";
             }
@@ -141,7 +141,7 @@ Meteor.methods({
         if (Settings.findOne({_id:"couchpotatosetting"}).enabled) {
             var allMovies = Movies.find({downloaded: false});
             allMovies.forEach(function (movie) {
-                Meteor.call('searchCP', movie.imdb, movie.title, movie.released);
+                Meteor.call('searchCP', movie.id, movie.imdb, movie.title, movie.released);
             });
         };
     },
