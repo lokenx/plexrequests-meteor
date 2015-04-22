@@ -267,9 +267,9 @@ Meteor.methods({
                 return "error";
             }
             //If can connect see if series is in DB already
-            if (Meteor.http.call("GET", srAPI + "?cmd=show&tvdbid=" + id)['data']['result'] === "failure") {
+            if (Meteor.http.call("GET", srAPI + "?cmd=show&tvdbid=" + tvdb)['data']['result'] === "failure") {
                 //If not in DB add to DB
-                var sickRageAdd = Meteor.http.call("GET", srAPI  + "?cmd=show.addnew&tvdbid=" + id + "&status=wanted");
+                var sickRageAdd = Meteor.http.call("GET", srAPI  + "?cmd=show.addnew&tvdbid=" + tvdb + "&status=wanted");
 
                 if (sickRageAdd['data']['result'] === "success") {
                     TV.insert({
@@ -282,10 +282,12 @@ Meteor.methods({
                         createdAt: new Date()
                     });
                     return "added";
+                if (sickRageAdd['data']['result'] === "failure") { // Returned message "An existing indexerid already exists in database"
+                	return "downloaded"	
                 } else {
                     return "error"
                 }
-            } else if (Meteor.http.call("GET", srAPI + "?cmd=show&tvdbid=" + id)['data']['result'] === "success") {
+            } else if (Meteor.http.call("GET", srAPI + "?cmd=show&tvdbid=" + tvdb)['data']['result'] === "success") {
                 //If in DB let user know
                 return "downloaded";
             } else {
