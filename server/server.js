@@ -7,7 +7,7 @@ Meteor.publish('tv', function (){
 });
 
 Meteor.publish('cpapi', function () {
-    if(this.userId) return Settings.find({_id: "couchpotatosetting"});
+    if(this.userId) return Settings.find({});
 });
 
 
@@ -306,6 +306,18 @@ Meteor.methods({
             return "added";
         }
 
-    }
+    },
+    'checkSREnabled' : function () {
+        return Settings.findOne({_id:"sickragesetting"}).enabled;
+    },
+    'checkSR' : function () {
+        var srAPI = Settings.findOne({_id:"sickragesetting"}).api;
+        var status = Meteor.http.call("GET", srAPI + "?cmd=sb.ping", {timeout:5000});
 
+        //Workaround to allow self-signed SSL certs, however can be dangerous and should not be used in production, looking into better way
+        //But it's possible there's nothing much I can do
+        process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+        return (status['data']['result']);
+
+    },
 });

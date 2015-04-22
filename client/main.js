@@ -22,6 +22,10 @@ Router.route('/plex', function () {
     this.render('plex');
 });
 
+Router.route('/sickrage', function () {
+    this.render('sickrage');
+});
+
 Template.body.helpers({
     url: function () {
     return Meteor.absoluteUrl();
@@ -44,7 +48,14 @@ Houston.menu({
 
 Houston.menu({
     'type': 'link',
+    'use': '/sickrage',
+    'title': 'SickRage Status',
+    'target': '_blank'
+});
+
+Houston.menu({
+    'type': 'link',
     'use': 'http://plexrequests.8bits.ca',
-    'title': 'Plex Requests Info',
+    'title': 'Project Site',
     'target': '_blank'
 });
