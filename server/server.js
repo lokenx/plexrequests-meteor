@@ -269,7 +269,7 @@ Meteor.methods({
             //If can connect see if series is in DB already
             if (Meteor.http.call("GET", srAPI + "?cmd=show&tvdbid=" + tvdb)['data']['result'] === "failure") {
                 //If not in DB add to DB
-                var sickRageAdd = Meteor.http.call("GET", srAPI  + "?cmd=show.addnew&tvdbid=" + tvdb + "&status=wanted");
+                var sickRageAdd = Meteor.http.call("GET", srAPI  + "?cmd=show.addnew&tvdbid=" + tvdb);
 
                 if (sickRageAdd['data']['result'] === "success") {
                     TV.insert({
