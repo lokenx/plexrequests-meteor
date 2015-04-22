@@ -36,21 +36,18 @@ Houston.menu({
     'type': 'link',
     'use': '/plex',
     'title': 'Plex Auth Setup',
-    'target': '_blank'
 });
 
 Houston.menu({
     'type': 'link',
     'use': '/couchpotato',
     'title': 'CouchPotato Status',
-    'target': '_blank'
 });
 
 Houston.menu({
     'type': 'link',
     'use': '/sickrage',
     'title': 'SickRage Status',
-    'target': '_blank'
 });
 
 Houston.menu({
