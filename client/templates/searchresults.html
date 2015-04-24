@@ -1,6 +1,6 @@
 <template name="searchresults">
     <li class="list-group-item" data-id="{{id}}" data-title="{{title}}" data-year="{{year}}">
-        {{title}} ({{year}})
+        {{title}} ({{year}}) &nbsp; <a href="http://www.dereferer.org/?{{link}}" target="_blank"><i class="fa fa-external-link-square"></i></a>
         {{#if statusIs "Add"}}
             <span class="add-request btn btn-primary pull-right btn-xs">{{status}}</span>
         {{else}}
@@ -11,5 +11,5 @@
         {{/if}}
         {{/if}}
         <div class="requestError"></div>
-    </li>
+    </li>            
 </template>

@@ -56,11 +56,17 @@ Template.search.events({
                                         }
                                     }
                                 }
+                                if (Session.get('searchType') === 'movie') {
+                                    link = "https://www.themoviedb.org/movie/" + id;
+                                } else {
+                                    link = "https://www.themoviedb.org/tv/" + id;
+                                }
                                 currentSearch._collection.insert({
                                     id: id,
                                     title: title,
                                     year: year,
-                                    status: status
+                                    status: status,
+                                    link: link
                                 });
                             }
                             $('#resultsList').show();
