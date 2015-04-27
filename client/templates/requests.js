@@ -13,25 +13,27 @@ Template.requestsmovie.helpers({
             rowsPerPage: 10,
             class: 'table table-bordered table-striped',
             showFilter: true,
+            responsive: true,
             fields: [
+	            { key: 'createdAt', label: 'Created', sort: 'descending', hidden: true },
 			    { key: 'title',  label: 'Title' },
 			    { key: 'released',  label: 'Released' },
 			    { key: 'downloaded', label:'Done',
 				    fn: function (value) {
 					    if(value===true){
-						    return '<i class="fa fa-check-circle enabledSuccess"></i>';
+						    return new Spacebars.SafeString('<i class="fa fa-check-circle enabledSuccess"></i>');
 						}else{
-							return '<i class="fa fa-cloud-download"></i>';
+							return new Spacebars.SafeString('<i class="fa fa-cloud-download"></i>');
 						};
 					}
 				},
-				{key: "id", title: "Info",
+				{key: "id", label: "Info",
 		            tmpl: Meteor.isClient && Template.movielink
 		        },
 			    { key: 'user',  label: 'User',
 				    fn: function (value) {
 					    if (Meteor.userId()) {
-		                    return data;
+		                    return value;
 		                } else {
 		                    return '';
 		                }
