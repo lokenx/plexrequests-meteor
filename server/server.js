@@ -282,8 +282,6 @@ Meteor.methods({
                         createdAt: new Date()
                     });
                     return "added";
-                }else if(sickRageAdd['data']['result'] === "failure"){ //Message is "An existing indexerid already exists in database"
-	                return "downloaded";
                 } else {
                     return "error"
                 }
