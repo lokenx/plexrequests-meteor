@@ -88,30 +88,13 @@ label, .radio label {
 	width:18px;
 	height: 18px;
 }
-#filterbar {
-  margin-bottom: 0px;
-}
-#filterbar .list-group-item {
-  background-color: transparent;
-}
-#filterbar .list-group-item a {
-  color: #FFF;
-  display: block;
-  cursor: pointer;
-}
-#filterbar .list-group-item a:hover {
-  color: #DF691A;
-  text-decoration: none;
-}
-#requests .list-group-item .item-status {
-   width: 20px;
-   height: 20px;
-}
+
 /*Figure out the best way to display erors messages for search list*/
 #requestError{
    position: absolute;
    width: 100%;
 }
+
 #searchError{
    position: relative;
    display: block;
@@ -119,35 +102,89 @@ label, .radio label {
    color: #f0ad4e;
 }
 
-table, .table {
-    font-size: 1em;
+/*Responsive table  + styles*/
+.reactive-table-options,
+.reactive-table-filter{
+	padding: 0;
 }
-table td:nth-of-type(1) {
-    width: 50%;
+.reactive-table-filter{
+	margin-right: 5px;
 }
-table td:nth-of-type(2) {
-    width: 30%;
+.reactive-table {
+  background: #4e5d6c;
+  overflow: hidden;
+  font-size: 15px;
+ }
+thead tr {
+  border-bottom: 3px solid #2b3e50;
 }
-table td:nth-of-type(3) {
-    width: 20%;
-}
+ tr {
+     border-bottom: 2px solid #2b3e50;
+  }
+th, td {
+      padding: 10px 15px!important;
+  }
+th, td:before {
+    color: #dd5!important;
+  }
 
-/*
-@media (max-width: 480px) {
-	.add-request {
-		  text-indent: -9999;
-		  white-space: nowrap;
-		  overflow: hidden;
-	}
-	.add-request:after {
-	 	content: "\f067";
-	    display: inline-block;
-	    font: normal normal normal 14px/1 FontAwesome;
-	    font-size: inherit;
-	    text-rendering: auto;
-	    -webkit-font-smoothing: antialiased;
-	    -moz-osx-font-smoothing: grayscale;
-	    transform: translate(0, 0);
-	}
+.reactive-table-navigation .form-inline input {
+  padding: 0px 6px;
+  width: 32px;
+  height: 26px;
+  text-align: center;
 }
+/*
+Bootstrap no tables mobile
+http://bootsnipp.com/snippets/featured/no-more-tables-respsonsive-table
 */
+@media only screen and (max-width: 600px) {
+
+    /* Force table to not be like tables anymore */
+	#no-more-tables table,
+	#no-more-tables thead,
+	#no-more-tables tbody,
+	#no-more-tables th,
+	#no-more-tables td,
+	#no-more-tables tr {
+		display: block;
+	}
+
+	/* Hide table headers (but not display: none;, for accessibility) */
+	#no-more-tables thead tr {
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+
+	#no-more-tables tr {  }
+
+	#no-more-tables td {
+		/* Behave  like a "row" */
+		border: none;
+ 		border-bottom: 1px solid #677076;
+		padding: 6px 15px!important;
+		position: relative;
+		padding-left: 40%!important;
+		white-space: normal;
+		text-align:left;
+	}
+
+	#no-more-tables td:before {
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 15px;
+		width: 35%;
+		padding-right: 10px!important;
+		white-space: nowrap;
+		text-align:left;
+		font-weight: bold;
+	}
+
+	/*
+	Label the data
+	*/
+	#no-more-tables td:before { content: attr(class); }
+}
