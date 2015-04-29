@@ -1,10 +1,14 @@
-<template name="requestsmovie">
+<template name="requests">
     <div class="overview" id="requests" style="display:none;">
         <h3>{{searchIs}} Requests:</h3>
-            
-        {{> tabular table=TabularTables.Movies class="table table-bordered table-striped"}}
-
-        <div>
+        <div id="no-more-tables">
+        	{{#if isMovie}}
+        		{{> reactiveTable collection=Movies settings=settings }}
+        	{{else}}
+        		{{> reactiveTable collection=TV settings=settings }}
+        	{{/if}}
+        </div>
+    <div>
             <button id="updateRequests" type="button" class="btn btn-info" onclick="javascript:Meteor.call('updateCP');">Update status requests!</button>
         </div>
     </div>
