@@ -32,7 +32,11 @@ Template.requests.helpers({
 					},
 					{ key: "id", label: "Info", cellClass: 'Info', sortable: false,
 			            fn: function (value) {
-							    return new Spacebars.SafeString('<a href="http://www.dereferer.org/?https://www.themoviedb.org/movie/'+value+'" target="_blank" style="text-align:center;"><i class="fa fa-external-link-square"></i></a>');
+				            if (Session.get('searchType') === 'movie'){
+					            return new Spacebars.SafeString('<a href="http://www.dereferer.org/?https://www.themoviedb.org/movie/'+value+'" target="_blank" style="text-align:center;"><i class="fa fa-external-link-square"></i></a>');
+					        }else{
+						        return new Spacebars.SafeString('<a href="http://www.dereferer.org/?https://www.themoviedb.org/tv/'+value+'" target="_blank" style="text-align:center;"><i class="fa fa-external-link-square"></i></a>');
+						    }
 						}
 			        },
 				    { key: 'user',  label: 'User', cellClass: 'User',
