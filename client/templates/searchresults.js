@@ -26,7 +26,7 @@ Template.searchresults.events({
                                     $(event.target).parent().html('Something went wrong, please let the admin know!');
                                 } else if ((data === "active") || (data ==="added")) {
                                     $(event.target).html('Movie added! <i class="fa fa-check-circle"></i>').addClass('btn-success').addClass('disabled');
-                                    Meteor.call('pushBullet', title, year, puser);
+                                    Meteor.call('pushBullet', title, year, puser, "Movie");
                                 } else if (data === "downloaded") {
                                     $(event.target).html('<i class="icon-download-alt"></i> Already in Library').addClass('btn-warning').addClass('disabled');
                                 } else if (data === "error") {
@@ -67,7 +67,7 @@ Template.searchresults.events({
                                     $(event.target).parent().html('Something went wrong, please let the admin know!');
                                 } else if (data ==="added") {
                                     $(event.target).html('TV Series added! <i class="fa fa-check-circle"></i>').addClass('btn-success').addClass('disabled');
-                                    Meteor.call('pushBullet', title, year, puser);
+                                    Meteor.call('pushBullet', title, year, puser, "TV");
                                 } else if (data === "downloaded") {
                                     $(event.target).html('<i class="icon-share-alt"></i> Already in Library').addClass('btn-warning').addClass('disabled');
                                 } else if (data === "error") {
