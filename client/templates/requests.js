@@ -1,8 +1,13 @@
 Template.requests.helpers({
     Movies: function () {
-        return Movies;
-    }
+		var date = new Date(+new Date - 12096e5);
+		return Movies.find({$or: [
+			{ downloaded : false },
+			{ downloaded : true , createdAt: {"$gte": date} }
+			]});
+	}
 });
+
 Template.requests.helpers({
     TV: function () {
         return TV;
