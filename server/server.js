@@ -43,6 +43,17 @@ if (!(Settings.findOne({_id: "pushbulletsetting"}))) {
     });
 };
 
+// PushOver
+if (!(Settings.findOne({_id: "pushoversetting"}))) {
+    Settings.insert({
+        _id: "pushoversetting",
+        service: "PushOver",
+        api: "abcdef0123456789",
+        userKey: "abcdef0123456789",
+        enabled: false
+    });
+};
+
 if (!(Settings.findOne({_id: "sickragesetting"}))) {
     Settings.insert({
         _id: "sickragesetting",
@@ -70,11 +81,43 @@ Meteor.methods({
     'pushBullet' : function (movie, year, puser, type) {
         if (Settings.findOne({_id:"pushbulletsetting"}).enabled) {
             var pbAPI = Settings.findOne({_id:"pushbulletsetting"}).api;
+            this.unblock();
             Meteor.http.call("POST", "https://api.pushbullet.com/v2/pushes",
                              {auth: pbAPI + ":",
                               params: {"type": "note", "title": "Plex Requests by " + puser, "body": type + ": " + movie + " (" + year + ")"}
                              });
         }
+    },
+    'pushOver': function(media, year, plexUser, type){
+        check(media, String);
+        check(year, String);
+        check(plexUser, String);
+        check(type, String);
+
+        var pushOver = Settings.findOne('pushoversetting');
+
+        if(!pushOver){ return; }
+
+        var pushOverToken = pushOver.api;
+        var pushOverUserKey = pushOver.userKey;
+
+        var url = 'https://api.pushover.net/1/messages.json';
+
+        var msgTitle = 'Plex Requests by ' + plexUser;
+        var msgBody = type + ': ' + media + ' (' + year + ') ';
+
+
+        var options = {
+            params: {
+                token: pushOverToken,
+                user: pushOverUserKey,
+                title: msgTitle,
+                message: msgBody
+            }
+        };
+
+        this.unblock();
+        Meteor.http.post(url, options);
     },
     'searchCP' : function (id, imdb, movie, year, puser) {
         if (Settings.findOne({_id:"couchpotatosetting"}).enabled) {
