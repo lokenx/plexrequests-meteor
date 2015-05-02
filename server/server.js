@@ -52,6 +52,20 @@ if (!(Settings.findOne({_id: "sickragesetting"}))) {
     });
 };
 
+if (!(Settings.findOne({_id: "sonarrsetting"}))) {
+    Settings.insert({
+        _id: "sonarrsetting",
+        service: "Sonarr",
+        api: "http://192.168.0.1:8989",
+        api_key: "abcdef0123456789",
+        qualityProfileId: 1,
+        rootFolderPath: "/path/to/root/tv/folder/",
+        enabled: false
+    });
+};
+
+
+
 Meteor.methods({
     'pushBullet' : function (movie, year, puser, type) {
         if (Settings.findOne({_id:"pushbulletsetting"}).enabled) {
@@ -272,15 +286,6 @@ Meteor.methods({
                 var sickRageAdd = Meteor.http.call("GET", srAPI  + "?cmd=show.addnew&tvdbid=" + tvdb);
 
                 if (sickRageAdd['data']['result'] === "success") {
-                    TV.insert({
-                        title: title,
-                        id: id,
-                        tvdb: tvdb,
-                        released: year,
-                        user: puser,
-                        downloaded: false,
-                        createdAt: new Date()
-                    });
                     return "added";
                 } else {
                     return "error"
@@ -292,20 +297,7 @@ Meteor.methods({
                 return "error";
             }
 
-        } else {
-        //If not enabled add to requests lists
-            TV.insert({
-                title: title,
-                id: id,
-                tvdb: tvdb,
-                released: year,
-                user: puser,
-                downloaded: false,
-                createdAt: new Date()
-            });
-            return "added";
         }
-
     },
     'checkSREnabled' : function () {
         return Settings.findOne({_id:"sickragesetting"}).enabled;
@@ -320,4 +312,92 @@ Meteor.methods({
         return (status['data']['result']);
 
     },
+    'checkSO' : function () {
+        return false;   
+    },
+    'checkSOEnabled' : function () {
+        return Settings.findOne({_id:"sonarrsetting"}).enabled;
+    },
+    'searchSonarr' : function(id, tvdb, title, year, puser) {
+            
+        //HTTPS Requests
+        process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
+        //Check if Sonarr up
+        soAPI = Settings.findOne({_id:"sonarrsetting"}).api_key;
+        soURL = Settings.findOne({_id:"sonarrsetting"}).api;
+        soQualityProfileId = Settings.findOne({_id:"sonarrsetting"}).qualityProfileId;
+        soRootFolderPath = Settings.findOne({_id:"sonarrsetting"}).rootFolderPath;
+        try {
+            var status = Meteor.http.call("GET", soURL + "/api/system/status/", {headers: {"X-Api-Key":soAPI}, timeout:5000});
+        }
+        catch (error) {
+            //If can't connect error out
+            console.log(error)
+            return "error";
+        }
+
+        //Attempt to add series
+        try {
+            var addSonarr = Meteor.http.call("POST", soURL + "/api/Series/", {headers: {"X-Api-Key":soAPI}, data: {
+                "tvdbId":tvdb,
+                "title":title,
+                "qualityProfileId":soQualityProfileId,
+                "seasons":[{}],
+                "rootFolderPath":soRootFolderPath
+            }});
+            return "added";
+        }
+        catch (e) {
+            var search = e.message.search("This series has already been added");
+
+            if (search != -1) {
+                return "downloaded";
+            } else {
+                console.log(e);
+                return "error";
+            }
+        }
+        return false;
+    },
+    'addTV' : function(id, tvdb, title, year, puser) {
+        if (Settings.findOne({_id:"sonarrsetting"}).enabled){
+            var sickAdd = Meteor.call('searchSonarr', id, tvdb, title, year, puser);   
+        }
+        
+        if (Settings.findOne({_id:"sickragesetting"}).enabled) {
+            var sonarAdd = Meteor.call('searchSickRage', id, tvdb, title, year, puser);
+        } 
+        
+        if ((sickAdd == "added") || (sonarAdd == "added")) {
+            TV.insert({
+              title: title,
+              id: id,
+              tvdb: tvdb,
+              released: year,
+              user: puser,
+              downloaded: false,
+              createdAt: new Date()
+            });
+            return "added";
+        }
+        
+        if (sickAdd) {
+            return sickAdd;
+        } else if (sonarAdd) {
+            return sonarAdd;
+        } else {
+            TV.insert({
+              title: title,
+              id: id,
+              tvdb: tvdb,
+              released: year,
+              user: puser,
+              downloaded: false,
+              createdAt: new Date()
+            });
+            return "added";
+        }
+    }
+
 });

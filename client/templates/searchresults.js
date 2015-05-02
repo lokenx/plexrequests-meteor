@@ -61,7 +61,7 @@ Template.searchresults.events({
                         tvdb = data['tvdb_id'];
                         id = data['id'];
                         if (TV.findOne({tvdb: tvdb}) === undefined) {
-                            Meteor.call('searchSickRage', id, tvdb, title, year, puser, function (err, data) {
+                            Meteor.call('addTV', id, tvdb, title, year, puser, function (err, data) {
                                 if (err) {
                                     console.log(err);
                                     $(event.target).parent().html('Something went wrong, please let the admin know!');
