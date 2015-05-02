@@ -75,35 +75,6 @@ if (!(Settings.findOne({_id: "sonarrsetting"}))) {
     });
 };
 
-function choosePushService(){
-    var pushService;
-
-    // Check for enabled state on both services
-
-    var pushOver = Settings.findOne('pushoversetting', { fields: { enabled: 1 }}).enabled;
-    var pushBullet = Settings.findOne('pushbulletsetting', { fields: { enabled: 1 } }).enabled;
-
-    // Tests: Enable pushOver only
-    // pushBullet only
-    // Both enabled
-
-    if(pushOver && pushBullet){
-        pushService = 'pushBullet';
-    }
-    else if(!pushOver && pushBullet){
-        pushService = 'pushBullet';
-
-    }
-    else if(pushOver && !pushBullet){
-        pushService = 'pushOver';
-    }
-    else if(!pushOver && !pushBullet){
-        pushService = false;
-    }
-
-    return pushService;
-}
-
 Meteor.methods({
     'pushService' : function (media, year, plexUser, type) {
         check(media, String);
@@ -111,19 +82,14 @@ Meteor.methods({
         check(plexUser, String);
         check(type, String);
 
-        var service = choosePushService();
-
-        // No service enabled
-        if(!service){ console.log('Error: please enable a service'); return; }
-
         var url, options;
 
         var msgTitle = 'Plex Requests by ' + plexUser;
         var msgBody = type + ': ' + media + ' (' + year + ')';
 
 
-        // PushBullet
-        if(service === 'pushBullet'){
+        if (pushBullet = Settings.findOne({_id:"pushbulletsetting"}).enabled) {
+            // PushBullet
             var pbAPI = Settings.findOne({_id:"pushbulletsetting"}).api;
 
             options = {
@@ -136,16 +102,15 @@ Meteor.methods({
             }
 
             url = 'https://api.pushbullet.com/v2/pushes';
-        };
-
-        // PushOver
-        if(service === 'pushOver'){
+            
+            Meteor.http.post(url, options);
+            
+        } else if (Settings.findOne({_id:"pushoversetting"}).enabled) {
+            // PushOver
             var pushOver = Settings.findOne('pushoversetting');
 
             var pushOverToken = pushOver.api;
             var pushOverUserKey = pushOver.userKey;
-
-            url = 'https://api.pushover.net/1/messages.json';
 
             options = {
                 params: {
@@ -155,10 +120,16 @@ Meteor.methods({
                     message: msgBody
                 }
             };
-        };
-
-        this.unblock();
-        Meteor.http.post(url, options);
+            
+            url = 'https://api.pushover.net/1/messages.json';
+            
+            Meteor.http.post(url, options);
+            
+        } else {
+            // No service enabled
+            console.log('Error: please enable a service'); 
+            return;
+        }
     },
     'searchCP' : function (id, imdb, movie, year, puser) {
         if (Settings.findOne({_id:"couchpotatosetting"}).enabled) {
