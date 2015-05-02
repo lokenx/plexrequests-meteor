@@ -43,6 +43,17 @@ if (!(Settings.findOne({_id: "pushbulletsetting"}))) {
     });
 };
 
+// PushOver
+if (!(Settings.findOne({_id: "pushoversetting"}))) {
+    Settings.insert({
+        _id: "pushoversetting",
+        service: "PushOver",
+        api: "abcdef0123456789",
+        userKey: "abcdef0123456789",
+        enabled: false
+    });
+};
+
 if (!(Settings.findOne({_id: "sickragesetting"}))) {
     Settings.insert({
         _id: "sickragesetting",
@@ -64,17 +75,90 @@ if (!(Settings.findOne({_id: "sonarrsetting"}))) {
     });
 };
 
+function choosePushService(){
+    var pushService;
 
+    // Check for enabled state on both services
+
+    var pushOver = Settings.findOne('pushoversetting', { fields: { enabled: 1 }}).enabled;
+    var pushBullet = Settings.findOne('pushbulletsetting', { fields: { enabled: 1 } }).enabled;
+
+    // Tests: Enable pushOver only
+    // pushBullet only
+    // Both enabled
+
+    if(pushOver && pushBullet){
+        pushService = 'pushBullet';
+    }
+    else if(!pushOver && pushBullet){
+        pushService = 'pushBullet';
+
+    }
+    else if(pushOver && !pushBullet){
+        pushService = 'pushOver';
+    }
+    else if(!pushOver && !pushBullet){
+        pushService = false;
+    }
+
+    return pushService;
+}
 
 Meteor.methods({
-    'pushBullet' : function (movie, year, puser, type) {
-        if (Settings.findOne({_id:"pushbulletsetting"}).enabled) {
+    'pushService' : function (media, year, plexUser, type) {
+        check(media, String);
+        check(year, String);
+        check(plexUser, String);
+        check(type, String);
+
+        var service = choosePushService();
+
+        // No service enabled
+        if(!service){ console.log('Error: please enable a service'); return; }
+
+        var url, options;
+
+        var msgTitle = 'Plex Requests by ' + plexUser;
+        var msgBody = type + ': ' + media + ' (' + year + ')';
+
+
+        // PushBullet
+        if(service === 'pushBullet'){
             var pbAPI = Settings.findOne({_id:"pushbulletsetting"}).api;
-            Meteor.http.call("POST", "https://api.pushbullet.com/v2/pushes",
-                             {auth: pbAPI + ":",
-                              params: {"type": "note", "title": "Plex Requests by " + puser, "body": type + ": " + movie + " (" + year + ")"}
-                             });
-        }
+
+            options = {
+                auth: pbAPI + ':',
+                params: {
+                    type: 'note',
+                    title: msgTitle,
+                    body: msgBody
+                }
+            }
+
+            url = 'https://api.pushbullet.com/v2/pushes';
+        };
+
+        // PushOver
+        if(service === 'pushOver'){
+            var pushOver = Settings.findOne('pushoversetting');
+
+            var pushOverToken = pushOver.api;
+            var pushOverUserKey = pushOver.userKey;
+
+            url = 'https://api.pushover.net/1/messages.json';
+
+            options = {
+                params: {
+                    token: pushOverToken,
+                    user: pushOverUserKey,
+                    title: msgTitle,
+                    message: msgBody
+                }
+            };
+        };
+
+        this.unblock();
+        Meteor.http.post(url, options);
     },
     'searchCP' : function (id, imdb, movie, year, puser) {
         if (Settings.findOne({_id:"couchpotatosetting"}).enabled) {
