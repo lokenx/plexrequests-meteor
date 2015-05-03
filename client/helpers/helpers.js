@@ -14,3 +14,7 @@ UI.registerHelper('isMovie',function(input){
         return false;
     }
 });
+
+UI.registerHelper('baseUrl',function(){
+  return Meteor.absoluteUrl();
+});
