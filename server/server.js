@@ -75,6 +75,19 @@ if (!(Settings.findOne({_id: "sonarrsetting"}))) {
     });
 };
 
+// Headphones
+
+// Returns cursor and then counts docs instead of returning an array - slightly more efficient
+if (Settings.find("headphonessetting", { fields: { _id: 1 } }).count() === 0) {
+    Settings.insert({
+        _id: "headphonessetting",
+        service: "Headphones",
+        api: "http://192.168.0.1:8181",
+        api_key: "abcdef0123456789",
+        enabled: false
+    });
+};
+
 Meteor.methods({
     'pushService' : function (media, year, plexUser, type) {
         check(media, String);
@@ -454,5 +467,36 @@ Meteor.methods({
             return "added";
         }
     }
+});
 
+// Headphones
+Meteor.methods({
+    'checkHeadphonesEnabled': function(){
+        return Settings.findOne('headphonessetting').enabled;
+    },
+    'checkHeadphones': function(){
+        // Possibilities
+
+        // Store connection status in DB
+
+        // When accessing test page it runs this method
+        var headphones = Settings.findOne('headphonessetting');
+
+        var api = headphones.api;
+        var apiKey = headphones.api_key;
+
+        var checkStatusCmd = 'getLog';
+
+        var url = api + '/api';
+
+        var options = {
+            params: {
+                apikey: apiKey,
+                cmd: checkStatusCmd
+            },
+            timeout: 5000
+        };
+
+        return Meteor.http.get(url, options);
+    }
 });

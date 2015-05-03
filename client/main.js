@@ -26,6 +26,14 @@ Router.route('/sickrage', function () {
     this.render('sickrage');
 });
 
+Router.route('/headphones', {
+    name: 'headphones',
+    waitOn: function(){
+        // Docs sometimes are not ready when the helpers load resulting in an error in console
+        return Meteor.subscribe('cpapi');
+    }
+});
+
 Template.body.helpers({
     url: function () {
     return Meteor.absoluteUrl();
@@ -48,6 +56,12 @@ Houston.menu({
     'type': 'link',
     'use': '/sickrage',
     'title': 'SickRage Status',
+});
+
+Houston.menu({
+    'type': 'link',
+    'use': '/headphones',
+    'title': 'Headphones Status',
 });
 
 Houston.menu({
