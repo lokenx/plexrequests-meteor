@@ -485,7 +485,7 @@ Meteor.methods({
         var api = headphones.api;
         var apiKey = headphones.api_key;
 
-        var checkStatusCmd = 'getVersion';
+        var checkStatusCmd = 'getLog';
 
         var url = api + '/api';
 
