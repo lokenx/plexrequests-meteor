@@ -36,14 +36,27 @@
 
           {{!-- Api/Url --}}
           <h3 style="font-weight: 400;">
-            API/URL: 
+            URL: 
           </h3>
           {{!-- Add validation for the api --}}
           <pre style="margin-top: 25px;"><code><span class="api">{{ sonarrApi }}</span></code></pre>
-
-
+          
+          {{!--API--}}
+          <h3 style="font-weight: 400;">API: </h3>
+          <pre style="margin-top: 25px;"><code><span class="api">{{ sonarrApiKey }}</span></code></pre>
+          
+          {{!--QualityProfileId--}}
+          <h3 style="font-weight: 400;">QualityProfileID: </h3>
+          <pre style="margin-top: 25px;"><code><span class="api">{{ sonarrqPID }}</span></code></pre>
+          
+          {{!--RootFolderPath--}}
+          <h3 style="font-weight: 400;">RootFolderPath: </h3>
+          <pre style="margin-top: 25px;"><code><span class="api">{{ sonarrrFP }}</span></code></pre>
+          
+          <br>
+          <br>
+          
           {{!-- Common issues --}}
-          {{ #unless isChecking }}
             <div class="commonIssues">
               <h3>Common Issues</h3>
 
@@ -63,7 +76,12 @@
 
                 <li style="margin-bottom: 20px;">
                   <strong>URL: </strong> Please ensure you have typed the URL correctly, it should follow the below format
-                  <pre style="margin-top: 25px;"><code>http://192.168.0.1:8989</code></pre><br>
+                  <pre style="margin-top: 25px;"><code>http://192.168.0.1:8989</code></pre>
+                </li>
+                  
+                <li style="margin-bottom: 20px;">
+                  <strong>API: </strong> Please ensure you have typed your API key corrently, it should follow the below format
+                  <pre style="margin-top: 25px;"><code>abcdef0123456789</code></pre>
                 </li>
 
                 <li style="margin-bottom: 20px;">
@@ -71,17 +89,17 @@
                 </li>
 
                 <li style="margin-bottom: 20px;">
-                  <strong>Manual test: </strong> You can try a manual call to the Sonarr API via a web browser to confirm connectivity. Simply copy and paste the below URL into your browser, if things are working you should get a message displayed that says (values can be different)
-                  <pre><code>{<br>"version": "2.0.0.1121",<br> "buildTime": "2014-02-08T20:49:36.5560392Z",<br> "isDebug": false,<br> "isProduction": true,<br> "isAdmin": true,<br> "isUserInteractive": false,<br> "startupPath": "C:\\ProgramData\\NzbDrone\\bin",<br> "appData": "C:\\ProgramData\\NzbDrone",<br> "osVersion": "6.2.9200.0",<br> "isMono": false,<br> "isLinux": false,<br> "isWindows": true,<br> "branch": "develop",<br> "authentication": false,<br> "startOfWeek": 0,<br> "urlBase": ""<br>}</code></pre>
-                    <h6><strong>Endpoint:</strong></h6>
-                    <pre style="margin-top: 25px;"><code>{{ sonarrApi }}/api/system/status?apikey=abcdef0123456789</code></pre>
+                  <strong>Manual test: </strong> You can try a manual call to the Sonarr API via a web browser to confirm connectivity. Simply copy and paste the below URL into your browser, if things are working you should get a message displayed that includes information similar to the below:
+                    <br>
+                    <br>
+                  <pre><code>{<br> "version": "2.0.0.1121",<br> "buildTime": "2014-02-08T20:49:36.5560392Z",<br> "isDebug": false,<br> "isProduction": true,<br> "isAdmin": true,<br> "isUserInteractive": false,<br> "startupPath": "C:\\ProgramData\\NzbDrone\\bin",<br> "appData": "C:\\ProgramData\\NzbDrone",<br> "osVersion": "6.2.9200.0",<br> "isMono": false,<br> "isLinux": false,<br> "isWindows": true,<br> "branch": "develop",<br> "authentication": false,<br> "startOfWeek": 0,<br> "urlBase": ""<br>}</code></pre>
+                    <br>
+                    <h5><strong>Endpoint:</strong></h5>
+                    <pre style="margin-top: 25px;"><code>{{ sonarrApi }}/api/system/status?apikey={{sonarrApiKey}}</code></pre>
                 </li>
 
               </ol>
             </div>
-          {{ else }}
-            {{ > loader }}
-          {{ /unless }}
         {{ else }}
           <div class="unauthorized">
             <h2>

@@ -1,11 +1,12 @@
 Template.sonarr.onCreated(function(){
   this.subscribe('cpapi');
   Session.set('isChecking', true);
+    Session.set('isError', false);
 
   /* Initial Checks */
   Meteor.call('checkSOEnabled', function(error, result){
     if(error){
-      console.error(error);
+        console.error(error);
     }
     else{
       Session.set('sonarrEnabled', result);
@@ -14,13 +15,14 @@ Template.sonarr.onCreated(function(){
 
   Meteor.call('checkSO', function(error, result){
     if(error){
-      console.error(error);
+        console.error(error);
     }
     else{
-      Session.set('sonarrConnection', result);
-      Session.set('isChecking', false);
+        Session.set('sonarrConnection', result);
+        Session.set('isChecking', false);
     }
   });
+    
 
   /* Reactively listen to sonarrsetting */
   this.autorun(function(c){
@@ -71,6 +73,18 @@ Template.sonarr.helpers({
     if(!Template.instance().subscriptionsReady()){ return; }
 
     return Settings.findOne('sonarrsetting', { fields: { api: 1 } }).api;
+  },
+    sonarrApiKey : function () {
+        if(!Template.instance().subscriptionsReady()){ return; }
+    return Settings.findOne('sonarrsetting').api_key;
+  },  
+    sonarrqPID : function () {
+        if(!Template.instance().subscriptionsReady()){ return; }
+    return Settings.findOne('sonarrsetting').qualityProfileId;
+  },
+    sonarrrFP : function () {
+        if(!Template.instance().subscriptionsReady()){ return; }
+    return Settings.findOne('sonarrsetting').rootFolderPath;
   },
   baseUrl: function(){
     return Meteor.absoluteUrl();
