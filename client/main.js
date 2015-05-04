@@ -26,6 +26,10 @@ Router.route('/sickrage', function () {
     this.render('sickrage');
 });
 
+Router.route('/sonarr', {
+    name: 'sonarr'
+});
+
 Template.body.helpers({
     url: function () {
     return Meteor.absoluteUrl();
@@ -48,6 +52,12 @@ Houston.menu({
     'type': 'link',
     'use': '/sickrage',
     'title': 'SickRage Status',
+});
+
+Houston.menu({
+    'type': 'link',
+    'use': '/sonarr',
+    'title': 'Sonarr Status',
 });
 
 Houston.menu({
