@@ -1,47 +1,28 @@
 #Plex Requests - Meteor Style!
 
-###Support for SickRage/Beard has been added. The application currently will ONLY do TV searches and requests, I'll be adding the ability to switch back and forth shortly. It's currently very alpha so please don't use this on your main install.
-
-###There is no test page setup for SickRage/SickBeard yet so settings must be set and configured in the /admin interface. Please don't forget the `/` at the end!
-
-###If you come accross any issues please open a GitHub issue!
-
-###Again, this is super early stages and it will break...you've been warned!
-
 ![plexrequestshomepage](Screenshot03.png)
 
-This is [Plex Requests](https://github.com/lokenx/plexrequests) but written with Meteor! It's been updated with [Couch Potato](https://github.com/RuudBurger/CouchPotatoServer) intergration, includes a new admin interface courtesy of the [Houston](https://github.com/gterrono/houston) package, and now supports authentication via Plex.tv usernames!
+This is [Plex Requests](https://github.com/lokenx/plexrequests) but written with Meteor! It's been updated with [SickRage](https://github.com/SiCKRAGETV/SickRage) and [Sonarr](https://sonarr.tv/) (currently beta) intergration, includes a new admin interface courtesy of the [Houston](https://github.com/gterrono/houston) package, and now supports authentication via Plex.tv usernames!
 
 **A project website has been setup using [GitHub pages](http://plexrequests.8bits.ca/), please visit it for more details!**
 
 ##Features
-* **NEW** Accounts are here! User's simply need enter their Plex.tv usernames to gain access
-* Users can search the [OMDB](http://www.omdbapi.com/) for movies to request
-* Requested movies are easily available for users to see, and downloaded content gets cleaned up from the list
-* Adminitrators can view and edit requested movies using the admin interface, as well as configure settings
-* Couch Potato and PushBullet can be integrated via the admin interface
+* Accounts are here! User's simply need enter their Plex.tv usernames to gain access
+* Users can search the [The MovieDB](https://www.themoviedb.org/) for movies and TV series to request
+* Requested content is easily available for users to see, and downloaded content gets cleaned up from the list
+* Adminitrators can view and edit requests using the admin interface, as well as configure settings
+* Couch Potato, SickRage, Sonarr, PushOver and PushBullet can be integrated via the admin interface
  * With CP enabled, movies are added to CP Wanted List if not present already, and an option to update movies download status is provided to users
- * **NEW** Movies are also first checked to see if they're already downloaded in CP and let's the users know as such
- * PushBullet notifications can be sent to give you a notification when a movie is requested
-* **NEW** A CP test page is now setup at `/couchpotato` that should help diagnose and troubleshoot connectivity issues
+ * SickRage/Sonarr integration allows shows to be added to your watch list for automated downloading
+ * PushBullet and PushOver notifications can be sent to give you a notification when something is requested
+* Test pages is now setup that should help diagnose and troubleshoot connectivity issues, links can be found in admin interface
 
 ![Plex Authentication](Screenshot10.png)
 
 ##Installation
 Installation is straightforward: please update to Meteor 1.1 (for Windows support), clone the repo, `cd` into the directory, and run `meteor`. For Windows users check out this [blog post](http://8bits.ca/blog/installing-plexrequests-windows/) for installation instructions using Git!
 
-On first run navigate to `http://localhost:3000/admin` and create an admin account with an username and password. **If this isn't done someone else can create the admin account to your applications.** This account is only used for logging in, email integration isn't enabled. Once logged in, go to the `setting` collection and enable Couch Potato or PushBullet integration.
-
-For PushBullet just your API key is required and changing the last field to `true`. For CouchPotao you need to enter the full IP address of your server, including port and API. **Please ensure there's a trailing `/` at the end of the URL.** Please see below for an example. You will also need to change the last field to `true`.  
-
-    http://192.168.0.0:5050/api/abcdef1234567890/
-
-To setup authentication to your application please nagivate to `http://localhost:3000/plex` and login with your Plex.tv account or follow the manual instructions provided. You need to be logged in as the admin user to access this page as well.
-
-##Additional Information
-If you're having trouble with Couch Potato please visit `http://localhost:3000/couchpotato` (or your own URL) for some assistance, it requires you to be logged in to the admin interface to access. It does quick checks to see if it can connect to Couch Potato.
-
-For authentication issues, `http://localhost:3000/plex` provides information regarding the current status of authentication and connectivity.
+On first run navigate to `http://localhost:3000/admin` and create an admin account with an username and password. **If this isn't done someone else can create the admin account to your applications.** This account is only used for logging in, email integration isn't enabled. Once logged in, please visit the status and setup pages for the various services as linked to in the admin interface to get started.
 
 ##FAQ
 Please visit the projects [GitHub page](http://plexrequests.8bits.ca/) for [FAQ page](http://plexrequests.8bits.ca/faq)
