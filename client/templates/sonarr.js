@@ -1,25 +1,34 @@
 Template.sonarr.onCreated(function(){
-  this.subscribe('cpapi');
-  Session.set('isChecking', true);
+    this.subscribe('cpapi');
+    Session.set('isChecking', true);
     Session.set('isError', false);
 
   /* Initial Checks */
   Meteor.call('checkSOEnabled', function(error, result){
     if(error){
         console.error(error);
+        Session.set('isError', true);
     }
     else{
-      Session.set('sonarrEnabled', result);
+        Session.set('sonarrEnabled', result);
+        if (!result) {
+            Session.set('isError', true);
+        }
+
     }
   });
 
   Meteor.call('checkSO', function(error, result){
     if(error){
         console.error(error);
+        Session.set('isError', true);
     }
     else{
         Session.set('sonarrConnection', result);
         Session.set('isChecking', false);
+        if (!result) {
+            Session.set('isError', true);
+        }
     }
   });
     
@@ -91,5 +100,8 @@ Template.sonarr.helpers({
   },
   isChecking: function(){
     return Session.get('isChecking');
+  },
+    isError: function(){
+    return Session.get('isError');
   }
 });

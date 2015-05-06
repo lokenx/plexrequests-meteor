@@ -55,7 +55,8 @@
           
           <br>
           <br>
-          
+          {{ #unless isError }}
+          {{else}}
           {{!-- Common issues --}}
             <div class="commonIssues">
               <h3>Common Issues</h3>
@@ -100,6 +101,7 @@
 
               </ol>
             </div>
+          {{/unless}}
         {{ else }}
           <div class="unauthorized">
             <h2>

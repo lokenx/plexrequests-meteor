@@ -371,13 +371,20 @@ Meteor.methods({
         soAPI = Settings.findOne({_id:"sonarrsetting"}).api_key;
         soURL = Settings.findOne({_id:"sonarrsetting"}).api;
         
-        try {
-            var status = Meteor.http.call("GET", soURL + "/api/system/status/", {headers: {"X-Api-Key":soAPI}, timeout:5000});
-            return true;
-        }
+         try {
+             var status = Meteor.http.call("GET", soURL + "/api/system/status/", {headers: {"X-Api-Key":soAPI}, timeout:5000});
+             
+             if(status.statusCode === 200){
+                 // authorized
+                return true;
+             } else {
+                 // Something else happened
+                 return false;
+             }
+         }
         catch (error) {
             //If can't connect error out
-            console.log(error);
+            console.log(error)
             return false;
         }
         
