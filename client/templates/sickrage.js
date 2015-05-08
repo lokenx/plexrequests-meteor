@@ -5,13 +5,13 @@ Template.sickrage.onCreated(function(){
 
   Meteor.call('checkSR', function(error, result) {
     if(error){
-        console.error(error);
-        Session.set('isError', true);
+      console.error(error);
+      Session.set('isError', true);
     }
     else{
         Session.set('srConnection', result);
         if (!result) {
-            Session.set('isError', true);
+          Session.set('isError', true);
         }
     }
     Session.set('isChecking', false);
@@ -19,14 +19,14 @@ Template.sickrage.onCreated(function(){
 
   Meteor.call('checkSREnabled', function(error, result) {
     if(error){
-        console.error(error);
-        Session.set('isError', true);
+      console.error(error);
+      Session.set('isError', true);
     }
     else{
-        Session.set('srEnabled', result);
-        if (!result) {
-            Session.set('isError', true);
-        }
+      Session.set('srEnabled', result);
+      if (!result) {
+          Session.set('isError', true);
+      }
     }
   });
 });
