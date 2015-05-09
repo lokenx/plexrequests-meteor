@@ -31,17 +31,6 @@ Template.sonarr.onCreated(function(){
         }
     }
   });
-    
-
-  /* Reactively listen to sonarrsetting */
-  this.autorun(function(c){
-    if(!Template.instance().subscriptionsReady()){ return; }
-
-    var enabled = Settings.findOne('sonarrsetting', { fields: { enabled: 1 } }).enabled;
-
-    Session.set('sonarrEnabled', enabled);
-  });
-
 });
 
 Template.sonarr.helpers({
