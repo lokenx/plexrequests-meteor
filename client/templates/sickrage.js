@@ -39,7 +39,7 @@ Template.sickrage.helpers({
       /* Reactive */
       if(!Template.instance().subscriptionsReady()){ return; }
 
-      var enabled = Settings.findOne('sonarrsetting', { fields: { enabled: 1 } }).enabled;
+      var enabled = Settings.findOne('sickragesetting', { fields: { enabled: 1 } }).enabled;
 
       Session.set('srEnabled', enabled);
 
@@ -51,10 +51,10 @@ Template.sickrage.helpers({
       }
 
       if(classFor === 'connection' && elementType === 'span'){
-        className = Session.equals('srConnection', true) ? 'cpSuccess' : 'cpError';
+        className = Session.equals('srConnection', 'success') ? 'cpSuccess' : 'cpError';
       }
       else if(classFor === 'connection' && elementType === 'icon'){
-        className = Session.equals('srConnection', true) ? 'fa-check-circle' : 'fa-exclamation-circle';
+        className = Session.equals('srConnection', 'success') ? 'fa-check-circle' : 'fa-exclamation-circle';
       }
 
       return className;
