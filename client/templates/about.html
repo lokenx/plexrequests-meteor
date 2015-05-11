@@ -3,7 +3,18 @@
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
                 {{#if currentUser }}
-                <h1>{{branch}} {{commit}}</h1>
+                <h1>About</h1>
+                <p class="lead">Need to check with Branch you're on, or what the current commit is? You've come to the right place! You can return to the <a href="{{ url }}">application</a>, or the <a href="{{ url }}admin">admin</a> interface once done.</p>
+                
+                <h3 style="font-weight:400;">Branch: <a href="https://github.com/lokenx/plexrequests-meteor/tree/{{branch}}" target="_blank">{{branch}}</a></h3>
+                
+                <h3 style="font-weight:400;">Commit: <a href="https://github.com/lokenx/plexrequests-meteor/commit/{{commit}}" target="_blank">{{commit}}</a></h3>
+                
+                {{else}}
+                <div class="unauthorized">
+                    <h2>You are not authorized to view this page <i class="fa fa-exclamation-triangle enabledError"></i></h2>
+                    <h3><a href="{{ url }}">Return to the main page!</a></h3>
+                </div>
                 {{/if}}
             </div>
         </div>

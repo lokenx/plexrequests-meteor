@@ -25,5 +25,8 @@ Template.about.helpers({
     },
     branch: function(){
         return Session.get('branch');
-    }
+    },
+     url: function () {
+         return Meteor.absoluteUrl();
+     }
 });

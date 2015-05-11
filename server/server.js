@@ -475,18 +475,12 @@ Meteor.methods({
         }
     },
     'getCommit' : function(){
-        var currentCommit = Meteor.npmRequire('git-rev');
-        currentCommit.short(function (str) {
-            console.log(str);
-            return str;
-        });
+        var currentCommit = Meteor.npmRequire('git-rev-sync');
+        return currentCommit.short();
     },
     'getBranch' : function(){
-        var currentBranch = Meteor.npmRequire('git-rev');
-        currentBranch.branch(function (str) {
-            console.log(str)
-            return str;
-        });
+        var currentBranch = Meteor.npmRequire('git-rev-sync');
+        return currentBranch.branch();
     }
 
 });

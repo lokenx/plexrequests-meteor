@@ -1,7 +1,12 @@
 {
   "dependencies": {
-    "git-rev": {
-      "version": "0.2.1"
+    "git-rev-sync": {
+      "version": "1.0.0",
+      "dependencies": {
+        "graceful-fs": {
+          "version": "3.0.6"
+        }
+      }
     }
   }
 }

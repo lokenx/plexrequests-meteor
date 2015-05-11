@@ -42,6 +42,12 @@ Template.body.helpers({
 
 Houston.menu({
     'type': 'link',
+    'use': '/about',
+    'title': 'About',
+});
+
+Houston.menu({
+    'type': 'link',
     'use': '/plex',
     'title': 'Plex Auth Setup',
 });
