@@ -71,6 +71,7 @@ if (!(Settings.findOne({_id: "sonarrsetting"}))) {
         api_key: "abcdef0123456789",
         qualityProfileId: 1,
         rootFolderPath: "/path/to/root/tv/folder/",
+        seasonFolder: "true",
         enabled: false
     });
 };
@@ -403,6 +404,7 @@ Meteor.methods({
         soURL = Settings.findOne({_id:"sonarrsetting"}).api;
         soQualityProfileId = Settings.findOne({_id:"sonarrsetting"}).qualityProfileId;
         soRootFolderPath = Settings.findOne({_id:"sonarrsetting"}).rootFolderPath;
+        soSeasonFolder = Settings.findOne({_id:"sonarrsetting"}).seasonFolder;
         try {
             var status = Meteor.http.call("GET", soURL + "/api/system/status/", {headers: {"X-Api-Key":soAPI}, timeout:5000});
         }
@@ -419,6 +421,7 @@ Meteor.methods({
                 "title":title,
                 "qualityProfileId":soQualityProfileId,
                 "seasons":[{}],
+                "seasonFolder":soSeasonFolder,
                 "rootFolderPath":soRootFolderPath
             }});
             return "added";
