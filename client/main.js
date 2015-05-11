@@ -30,6 +30,10 @@ Router.route('/sonarr', {
     name: 'sonarr'
 });
 
+Router.route('/about', {
+    name: 'about'
+});
+
 Template.body.helpers({
     url: function () {
     return Meteor.absoluteUrl();

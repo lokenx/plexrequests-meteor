@@ -1,0 +1,11 @@
+<template name="about">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                {{#if currentUser }}
+                <h1>{{branch}} {{commit}}</h1>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</template>
