@@ -6,7 +6,7 @@
 				        {{#if currentUser }}
                 
                     <h1>Plex Authentication Setup</h1>
-                    <p class="lead">This page is to setup your Plex Requests site with user authentication. If you are having issues please post on the <a href="https://forums.plex.tv/index.php/topic/151899-plex-movie-requests/">forums</a> or the <a href="https://github.com/lokenx/plexrequests-meteor">GitHub repo</a>. You can return to the <a href="{{url}}">application</a>, or the <a href="{{url}}admin">admin</a> interface once done.</p>
+                    <p class="lead">This page is to setup your Plex Requests site with user authentication. If you are having issues please post on the <a href="https://forums.plex.tv/index.php/topic/151899-plex-movie-requests/">forums</a> or the <a href="https://github.com/lokenx/plexrequests-meteor">GitHub repo</a>. You can return to the <a href="/">application</a>, or the <a href="/admin">admin</a> interface once done.</p>
 
                     <div class="plexAuthEnabled" style="display:none">
                         <h3 style="font-weight:400;">Enabled: <span class="enabledSuccess">true <i class="fa fa-check-circle"></i></span></h3>
@@ -84,7 +84,7 @@
                 
                 <div class="unauthorized">
                     <h2>You are not authorized to view this page <i class="fa fa-exclamation-triangle enabledError"></i></h2>
-                    <h3><a href="{{url}}">Return to the main page!</a></h3>
+                    <h3><a href="/">Return to the main page!</a></h3>
                 </div>
                 
                 {{/if}}
