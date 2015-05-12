@@ -17,6 +17,15 @@ Template.about.onCreated(function(){
             Session.set('branch',result);
         }
     });
+    
+    Meteor.call('getCurrentCommit', function(error, result) {
+        if (error) {
+            console.log(error);
+            Session.set('error', true);
+        } else {
+            Session.set('upToDate', result);
+        }
+    });
 });
 
 Template.about.helpers({
@@ -25,6 +34,12 @@ Template.about.helpers({
     },
     branch: function(){
         return Session.get('branch');
+    },
+    update: function(){
+        return Session.get('upToDate');
+    },
+    error: function(){
+        return Session.get('error');
     },
      url: function () {
          return Meteor.absoluteUrl();

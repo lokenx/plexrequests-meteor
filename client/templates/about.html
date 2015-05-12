@@ -10,6 +10,8 @@
                 
                 <h3 style="font-weight:400;">Commit: <a href="https://github.com/lokenx/plexrequests-meteor/commit/{{commit}}" target="_blank">{{commit}}</a></h3>
                 
+                <h3 style="font-weight:400;">{{#if error}}We're having trouble talking to <a href="https://status.github.com/" target="_blank">GitHub</a> to see if there's an update available...try again later!{{else}}{{#unless update}}Looks like there's a  <a href="https://github.com/lokenx/plexrequests-meteor/tree/{{branch}}" target="_blank">new version!</a>{{else}}You're all up to date!{{/unless}}{{/if}}</h3>
+                
                 {{else}}
                 <div class="unauthorized">
                     <h2>You are not authorized to view this page <i class="fa fa-exclamation-triangle enabledError"></i></h2>

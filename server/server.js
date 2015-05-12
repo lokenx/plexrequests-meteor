@@ -484,6 +484,22 @@ Meteor.methods({
     'getBranch' : function(){
         var currentBranch = Meteor.npmRequire('git-rev-sync');
         return currentBranch.branch();
+    },
+    'getCurrentCommit' : function(){
+        var git = Meteor.npmRequire('git-rev-sync');
+        var branch = git.branch();
+        var commit = git.long();
+        
+        var latestGit = Meteor.http.call("GET", "https://api.github.com/repos/lokenx/plexrequests-meteor/branches/" + branch,
+                                         {headers: {"User-Agent": "Meteor/1.1"}});
+        
+        if (latestGit.statusCode == 403) {
+            return "error"
+        } else if (latestGit['data']['commit']['sha'] == commit) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 });
