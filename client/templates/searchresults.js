@@ -65,12 +65,6 @@ Template.searchresults.events({
         if (episodes === "all") {
             getAll = true;
         }
-        var seasons = [];
-        for (i = 1; i <= 5; i++) {
-            seasonObject = { seasonNumber:i, monitored:true };
-            seasons.push(seasonObject);
-        }
-        console.log(JSON.stringify(seasons));
         $('#episodeModal-' + id).modal('hide');
         $(addButton).html('<i class="fa fa-spinner fa-spin fa-lg"></i>').removeClass('btn-primary');
         if (Session.get('searchType') === 'tv') {
