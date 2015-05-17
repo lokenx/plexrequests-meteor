@@ -317,12 +317,16 @@ Meteor.methods({
         }
 
     },
-    'searchSickRage' : function(id, tvdb, title, year, puser) {
+    'searchSickRage' : function(id, tvdb, title, year, puser, getAll) {
         //Check if SickRage service is enabled
         if (Settings.findOne({_id:"sickragesetting"}).enabled){
 
             //If enabled check if can connect to it
             var srAPI = Settings.findOne({_id:"sickragesetting"}).api;
+            var episodeStatus = "skipped";
+            if (getAll === true) {
+                episodeStatus = "wanted";
+            }
 
             //Workaround to allow self-signed SSL certs, however can be dangerous and should not be used in production, looking into better way
             //But it's possible there's nothing much I can do
@@ -339,7 +343,7 @@ Meteor.methods({
             //If can connect see if series is in DB already
             if (Meteor.http.call("GET", srAPI + "?cmd=show&tvdbid=" + tvdb)['data']['result'] === "failure") {
                 //If not in DB add to DB
-                var sickRageAdd = Meteor.http.call("GET", srAPI  + "?cmd=show.addnew&tvdbid=" + tvdb);
+                var sickRageAdd = Meteor.http.call("GET", srAPI  + "?cmd=show.addnew&tvdbid=" + tvdb + "&status=" + episodeStatus);
 
                 if (sickRageAdd['data']['result'] === "success") {
                     return "added";
@@ -394,7 +398,7 @@ Meteor.methods({
     'checkSOEnabled' : function () {
         return Settings.findOne({_id:"sonarrsetting"}).enabled;
     },
-    'searchSonarr' : function(id, tvdb, title, year, puser) {
+    'searchSonarr' : function(id, tvdb, title, year, puser, getAll, totalSeasons) {
             
         //HTTPS Requests
         process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
@@ -414,15 +418,31 @@ Meteor.methods({
             return "error";
         }
 
+        //Seasons variable currently unused.
+        var seasons = [];
+
+        var options = [];
+        if (getAll === false) {
+            options = ({
+                "ignoreEpisodesWithFiles": true,
+                "ignoreEpisodesWithoutFiles": true
+            });
+        } else {
+            options = ({
+                "ignoreEpisodesWithFiles": false,
+                "ignoreEpisodesWithoutFiles": false
+            });
+        }
         //Attempt to add series
         try {
             var addSonarr = Meteor.http.call("POST", soURL + "/api/Series/", {headers: {"X-Api-Key":soAPI}, data: {
                 "tvdbId":tvdb,
                 "title":title,
                 "qualityProfileId":soQualityProfileId,
-                "seasons":[{}],
+                "seasons":seasons,
                 "seasonFolder":soSeasonFolder,
-                "rootFolderPath":soRootFolderPath
+                "rootFolderPath":soRootFolderPath,
+                "addOptions":options
             }});
             return "added";
         }
@@ -438,13 +458,13 @@ Meteor.methods({
         }
         return false;
     },
-    'addTV' : function(id, tvdb, title, year, puser) {
+    'addTV' : function(id, tvdb, title, year, puser, getAll, totalSeasons) {
         if (Settings.findOne({_id:"sonarrsetting"}).enabled){
-            var sickAdd = Meteor.call('searchSonarr', id, tvdb, title, year, puser);   
+            var sickAdd = Meteor.call('searchSonarr', id, tvdb, title, year, puser, getAll, totalSeasons);   
         }
         
         if (Settings.findOne({_id:"sickragesetting"}).enabled) {
-            var sonarAdd = Meteor.call('searchSickRage', id, tvdb, title, year, puser);
+            var sonarAdd = Meteor.call('searchSickRage', id, tvdb, title, year, puser, getAll);
         } 
         
         if ((sickAdd == "added") || (sonarAdd == "added")) {
