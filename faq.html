@@ -17,8 +17,13 @@ permalink: /faq/
         <p>No, authentication is now off by default. Users are still asked to enter their Plex.tv username but it does not check them against your friends or managed users, merely shows you who is requesting content.</p>
         <br>
 
-        <h4 id="how-often-are-movies-removed-from-the-requested-list">How often are movies removed from the requested list?</h4>
+        <h4>Is there a way to approve requests?</h4>
+        <p>Currently no. All requests are automatically added to Couch Potato, SickRage, or Sonarr if they have been setup. An approval system will be investigated for the next major release.</p>
+        <br>
+        
+        <h4 id="how-often-are-movies-removed-from-the-requested-list">How often are movies and TV series removed from the requested list?</h4>
         <p>Movies are kept on the list until their download status gets changed to true. Once their status is true they are removed from the list if their requested date is older than 14 days.</p>
+        <p>Currently TV series are not removed from the requested list.</p>
         <br>
 
         <h4 id="doesnt-that-mean-movies-requested-a-long-time-ago-will-never-show-up-in-the-list-as-downloaded">Doesn’t that mean movies requested a long time ago will never show up in the list as downloaded?</h4>
@@ -26,7 +31,7 @@ permalink: /faq/
         <br>
 
         <h4 id="why-cant-i-find-the-movie-i-want-the-search-results-suck">Why can’t I find the movie I want? The search results suck!</h4>
-        <p>Currently, I am using the <a href="http://www.omdbapi.com">OMDB API</a> for search results. I’m looking into possibly switching to something else so if you’ve a recommendation let me know!</p>
+        <p>We have recently switched to using <a href="https://www.themoviedb.org/" target="_blank">TheMovieDB</a> API for our search results. It has great support for both Movies and TV series, and handles foreign language titles great as well. If you've any issues with the search results please let me know!</p>
         <br>
 
         <h4 id="can-i-run-this-on-my-synologyqnaprasberry-pi">Can I run this on my Synology/QNAP/Rasberry Pi?</h4>
