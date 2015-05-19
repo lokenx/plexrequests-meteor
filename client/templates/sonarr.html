@@ -1,0 +1,122 @@
+<template name="sonarr">
+  <div class="row">
+    <div class="container">
+      <div class="col-md-offset-2 col-md-8">
+        
+        {{ #if currentUser }}
+        
+          <h1>Sonarr Test Page</h1>
+
+          <p class="lead">
+            This page is to help confirm that you can successfully communicate with Sonarr, if you still have issues please post on the <a href="https://forums.plex.tv/index.php/topic/151899-plex-movie-requests/">forums</a> or the <a href="https://github.com/lokenx/plexrequests-meteor">GitHub repo</a>. You can return to the <a href="/">application</a>, or the <a href="/admin">admin</a> interface once done.
+          </p>
+
+          {{!-- Enabled --}}
+          <h3 style="font-weight: 400;">
+            Enabled: 
+              {{ #unless isChecking }}
+                <span class="{{ sonarrClass 'enabled' 'span' }}">
+                  {{ sonarrEnabled }}
+                  <i class="fa {{ sonarrClass 'enabled' 'icon' }}"></i>
+                </span>
+              {{ /unless }}
+          </h3>
+
+          {{!-- Connection --}}
+          <h3 style="font-weight: 400;">
+            Connection: 
+              {{ #unless isChecking }}
+                <span class="{{ sonarrClass 'connection' 'span' }}">
+                  {{ sonarrConnection }}
+                  <i class="fa {{ sonarrClass 'connection' 'icon' }}"></i>
+                </span>
+              {{ /unless }}
+          </h3>
+
+          {{!-- Api/Url --}}
+          <h3 style="font-weight: 400;">
+            URL: 
+          </h3>
+          {{!-- Add validation for the api --}}
+          <pre style="margin-top: 25px;"><code><span class="api">{{ sonarrApi }}</span></code></pre>
+          
+          {{!--API--}}
+          <h3 style="font-weight: 400;">API: </h3>
+          <pre style="margin-top: 25px;"><code><span class="api">{{ sonarrApiKey }}</span></code></pre>
+          
+          {{!--QualityProfileId--}}
+          <h3 style="font-weight: 400;">QualityProfileID: </h3>
+          <pre style="margin-top: 25px;"><code><span class="api">{{ sonarrqPID }}</span></code></pre>
+          
+          {{!--RootFolderPath--}}
+          <h3 style="font-weight: 400;">RootFolderPath: </h3>
+          <pre style="margin-top: 25px;"><code><span class="api">{{ sonarrrFP }}</span></code></pre>
+          
+          <br>
+          <br>
+          {{ #unless isError }}
+          {{else}}
+          {{!-- Common issues --}}
+            <div class="commonIssues">
+              <h3>Common Issues</h3>
+
+              <ol>
+                <li style="margin-bottom: 20px;">
+                  <strong>Customize settings:</strong>
+                  You need to go to the admin interface to setup your own Sonarr settings. You can navigate to it by going to 
+                  <br>
+                  <pre style="margin-top: 25px;"><code>{{ baseUrl }}admin</code></pre>
+                </li>
+
+                <li style="margin-bottom: 20px;">
+                  <strong>Service enabled:</strong>
+                    Please ensure you have enabled Sonarr by changing the value of the <strong>Enabled</strong> field to <kbd>enabled</kbd>
+                </li>
+
+
+                <li style="margin-bottom: 20px;">
+                  <strong>URL: </strong> Please ensure you have typed the URL correctly, it should follow the below format
+                  <pre style="margin-top: 25px;"><code>http://192.168.0.1:8989</code></pre>
+                </li>
+                  
+                <li style="margin-bottom: 20px;">
+                  <strong>API: </strong> Please ensure you have typed your API key corrently, it should follow the below format
+                  <pre style="margin-top: 25px;"><code>abcdef0123456789</code></pre>
+                </li>
+
+                <li style="margin-bottom: 20px;">
+                  <strong>LAN: </strong>I've tested hosting Plex Request outside of my LAN and it works. If you would like to run it in a different location you will have to configure router firewall rules as well as port forwarding, and use your router/public IP instead of Sonarr's. Also don't forget to put a username/password on Sonarr as it's now opened up to the interwebs
+                </li>
+
+                <li style="margin-bottom: 20px;">
+                  <strong>Manual test: </strong> You can try a manual call to the Sonarr API via a web browser to confirm connectivity. Simply copy and paste the below URL into your browser, if things are working you should get a message displayed that includes information similar to the below:
+                    <br>
+                    <br>
+                  <pre><code>{<br> "version": "2.0.0.1121",<br> "buildTime": "2014-02-08T20:49:36.5560392Z",<br> "isDebug": false,<br> "isProduction": true,<br> "isAdmin": true,<br> "isUserInteractive": false,<br> "startupPath": "C:\\ProgramData\\NzbDrone\\bin",<br> "appData": "C:\\ProgramData\\NzbDrone",<br> "osVersion": "6.2.9200.0",<br> "isMono": false,<br> "isLinux": false,<br> "isWindows": true,<br> "branch": "develop",<br> "authentication": false,<br> "startOfWeek": 0,<br> "urlBase": ""<br>}</code></pre>
+                    <br>
+                    <h5><strong>Endpoint:</strong></h5>
+                    <pre style="margin-top: 25px;"><code>{{ sonarrApi }}/api/system/status?apikey={{sonarrApiKey}}</code></pre>
+                </li>
+
+              </ol>
+            </div>
+          {{/unless}}
+        {{ else }}
+          <div class="unauthorized">
+            <h2>
+              You are not authorized to view this page
+              <i class="fa fa-exclamation-triangle enabledError"></i>
+            </h2>
+
+            <h3><a href="/">Return to the main page!</a></h3>
+          </div>
+        {{ /if }}
+
+      </div> {{!-- .col --}}
+    </div> {{!-- .container --}}
+  </div> {{!-- .row --}}
+</template>
+
+<template name="loader">
+  <i class="fa fa-spinner fa-spin fa-pulse fa-fw"></i>
+</template>

@@ -7,10 +7,6 @@ label, .radio label {
     font-size: 1em;
 }
 
-#results {
-    padding-left: 15px;
-}
-
 .btn {
     margin: 2px 0px;
     white-space: normal;
@@ -24,21 +20,11 @@ label, .radio label {
     padding-bottom: 10%;
 }
 
-/*.info ul {
-    max-height: 200px;
-    overflow: scroll;
-}*/
-
 @media (min-width: 768px) {
     body {
         padding-top: 60px;
     }
-    /*.info ul {
-        max-height: 400px
-    }*/
 }
-
-
 
 .enabledError {
     color: #c0392b;
@@ -73,4 +59,131 @@ label, .radio label {
 
 .unauthorized {
     text-align: center;
+}
+
+#showRequests.btn-primary:hover,
+.btn-group .btn-primary:hover {
+    background-color: #DD6928;
+}
+
+.top-buffer {
+	margin-top:5%;
+}
+.list-group-item{
+	border-color: #2b3e50;
+	margin-bottom: 0;
+}
+
+#resultsList .list-group-item .btn{
+   position: absolute;
+   right: 8px;
+   top: 8px;
+}
+#resultsList .list-group-item .btn.disabled {
+  opacity: 1.0;
+  filter: alpha(opacity=100);
+}
+
+#searchWorking.ball-clip-rotate>div {
+	width:18px;
+	height: 18px;
+}
+
+/*Figure out the best way to display erors messages for search list*/
+#requestError{
+   position: absolute;
+   width: 100%;
+}
+#searchError{
+   position: relative;
+   display: block;
+   padding: 10px 15px;
+   color: #f0ad4e;
+}
+
+/*Responsive table  + styles*/
+.reactive-table-options,
+.reactive-table-filter{
+	padding: 0;
+}
+.reactive-table-filter{
+	margin-right: 5px;
+}
+.reactive-table {
+  background: #4e5d6c;
+  overflow: hidden;
+  font-size: 15px;
+ }
+thead tr {
+  border-bottom: 3px solid #2b3e50;
+}
+ tr {
+     border-bottom: 2px solid #2b3e50;
+  }
+th, td {
+      padding: 10px 15px!important;
+  }
+th, td:before {
+    color: #ebebeb!important;
+  }
+
+.reactive-table-navigation .form-inline input {
+  padding: 0px 6px;
+  width: 32px;
+  height: 26px;
+  text-align: center;
+}
+/*
+Bootstrap no tables mobile
+http://bootsnipp.com/snippets/featured/no-more-tables-respsonsive-table
+*/
+@media only screen and (max-width: 600px) {
+
+    /* Force table to not be like tables anymore */
+	#no-more-tables table,
+	#no-more-tables thead,
+	#no-more-tables tbody,
+	#no-more-tables th,
+	#no-more-tables td,
+	#no-more-tables tr {
+		display: block;
+	}
+
+	/* Hide table headers (but not display: none;, for accessibility) */
+	#no-more-tables thead tr {
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+
+	#no-more-tables tr {  }
+
+	#no-more-tables td {
+		/* Behave  like a "row" */
+		border: none;
+ 		border-bottom: 1px solid #677076;
+		padding: 6px 15px!important;
+		position: relative;
+		padding-left: 40%!important;
+		white-space: normal;
+		text-align:left;
+	}
+
+	#no-more-tables td:before {
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 15px;
+		width: 35%;
+		padding-right: 10px!important;
+		white-space: nowrap;
+		text-align:left;
+		font-weight: bold;
+	}
+
+	/*
+	Label the data
+	*/
+	#no-more-tables td:before { content: attr(class); }
 }

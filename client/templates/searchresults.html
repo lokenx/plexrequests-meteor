@@ -1,0 +1,15 @@
+<template name="searchresults">
+    <li class="list-group-item" data-id="{{id}}" data-title="{{title}}" data-year="{{year}}">
+        {{title}} ({{year}}) &nbsp; <a href="http://www.dereferer.org/?{{link}}" target="_blank"><i class="fa fa-external-link-square"></i></a>
+        {{#if statusIs "Add"}}
+            <span class="add-request btn btn-primary pull-right btn-xs">{{status}}</span>
+        {{else}}
+        {{#if statusIs "Already in Library"}}
+            <span class="btn btn-success disabled pull-right btn-xs">{{status}}</span>
+        {{else}}
+            <span class="btn btn-warning disabled pull-right btn-xs">{{status}}</span>
+        {{/if}}
+        {{/if}}
+        <div class="requestError"></div>
+    </li>            
+</template>

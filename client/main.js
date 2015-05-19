@@ -1,39 +1,38 @@
-MovieSearch = new Mongo.Collection("moviesearch");
-Session.set('resultsloaded', false);
-Session.set('searchingresults', false);
-Session.set('noresults', false);
-Session.set('searcherror', false);
-Session.set('requests', false);
-Session.set('movieadded', false);
-Session.set('movieexists', false);
-Session.set('moviedownloaded', false);
+currentSearch = new Mongo.Collection("currentsearch");
 
-/*Below is commented out as it was overwriting the persistent session*/
-//Session.set('plexauthuser', false);
+Meteor.subscribe('movies');
+Meteor.subscribe('tv');
+Meteor.subscribe('cpapi');
 
-$("#showmodal").on("click", function() {
-    $('#myModal').modal('show');
-    return false;
-});
+Session.set('searchType', '');
 
 Router.configure({
-  notFoundTemplate: "NotFound"
+    notFoundTemplate: "NotFound"
 });
 
 Router.route('/', function () {
-  this.render('home');
+    this.render('home');
 });
 
 Router.route('/couchpotato', function () {
-  this.render('couchpotato');
+    this.render('couchpotato');
 });
 
 Router.route('/plex', function () {
-  this.render('plex');
+    this.render('plex');
 });
 
-Meteor.subscribe('movies');
-Meteor.subscribe('cpapi');
+Router.route('/sickrage', function () {
+    this.render('sickrage');
+});
+
+Router.route('/sonarr', {
+    name: 'sonarr'
+});
+
+Router.route('/about', {
+    name: 'about'
+});
 
 Template.body.helpers({
     url: function () {
@@ -42,22 +41,43 @@ Template.body.helpers({
 });
 
 Houston.menu({
-  'type': 'link',
-  'use': Meteor.absoluteUrl() + 'plex',
-  'title': 'Plex Auth Setup',
-  'target': '_blank'
+    'type': 'link',
+    'use': '/about',
+    'title': 'About',
+    'target': '_blank'
 });
 
 Houston.menu({
-  'type': 'link',
-  'use': Meteor.absoluteUrl() + 'couchpotato',
-  'title': 'CouchPotato Status',
-  'target': '_blank'
+    'type': 'link',
+    'use': '/plex',
+    'title': 'Plex Auth Setup',
+    'target': '_blank'
 });
 
 Houston.menu({
-  'type': 'link',
-  'use': 'http://plexrequests.8bits.ca',
-  'title': 'Plex Requests Info',
-  'target': '_blank'
+    'type': 'link',
+    'use': '/couchpotato',
+    'title': 'CouchPotato Status',
+    'target': '_blank'
+});
+
+Houston.menu({
+    'type': 'link',
+    'use': '/sickrage',
+    'title': 'SickRage Status',
+    'target': '_blank'
+});
+
+Houston.menu({
+    'type': 'link',
+    'use': '/sonarr',
+    'title': 'Sonarr Status',
+    'target': '_blank'
+});
+
+Houston.menu({
+    'type': 'link',
+    'use': 'http://plexrequests.8bits.ca',
+    'title': 'Project Site',
+    'target': '_blank'
 });

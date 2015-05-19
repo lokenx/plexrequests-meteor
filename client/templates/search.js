@@ -1,46 +1,89 @@
+var timer = null; //timer varible is to turn off search spiner after typing has stopped
+var status;
+
 Template.search.events({
-    'submit form': function (event) {
-        Session.set('searchingresults', true);
-        Session.set('resultsloaded', false);
-        Session.set('noresults', false);
-        Session.set('searcherror', false);
-        Session.set('requests', false);
-        Session.set('movieadded', false);
-        Session.set('movieexists', false);
-        Session.set('moviedownloaded', false);
-        var url = "http://www.omdbapi.com/?type=movie&s=" + document.getElementById("search").value;
-
-        (function () {
-            $.getJSON(url)
-                .done(function (data) {
-                    MovieSearch._collection.remove({});
-                    document.getElementById("search").blur();
-
-                    try {
-                        var len = data['Search'].length;
-                    } catch (err) {
-                        Session.set('searchingresults', false);
-                        Session.set('noresults', true);
-                        return;
-                    }
-
-                    for (i = 0; i < data['Search'].length; i++) {
-                        MovieSearch._collection.insert({
-                            title: data['Search'][i]['Title'],
-                            year: data['Search'][i]['Year'],
-                            imdb: data['Search'][i]['imdbID']
-                        });
-                    }
-                    Session.set('searchingresults', false);
-                    Session.set('resultsloaded', true);
-                    Session.set('noresults', false);
-                })
-                .fail(function () {
-                    Session.set('searchingresults', false);
-                    Session.set('noresults', false);
-                    Session.set('searcherror', true);
-                });
-        }());
+    'submit #searchForm': function () {
         return false;
-    }
+    },
+    'focus #search': function () {
+        $('#search').select().mouseup(function (e) {
+            e.preventDefault();
+            $(this).unbind("mouseup");
+        });
+    },
+    'keyup  #search': _.throttle(function (event) {
+        $('#searchWorking').show();
+		    var searchterm = $(event.target).val().trim();
+		    var url = "http://api.themoviedb.org/3/search/"+Session.get('searchType')+"?api_key=95a281fbdbc2d2b7db59680dade828a6&query=" + searchterm;
+		    if ( searchterm.length >= 2 ){
+            (function () {
+                $.getJSON(url)
+                    .done(function (data) {
+                        currentSearch._collection.remove({});
+                        clearTimeout(timer);
+                        timer = setTimeout(function(){
+                            $('#searchWorking').hide();
+                        }, 400);
+                        if (data['total_results'] === 0) {
+                            $('#searchError').html('Hmm something went wrong with your search...search again?').show();
+                            return;
+                        } else {
+                            for (i = 0; i < data['results'].length; i++) {
+                                status = 'Add';
+                                id = data['results'][i]['id'];
+                                if(Session.get('searchType') === 'movie'){
+                                    title = data['results'][i]['title'];
+                                    year = data['results'][i]['release_date'];
+                                    if (!(Movies.findOne({id: id}) === undefined )) {
+                                        if (Movies.findOne({id: id}).downloaded === true) {
+                                            status = 'Already in Library';
+                                        } else {
+                                            status = 'Already Requested';
+                                        }
+                                    }
+                                } else if(Session.get('searchType') === 'tv'){
+                                    title = data['results'][i]['name'];
+                                    if (data['results'][i]['first_air_date'] !== null) {
+                                        year = data['results'][i]['first_air_date'];
+                                    } else {
+                                        year = "unknown";
+                                    }
+                                    if (!(TV.findOne({id: id}) === undefined )) {
+                                        if (TV.findOne({id: id}).downloaded === true) {
+                                            status = 'Already in Library';
+                                        } else {
+                                            status = 'Already Requested';
+                                        }
+                                    }
+                                }
+                                if (Session.get('searchType') === 'movie') {
+                                    link = "https://www.themoviedb.org/movie/" + id;
+                                } else {
+                                    link = "https://www.themoviedb.org/tv/" + id;
+                                }
+                                currentSearch._collection.insert({
+                                    id: id,
+                                    title: title,
+                                    year: year,
+                                    status: status,
+                                    link: link
+                                });
+                            }
+                            $('#resultsList').show();
+                            $('#searchError').hide();
+                        }
+                    })
+                    .fail(function () {
+                        $('#searchError').html('Hmm something went wrong with your search...search again?').show();
+                    });
+            }());
+            return false;
+        } else { //End if less than two charectors in search
+            $('#searchWorking').show();
+            $('#searchError').hide();
+            currentSearch._collection.remove({});
+            $('#resultsList').hide();
+        }
+        return false;
+    }, 400)//end keyup throttle
 });

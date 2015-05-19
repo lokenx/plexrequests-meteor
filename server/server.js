@@ -2,13 +2,19 @@ Meteor.publish('movies', function (){
     return Movies.find({});
 });
 
+Meteor.publish('tv', function (){
+    return TV.find({});
+});
+
 Meteor.publish('cpapi', function () {
-    if(this.userId) return Settings.find({_id: "couchpotatosetting"});
+    if(this.userId) return Settings.find({});
 });
 
 
 Houston.add_collection(Settings);
 Houston.add_collection(Movies);
+Houston.add_collection(TV);
+
 
 if (!(Settings.findOne({_id: "couchpotatosetting"}))) {
     Settings.insert({
@@ -23,7 +29,7 @@ if (!(Settings.findOne({_id: "plexsetting"}))) {
     Settings.insert({
         _id: "plexsetting",
         service: "Plex",
-		api: "Plex Token",
+        api: "Plex Token",
         enabled: false
     });
 };
@@ -37,24 +43,102 @@ if (!(Settings.findOne({_id: "pushbulletsetting"}))) {
     });
 };
 
+// PushOver
+if (!(Settings.findOne({_id: "pushoversetting"}))) {
+    Settings.insert({
+        _id: "pushoversetting",
+        service: "PushOver",
+        api: "abcdef0123456789",
+        userKey: "abcdef0123456789",
+        enabled: false
+    });
+};
+
+if (!(Settings.findOne({_id: "sickragesetting"}))) {
+    Settings.insert({
+        _id: "sickragesetting",
+        service: "SickRage",
+        api: "http://192.168.0.1:8081/api/abcdef0123456789/",
+        enabled: false
+    });
+};
+
+if (!(Settings.findOne({_id: "sonarrsetting"}))) {
+    Settings.insert({
+        _id: "sonarrsetting",
+        service: "Sonarr",
+        api: "http://192.168.0.1:8989",
+        api_key: "abcdef0123456789",
+        qualityProfileId: 1,
+        rootFolderPath: "/path/to/root/tv/folder/",
+        seasonFolder: "true",
+        enabled: false
+    });
+};
+
 Meteor.methods({
-    'pushBullet' : function (movie, puser) {
-        if (Settings.findOne({_id:"pushbulletsetting"}).enabled) {
+    'pushService' : function (media, year, plexUser, type) {
+        check(media, String);
+        check(year, String);
+        check(plexUser, String);
+        check(type, String);
+
+        var url, options;
+
+        var msgTitle = 'Plex Requests by ' + plexUser;
+        var msgBody = type + ': ' + media + ' (' + year + ')';
+
+
+        if (pushBullet = Settings.findOne({_id:"pushbulletsetting"}).enabled) {
+            // PushBullet
             var pbAPI = Settings.findOne({_id:"pushbulletsetting"}).api;
-            Meteor.http.call("POST", "https://api.pushbullet.com/v2/pushes",
-                             {auth: pbAPI + ":",
-                              params: {"type": "note", "title": "Plex Requests by " + puser, "body": movie}
-                             });
+
+            options = {
+                auth: pbAPI + ':',
+                params: {
+                    type: 'note',
+                    title: msgTitle,
+                    body: msgBody
+                }
+            }
+
+            url = 'https://api.pushbullet.com/v2/pushes';
+            
+            Meteor.http.post(url, options);
+            
+        } else if (Settings.findOne({_id:"pushoversetting"}).enabled) {
+            // PushOver
+            var pushOver = Settings.findOne('pushoversetting');
+
+            var pushOverToken = pushOver.api;
+            var pushOverUserKey = pushOver.userKey;
+
+            options = {
+                params: {
+                    token: pushOverToken,
+                    user: pushOverUserKey,
+                    title: msgTitle,
+                    message: msgBody
+                }
+            };
+            
+            url = 'https://api.pushover.net/1/messages.json';
+            
+            Meteor.http.post(url, options);
+            
+        } else {
+            // No service enabled
+            console.log('Error: please enable a service'); 
+            return;
         }
     },
-    'searchCP' : function (id, movie, puser) {
+    'searchCP' : function (id, imdb, movie, year, puser) {
         if (Settings.findOne({_id:"couchpotatosetting"}).enabled) {
             var cpAPI = Settings.findOne({_id:"couchpotatosetting"}).api;
 
             //Workaround to allow self-signed SSL certs, however can be dangerous and should not be used in production, looking into better way
             //But it's possible there's nothing much I can do
             process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-            var imdb = id;
 
             try {
                 var status = Meteor.http.call("GET", cpAPI  + "app.available", {timeout:5000});
@@ -68,14 +152,15 @@ Meteor.methods({
             if (initSearch['data']['media'] === null) {
                 //Movie is not in CP
                 Meteor.http.call("POST", cpAPI  + "movie.add/", {params: {"identifier": imdb}});
-                var postAdd = Meteor.http.call("GET", cpAPI  + "media.get/", {params: {"id": imdb}});
-                var json = JSON.parse(postAdd.content);
-                var movie = json['media']['title'];
-                var released = json['media']['info']['released'];
+                //var postAdd = Meteor.http.call("GET", cpAPI  + "media.get/", {params: {"id": imdb}});
+                //var json = JSON.parse(postAdd.content);
+                //var movie = json['media']['title'];
+                //var released = json['media']['info']['released'];
                 Movies.insert({
                     title: movie,
+                    id: id,
                     imdb: imdb,
-                    released: released,
+                    released: year,
                     user: puser,
                     downloaded: false,
                     createdAt: new Date()
@@ -83,15 +168,16 @@ Meteor.methods({
                 return "added"
             } else if (initSearch['data']['media']['status'] === "active") {
                 //Movie is on the wanted list already
-                var json = JSON.parse(initSearch.content);
-                var id = json['media']['info']['imdb'];
-                if (Movies.findOne({imdb: id}) === undefined) {
-                    var movie = json['media']['title'];
-                    var released = json['media']['info']['released'];
+                //var json = JSON.parse(initSearch.content);
+                //var id = json['media']['info']['imdb'];
+                if (Movies.findOne({imdb: imdb}) === undefined) {
+                    //var movie = json['media']['title'];
+                    //var released = json['media']['info']['released'];
                     Movies.insert({
                         title: movie,
-                        imdb: id,
-                        released: released,
+                        id: id,
+                        imdb: imdb,
+                        released: year,
                         user: puser,
                         downloaded: false,
                         createdAt: new Date()
@@ -100,10 +186,10 @@ Meteor.methods({
                 return "active";
             } else if (initSearch['data']['media']['status'] === "done") {
                 //Movie is downloaded already
-                var json = JSON.parse(initSearch.content);
-                var id = json['media']['info']['imdb'];
-                if (Movies.findOne({imdb: id}) !== undefined) {
-                    Movies.update({imdb: id}, {$set: {downloaded: true}});
+                //var json = JSON.parse(initSearch.content);
+                //var id = json['media']['info']['imdb'];
+                if (Movies.findOne({imdb: imdb}) !== undefined) {
+                    Movies.update({imdb: imdb}, {$set: {downloaded: true}});
                 }
                 return "downloaded";
             }
@@ -111,8 +197,9 @@ Meteor.methods({
             //CP not being used so just add to list of requested movies
             Movies.insert({
                     title: movie,
-                    imdb: id,
-                    released: "",
+                    id: id,
+                    imdb: imdb,
+                    released: year,
                     user: puser,
                     downloaded: false,
                     createdAt: new Date()
@@ -124,7 +211,7 @@ Meteor.methods({
         if (Settings.findOne({_id:"couchpotatosetting"}).enabled) {
             var allMovies = Movies.find({downloaded: false});
             allMovies.forEach(function (movie) {
-                Meteor.call('searchCP', movie.imdb, movie.title);
+                Meteor.call('searchCP', movie.id, movie.imdb, movie.title, movie.released);
             });
         };
     },
@@ -228,7 +315,191 @@ Meteor.methods({
             console.log(error);
             return false;
         }
+
+    },
+    'searchSickRage' : function(id, tvdb, title, year, puser) {
+        //Check if SickRage service is enabled
+        if (Settings.findOne({_id:"sickragesetting"}).enabled){
+
+            //If enabled check if can connect to it
+            var srAPI = Settings.findOne({_id:"sickragesetting"}).api;
+
+            //Workaround to allow self-signed SSL certs, however can be dangerous and should not be used in production, looking into better way
+            //But it's possible there's nothing much I can do
+            process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
+            try {
+                var status = Meteor.http.call("GET", srAPI  + "?cmd=sb.ping", {timeout:5000});
+            }
+            catch (error) {
+                //If can't connect error out
+                console.log(error)
+                return "error";
+            }
+            //If can connect see if series is in DB already
+            if (Meteor.http.call("GET", srAPI + "?cmd=show&tvdbid=" + tvdb)['data']['result'] === "failure") {
+                //If not in DB add to DB
+                var sickRageAdd = Meteor.http.call("GET", srAPI  + "?cmd=show.addnew&tvdbid=" + tvdb);
+
+                if (sickRageAdd['data']['result'] === "success") {
+                    return "added";
+                } else {
+                    return "error"
+                }
+            } else if (Meteor.http.call("GET", srAPI + "?cmd=show&tvdbid=" + tvdb)['data']['result'] === "success") {
+                //If in DB let user know
+                return "downloaded";
+            } else {
+                return "error";
+            }
+
+        }
+    },
+    'checkSREnabled' : function () {
+        return Settings.findOne({_id:"sickragesetting"}).enabled;
+    },
+    'checkSR' : function () {
+        var srAPI = Settings.findOne({_id:"sickragesetting"}).api;
+        var status = Meteor.http.call("GET", srAPI + "?cmd=sb.ping", {timeout:5000});
+
+        //Workaround to allow self-signed SSL certs, however can be dangerous and should not be used in production, looking into better way
+        //But it's possible there's nothing much I can do
+        process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+        return (status['data']['result']);
+
+    },
+    'checkSO' : function () {
+        soAPI = Settings.findOne({_id:"sonarrsetting"}).api_key;
+        soURL = Settings.findOne({_id:"sonarrsetting"}).api;
         
+         try {
+             var status = Meteor.http.call("GET", soURL + "/api/system/status/", {headers: {"X-Api-Key":soAPI}, timeout:5000});
+             
+             if(status.statusCode === 200){
+                 // authorized
+                return true;
+             } else {
+                 // Something else happened
+                 return false;
+             }
+         }
+        catch (error) {
+            //If can't connect error out
+            console.log(error)
+            return false;
+        }
+        
+        return false;   
+    },
+    'checkSOEnabled' : function () {
+        return Settings.findOne({_id:"sonarrsetting"}).enabled;
+    },
+    'searchSonarr' : function(id, tvdb, title, year, puser) {
+            
+        //HTTPS Requests
+        process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
+        //Check if Sonarr up
+        soAPI = Settings.findOne({_id:"sonarrsetting"}).api_key;
+        soURL = Settings.findOne({_id:"sonarrsetting"}).api;
+        soQualityProfileId = Settings.findOne({_id:"sonarrsetting"}).qualityProfileId;
+        soRootFolderPath = Settings.findOne({_id:"sonarrsetting"}).rootFolderPath;
+        soSeasonFolder = Settings.findOne({_id:"sonarrsetting"}).seasonFolder;
+        try {
+            var status = Meteor.http.call("GET", soURL + "/api/system/status/", {headers: {"X-Api-Key":soAPI}, timeout:5000});
+        }
+        catch (error) {
+            //If can't connect error out
+            console.log(error)
+            return "error";
+        }
+
+        //Attempt to add series
+        try {
+            var addSonarr = Meteor.http.call("POST", soURL + "/api/Series/", {headers: {"X-Api-Key":soAPI}, data: {
+                "tvdbId":tvdb,
+                "title":title,
+                "qualityProfileId":soQualityProfileId,
+                "seasons":[{}],
+                "seasonFolder":soSeasonFolder,
+                "rootFolderPath":soRootFolderPath
+            }});
+            return "added";
+        }
+        catch (e) {
+            var search = e.message.search("This series has already been added");
+
+            if (search != -1) {
+                return "downloaded";
+            } else {
+                console.log(e);
+                return "error";
+            }
+        }
+        return false;
+    },
+    'addTV' : function(id, tvdb, title, year, puser) {
+        if (Settings.findOne({_id:"sonarrsetting"}).enabled){
+            var sickAdd = Meteor.call('searchSonarr', id, tvdb, title, year, puser);   
+        }
+        
+        if (Settings.findOne({_id:"sickragesetting"}).enabled) {
+            var sonarAdd = Meteor.call('searchSickRage', id, tvdb, title, year, puser);
+        } 
+        
+        if ((sickAdd == "added") || (sonarAdd == "added")) {
+            TV.insert({
+              title: title,
+              id: id,
+              tvdb: tvdb,
+              released: year,
+              user: puser,
+              downloaded: false,
+              createdAt: new Date()
+            });
+            return "added";
+        }
+        
+        if (sickAdd) {
+            return sickAdd;
+        } else if (sonarAdd) {
+            return sonarAdd;
+        } else {
+            TV.insert({
+              title: title,
+              id: id,
+              tvdb: tvdb,
+              released: year,
+              user: puser,
+              downloaded: false,
+              createdAt: new Date()
+            });
+            return "added";
+        }
+    },
+    'getCommit' : function(){
+        var currentCommit = Meteor.npmRequire('git-rev-sync');
+        return currentCommit.short();
+    },
+    'getBranch' : function(){
+        var currentBranch = Meteor.npmRequire('git-rev-sync');
+        return currentBranch.branch();
+    },
+    'getCurrentCommit' : function(){
+        var git = Meteor.npmRequire('git-rev-sync');
+        var branch = git.branch();
+        var commit = git.long();
+        
+        var latestGit = Meteor.http.call("GET", "https://api.github.com/repos/lokenx/plexrequests-meteor/branches/" + branch,
+                                         {headers: {"User-Agent": "Meteor/1.1"}});
+        
+        if (latestGit.statusCode == 403) {
+            return "error"
+        } else if (latestGit['data']['commit']['sha'] == commit) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 });
