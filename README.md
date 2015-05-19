@@ -26,7 +26,7 @@ On first run navigate to `http://localhost:3000/admin` and create an admin accou
 Please visit the projects [GitHub page](http://plexrequests.8bits.ca/) for [FAQ page](http://plexrequests.8bits.ca/faq)
 
 ##Contributors
-Plex Authentication: [@jeradin](https://github.com/Jeradin)
+Plex Authentication: [@jeradin](https://github.com/Jeradin)  
 Test Pages: [@jrudio](https://github.com/jrudio)
 
 ##License
