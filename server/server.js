@@ -532,12 +532,13 @@ Meteor.methods({
         var branch = Version.findOne({_id: "versionInfo"}).branch;
         var currentVersion = Version.findOne({_id: "versionInfo"}).number;
 
-        var latestVersion = Meteor.http.call("GET",
+        var latestJson = Meteor.http.call("GET",
             "https://api.github.com/repos/lokenx/plexrequests-meteor/contents/version.txt?ref=" + branch,
             {headers: {"User-Agent": "Meteor/1.1"}}
         );
 
-        console.log(latestVersion);
+        var latestVersion = Buffer(latestJson['data']['content'], "base64").toString();
+        latestVersion = latestVersion.slice(0, - 1);
 
         if (latestVersion > currentVersion) {
             Version.update({_id: "versionInfo"},{$set: {updateAvailable: true}});
@@ -556,5 +557,3 @@ Version.update({_id: "versionInfo"},
         updateAvailable: false
     }
 });
-
-Meteor.call('checkForUpdate');

@@ -1,5 +1,5 @@
 Template.about.onCreated(function(){
-
+    Meteor.call('checkForUpdate');
 });
 
 Template.about.helpers({
