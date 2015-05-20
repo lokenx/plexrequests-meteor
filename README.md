@@ -2,20 +2,18 @@
 
 ![plexrequestshomepage](Screenshot03.png)
 
-This is [Plex Requests](https://github.com/lokenx/plexrequests) but written with Meteor! It's been updated with [SickRage](https://github.com/SiCKRAGETV/SickRage) and [Sonarr](https://sonarr.tv/) (currently beta) intergration, includes a new admin interface courtesy of the [Houston](https://github.com/gterrono/houston) package, and now supports authentication via Plex.tv usernames!
+This is [Plex Requests](https://github.com/lokenx/plexrequests) but written with Meteor! It's been updated with [SickRage](https://github.com/SiCKRAGETV/SickRage) and [Sonarr](https://sonarr.tv/) (currently beta) intergration, includes support for authentication via Plex.tv usernames, and TV requests!
 
 **A project website has been setup using [GitHub pages](http://plexrequests.8bits.ca/), please visit it for more details!**
 
 ##Features
-* Accounts are here! User's simply need enter their Plex.tv usernames to gain access
-* Users can search the [The MovieDB](https://www.themoviedb.org/) for movies and TV series to request
-* Requested content is easily available for users to see, and downloaded content gets cleaned up from the list
-* Adminitrators can view and edit requests using the admin interface, as well as configure settings
-* Couch Potato, SickRage, Sonarr, PushOver and PushBullet can be integrated via the admin interface
- * With CP enabled, movies are added to CP Wanted List if not present already, and an option to update movies download status is provided to users
- * SickRage/Sonarr integration allows shows to be added to your watch list for automated downloading
- * PushBullet and PushOver notifications can be sent to give you a notification when something is requested
-* Test pages is now setup that should help diagnose and troubleshoot connectivity issues, links can be found in admin interface
+*   Users can easily search the [TheMovieDB](https://www.themoviedb.org/) for content to request
+*   Easily accessible list of requested movies and TV series
+*   Simple and easy user authentication lets only those you want in
+*   [Couch Potato](https://couchpota.to/) integration for automatic downloads of movies
+*   [SickRage](https://github.com/SiCKRAGETV/SickRage) and [Sonarr](https://sonarr.tv/) integrationed for automatic TV Series downloads
+*   [PushBullet](https://www.pushbullet.com/) or [PushOver](https://pushover.net/) notifications to keep up to date with requests
+*   Test pages are now setup that should help diagnose and troubleshoot connectivity issues, links can be found in admin interface
 
 ![Plex Authentication](Screenshot10.png)
 
@@ -28,6 +26,8 @@ On first run navigate to `http://localhost:3000/admin` and create an admin accou
 Please visit the projects [GitHub page](http://plexrequests.8bits.ca/) for [FAQ page](http://plexrequests.8bits.ca/faq)
 
 ##Contributors
-Plex Authentication: [@jeradin](https://github.com/Jeradin)
+Plex Authentication: [@jeradin](https://github.com/Jeradin)  
+Test Pages: [@jrudio](https://github.com/jrudio)
+
 ##License
 This application is licensed under The MIT License. The Plex logo, and name are copyright of Plex Inc.
