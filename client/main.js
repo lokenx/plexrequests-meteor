@@ -3,6 +3,7 @@ currentSearch = new Mongo.Collection("currentsearch");
 Meteor.subscribe('movies');
 Meteor.subscribe('tv');
 Meteor.subscribe('cpapi');
+Meteor.subscribe('version');
 
 Session.set('searchType', '');
 

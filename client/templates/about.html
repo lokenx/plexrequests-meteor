@@ -5,17 +5,11 @@
                 {{#if currentUser }}
                 <h1>About</h1>
                 <p class="lead">Need to check with Branch you're on, or what the current commit is? You've come to the right place! You can return to the <a href="/">application</a>, or the <a href="/admin">admin</a> interface once done.</p>
-                
-                <p class="lead"><i class="fa fa-info-circle" style="font-weight:400;color:#DD6928;"></i> To get branch and commit information, Plex Requests needs to be installed via Git. For those that installed via downloading the zip file, currently version information is unavailable.</p>
-                
-                <h3 style="font-weight:400;">Release: v0.5</h3>
-                
-                <h3 style="font-weight:400;">Branch: <a href="https://github.com/lokenx/plexrequests-meteor/tree/{{branch}}" target="_blank">{{branch}}</a></h3>
-                
-                <h3 style="font-weight:400;">Commit: <a href="https://github.com/lokenx/plexrequests-meteor/commit/{{commit}}" target="_blank">{{commit}}</a></h3>
-                
-                <h3 style="font-weight:400;">{{#if error}}We're having trouble talking to <a href="https://status.github.com/" target="_blank">GitHub</a> to see if there's an update available...try again later!{{else}}{{#unless update}}Looks like there's a  <a href="https://github.com/lokenx/plexrequests-meteor/tree/{{branch}}" target="_blank">new version!</a>{{else}}You're all up to date!{{/unless}}{{/if}}</h3>
-                
+
+                <h3><span style="font-weight:400;">Branch:</span> <a href="https://github.com/lokenx/plexrequests-meteor/tree/{{branch}}" target="_blank">{{branch}}</a></h3>
+
+                <h3><span style="font-weight:400;">Version:</span> {{version}} {{#if updateAvailable}}- There's an <a href="https://github.com/lokenx/plexrequests-meteor">update</a> available!{{/if}}</h3>
+
                 {{else}}
                 <div class="unauthorized">
                     <h2>You are not authorized to view this page <i class="fa fa-exclamation-triangle enabledError"></i></h2>
