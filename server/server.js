@@ -10,7 +10,7 @@ Meteor.publish('cpapi', function () {
     if(this.userId) return Settings.find({});
 });
 
-Meteor.publish('version', function () {
+Meteor.publish('version', function (){
     return Version.find({});
 });
 
@@ -81,6 +81,14 @@ if (!(Settings.findOne({_id: "sonarrsetting"}))) {
     });
 };
 
+if (!(Version.findOne({_id:"versionInfo"}))) {
+    Version.insert({
+        _id: "versionInfo",
+        branch: "",
+        number: "",
+        updateAvailable: false
+    });
+}
 
 
 Meteor.methods({
@@ -504,56 +512,38 @@ Meteor.methods({
             return "added";
         }
     },
-    'getCommit' : function(){
-        var currentCommit = Meteor.npmRequire('git-rev-sync');
-        return currentCommit.short();
-    },
     'getBranch' : function(){
         var currentBranch = Meteor.npmRequire('git-rev-sync');
         return currentBranch.branch();
     },
-    'getCurrentCommit' : function(){
-        var git = Meteor.npmRequire('git-rev-sync');
-        var branch = git.branch();
-        var commit = git.long();
-
-        var latestGit = Meteor.http.call("GET", "https://api.github.com/repos/lokenx/plexrequests-meteor/branches/" + branch,
-                                         {headers: {"User-Agent": "Meteor/1.1"}});
-
-        if (latestGit.statusCode == 403) {
-            return "error"
-        } else if (latestGit['data']['commit']['sha'] == commit) {
-            return true;
-        } else {
-            return false;
-        }
-    },
     'checkForUpdate' : function () {
-        var branch = Version.findOne({_id: "versionInfo"}).branch;
+        var branch = Meteor.call('getBranch');
+        
+        Version.update({_id:"versionInfo"},
+            {$set: {
+                branch: branch,
+                number: "0.5.1",
+                updateAvailable: false
+            }
+        });
+        
         var currentVersion = Version.findOne({_id: "versionInfo"}).number;
 
-        var latestJson = Meteor.http.call("GET",
-            "https://api.github.com/repos/lokenx/plexrequests-meteor/contents/version.txt?ref=" + branch,
-            {headers: {"User-Agent": "Meteor/1.1"}}
-        );
-
-        var latestVersion = Buffer(latestJson['data']['content'], "base64").toString();
-        latestVersion = latestVersion.slice(0, - 1);
+        try {
+            var latestJson = Meteor.http.call("GET","https://api.github.com/repos/lokenx/plexrequests-meteor/contents/version.txt?ref=" + branch,{headers: {"User-Agent": "Meteor/1.1"}});
+        }
+        catch (err){
+            console.log(err);
+            return false;
+        }
+        
+        var latestJson64 = latestJson['data']['content'];
+        var latestVersion64 = new Buffer(latestJson64, "base64").toString();
+        var latestVersion = latestVersion64.slice(0, - 1);
 
         if (latestVersion > currentVersion) {
             Version.update({_id: "versionInfo"},{$set: {updateAvailable: true}});
         }
-    }
-
-
-});
-
-var b = Meteor.call('getBranch');
-//Version number info
-Version.update({_id: "versionInfo"},
-    {$set: {
-        branch: b,
-        number: "0.5.1",
-        updateAvailable: false
+        return true;
     }
 });
