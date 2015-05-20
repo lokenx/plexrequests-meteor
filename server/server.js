@@ -81,6 +81,14 @@ if (!(Settings.findOne({_id: "sonarrsetting"}))) {
     });
 };
 
+if (!(Version.findOne({_id:"versionInfo"}))) {
+    Version.insert({
+        _id: "versionInfo",
+        branch: "",
+        number: "",
+        updateAvailable: false
+    });
+}
 
 
 Meteor.methods({
@@ -510,15 +518,6 @@ Meteor.methods({
     },
     'checkForUpdate' : function () {
         var branch = Meteor.call('getBranch');
-
-        if (!(Version.findOne({_id:"versionInfo"}))) {
-            Version.insert({
-                _id: "versionInfo",
-                branch: "",
-                number: "",
-                updateAvailable: false
-            });
-        }
         
         Version.update({_id:"versionInfo"},
             {$set: {
