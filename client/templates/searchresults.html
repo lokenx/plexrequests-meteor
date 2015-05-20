@@ -1,15 +1,40 @@
 <template name="searchresults">
     <li class="list-group-item" data-id="{{id}}" data-title="{{title}}" data-year="{{year}}">
         {{title}} ({{year}}) &nbsp; <a href="http://www.dereferer.org/?{{link}}" target="_blank"><i class="fa fa-external-link-square"></i></a>
-        {{#if statusIs "Add"}}
-            <span class="add-request btn btn-primary pull-right btn-xs">{{status}}</span>
+        {{#if isMovie}}
+            {{#if statusIs "Add"}}
+                <span class="add-request-movie btn btn-primary pull-right btn-xs">{{status}}</span>
+            {{else}}
+            {{#if statusIs "Already in Library"}}
+                <span class="btn btn-success disabled pull-right btn-xs">{{status}}</span>
+            {{else}}
+                <span class="btn btn-warning disabled pull-right btn-xs">{{status}}</span>
+            {{/if}}
+            {{/if}}
         {{else}}
-        {{#if statusIs "Already in Library"}}
-            <span class="btn btn-success disabled pull-right btn-xs">{{status}}</span>
-        {{else}}
-            <span class="btn btn-warning disabled pull-right btn-xs">{{status}}</span>
-        {{/if}}
+            <span id="btn-add-tv-{{id}}" class="btn btn-primary pull-right btn-xs" data-toggle="modal" data-target="#episodeModal-{{id}}">{{status}}</span>
         {{/if}}
         <div class="requestError"></div>
-    </li>            
+    </li>
+    <!-- Episode Selection Modal -->
+    <div class="modal fade" id="episodeModal-{{id}}" tabindex="-1" role="dialog" aria-labelledby="episodeModalLabel-{{id}}" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="episodeModalLabel-{{id}}">{{title}} ({{year}}) Episode Selection</h4>
+                </div>
+                <div class="modal-body">
+                    Select <b>New Episodes</b> if you only want to request future episodes.
+                    <br/><br/>
+                    Select <b>All Episodes</b> if you want any episodes that have aired in the past as well as future episodes.
+                    <br/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-id="{{id}}" data-title="{{title}}" data-year="{{year}}" data-episodes="all" class="add-request-tv btn btn-danger">All Episodes</button>
+                    <button type="button" data-id="{{id}}" data-title="{{title}}" data-year="{{year}}" data-episodes="new" class="add-request-tv btn btn-primary">New Episodes</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>

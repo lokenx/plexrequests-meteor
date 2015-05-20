@@ -5,7 +5,7 @@ Template.searchresults.helpers({
 });
 
 Template.searchresults.events({
-    "click .add-request": function (event) {
+    "click .add-request-movie": function (event) {
         $(event.target).html('<i class="fa fa-spinner fa-spin fa-lg"></i>').removeClass('btn-primary');
         var title = $(event.target).parent().data( "title" );
         var year = $(event.target).parent().data( "year" );
@@ -52,7 +52,34 @@ Template.searchresults.events({
                         console.log("fail");
                     });
           }());
-        } else if (Session.get('searchType') === 'tv') {
+        }
+    },
+    "click .add-request-tv": function (event) {
+        var title = $(event.target).data( "title" );
+        var year = $(event.target).data( "year" );
+        var id = $(event.target).data( "id" );
+        var episodes = $(event.target).data( "episodes" );
+        var puser = Session.get("plexuser");
+        var getAll = false;
+        var addButton = "#btn-add-tv-" + id;
+        if (episodes === "all") {
+            getAll = true;
+        }
+        $('#episodeModal-' + id).modal('hide');
+        $(addButton).html('<i class="fa fa-spinner fa-spin fa-lg"></i>').removeClass('btn-primary');
+        if (Session.get('searchType') === 'tv') {
+            var totalSeasons;
+            var tvurl = "http://api.themoviedb.org/3/tv/" + id + "?api_key=95a281fbdbc2d2b7db59680dade828a6";
+            (function () {
+                $.getJSON(tvurl)
+                    .done(function (data) {
+                        totalSeasons = data['number_of_seasons'];
+                    })
+                    .fail(function () {
+                        totalSeasons = 0;
+                        console.log("fail");
+                    });
+            }());
             var tvdb;
             var url = "http://api.themoviedb.org/3/tv/" + id + "/external_ids?api_key=95a281fbdbc2d2b7db59680dade828a6";
             (function () {
@@ -61,17 +88,17 @@ Template.searchresults.events({
                         tvdb = data['tvdb_id'];
                         id = data['id'];
                         if (TV.findOne({tvdb: tvdb}) === undefined) {
-                            Meteor.call('addTV', id, tvdb, title, year, puser, function (err, data) {
+                            Meteor.call('addTV', id, tvdb, title, year, puser, getAll, totalSeasons, function (err, data) {
                                 if (err) {
                                     console.log(err);
-                                    $(event.target).parent().html('Something went wrong, please let the admin know!');
+                                    $(addButton).html('Something went wrong, please let the admin know!');
                                 } else if (data ==="added") {
-                                    $(event.target).html('TV Series added! <i class="fa fa-check-circle"></i>').addClass('btn-success').addClass('disabled');
+                                    $(addButton).html('TV Series added! <i class="fa fa-check-circle"></i>').addClass('btn-success').addClass('disabled');
                                     Meteor.call('pushService', title, year, puser, "TV");
                                 } else if (data === "downloaded") {
-                                    $(event.target).html('<i class="icon-share-alt"></i> Already in Library').addClass('btn-warning').addClass('disabled');
+                                    $(addButton).html('<i class="icon-share-alt"></i> Already in Library').addClass('btn-warning').addClass('disabled');
                                 } else if (data === "error") {
-                                    $(event.target).html('<i class="fa fa-exclamation-triangle"></i> Error').addClass('btn-danger');
+                                    $(addButton).html('<i class="fa fa-exclamation-triangle"></i> Error').addClass('btn-danger');
                                 } else {
                                     console.log(data);
                                     console.log("Somethings broken...");
@@ -80,10 +107,10 @@ Template.searchresults.events({
                             return false;
                         } else {
                             if (TV.findOne({tvdb: tvdb}).downloaded === true) {
-                                $(event.target).html('<i class="icon-download-alt"></i> Already in Library').addClass('btn-warning').addClass('disabled');
+                                $(addButton).html('<i class="icon-download-alt"></i> Already in Library').addClass('btn-warning').addClass('disabled');
                                 return false;
                             } else {
-                                $(event.target).html('<i class="icon-share-alt"></i> Already Requested').addClass('btn-warning').addClass('disabled');
+                                $(addButton).html('<i class="icon-share-alt"></i> Already Requested').addClass('btn-warning').addClass('disabled');
                                 return false;
                             }
                             return false;
