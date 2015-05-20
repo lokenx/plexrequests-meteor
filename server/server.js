@@ -537,12 +537,13 @@ Meteor.methods({
             {headers: {"User-Agent": "Meteor/1.1"}}
         );
 
-        var latestVersion = Buffer(latestJson['data']['content'], "base64").toString();
-        latestVersion = latestVersion.slice(0, - 1);
+        var latestVersion64 = Buffer(latestJson['data']['content'], "base64").toString();
+        var latestVersion = latestVersion64.slice(0, - 1);
 
         if (latestVersion > currentVersion) {
             Version.update({_id: "versionInfo"},{$set: {updateAvailable: true}});
         }
+        return;
     }
 
 
