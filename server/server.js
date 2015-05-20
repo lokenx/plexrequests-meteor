@@ -10,7 +10,7 @@ Meteor.publish('cpapi', function () {
     if(this.userId) return Settings.find({});
 });
 
-Meteor.publish('version', function () {
+Meteor.publish('version', function (){
     return Version.find({});
 });
 
@@ -509,32 +509,42 @@ Meteor.methods({
         return currentBranch.branch();
     },
     'checkForUpdate' : function () {
-        var branch = Version.findOne({_id: "versionInfo"}).branch;
+        var branch = Meteor.call('getBranch');
+
+        if (!(Version.findOne({_id:"versionInfo"}))) {
+            Version.insert({
+                _id: "versionInfo",
+                branch: "",
+                number: "",
+                updateAvailable: false
+            });
+        }
+        
+        Version.update({_id:"versionInfo"},
+            {$set: {
+                branch: branch,
+                number: "0.5.1",
+                updateAvailable: false
+            }
+        });
+        
         var currentVersion = Version.findOne({_id: "versionInfo"}).number;
 
-        var latestJson = Meteor.http.call("GET",
-            "https://api.github.com/repos/lokenx/plexrequests-meteor/contents/version.txt?ref=" + branch,
-            {headers: {"User-Agent": "Meteor/1.1"}}
-        );
+        try {
+            var latestJson = Meteor.http.call("GET","https://api.github.com/repos/lokenx/plexrequests-meteor/contents/version.txt?ref=" + branch,{headers: {"User-Agent": "Meteor/1.1"}});
+        }
+        catch (err){
+            console.log(err);
+            return false;
+        }
+        
         var latestJson64 = latestJson['data']['content'];
-        var latestVersion64 = Buffer(latestJson64, "base64").toString();
+        var latestVersion64 = new Buffer(latestJson64, "base64").toString();
         var latestVersion = latestVersion64.slice(0, - 1);
 
         if (latestVersion > currentVersion) {
             Version.update({_id: "versionInfo"},{$set: {updateAvailable: true}});
         }
         return true;
-    }
-
-
-});
-
-var b = Meteor.call('getBranch');
-//Version number info
-Version.update({_id: "versionInfo"},
-    {$set: {
-        branch: b,
-        number: "0.5.1",
-        updateAvailable: false
     }
 });
