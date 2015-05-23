@@ -518,15 +518,15 @@ Meteor.methods({
     },
     'checkForUpdate' : function () {
         var branch = Meteor.call('getBranch');
-        
+
         Version.update({_id:"versionInfo"},
             {$set: {
                 branch: branch,
-                number: "0.5.1",
+                number: "0.5.2",
                 updateAvailable: false
             }
         });
-        
+
         var currentVersion = Version.findOne({_id: "versionInfo"}).number;
 
         try {
@@ -536,7 +536,7 @@ Meteor.methods({
             console.log(err);
             return false;
         }
-        
+
         var latestJson64 = latestJson['data']['content'];
         var latestVersion64 = new Buffer(latestJson64, "base64").toString();
         var latestVersion = latestVersion64.slice(0, - 1);

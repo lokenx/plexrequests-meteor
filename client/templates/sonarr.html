@@ -2,9 +2,9 @@
   <div class="row">
     <div class="container">
       <div class="col-md-offset-2 col-md-8">
-        
+
         {{ #if currentUser }}
-        
+
           <h1>Sonarr Test Page</h1>
 
           <p class="lead">
@@ -13,7 +13,7 @@
 
           {{!-- Enabled --}}
           <h3 style="font-weight: 400;">
-            Enabled: 
+            Enabled:
               {{ #unless isChecking }}
                 <span class="{{ sonarrClass 'enabled' 'span' }}">
                   {{ sonarrEnabled }}
@@ -24,7 +24,7 @@
 
           {{!-- Connection --}}
           <h3 style="font-weight: 400;">
-            Connection: 
+            Connection:
               {{ #unless isChecking }}
                 <span class="{{ sonarrClass 'connection' 'span' }}">
                   {{ sonarrConnection }}
@@ -35,23 +35,23 @@
 
           {{!-- Api/Url --}}
           <h3 style="font-weight: 400;">
-            URL: 
+            URL:
           </h3>
           {{!-- Add validation for the api --}}
           <pre style="margin-top: 25px;"><code><span class="api">{{ sonarrApi }}</span></code></pre>
-          
+
           {{!--API--}}
           <h3 style="font-weight: 400;">API: </h3>
           <pre style="margin-top: 25px;"><code><span class="api">{{ sonarrApiKey }}</span></code></pre>
-          
+
           {{!--QualityProfileId--}}
           <h3 style="font-weight: 400;">QualityProfileID: </h3>
           <pre style="margin-top: 25px;"><code><span class="api">{{ sonarrqPID }}</span></code></pre>
-          
+
           {{!--RootFolderPath--}}
           <h3 style="font-weight: 400;">RootFolderPath: </h3>
           <pre style="margin-top: 25px;"><code><span class="api">{{ sonarrrFP }}</span></code></pre>
-          
+
           <br>
           <br>
           {{ #unless isError }}
@@ -63,7 +63,7 @@
               <ol>
                 <li style="margin-bottom: 20px;">
                   <strong>Customize settings:</strong>
-                  You need to go to the admin interface to setup your own Sonarr settings. You can navigate to it by going to 
+                  You need to go to the admin interface to setup your own Sonarr settings. You can navigate to it by going to
                   <br>
                   <pre style="margin-top: 25px;"><code>{{ baseUrl }}admin</code></pre>
                 </li>
@@ -78,7 +78,7 @@
                   <strong>URL: </strong> Please ensure you have typed the URL correctly, it should follow the below format
                   <pre style="margin-top: 25px;"><code>http://192.168.0.1:8989</code></pre>
                 </li>
-                  
+
                 <li style="margin-bottom: 20px;">
                   <strong>API: </strong> Please ensure you have typed your API key corrently, it should follow the below format
                   <pre style="margin-top: 25px;"><code>abcdef0123456789</code></pre>
@@ -102,14 +102,7 @@
             </div>
           {{/unless}}
         {{ else }}
-          <div class="unauthorized">
-            <h2>
-              You are not authorized to view this page
-              <i class="fa fa-exclamation-triangle enabledError"></i>
-            </h2>
-
-            <h3><a href="/">Return to the main page!</a></h3>
-          </div>
+            {{>unathorized}}
         {{ /if }}
 
       </div> {{!-- .col --}}

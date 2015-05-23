@@ -11,10 +11,7 @@
                 <h3><span style="font-weight:400;">Version:</span> {{version}} {{#if updateAvailable}}- There's an <a href="https://github.com/lokenx/plexrequests-meteor">update</a> available!{{/if}}</h3>
 
                 {{else}}
-                <div class="unauthorized">
-                    <h2>You are not authorized to view this page <i class="fa fa-exclamation-triangle enabledError"></i></h2>
-                    <h3><a href="/">Return to the main page!</a></h3>
-                </div>
+                    {{>unathorized}}
                 {{/if}}
             </div>
         </div>

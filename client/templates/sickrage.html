@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
                 {{#if currentUser }}
-                
+
                     <h1>SickRage/Beard Test Page</h1>
 
                     <p class="lead">
@@ -55,12 +55,9 @@
                         </div>
                     {{ /if }}
                 {{else}}
-                    <div class="unauthorized">
-                    <h2>You are not authorized to view this page <i class="fa fa-exclamation-triangle enabledError"></i></h2>
-                    <h3><a href="/">Return to the main page!</a></h3>
-                    </div>
+                    {{>unathorized}}
                 {{/if}}
             </div>
         </div>
-    </div> 
+    </div>
 </template>
