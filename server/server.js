@@ -30,6 +30,15 @@ if (!(Settings.findOne({_id: "couchpotatosetting"}))) {
     });
 };
 
+if (!(Settings.findOne({_id: "couchpotatosetting_2"}))) {
+    Settings.insert({
+        _id: "couchpotatosetting_2",
+        service: "CouchPotato_2",
+        api: "http://192.168.0.2:5050/api/abcdef0123456789/",
+        enabled: false
+    });
+};
+
 if (!(Settings.findOne({_id: "plexsetting"}))) {
     Settings.insert({
         _id: "plexsetting",
@@ -222,6 +231,81 @@ Meteor.methods({
             return "added";
         };
     },
+    'searchCP2' : function (id, imdb, movie, year, puser) {
+        if (Settings.findOne({_id:"couchpotatosetting_2"}).enabled) {
+            var cpAPI = Settings.findOne({_id:"couchpotatosetting_2"}).api;
+
+            //Workaround to allow self-signed SSL certs, however can be dangerous and should not be used in production, looking into better way
+            //But it's possible there's nothing much I can do
+            process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
+            try {
+                var status = Meteor.http.call("GET", cpAPI  + "app.available", {timeout:5000});
+            }
+            catch (error) {
+                console.log(error)
+            }
+
+            var initSearch = Meteor.http.call("GET", cpAPI  + "media.get/", {params: {"id": imdb}});
+
+            if (initSearch['data']['media'] === null) {
+                //Movie is not in CP
+                Meteor.http.call("POST", cpAPI  + "movie.add/", {params: {"identifier": imdb}});
+                //var postAdd = Meteor.http.call("GET", cpAPI  + "media.get/", {params: {"id": imdb}});
+                //var json = JSON.parse(postAdd.content);
+                //var movie = json['media']['title'];
+                //var released = json['media']['info']['released'];
+                Movies.insert({
+                    title: movie,
+                    id: id,
+                    imdb: imdb,
+                    released: year,
+                    user: puser,
+                    downloaded: false,
+                    createdAt: new Date()
+                });
+                return "added"
+            } else if (initSearch['data']['media']['status'] === "active") {
+                //Movie is on the wanted list already
+                //var json = JSON.parse(initSearch.content);
+                //var id = json['media']['info']['imdb'];
+                if (Movies.findOne({imdb: imdb}) === undefined) {
+                    //var movie = json['media']['title'];
+                    //var released = json['media']['info']['released'];
+                    Movies.insert({
+                        title: movie,
+                        id: id,
+                        imdb: imdb,
+                        released: year,
+                        user: puser,
+                        downloaded: false,
+                        createdAt: new Date()
+                    });
+                }
+                return "active";
+            } else if (initSearch['data']['media']['status'] === "done") {
+                //Movie is downloaded already
+                //var json = JSON.parse(initSearch.content);
+                //var id = json['media']['info']['imdb'];
+                if (Movies.findOne({imdb: imdb}) !== undefined) {
+                    Movies.update({imdb: imdb}, {$set: {downloaded: true}});
+                }
+                return "downloaded";
+            }
+        } else {
+            //CP not being used so just add to list of requested movies
+            Movies.insert({
+                    title: movie,
+                    id: id,
+                    imdb: imdb,
+                    released: year,
+                    user: puser,
+                    downloaded: false,
+                    createdAt: new Date()
+            });
+            return "added";
+        };
+    },
     'updateCP' : function () {
         if (Settings.findOne({_id:"couchpotatosetting"}).enabled) {
             var allMovies = Movies.find({downloaded: false});
@@ -243,6 +327,9 @@ Meteor.methods({
     },
     'checkCPEnabled' : function () {
         return Settings.findOne({_id:"couchpotatosetting"}).enabled;
+    },
+    'checkCPEnabled2' : function () {
+        return Settings.findOne({_id:"couchpotatosetting_2"}).enabled;
     },
     'checkPlexEnabled' : function () {
         return Settings.findOne({_id:"plexsetting"}).enabled;
@@ -518,7 +605,7 @@ Meteor.methods({
     },
     'checkForUpdate' : function () {
         var branch = Meteor.call('getBranch');
-        
+
         Version.update({_id:"versionInfo"},
             {$set: {
                 branch: branch,
@@ -526,7 +613,7 @@ Meteor.methods({
                 updateAvailable: false
             }
         });
-        
+
         var currentVersion = Version.findOne({_id: "versionInfo"}).number;
 
         try {
@@ -536,7 +623,7 @@ Meteor.methods({
             console.log(err);
             return false;
         }
-        
+
         var latestJson64 = latestJson['data']['content'];
         var latestVersion64 = new Buffer(latestJson64, "base64").toString();
         var latestVersion = latestVersion64.slice(0, - 1);
