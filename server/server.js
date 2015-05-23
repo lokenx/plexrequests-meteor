@@ -517,11 +517,11 @@ Meteor.methods({
         return currentBranch.branch();
     },
     'checkForUpdate' : function () {
-        var branch = Meteor.call('getBranch');
+        //var branch = Meteor.call('getBranch');
 
         Version.update({_id:"versionInfo"},
             {$set: {
-                branch: branch,
+                branch: dev,
                 number: "0.5.2",
                 updateAvailable: false
             }
