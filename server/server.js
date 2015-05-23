@@ -518,10 +518,10 @@ Meteor.methods({
     },
     'checkForUpdate' : function () {
         //var branch = Meteor.call('getBranch');
-
+        var branch = "dev";
         Version.update({_id:"versionInfo"},
             {$set: {
-                branch: dev,
+                branch: branch,
                 number: "0.5.2",
                 updateAvailable: false
             }
