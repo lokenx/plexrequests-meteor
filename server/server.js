@@ -255,7 +255,7 @@ Meteor.methods({
                 //var json = JSON.parse(postAdd.content);
                 //var movie = json['media']['title'];
                 //var released = json['media']['info']['released'];
-                Movies.insert({
+                /*Movies.insert({
                     title: movie,
                     id: id,
                     imdb: imdb,
@@ -263,8 +263,9 @@ Meteor.methods({
                     user: puser,
                     downloaded: false,
                     createdAt: new Date()
-                });
-                return "added"
+                });*/
+                //return "added"
+                return;
             } else if (initSearch['data']['media']['status'] === "active") {
                 //Movie is on the wanted list already
                 //var json = JSON.parse(initSearch.content);
@@ -272,7 +273,7 @@ Meteor.methods({
                 if (Movies.findOne({imdb: imdb}) === undefined) {
                     //var movie = json['media']['title'];
                     //var released = json['media']['info']['released'];
-                    Movies.insert({
+                    /*Movies.insert({
                         title: movie,
                         id: id,
                         imdb: imdb,
@@ -280,7 +281,7 @@ Meteor.methods({
                         user: puser,
                         downloaded: false,
                         createdAt: new Date()
-                    });
+                    });*/
                 }
                 return "active";
             } else if (initSearch['data']['media']['status'] === "done") {
@@ -288,13 +289,14 @@ Meteor.methods({
                 //var json = JSON.parse(initSearch.content);
                 //var id = json['media']['info']['imdb'];
                 if (Movies.findOne({imdb: imdb}) !== undefined) {
-                    Movies.update({imdb: imdb}, {$set: {downloaded: true}});
+                    //Movies.update({imdb: imdb}, {$set: {downloaded: true}});
                 }
-                return "downloaded";
+                //return "downloaded";
+                return;
             }
         } else {
             //CP not being used so just add to list of requested movies
-            Movies.insert({
+            /*Movies.insert({
                     title: movie,
                     id: id,
                     imdb: imdb,
@@ -302,7 +304,7 @@ Meteor.methods({
                     user: puser,
                     downloaded: false,
                     createdAt: new Date()
-            });
+            });*/
             return "added";
         };
     },
