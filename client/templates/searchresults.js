@@ -13,7 +13,7 @@ Template.searchresults.events({
         var puser = Session.get("plexuser");
         if (Session.get('searchType') === 'movie') {
           var imdb;
-          var url = "http://api.themoviedb.org/3/movie/" + id + "?api_key=95a281fbdbc2d2b7db59680dade828a6";
+          var url = "https://api.themoviedb.org/3/movie/" + id + "?api_key=95a281fbdbc2d2b7db59680dade828a6";
           (function () {
                 $.getJSON(url)
                     .done(function (data) {
@@ -69,7 +69,7 @@ Template.searchresults.events({
         $(addButton).html('<i class="fa fa-spinner fa-spin fa-lg"></i>').removeClass('btn-primary');
         if (Session.get('searchType') === 'tv') {
             var totalSeasons;
-            var tvurl = "http://api.themoviedb.org/3/tv/" + id + "?api_key=95a281fbdbc2d2b7db59680dade828a6";
+            var tvurl = "https://api.themoviedb.org/3/tv/" + id + "?api_key=95a281fbdbc2d2b7db59680dade828a6";
             (function () {
                 $.getJSON(tvurl)
                     .done(function (data) {
@@ -81,7 +81,7 @@ Template.searchresults.events({
                     });
             }());
             var tvdb;
-            var url = "http://api.themoviedb.org/3/tv/" + id + "/external_ids?api_key=95a281fbdbc2d2b7db59680dade828a6";
+            var url = "https://api.themoviedb.org/3/tv/" + id + "/external_ids?api_key=95a281fbdbc2d2b7db59680dade828a6";
             (function () {
                 $.getJSON(url)
                     .done(function (data) {
