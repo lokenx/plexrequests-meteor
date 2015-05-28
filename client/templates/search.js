@@ -14,7 +14,7 @@ Template.search.events({
     'keyup  #search': _.throttle(function (event) {
         $('#searchWorking').show();
 		    var searchterm = $(event.target).val().trim();
-		    var url = "http://api.themoviedb.org/3/search/"+Session.get('searchType')+"?api_key=95a281fbdbc2d2b7db59680dade828a6&query=" + searchterm;
+		    var url = "https://api.themoviedb.org/3/search/"+Session.get('searchType')+"?api_key=95a281fbdbc2d2b7db59680dade828a6&query=" + searchterm;
 		    if ( searchterm.length >= 2 ){
             (function () {
                 $.getJSON(url)
