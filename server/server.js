@@ -454,7 +454,7 @@ Meteor.methods({
                 "tvdbId":tvdb,
                 "title":title,
                 "qualityProfileId":soQualityProfileId,
-                "seasons":seasons,
+                "seasons":[{}],
                 "seasonFolder":soSeasonFolder,
                 "rootFolderPath":soRootFolderPath,
                 "addOptions":options
