@@ -522,7 +522,7 @@ Meteor.methods({
         Version.update({_id:"versionInfo"},
             {$set: {
                 branch: branch,
-                number: "0.5.2",
+                number: "0.5.3",
                 updateAvailable: false
             }
         });
@@ -547,3 +547,16 @@ Meteor.methods({
         return true;
     }
 });
+
+SyncedCron.add({
+    name: 'Update CP download status',
+    schedule: function(parser) {
+        return parser.text('every 6 hours');
+        },
+    job: function() {
+        Meteor.call('updateCP');
+        return 'Updating CP status';
+    }
+});
+
+SyncedCron.start();

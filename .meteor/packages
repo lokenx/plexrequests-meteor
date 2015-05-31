@@ -12,7 +12,6 @@ peerlibrary:xml2js
 u2622:persistent-session
 aslagle:reactive-table
 meteorhacks:npm
-
-
 npm-container
 mizzao:bootstrap-3
+percolate:synced-cron
