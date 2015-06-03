@@ -4,6 +4,7 @@ Meteor.subscribe('movies');
 Meteor.subscribe('tv');
 Meteor.subscribe('cpapi');
 Meteor.subscribe('version');
+Meteor.subscribe('weeklylimit');
 
 Session.set('searchType', '');
 

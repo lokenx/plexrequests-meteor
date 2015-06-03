@@ -1,6 +1,9 @@
 Template.searchresults.helpers({
     statusIs: function (status) {
         return this.status === status;
+    },
+    Settings: function () {
+        return Settings;
     }
 });
 
@@ -12,8 +15,15 @@ Template.searchresults.events({
         var id = $(event.target).parent().data( "id" );
         var puser = Session.get("plexuser");
         if (Session.get('searchType') === 'movie') {
-          var imdb;
-          var url = "https://api.themoviedb.org/3/movie/" + id + "?api_key=95a281fbdbc2d2b7db59680dade828a6";
+            var imdb;
+            var url = "https://api.themoviedb.org/3/movie/" + id + "?api_key=95a281fbdbc2d2b7db59680dade828a6";
+
+            //Check whether user has hit their weekly limit
+            var date = new Date(+new Date - 6.048e8);
+        if(Movies.find({user:puser, createdAt: {"$gte": date} }).fetch().length > Settings.findOne({_id:'weeklylimit'}).api) {
+            alert("You have already submitted your weekly limit of requests!");
+            $(event.target).html('Add').addClass('btn-primary');
+        } else {
           (function () {
                 $.getJSON(url)
                     .done(function (data) {
@@ -52,6 +62,7 @@ Template.searchresults.events({
                         console.log("fail");
                     });
           }());
+        }
         }
     },
     "click .add-request-tv": function (event) {

@@ -14,6 +14,9 @@ Meteor.publish('version', function (){
     return Version.find({});
 });
 
+Meteor.publish('weeklylimit', function () {
+    return Settings.find({_id:"weeklylimit"});
+});
 
 Houston.add_collection(Settings);
 Houston.add_collection(Movies);
@@ -79,6 +82,14 @@ if (!(Settings.findOne({_id: "sonarrsetting"}))) {
         seasonFolder: "true",
         enabled: false
     });
+};
+
+if (!(Settings.findOne({_id: "weeklylimit"}))) {
+    Settings.insert({
+        _id: "weeklylimit",
+        service: "User request limit",
+        api: 5
+    })
 };
 
 if (!(Version.findOne({_id:"versionInfo"}))) {
@@ -522,7 +533,7 @@ Meteor.methods({
         Version.update({_id:"versionInfo"},
             {$set: {
                 branch: branch,
-                number: "0.5.3",
+                number: "0.5.4",
                 updateAvailable: false
             }
         });
