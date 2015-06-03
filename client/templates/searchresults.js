@@ -20,7 +20,7 @@ Template.searchresults.events({
 
             //Check whether user has hit their weekly limit
             var date = new Date(+new Date - 6.048e8);
-            if (!(Settings.findOne({_id:'weeklylimit'}).api == 0) && (Movies.find({user:puser, createdAt: {"$gte": date} }).fetch().length >= Settings.findOne({_id:'weeklylimit'}).api)) {
+            if (!(Settings.findOne({_id:'weeklylimit'}).api == 0) && (Movies.find({user:puser, createdAt: {"$gte": date} }).fetch().length >= Settings.findOne({_id:'weeklylimit'}).api) && !(Meteor.user())) {
                 alert("You have already submitted your weekly limit of requests!");
                 $(event.target).html('Add').addClass('btn-primary');
             } else {
@@ -77,7 +77,7 @@ Template.searchresults.events({
         //Check whether user has hit their weekly limit
             
         var date = new Date(+new Date - 6.048e8);
-        if (!(Settings.findOne({_id:'weeklylimit'}).api == 0) && (TV.find({user:puser, createdAt: {"$gte": date} }).fetch().length >= Settings.findOne({_id:'weeklylimit'}).api)) {
+        if (!(Settings.findOne({_id:'weeklylimit'}).api == 0) && (TV.find({user:puser, createdAt: {"$gte": date} }).fetch().length >= Settings.findOne({_id:'weeklylimit'}).api) && !(Meteor.user())) {
             alert("You have already submitted your weekly limit of requests!");
             $('#episodeModal-' + id).modal('hide');
         } else {    
