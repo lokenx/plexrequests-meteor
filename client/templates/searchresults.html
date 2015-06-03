@@ -12,7 +12,11 @@
             {{/if}}
             {{/if}}
         {{else}}
+        {{#if statusIs "Add"}}
             <span id="btn-add-tv-{{id}}" class="btn btn-primary pull-right btn-xs" data-toggle="modal" data-target="#episodeModal-{{id}}">{{status}}</span>
+            {{else}}
+            <span id="btn-add-tv-{{id}}" class="btn btn-warning pull-right btn-xs" data-toggle="modal" data-target="#episodeModal-{{id}}">{{status}}</span>
+        {{/if}}
         {{/if}}
         <div class="requestError"></div>
     </li>
