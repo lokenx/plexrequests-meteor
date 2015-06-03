@@ -20,7 +20,7 @@ Template.searchresults.events({
 
             //Check whether user has hit their weekly limit
             var date = new Date(+new Date - 6.048e8);
-        if(Movies.find({user:puser, createdAt: {"$gte": date} }).fetch().length > Settings.findOne({_id:'weeklylimit'}).api) {
+        if (!(Settings.findOne({_id:'weeklylimit'}).api == 0) && (Movies.find({user:puser, createdAt: {"$gte": date} }).fetch().length >= Settings.findOne({_id:'weeklylimit'}).api)) {
             alert("You have already submitted your weekly limit of requests!");
             $(event.target).html('Add').addClass('btn-primary');
         } else {
