@@ -2,7 +2,7 @@ currentSearch = new Mongo.Collection("currentsearch");
 
 Meteor.subscribe('movies');
 Meteor.subscribe('tv');
-Meteor.subscribe('cpapi');
+Meteor.subscribe('settings');
 Meteor.subscribe('version');
 Meteor.subscribe('weeklylimit');
 
@@ -34,6 +34,10 @@ Router.route('/sonarr', {
 
 Router.route('/about', {
     name: 'about'
+});
+
+Router.route('/settings', {
+    name: 'settings'
 });
 
 Template.body.helpers({

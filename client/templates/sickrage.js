@@ -1,5 +1,5 @@
 Template.sickrage.onCreated(function(){
-  this.subscribe('cpapi');
+  this.subscribe('settings');
   Session.set('isError', false);
   Session.set('isChecking', true);
 

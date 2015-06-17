@@ -6,7 +6,7 @@ Meteor.publish('tv', function (){
     return TV.find({});
 });
 
-Meteor.publish('cpapi', function () {
+Meteor.publish('settings', function () {
     if(this.userId) return Settings.find({});
 });
 

@@ -1,5 +1,5 @@
 Template.sonarr.onCreated(function(){
-    this.subscribe('cpapi');
+    this.subscribe('settings');
     Session.set('isChecking', true);
     Session.set('isError', false);
 
