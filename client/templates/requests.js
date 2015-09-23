@@ -25,7 +25,7 @@ Template.requests.helpers({
 		            { key: 'createdAt', label: 'Created', sort: 'descending', hidden: true },
 				    { key: 'title',  label: 'Title', cellClass: 'Title'},
 				    { key: 'released',  label: 'Released', cellClass: 'Released' },
-				    { key: 'downloaded', label:'Done', cellClass: 'Done',
+				    { key: 'downloaded', label:function() {return new Spacebars.SafeString("<span title='Green check mark means Movie is available'>Status</span>")}, cellClass: 'Status',
 					    hidden: function () { if (Session.get('searchType') === 'movie'){ return false; }else{ return true; } },
 					    fn: function (value) {
 						    if(value===true){
@@ -56,4 +56,8 @@ Template.requests.helpers({
 				]
 	        };
 	}
+});
+
+Template.requests.onCreated(function(){
+    $('th.downloaded').hide();
 });
