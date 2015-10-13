@@ -1,0 +1,49 @@
+<template name="search">
+	<div class="row">
+		<div class="col-md-8">
+	    <form class="form-inline" id="search-form">
+				<div class="input-group col-sm-8">
+	        <div class="input-group-addon">
+	          {{#if searching}}
+	            <i class="fa fa-spinner fa-pulse"></i>
+	          {{else}}
+	            <i class="fa fa-search"></i>
+	          {{/if}}
+	        </div>
+        	<input type="search" class="form-control" id="search-input" placeholder="Search" {{searchDisabled}}>
+	        <div class="input-group-btn">
+	          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="type-select-button">{{firstSearchOption}} <span class="caret"></span></button>
+	          <ul class="dropdown-menu type-select">
+	            {{#each searchOptions}}
+	            	<li><a href="#">{{this}}</a></li>
+            	{{/each}}
+	          </ul>
+	        </div>
+	      </div>
+	      {{#if searchDisabled}}
+	      	<br>
+	      	<br>
+        	<div class="alert alert-danger" role="alert">
+        		Searching has been disabled.
+      		</div>
+    		{{/if}}
+	    </form>
+    </div>
+  </div>
+  <div class="row">
+    <div id="search-results" class="col-md-8">
+      <h3 class="results-header" style="display:none;">{{searchType}}</h3>
+      <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        {{#each results}}
+          {{> item}}
+        {{/each}}
+      </div>
+    </div>
+
+    {{#if error}}
+      <div class="col-sm-4">
+        <div class="alert alert-warning" role="alert">No results found</div>
+      </div>
+    {{/if}}
+  </div>
+</template>

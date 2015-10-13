@@ -5,12 +5,11 @@
 # but you can also edit it by hand.
 
 http
-iron:router
+iron:router@=1.0.10
 peerlibrary:xml2js
 u2622:persistent-session
 aslagle:reactive-table
 meteorhacks:npm
-mizzao:bootstrap-3
 percolate:synced-cron
 npm-container
 standard-minifiers
@@ -29,3 +28,14 @@ spacebars
 check
 aldeed:collection2
 yogiben:admin
+iron:core@=1.0.8
+twbs:bootstrap
+fortawesome:fontawesome
+accounts-password
+# accounts-ui
+ian:accounts-ui-bootstrap-3
+reactive-var
+dburles:collection-helpers
+alanning:roles
+
+lokenx:themoviedbsearch

@@ -1,0 +1,32 @@
+<template name="adminDefaultWidgets">
+	{{#each admin_collections}}
+		{{#unless $eq showWidget false}}
+			{{> adminCollectionWidget collection=name}}
+		{{/unless}}
+	{{/each}}
+</template>
+
+<template name="adminCollectionWidget">
+	<div class="{{#if class}}{{class}}{{else}}col-lg-3 col-xs-6{{/if}}">
+	{{#with adminGetCollection collection}}
+		<a href="/admin/{{this.name}}">
+			<div class="small-box bg-{{color}}">
+				<div class="inner">
+					<h3>
+						{{adminCollectionCount name}}
+					</h3>
+					<p>
+						{{this.label}}
+					</p>
+				</div>
+				<div class="icon">
+					<i class="fa fa-{{this.icon}}"></i>
+				</div>
+				<a class="small-box-footer">
+					See all <i class="fa fa-arrow-circle-right"></i>
+				</a>
+			</div>
+		</a>
+		{{/with}}
+	</div>
+</template>

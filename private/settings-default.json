@@ -1,0 +1,7 @@
+{
+	"searchOptions" : {
+    "movies": true,
+    "tv": true,
+    "music": false
+	}
+}

@@ -1,0 +1,5 @@
+.build
+*.sublime-workspace
+*.sublime-project
+.build*
+.versions

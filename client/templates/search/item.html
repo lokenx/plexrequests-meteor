@@ -1,0 +1,33 @@
+<template name="item">
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="heading{{id}}">
+      <h4 class="panel-title" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{id}}" aria-expanded="true" aria-controls="collapse{{id}}">
+        {{title}} ({{year}})
+      </h4>
+    </div>
+    <div id="collapse{{id}}" class="panel-collapse collapse {{#if first}}in{{/if}}" role="tabpanel" aria-labelledby="heading{{id}}">
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-sm-9">
+            <p>
+              <strong>Overview</strong>
+              <br>
+              {{overview}}
+
+              <a href="http://www.dereferer.org/?{{link}}" target="_blank">More info <i class="fa fa-share"></i></a>
+            </p>
+            <br>
+            <p>
+              <button class="btn btn-primary add-request"><i class="fa fa-plus"></i> &nbsp; Request</button>
+            </p>
+          </div>
+          <div class="col-sm-3">
+            {{#if posterExists}}
+              <img src="http://image.tmdb.org/t/p/w154{{poster_path}}" class="img-responsive" alt="Poster">
+            {{/if}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
