@@ -80,5 +80,23 @@ Template.search.events({
   }, 1000),
   'submit #search-form': function (event) {
     return false;
+  },
+  'click .add-request': function (event) {
+    var btn = $(event.target);
+
+    btn.html('<i class="fa fa-spinner fa-spin"></i> &nbsp; Requesting...');
+    if (this.media_type === "movie") {
+      Meteor.call("requestMovie", {id: this.id, title: this.title, released: this.release_date, user: "jdoe"}, function (error, result) {
+        if (error || result === false) {
+          console.log("Error requesting, check server log");
+          btn.html('<i class="fa fa-times"></i> &nbsp; Error');
+          btn.removeClass("btn-primary");
+          btn.addClass("btn-danger");
+        } else {
+          btn.hide();
+        }
+      })
+    }
+
   }
 });

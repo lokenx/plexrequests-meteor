@@ -18,7 +18,16 @@
             </p>
             <br>
             <p>
-              <button class="btn btn-primary add-request"><i class="fa fa-plus"></i> &nbsp; Request</button>
+              {{#if isRequested}}
+                <button class="btn btn-success already-requested" disabled><i class="fa fa-check"></i> &nbsp; Requested</button>
+              {{else}}
+                {{#if isTV}}
+                  <button class="btn btn-primary add-request"><i class="fa fa-plus"></i> &nbsp; Request New Episodes</button>
+                  <button class="btn btn-primary add-request"><i class="fa fa-plus"></i> &nbsp; Request All Episodes</button>
+                {{else}}
+                <button class="btn btn-primary add-request"><i class="fa fa-plus"></i> &nbsp; Request</button>
+                {{/if}}
+              {{/if}}
             </p>
           </div>
           <div class="col-sm-3">
