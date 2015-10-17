@@ -27,16 +27,17 @@ ejson
 spacebars
 check
 aldeed:collection2
-yogiben:admin
 iron:core@=1.0.8
-twbs:bootstrap
 fortawesome:fontawesome
 accounts-password
-# accounts-ui
-ian:accounts-ui-bootstrap-3
 reactive-var
 dburles:collection-helpers
 alanning:roles
+momentjs:moment
+twbs:bootstrap
+ian:accounts-ui-bootstrap-3
+
 
 lokenx:themoviedbsearch
 lokenx:couchpotatowrapper
+msavin:mongol

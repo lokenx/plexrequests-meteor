@@ -1,0 +1,60 @@
+<template name="requests">
+	<div class="navbar navbar-default" role="navigation">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">Plex Requests</a>
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="navbar-collapse collapse">
+      <!-- <ul class="nav navbar-nav navbar-right">
+        {{> loginButtons}}
+      </ul> -->
+    </div>
+	</div>
+
+
+  <div class="container">
+  	<div class="row">
+  		<div class="col-md-offset-2">
+			  <h1>Requests</h1>
+  			<p>Below you can see yours and all other requests, as well as their download and approval status.</p>
+  		</div>
+  	</div>
+
+  <!-- Selector between Movies/TV/etc -->
+
+
+  <!-- List of content -->
+
+  {{#each movies}}
+  <div class="request-item">
+	  	<div class="row">
+	  		<div class="col-md-2 col-md-offset-2">
+	  			<img src="{{poster_path}}" class="img-responsive" alt="Poster">
+	  		</div>
+	  		<div class="col-md-6">
+	  			<ul class="request-details-list">
+		  			<li>{{title}}</li>
+		  			<li>Release date: {{release_date}}</li>
+		  			<li>Approved: {{{approval_status}}}</li>
+		  			<li>Available: {{{download_status}}}</li>
+		  			{{{requesting_user}}}
+	  			</ul>
+	  		</div>
+	  		<div class="col-md-2 request-details-buttons">
+	  			{{#if currentUser}}
+		  			{{#unless approved}}<p><button class="btn btn-success approve-item">Approve</button></p>{{/unless}}
+		  			<p><button class="btn btn-danger delete-item">Delete</button></p>
+		  		{{/if}}
+		  		<p><button class="btn btn-info report-item">Report Issue</button></p>
+	  		</div>
+	  	</div>
+  	</div>
+	{{/each}}
+
+  </div>
+</template>

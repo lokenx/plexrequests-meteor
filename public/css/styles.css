@@ -1,0 +1,19 @@
+.request-item {
+	padding-bottom: 5%;
+}
+
+.success-icon {
+	color: #3F7600;
+}
+
+.error-icon {
+	color: #D2000D;
+}
+
+.request-details-list {
+	list-style: none;
+}
+
+.request-details-buttons {
+	text-align: right;
+}

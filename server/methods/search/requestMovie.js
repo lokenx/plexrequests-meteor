@@ -1,6 +1,7 @@
 Meteor.methods({
 	"requestMovie": function(request) {
 		check(request, Object);
+		var poster = request.poster_path || "/";
 
 		// Movie Request only requires IMDB_ID
 		//Get IMDB ID
@@ -22,7 +23,8 @@ Meteor.methods({
 					released: request.released,
 					user: request.user,
 					downloaded: false,
-					approved: false
+					approved: false,
+					poster_path: poster
 				});
 			} catch (error) {
 				console.log(error.message);
@@ -50,7 +52,8 @@ Meteor.methods({
 							released: request.released,
 							user: request.user,
 							downloaded: false,
-							approved: true
+							approved: true,
+							poster_path: poster
 						});
 					} catch (error) {
 						console.log(error.message);
@@ -70,7 +73,8 @@ Meteor.methods({
 						released: request.released,
 						user: request.user,
 						downloaded: false,
-						approved: true
+						approved: true,
+						poster_path: poster
 					});
 				} catch (error) {
 					console.log(error.message);
