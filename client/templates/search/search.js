@@ -92,8 +92,12 @@ Template.search.events({
           btn.html('<i class="fa fa-times"></i> &nbsp; Error');
           btn.removeClass("btn-primary");
           btn.addClass("btn-danger");
-        } else {
+        } else if (result === true) {
           btn.hide();
+        } else if (result === "limit") {
+          btn.html('<i class="fa fa-times"></i> &nbsp; Exceeded weekly limit!');
+          btn.removeClass("btn-primary");
+          btn.addClass("btn-warning");
         }
       })
     }
