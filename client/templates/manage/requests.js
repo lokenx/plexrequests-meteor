@@ -12,8 +12,9 @@ Template.requests.helpers({
   },
   'download_status' : function () {
   	//Movie true/false
+  	var approval;
   	if (this.imdb) {
-  		var approval = (this.downloaded) ? '<i class="fa fa-check success-icon"></i>': '<i class="fa fa-times error-icon"></i>';  		
+  		approval = (this.downloaded) ? '<i class="fa fa-check success-icon"></i>': '<i class="fa fa-times error-icon"></i>';  		
   	} else {
   		//TV dowloaded:total
   	}
@@ -21,7 +22,43 @@ Template.requests.helpers({
   },
   'requesting_user' : function () {
   	if (Meteor.user()) {
-  		return "<li>User: " + this.user + "</li>";
+  		return "<li><strong>User:</strong> " + this.user + "</li>";
   	}
   }
+});
+
+Template.requests.events({
+	'click .approve-item' : function (event, template) {
+		Meteor.call("approveRequest", this, function(error, result) {
+			if (error || !(result)) {
+				//Alert error
+				console.log(error);
+			} else {
+				// Alert success
+			}
+		});
+	},
+	'click .delete-item' : function (event, template) {
+		if (window.confirm("Are you sure you want to delete " + this.title + "?")) {
+			Meteor.call("deleteRequest", this, function(error, result) {
+				if (error || !(result)) {
+					//Alert error
+					console.log(error);
+				} else {
+					// Alert success with undo option
+				}
+			});
+		}
+	},
+	'click .issue-select' : function (event, template) {
+		var issue = event.target.text;
+		Meteor.call("addIssue", this, issue, function(error, result) {
+			if (error || !(result)) {
+				//Alert error
+				console.log(error);
+			} else {
+				// Alert success
+			}
+		})
+	}
 })
