@@ -23,6 +23,14 @@
 	list-style: none;
 }
 
-.settings {
+/*.settings {
 	padding-top: 5%;
+}*/
+
+.settings h2 {
+	padding-top: 5%;
+}
+
+.settings button {
+	margin: 10% 0%;
 }
