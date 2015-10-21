@@ -17,3 +17,12 @@
 .request-details-buttons {
 	text-align: right;
 }
+
+.login-buttons {
+	font-size: 1.5em;
+	list-style: none;
+}
+
+.settings {
+	padding-top: 5%;
+}

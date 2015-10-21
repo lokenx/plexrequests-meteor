@@ -29,6 +29,7 @@ Template.home.events({
        } else {
         Session.setAuth('auth', "true");
         Session.setAuth('user', plexUsername);
+        Bert.alert( 'Successfully logged in!', 'success');
         Router.go('/search');
       }
     });

@@ -29,5 +29,11 @@ Router.route('/requests', function () {
 });
 
 Router.route('/admin', function () {
-	this.render('admin');
+	if (Meteor.userId()) {
+		this.render('admin', {
+	    data: function () { return Settings.findOne({})}
+	  });	
+	} else {
+		this.render('admin')
+	}
 })

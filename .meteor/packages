@@ -36,10 +36,11 @@ alanning:roles
 momentjs:moment
 twbs:bootstrap
 ian:accounts-ui-bootstrap-3
-
-
-lokenx:themoviedbsearch
-lokenx:couchpotatowrapper
 msavin:mongol
 zimme:active-route
 themeteorchef:bert
+aldeed:autoform
+ongoworks:security
+
+lokenx:themoviedbsearch
+lokenx:couchpotatowrapper
