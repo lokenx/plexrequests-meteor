@@ -10,13 +10,15 @@ Template.registerHelper('auth', () => {
 	var auth = function () {
 		if (Session.get("auth") === "true") {
 			return true;
+		} else if (Meteor.userId()) {
+			return true;
 		} else {
 			return false;
 		}
-
-		if (Meteor.userId()) {
-			return true;
-		}
 	}
 	return auth();
+});
+
+Template.registerHelper('plexAuth', () => {
+	return (Session.get("auth") === "true") ? true : false;
 })

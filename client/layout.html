@@ -1,7 +1,7 @@
 <template name="layout">
 	<div class="navbar navbar-default" role="navigation">
     <div class="navbar-header">
-      <a class="navbar-brand" href="/"><i class="fa fa-play-circle"></i> Plex Requests</a>
+      <a class="navbar-brand" href="/"><i class="fa fa-play-circle"></i> Plex Requests {{#if currentUser}}<a href="{{pathFor 'admin'}}" class="admin-link">Admin</a>{{/if}}</a>
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
@@ -11,13 +11,18 @@
     </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
-        {{#if auth}}
+        {{#if plexAuth}}
           <li class="{{isActiveRoute regex='search'}}"><a href="{{pathFor 'search'}}">Search</a></li>
+        {{/if}}
+        {{#if auth}}
           <li class="{{isActiveRoute 'requests'}}"><a href="{{pathFor 'requests'}}">Requests</a></li>
+          {{#unless plexAuth}}
+            <li><a href="/">Login</a></li>
+          {{/unless}}
+        {{/if}}
+        {{#if plexAuth}}
           <li><a href="#" id="logoutUser">Logout</a></li>
         {{/if}}
-
-        {{> loginButtons}}
         
       </ul>
     </div>
