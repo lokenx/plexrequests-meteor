@@ -1,12 +1,28 @@
 Router.configure({
-  layoutTemplate: 'home'
+  layoutTemplate: 'layout'
+});
+
+Router.route('/', function () {
+  if (Session.get("auth")) {
+		this.redirect('search');
+	} else {
+		this.render('home');
+	}
 });
 
 Router.route('/search', function () {
-  this.render('search');
+  if (Session.get("auth")) {
+		this.render('search');
+	} else {
+		this.redirect('/');
+	}
 });
 
 Router.route('/requests', function () {
-	this.render('requests');
+	if (Session.get("auth")) {
+		this.render('requests');
+	} else {
+		this.redirect('/');
+	}
 });
 

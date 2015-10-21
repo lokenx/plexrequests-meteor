@@ -1,4 +1,4 @@
-<template name="home">
+<template name="layout">
 	<div class="navbar navbar-default" role="navigation">
     <div class="navbar-header">
       <a class="navbar-brand" href="/"><i class="fa fa-play-circle"></i> Plex Requests</a>
@@ -11,12 +11,14 @@
     </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
-        <li class="{{isActiveRoute regex='search'}}"><a href="{{pathFor 'search'}}">Search</a></li>
-        <li class="{{isActiveRoute 'requests'}}"><a href="{{pathFor 'requests'}}">Requests</a></li>
-
-        <!-- <li><a href="#">Search</a></li> -->
+        {{#if auth}}
+          <li class="{{isActiveRoute regex='search'}}"><a href="{{pathFor 'search'}}">Search</a></li>
+          <li class="{{isActiveRoute 'requests'}}"><a href="{{pathFor 'requests'}}">Requests</a></li>
+          <li><a href="#" id="logoutUser">Logout</a></li>
+        {{/if}}
 
         {{> loginButtons}}
+        
       </ul>
     </div>
 	</div>
