@@ -16,3 +16,15 @@ Template.admin.helpers({
     return Settings.findOne({});
   }
 });
+
+Template.admin.events({
+  'show.bs.collapse .panel' : function (event, template) {
+    console.log($(event.target));
+    $(event.target).parent().removeClass("panel-default")
+    $(event.target).parent().addClass("panel-primary")
+  },
+  'hide.bs.collapse .panel' : function (event, template) {
+    $(event.target).parent().removeClass("panel-primary")
+    $(event.target).parent().addClass("panel-default")
+  }
+});
