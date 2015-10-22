@@ -39,20 +39,20 @@ Template.search.helpers({
 	},
 	'results': function () {
     return Template.instance().results.get();
+  },
+  'activeSearch' : function () {
+    return (Template.instance().searchType.get().length === this.length);
   }
 });
 
 Template.search.events({
-	'click .type-select': function (event, template) {
+  'click .search-selector a' : function (event, template) {
     var type = $(event.target).text();
     template.searchType.set(type);
-    $('#type-select-button').html(type + ' <span class="caret"></span>')
     template.results.set([]);
-    $('.results-header').hide();
     $('#search-input').trigger('keyup');
   },
   'keyup  #search-input': _.throttle(function (event, template) {
-    $('.results-header').hide();
     template.results.set([]);
 
     var searchterm = $(event.target).val().trim();
@@ -70,7 +70,6 @@ Template.search.events({
         } else if (result.length) {
           template.searching.set(false);
           template.results.set(result);
-          $('.results-header').show();
         } else {
           template.searching.set(false);
           template.error.set(true);
