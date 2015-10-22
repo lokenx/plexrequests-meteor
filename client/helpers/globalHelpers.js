@@ -1,7 +1,3 @@
-Template.registerHelper('movies', function () {
-  return Movies.find();
-});
-
 Template.registerHelper('plexUser', function () {
 	return Session.get("user");
 });
