@@ -8,7 +8,7 @@ Template.search.onCreated(function () {
 
   Meteor.call("searchOptions", function (error, result) {
     if (result.length !== 0) {
-      Session.set("searchOptions", result);      
+      Session.set("searchOptions", result);
     } else {
       Session.set("searchDisabled", true);
     }
@@ -82,21 +82,21 @@ Template.search.events({
   },
   'click .add-request': function (event) {
     var btn = $(event.target);
+    var requestTitle = this.title;
 
     btn.html('<i class="fa fa-spinner fa-spin"></i> &nbsp; Requesting...');
     if (this.media_type === "movie") {
       Meteor.call("requestMovie", {id: this.id, title: this.title, released: this.release_date, poster_path: this.poster_path, user: "jdoe"}, function (error, result) {
         if (error || result === false) {
           console.log("Error requesting, check server log");
-          btn.html('<i class="fa fa-times"></i> &nbsp; Error');
-          btn.removeClass("btn-primary");
-          btn.addClass("btn-danger");
+          btn.html('<i class="fa fa-plus"></i> &nbsp; Request');
+          Bert.alert("Couldn't submit request, please try again!", "danger");
         } else if (result === true) {
+          Bert.alert("Successfully requested " + requestTitle + "!", "success");
           btn.hide();
         } else if (result === "limit") {
-          btn.html('<i class="fa fa-times"></i> &nbsp; Exceeded weekly limit!');
-          btn.removeClass("btn-primary");
-          btn.addClass("btn-warning");
+          Bert.alert("You've exceeded your weekly limit!", "warning");
+          btn.html('<i class="fa fa-plus"></i> &nbsp; Request');
         }
       })
     }

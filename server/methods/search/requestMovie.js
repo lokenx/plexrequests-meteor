@@ -4,7 +4,7 @@ Meteor.methods({
 		var poster = request.poster_path || "/";
 
 		// Check user request limit
-		var date = new Date(+new Date - 6.048e8);
+		var date = Date.now() - 6.048e8;
 		var weeklyLimit = Settings.find({}).fetch()[0].weeklyLimit;
 		var userRequestTotal = Movies.find({user:request.user, createdAt: {"$gte": date} }).fetch().length;
 
@@ -43,7 +43,7 @@ Meteor.methods({
 			return true;
 		} else {
 			// No approval required
-			
+
 			if (Settings.find({}).fetch()[0].couchPotatoENABLED) {
 				try {
 					var add = CouchPotato.movieAdd(imdb);
