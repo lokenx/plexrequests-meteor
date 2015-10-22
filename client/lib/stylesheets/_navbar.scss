@@ -1,0 +1,56 @@
+.navbar {
+  font-weight: 300;
+}
+
+// Logo
+.navbar-brand  {
+  i {
+    color: $primary-color;
+  }
+}
+
+// Navigation links
+.navbar-dark {
+  .navbar-nav {
+    .nav-item {
+      padding-left: 1rem;
+    }
+    .active {
+      .nav-link {
+        color: $primary-color;
+        &:hover {
+          color: $primary-color-lighter;
+        }
+        &:visited {
+          color: $primary-color;
+        }
+      }
+    }
+  }
+}
+
+// Admin link
+.admin-link {
+  color: rgba(255, 255, 255, .5);
+  padding-left: 1rem;
+  &:hover {
+    color: rgba(255, 255, 255, .7);
+    text-decoration: none;
+  }
+  &:visited {
+    color: rgba(255, 255, 255, .5);
+    &:hover {
+      color: rgba(255, 255, 255, .7);
+      text-decoration: none;
+    }
+  }
+  &:focus {
+    color: rgba(255, 255, 255, .5);
+    text-decoration: none;
+  }
+}
+
+// Toggle
+.navbar-toggler {
+  color: rgba(255, 255, 255, .7);
+}

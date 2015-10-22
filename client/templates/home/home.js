@@ -22,7 +22,7 @@ Template.home.events({
               Bert.alert( 'Successfully logged in!', 'success');
               Router.go('/search');
           } else if (result === false) {
-        		Bert.alert( 'Wrong username entered. Please try again!', 'warning', 'growl-top-right' );  	
+        		Bert.alert( 'Wrong username entered. Please try again!', 'warning');  	
             $('#submitButton').html('<i class="fa fa-user  fa-fw"></i> Sign In');
             Session.setAuth('auth', false);
           }

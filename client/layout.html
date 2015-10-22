@@ -1,32 +1,26 @@
 <template name="layout">
-	<div class="navbar navbar-default" role="navigation">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="/"><i class="fa fa-play-circle"></i> Plex Requests {{#if currentUser}}<a href="{{pathFor 'admin'}}" class="admin-link">Admin</a>{{/if}}</a>
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-    </div>
-    <div class="navbar-collapse collapse">
-      <ul class="nav navbar-nav navbar-right">
+	<nav class="navbar navbar-dark" style="background-color: #000;">
+    <button class="navbar-toggler hidden-md-up" type="button" data-toggle="collapse" data-target="#navBarItems">
+      &#9776;
+    </button>
+    <div class="collapse navbar-toggleable-sm" id="navBarItems">
+			<a class="navbar-brand" href="/"><i class="fa fa-play-circle logo-icon"></i> Plex Requests {{#if currentUser}}<a href="{{pathFor 'admin'}}" class="admin-link">Admin</a>{{/if}}</a>
+      <ul class="nav navbar-nav pull-right">
         {{#if plexAuth}}
-          <li class="{{isActiveRoute regex='search'}}"><a href="{{pathFor 'search'}}">Search</a></li>
+          <li class="{{isActiveRoute regex='search'}} nav-item"><a href="{{pathFor 'search'}}" class="nav-link">Search</a></li>
         {{/if}}
         {{#if auth}}
-          <li class="{{isActiveRoute 'requests'}}"><a href="{{pathFor 'requests'}}">Requests</a></li>
+          <li class="{{isActiveRoute 'requests'}} nav-item"><a href="{{pathFor 'requests'}}" class="nav-link">Requests</a></li>
           {{#unless plexAuth}}
-            <li><a href="/">Login</a></li>
+            <li class="nav-item"><a href="/" class="nav-link">Login</a></li>
           {{/unless}}
         {{/if}}
         {{#if plexAuth}}
-          <li><a href="#" id="logoutUser">Logout</a></li>
+          <li class="nav-item"><a href="#" id="logoutUser" class="nav-link">Logout</a></li>
         {{/if}}
-        
       </ul>
     </div>
-	</div>
+	</nav>
 
   <div class="container">
 

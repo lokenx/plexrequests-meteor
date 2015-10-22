@@ -34,13 +34,15 @@ reactive-var
 dburles:collection-helpers
 alanning:roles
 momentjs:moment
-twbs:bootstrap
-ian:accounts-ui-bootstrap-3
+twbs:bootstrap@4.0.0-alpha
+# ian:accounts-ui-bootstrap-3
+accounts-ui
 msavin:mongol
 zimme:active-route
 themeteorchef:bert
 aldeed:autoform
 ongoworks:security
+fourseven:scss
 
 lokenx:themoviedbsearch
 lokenx:couchpotatowrapper

@@ -1,14 +1,17 @@
 <template name="home">
-	<div class="col-md-8 col-offset-md-2">
-		<h1>Login</h1>
-		
-		<p>Want to watch a movie or tv show but it's not currently on Plex? Enter your Plex account username below to request content!</p>
+	<div class="col-md-8 col-md-offset-2">
+		<div class="home">
+			<h1>Login</h1>
 
-		<form id="sign-in" role="form">
-        <div class="form-inline">
-            <input type="text" class="form-control" placeholder="Plex Username" name="plex-username" id='plex-username' required autofocus>
-            <button class="btn btn-primary" type="submit" id="submitButton"><i class="fa fa-user fa-fw"></i> Sign In</button>
-        </div>
-    </form>
+			<p>Want to watch a movie or tv show but it's not currently on Plex? Enter your Plex account username below to request content!</p>
+
+			<form id="sign-in" class="">
+				<div class="form-group col-sm-6">
+					<input type="text" class="form-control" placeholder="Plex Username" name="plex-username" id='plex-username' required autofocus>
+				</div>
+
+				<button class="btn btn-secondary-outline" type="submit" id="submitButton"><i class="fa fa-user fa-fw"></i> Sign In</button>
+			</form>
+		</div>
 	</div>
 </template>
