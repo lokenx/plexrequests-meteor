@@ -1,12 +1,12 @@
-Template.registerHelper('movies', () => {
+Template.registerHelper('movies', function () {
   return Movies.find();
 });
 
-Template.registerHelper('plexUser', () => {
+Template.registerHelper('plexUser', function () {
 	return Session.get("user");
 });
 
-Template.registerHelper('auth', () => {
+Template.registerHelper('auth', function () {
 	var auth = function () {
 		if (Session.get("auth") === "true") {
 			return true;
@@ -19,6 +19,6 @@ Template.registerHelper('auth', () => {
 	return auth();
 });
 
-Template.registerHelper('plexAuth', () => {
+Template.registerHelper('plexAuth', function () {
 	return (Session.get("auth") === "true") ? true : false;
 })
