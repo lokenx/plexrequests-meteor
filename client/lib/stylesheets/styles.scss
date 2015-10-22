@@ -1,17 +1,14 @@
 // Variables
-
 $primary-color: #FF8A01;
 $primary-color-lighter: lighten($primary-color, 20%);
 $background-color: #1F1F1F;
 $primary-text: #E6E6E6;
 
+// Imports
 @import "navbar";
 @import "base";
 @import "home";
-
-
-
-
+@import "search"
 
 // Reference Bootstrap grid sizes
 //

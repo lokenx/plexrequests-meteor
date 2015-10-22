@@ -1,0 +1,56 @@
+@media (max-width: 48em) {
+  .search {
+    padding-top: 1rem;
+  }
+}
+
+@media (min-width: 48em) {
+  .search {
+    padding-top: 4rem;
+  }
+}
+
+.search {
+  p {
+    font-weight: 300;
+  }
+}
+
+#search-form {
+  padding-top: 1rem;
+}
+
+.search-selector {
+	list-style: none;
+	margin-top: 1rem;
+  padding-left: 0;
+  font-weight: 300;
+
+  li {
+  	display: inline;
+    padding-right: 2.5rem;
+  }
+
+  a {
+    color: $primary-text;
+    padding-bottom: 0.5rem;
+
+    &:visited {
+      text-decoration: none;
+    }
+    &:link {
+      text-decoration: none;
+    }
+    &:hover {
+      text-decoration: none;
+    }
+    &:active {
+      text-decoration: none;
+    }
+  }
+
+  .active-search {
+    color: $primary-color;
+    border-bottom: 1px solid $primary-color;
+  }
+}
