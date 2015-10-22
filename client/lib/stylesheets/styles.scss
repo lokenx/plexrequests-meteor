@@ -4,6 +4,8 @@ $primary-color-lighter: lighten($primary-color, 20%);
 $background-color: #1F1F1F;
 $primary-text: #E6E6E6;
 $secondary-text: darken($primary-text, 20%);
+$success-color: #58B957;
+$error-color: #DB524B;
 
 // Imports
 @import "navbar";
@@ -11,6 +13,7 @@ $secondary-text: darken($primary-text, 20%);
 @import "home";
 @import "search";
 @import "item";
+@import "requests";
 
 // Reference Bootstrap grid sizes
 //

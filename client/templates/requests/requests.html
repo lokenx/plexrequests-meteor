@@ -1,59 +1,66 @@
 <template name="requests">
-	<div class="row">
-		<div class="col-md-offset-2">
-		  <h1>Requests</h1>
-			<p>Below you can see yours and all other requests, as well as their download and approval status.</p>
+	<div class="requests">
+		<div class="row">
+			<div class="col-md-offset-2 col-md-8">
+			  <h1>Requests</h1>
+				<p>Below you can see yours and all other requests, as well as their download and approval status.</p>
+			</div>
 		</div>
-	</div>
 
-<!-- Selector between Movies/TV/etc -->
-	<div class="col-md-offset-2">
-		<ul class="search-selector">
-	  	{{#each searchOptions}}
-	  		<li><a href="#" class="{{#if activeSearch}}active-search{{/if}}">{{this}}</a></li>
-	  	{{/each}}
-		</ul>
-	</div>
+	<!-- Selector between Movies/TV/etc -->
+		<div class="col-md-offset-2 col-md-8">
+			<ul class="search-selector">
+		  	{{#each searchOptions}}
+		  		<li><a href="#" class="{{#if activeSearch}}active-search{{/if}}">{{this}}</a></li>
+		  	{{/each}}
+			</ul>
+		</div>
 
-<!-- List of content -->
+	<!-- List of content -->
 
-  {{#each requests}}
-  <div class="request-item">
-	  	<div class="row">
-	  		<div class="col-md-2 col-md-offset-2">
-	  			<img src="{{poster_path}}" class="img-responsive" alt="Poster">
-	  		</div>
-	  		<div class="col-md-6">
-	  			<ul class="request-details-list">
-		  			<li><strong>{{title}}</strong></li>
-		  			<li><strong>Release date:</strong> {{release_date}}</li>
-		  			<li><strong>Approved:</strong> {{{approval_status}}}</li>
-		  			<li><strong>Available:</strong> {{{download_status}}}</li>
-		  			{{{requesting_user}}}
-		  			<li><strong>Issues:</strong> {{issues}}</li>
-	  			</ul>
-	  		</div>
-	  		<div class="col-md-2 request-details-buttons">
-	  			{{#if currentUser}}
-		  			{{#unless approved}}<p><button class="btn btn-success approve-item">Approve</button></p>{{/unless}}
-		  			<p><button class="btn btn-danger delete-item">Delete</button></p>
-		  			<p><button class="btn btn-info clear-issues">Clear Issues</button></p>
-		  		{{/if}}
-		  		<p>
-		  			<div class="btn-group">
-						  <button type="button" class="btn btn-info dropdown-toggle report-item" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						    Report Issue <span class="caret"></span>
-						  </button>
-						  <ul class="dropdown-menu">
-						    <li><a href="#" class="issue-select" value="issue1">Issue 1</a></li>
-						    <li><a href="#" class="issue-select" data="issue2">Issue 2</a></li>
-						    <li><a href="#" class="issue-select" data="issue3">Issue 3</a></li>
-						  </ul>
-						</div>
-		  		</p>
-	  		</div>
+	  {{#each requests}}
+	  <div class="request-item">
+		  	<div class="row">
+		  		<div class="col-md-2 col-md-offset-2">
+		  			<img src="{{poster_path}}" class="img-responsive" alt="Poster">
+		  		</div>
+		  		<div class="col-md-4">
+		  			<ul class="request-details-list">
+			  			<li><strong>{{title}}</strong></li>
+			  			<li><strong>Release date:</strong> {{release_date}}</li>
+			  			<li><strong>Approved:</strong> {{{approval_status}}}</li>
+			  			<li><strong>Available:</strong> {{{download_status}}}</li>
+			  			{{{requesting_user}}}
+			  			<li><strong>Issues:</strong> {{issues}}</li>
+		  			</ul>
+		  		</div>
+		  		<div class="col-md-2 request-details-buttons">
+		  			{{#if currentUser}}
+			  			{{#unless approved}}<p><button class="btn btn-sm btn-success-outline approve-item">Approve</button></p>{{/unless}}
+			  			<p><button class="btn btn-sm btn-danger-outline delete-item">Delete</button></p>
+			  			<p><button class="btn btn-sm btn-info-outline clear-issues">Clear Issues</button></p>
+			  		{{/if}}
+			  		<p>
+			  			<div class="btn-group">
+							  <button type="button" class="btn btn-sm btn-warning-outline dropdown-toggle report-item" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							    Report Issue <span class="caret"></span>
+							  </button>
+							  <ul class="dropdown-menu">
+							    <li><a href="#" class="issue-select dropdown-item" data="Wrong Audio">Wrong audio</a></li>
+							    <li><a href="#" class="issue-select dropdown-item" data="No Subtitles">No subtitles</a></li>
+							    <li><a href="#" class="issue-select dropdown-item" data="Wrong Content">Wrong content</a></li>
+							    <li><a href="#" class="issue-select dropdown-item" data="Playback issues">Playback issues</a></li>
+							  </ul>
+							</div>
+			  		</p>
+		  		</div>
+		  	</div>
 	  	</div>
-  	</div>
-	{{/each}}
-
+			<div class="row">
+		    <div class="col-md-8 col-md-offset-2">
+		      <div class="item-divider"></div>
+		    </div>
+			</div>
+		{{/each}}
+	</div>
 </template>
