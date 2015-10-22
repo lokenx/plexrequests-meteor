@@ -1,10 +1,10 @@
 Template.requests.onCreated(function () {
 	Session.set("searchOptions", []);
   this.searchType = new ReactiveVar("Movies");
-	
+
 	Meteor.call("searchOptions", function (error, result) {
     if (result.length !== 0) {
-      Session.set("searchOptions", result);      
+      Session.set("searchOptions", result);
     } else {
       Session.set("searchDisabled", true);
     }
@@ -28,7 +28,7 @@ Template.requests.helpers({
   	//Movie true/false
   	var approval;
   	if (this.imdb) {
-  		approval = (this.downloaded) ? '<i class="fa fa-check success-icon"></i>': '<i class="fa fa-times error-icon"></i>';  		
+  		approval = (this.downloaded) ? '<i class="fa fa-check success-icon"></i>': '<i class="fa fa-times error-icon"></i>';
   	} else {
   		//TV dowloaded:total
   	}
@@ -47,7 +47,7 @@ Template.requests.helpers({
   },
   'requests' : function () {
   	if (Template.instance().searchType.get() === "Movies") {
-  		return Movies.find();
+			return Movies.find({}, {sort: {createdAt:-1}});
   	} else {
   		return TV.find();
   	}
