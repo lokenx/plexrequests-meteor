@@ -26,5 +26,8 @@ Template.admin.events({
   'hide.bs.collapse .panel' : function (event, template) {
     $(event.target).parent().removeClass("panel-primary")
     $(event.target).parent().addClass("panel-default")
+  },
+  'submit #updateSettingsForm' : function () {
+    return false;
   }
 });

@@ -3,6 +3,8 @@
 
 body {
   background-color: $background-color;
+  color: $primary-text;
+  font-family: 'Lato', sans-serif;
 }
 
 h1 {
@@ -10,11 +12,6 @@ h1 {
   font-size: 3.5rem;
   font-family: 'Open Sans', sans-serif;
   font-weight: 600;
-}
-
-h2, h3, h4, h5, h6, p, li {
-  color: $primary-text;
-  font-family: 'Lato', sans-serif;
 }
 
 p {

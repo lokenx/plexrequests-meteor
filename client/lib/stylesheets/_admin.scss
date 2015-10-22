@@ -1,0 +1,38 @@
+@media (max-width: 48em) {
+  .admin {
+    padding-top: 1rem;
+    padding-bottom: 3rem;
+  }
+}
+
+@media (min-width: 48em) {
+  .admin {
+    padding-top: 4rem;
+    padding-bottom: 3rem;
+  }
+}
+
+.settings {
+  padding-top: 2rem;
+  font-weight: 300;
+
+  label {
+    font-weight: 400;
+  }
+}
+
+.setting-tab {
+  padding: 1.5rem 0;
+}
+
+#tokenForm {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.admin {
+  .nav-link {
+      color: $primary-color;
+
+  }
+}

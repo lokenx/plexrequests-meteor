@@ -1,131 +1,120 @@
 <template name="admin">
-	<div class="row">
-		<div class="col-md-8 col-md-offset-2">
-			<h1>Admin</h1>
-			<span class="login-buttons"> {{> loginButtons}} </span>
-		</div>
-	</div>
-
-	{{#if currentUser}}
-	<div class="row">
-		<div class="col-md-8 col-md-offset-2">
-			<div class="settings">
-
-		    {{#autoForm collection="Settings" doc=settings id="updateSettingsForm" type="update" resetOnSuccess="false"}}
-					
-					<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false">
-					  <div class="panel panel-primary">
-					    <div class="panel-heading" role="tab" id="headingOne">
-					      <h4 class="panel-title" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-				          General Settings
-					      </h4>
-					    </div>
-					    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-					      <div class="panel-body">
-					        {{> afQuickField name='searchOptionsMOVIES'}}
-									{{> afQuickField name='searchOptionsTV'}}
-									{{> afQuickField name='approval'}}
-									{{> afQuickField name='weeklyLimit'}}
-					      </div>
-					    </div>
-  					</div>
-  					<div class="panel panel-default">
-					    <div class="panel-heading" role="tab" id="headingTwo">
-					      <h4 class="panel-title" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-				          Plex Authentication
-					      </h4>
-					    </div>
-					    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-					      <div class="panel-body">
-					        {{> afQuickField name='plexAuthenticationENABLED'}}
-									{{> afQuickField name='plexAuthenticationTOKEN'}}
-					      </div>
-					    </div>
-  					</div>
-  					<div class="panel panel-default">
-					    <div class="panel-heading" role="tab" id="headingThree">
-					      <h4 class="panel-title" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-				          Couch Potato
-					      </h4>
-					    </div>
-					    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-					      <div class="panel-body">
-					        {{> afQuickField name='couchPotatoENABLED'}}
-									{{> afQuickField name='couchPotatoURL'}}
-									{{> afQuickField name='couchPotatoPORT'}}
-									{{> afQuickField name='couchPotatoAPI'}}
-									{{> afQuickField name='couchPotatoSSL'}}
-					      </div>
-					    </div>
-  					</div>
-  					<div class="panel panel-default">
-					    <div class="panel-heading" role="tab" id="headingFour">
-					      <h4 class="panel-title" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
-				          Sick Rage
-					      </h4>
-					    </div>
-					    <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
-					      <div class="panel-body">
-					        {{> afQuickField name='sickRageENABLED'}}
-									{{> afQuickField name='sickRageURL'}}
-									{{> afQuickField name='sickRagePORT'}}
-									{{> afQuickField name='sickRageAPI'}}
-									{{> afQuickField name='sickRageSSL'}}
-					      </div>
-					    </div>
-  					</div>
-  					<div class="panel panel-default">
-					    <div class="panel-heading" role="tab" id="headingFive">
-					      <h4 class="panel-title" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
-				          Sonarr
-					      </h4>
-					    </div>
-					    <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
-					      <div class="panel-body">
-					        {{> afQuickField name='sonarrENABLED'}}
-									{{> afQuickField name='sonarrURL'}}
-									{{> afQuickField name='sonarrPORT'}}
-									{{> afQuickField name='sonarrAPI'}}
-									{{> afQuickField name='sonarrSSL'}}
-									{{> afQuickField name='sonarrQUALITYPROFILEID'}}
-									{{> afQuickField name='sonarrROOTFOLDERPATH'}}
-									{{> afQuickField name='sonarrSEASONFOLDERS'}}
-					      </div>
-					    </div>
-  					</div>
-  					<div class="panel panel-default">
-					    <div class="panel-heading" role="tab" id="headingSix">
-					      <h4 class="panel-title" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="true" aria-controls="collapseSix">
-				          Pushbullet
-					      </h4>
-					    </div>
-					    <div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix">
-					      <div class="panel-body">
-					        {{> afQuickField name='pushbulletENABLED'}}
-									{{> afQuickField name='pushbulletAPI'}}
-					      </div>
-					    </div>
-  					</div>
-  					<div class="panel panel-default">
-					    <div class="panel-heading" role="tab" id="headingSeven">
-					      <h4 class="panel-title" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven" aria-expanded="true" aria-controls="collapseSeven">
-				          Pushover
-					      </h4>
-					    </div>
-					    <div id="collapseSeven" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSeven">
-					      <div class="panel-body">
-					        {{> afQuickField name='pushoverENABLED'}}
-									{{> afQuickField name='pushoverAPI'}}
-					      </div>
-					    </div>
-  					</div>
-					</div>
-
-    	  <button type="submit" class="btn btn-primary btn-block">Update Settings</button>
-		    {{/autoForm}}
-
+	<div class="admin">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+				<h1>Admin</h1>
+				<span class="login-buttons"> {{> loginButtons}} </span>
 			</div>
 		</div>
+
+		{{#if currentUser}}
+		<div class="row settings">
+			<div class="col-md-8 col-md-offset-2">
+					{{#autoForm collection="Settings" doc=settings id="updateSettingsForm" type="update" resetOnSuccess="false"}}
+
+						<!-- Nav tabs -->
+						<ul class="nav nav-tabs" role="tablist">
+							<li class="nav-item">
+								<a class="nav-link active" href="#generalSettings" role="tab" data-toggle="tab">General</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#couchpotatoSettings" role="tab" data-toggle="tab">CouchPotato</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#sickrageSettings" role="tab" data-toggle="tab">SickRage</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#sonarrSettings" role="tab" data-toggle="tab">Sonarr</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#notificationSettings" role="tab" data-toggle="tab">Alerts</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="#settings" role="tab" data-toggle="tab">About</a>
+							</li>
+						</ul>
+
+						<!-- Tab panes -->
+						<div class="tab-content">
+							<div role="tabpanel" class="tab-pane active" id="generalSettings">
+								<div class="setting-tab">
+									{{> afQuickField name='searchOptionsMOVIES'}}
+									{{> afQuickField name='searchOptionsTV'}}
+									<p class="text-muted">
+										Choose the type of content that can be requested
+									</p>
+									<br>
+									{{> afQuickField name='approval'}}
+									<p class="text-muted">
+										Choose whether you would like to approve all requests
+									</p>
+									<br>
+									{{> afQuickField name='weeklyLimit' style="width:auto;"}}
+									<p class="text-muted">
+										Set a weekly request limit for your users. Hint: 0 means no limit
+									</p>
+									<br>
+									{{> afQuickField name='plexAuthenticationENABLED'}}
+									{{> afQuickField name='plexAuthenticationTOKEN' style="width:auto;"}}
+
+									<form class="form-inline" id="tokenForm">
+									  <div class="form-group">
+									    <label class="sr-only" for="exampleInputEmail3">Plex Username</label>
+									    <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Plex Username">
+									  </div>
+									  <div class="form-group">
+									    <label class="sr-only" for="exampleInputPassword3">Password</label>
+									    <input type="password" class="form-control" id="exampleInputPassword3" placeholder="Password">
+									  </div>
+									  <button type="submit" class="btn btn-secondary-outline"><i class="fa fa-key"></i> Get token</button>
+									</form>
+
+									<p class="text-muted">
+										Allow only users you've shared your library with to request content. Follow these
+										<a href="https://support.plex.tv/hc/en-us/articles/204059436-Finding-your-account-token-X-Plex-Token" target="_blank">instructions</a>
+										to retrieve your token. Alternatively use the form above to sign into Plex.tv and we'll get it for you.
+									</p>
+
+								</div>
+							</div>
+							<div role="tabpanel" class="tab-pane" id="couchpotatoSettings">
+								{{> afQuickField name='couchPotatoENABLED'}}
+								{{> afQuickField name='couchPotatoURL'}}
+								{{> afQuickField name='couchPotatoPORT'}}
+								{{> afQuickField name='couchPotatoAPI'}}
+								{{> afQuickField name='couchPotatoSSL'}}
+							</div>
+							<div role="tabpanel" class="tab-pane" id="sickrageSettings">
+								{{> afQuickField name='sickRageENABLED'}}
+								{{> afQuickField name='sickRageURL'}}
+								{{> afQuickField name='sickRagePORT'}}
+								{{> afQuickField name='sickRageAPI'}}
+								{{> afQuickField name='sickRageSSL'}}
+							</div>
+							<div role="tabpanel" class="tab-pane" id="sonarrSettings">
+								{{> afQuickField name='sonarrENABLED'}}
+								{{> afQuickField name='sonarrURL'}}
+								{{> afQuickField name='sonarrPORT'}}
+								{{> afQuickField name='sonarrAPI'}}
+								{{> afQuickField name='sonarrSSL'}}
+								{{> afQuickField name='sonarrQUALITYPROFILEID'}}
+								{{> afQuickField name='sonarrROOTFOLDERPATH'}}
+								{{> afQuickField name='sonarrSEASONFOLDERS'}}
+							</div>
+							<div role="tabpanel" class="tab-pane" id="notificationSettings">
+								{{> afQuickField name='pushbulletENABLED'}}
+								{{> afQuickField name='pushbulletAPI'}}
+								{{> afQuickField name='pushoverENABLED'}}
+								{{> afQuickField name='pushoverAPI'}}
+							</div>
+							<div role="tabpanel" class="tab-pane" id="notificationSettings">
+								<p>About Page</p>
+							</div>
+						</div>
+						<button type="submit" class="btn btn-primary-outline btn-block">Update Settings</button>
+					{{/autoForm}}
+				</div>
+			</div>
+		{{/if}}
 	</div>
-	{{/if}}
 </template>
