@@ -20,3 +20,33 @@ h2, h3, h4, h5, h6, p, li {
 p {
   font-size: 1.1rem;
 }
+
+
+// Button styling
+
+.btn-primary-outline {
+  color: $primary-color;
+  border-color: $primary-color;
+
+  &:hover {
+    background-color: $primary-color;
+    border-color: $primary-color;
+  }
+  &:focus {
+    background-color: $primary-color;
+    border-color: $primary-color;
+  }
+  &:active {
+    background-color: $primary-color;
+    border-color: $primary-color;
+  }
+}
+
+.item-buttons {
+  .open {
+    .btn-primary-outline {
+      background-color: $primary-color;
+      border-color: $primary-color;
+    }
+  }
+}

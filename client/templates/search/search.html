@@ -38,11 +38,9 @@
 		</div>
 		<div class="row">
 			<div id="search-results" class="col-md-8 col-md-offset-2">
-				<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-					{{#each results}}
+				{{#each results}}
 					{{> item}}
-					{{/each}}
-				</div>
+				{{/each}}
 			</div>
 
 			{{#if error}}

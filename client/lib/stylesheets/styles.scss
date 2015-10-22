@@ -3,12 +3,14 @@ $primary-color: #FF8A01;
 $primary-color-lighter: lighten($primary-color, 20%);
 $background-color: #1F1F1F;
 $primary-text: #E6E6E6;
+$secondary-text: darken($primary-text, 20%);
 
 // Imports
 @import "navbar";
 @import "base";
 @import "home";
-@import "search"
+@import "search";
+@import "item";
 
 // Reference Bootstrap grid sizes
 //
@@ -22,66 +24,3 @@ $primary-text: #E6E6E6;
 //     lg: 62em,
 //   Extra large screen / wide desktop
 //     xl: 75em
-
-// .request-item {
-// 	padding-bottom: 5%;
-// }
-//
-// .success-icon {
-// 	color: #3F7600;
-// }
-//
-// .error-icon {
-// 	color: #D2000D;
-// }
-//
-// .request-details-list {
-// 	list-style: none;
-// }
-//
-// .request-details-buttons {
-// 	text-align: right;
-// }
-//
-// .login-buttons {
-// 	font-size: 1.5em;
-// 	list-style: none;
-// }
-//
-// .settings {
-// 	padding-top: 5%;
-// }
-//
-// .settings button {
-// 	margin: 10% 0%;
-// }
-//
-// .search-selector {
-// 	list-style: none;
-// 	margin-top: 2%;
-// }
-//
-// .search-selector li {
-// 	display: inline;
-// 	padding-right: 5%;
-// }
-//
-// .search-selector a:visited {
-// 	text-decoration: none;
-// }
-//
-// .search-selector a:link {
-// 	text-decoration: none;
-// }
-//
-// .search-selector a:hover {
-// 	text-decoration: none;
-// }
-//
-// .search-selector a:active {
-// 	text-decoration: none;
-// }
-//
-// .active-search {
-//   border-bottom: 1px solid #000;
-// }
