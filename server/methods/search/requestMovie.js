@@ -52,7 +52,7 @@ Meteor.methods({
 			}
 		}
 
-		if (Settings.find({}).fetch()[0].approval) {
+		if (settings.approval) {
 			// Approval required
 			// Add to DB but not CP
 			try {
@@ -75,7 +75,7 @@ Meteor.methods({
 		} else {
 			// No approval required
 
-			if (Settings.find({}).fetch()[0].couchPotatoENABLED) {
+			if (settings.couchPotatoENABLED) {
 				try {
 					var add = CouchPotato.movieAdd(imdb);
 				} catch (error) {
