@@ -30,85 +30,136 @@
 								<a class="nav-link" href="#notificationSettings" role="tab" data-toggle="tab">Alerts</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="#settings" role="tab" data-toggle="tab">About</a>
+								<a class="nav-link" href="#aboutSettings" role="tab" data-toggle="tab">About</a>
 							</li>
 						</ul>
 
 						<!-- Tab panes -->
 						<div class="tab-content">
 							<div role="tabpanel" class="tab-pane active" id="generalSettings">
-								<div class="setting-tab">
-									{{> afQuickField name='searchOptionsMOVIES'}}
-									{{> afQuickField name='searchOptionsTV'}}
-									<p class="text-muted">
-										Choose the type of content that can be requested
-									</p>
-									<br>
-									{{> afQuickField name='approval'}}
-									<p class="text-muted">
-										Choose whether you would like to approve all requests
-									</p>
-									<br>
-									{{> afQuickField name='weeklyLimit' style="width:auto;"}}
-									<p class="text-muted">
-										Set a weekly request limit for your users. Hint: 0 means no limit
-									</p>
-									<br>
-									{{> afQuickField name='plexAuthenticationENABLED'}}
-									{{> afQuickField name='plexAuthenticationTOKEN' style="width:auto;"}}
+								{{> afQuickField name='searchOptionsMOVIES'}}
+								{{> afQuickField name='searchOptionsTV'}}
+								<p class="text-muted">
+									Choose the type of content that can be requested
+								</p>
+								<br>
+								{{> afQuickField name='approval'}}
+								<p class="text-muted">
+									Choose whether you would like to approve all requests
+								</p>
+								<br>
+								{{> afQuickField name='weeklyLimit' style="width:auto;"}}
+								<p class="text-muted">
+									Set a weekly request limit for your users. Hint: 0 means no limit
+								</p>
+								<br>
+								{{> afQuickField name='plexAuthenticationENABLED'}}
+								{{> afQuickField name='plexAuthenticationTOKEN' style="width:auto;"}}
 
-									<form class="form-inline" id="tokenForm">
-									  <div class="form-group">
-									    <label class="sr-only" for="exampleInputEmail3">Plex Username</label>
-									    <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Plex Username">
-									  </div>
-									  <div class="form-group">
-									    <label class="sr-only" for="exampleInputPassword3">Password</label>
-									    <input type="password" class="form-control" id="exampleInputPassword3" placeholder="Password">
-									  </div>
-									  <button type="submit" class="btn btn-secondary-outline"><i class="fa fa-key"></i> Get token</button>
-									</form>
+								<form class="form-inline" id="tokenForm">
+								  <div class="form-group">
+								    <label class="sr-only" for="exampleInputEmail3">Plex Username</label>
+								    <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Plex Username">
+								  </div>
+								  <div class="form-group">
+								    <label class="sr-only" for="exampleInputPassword3">Password</label>
+								    <input type="password" class="form-control" id="exampleInputPassword3" placeholder="Password">
+								  </div>
+								  <button type="submit" class="btn btn-secondary-outline"><i class="fa fa-key"></i> Get token</button>
+								</form>
 
-									<p class="text-muted">
-										Allow only users you've shared your library with to request content. Follow these
-										<a href="https://support.plex.tv/hc/en-us/articles/204059436-Finding-your-account-token-X-Plex-Token" target="_blank">instructions</a>
-										to retrieve your token. Alternatively use the form above to sign into Plex.tv and we'll get it for you.
-									</p>
-
-								</div>
+								<p class="text-muted">
+									Allow only users you've shared your library with to request content. Follow these
+									<a href="https://support.plex.tv/hc/en-us/articles/204059436-Finding-your-account-token-X-Plex-Token" target="_blank">instructions</a>
+									to retrieve your token. Alternatively use the form above to sign into Plex.tv and we'll get it for you.
+								</p>
 							</div>
 							<div role="tabpanel" class="tab-pane" id="couchpotatoSettings">
 								{{> afQuickField name='couchPotatoENABLED'}}
+								<p class="text-muted">Enable CouchPotato for automated movie downloading</p>
+								<br>
 								{{> afQuickField name='couchPotatoURL'}}
+								<p class="text-muted">Enter the IP address of your CouchPotato server. Do not include http:// or any slashes.</p>
+								<br>
 								{{> afQuickField name='couchPotatoPORT'}}
+								<p class="text-muted">Enter the port used by CouchPotato. The default is 5050.</p>
+								<br>
 								{{> afQuickField name='couchPotatoAPI'}}
+								<p class="text-muted">Enter your API from CouchPotato. It can be found in CouchPotato Settings -> General -> API Key.</p>
+								<br>
 								{{> afQuickField name='couchPotatoSSL'}}
+								<p class="text-muted">Enable this if you use SSL on your CouchPotato server.</p>
 							</div>
 							<div role="tabpanel" class="tab-pane" id="sickrageSettings">
 								{{> afQuickField name='sickRageENABLED'}}
+								<p class="text-muted">Enable SickRage for automated tv downloading.</p>
+								<br>
 								{{> afQuickField name='sickRageURL'}}
+								<p class="text-muted">Enter the IP address of your SickRage server. Do not include http:// or any slashes.</p>
+								<br>
 								{{> afQuickField name='sickRagePORT'}}
+								<p class="text-muted">Enter the port used by SickRage. The default is 8081.</p>
+								<br>
 								{{> afQuickField name='sickRageAPI'}}
+								<p class="text-muted">Enter your API from SickRage. It can be found in SickRage Settings -> Interface -> API Key.</p>
+								<br>
 								{{> afQuickField name='sickRageSSL'}}
+								<p class="text-muted">Enabled if you use SSL on your SickRage server.</p>
+								<br>
 							</div>
 							<div role="tabpanel" class="tab-pane" id="sonarrSettings">
 								{{> afQuickField name='sonarrENABLED'}}
+								<p class="text-muted">Enabled Sonarr for automated tv downloading.</p>
+								<br>
 								{{> afQuickField name='sonarrURL'}}
+								<p class="text-muted">Enter the IP address of your Sonarr server. Do not include http:// or any slashes.</p>
+								<br>
 								{{> afQuickField name='sonarrPORT'}}
+								<p class="text-muted">Enter the port used by Sonarr. The default is 8081.</p>
+								<br>
 								{{> afQuickField name='sonarrAPI'}}
+								<p class="text-muted">Enter your API from Sonarr. It can be found in Sonarr Settings -> General.</p>
+								<br>
 								{{> afQuickField name='sonarrSSL'}}
+								<p class="text-muted">Enabled if you use SSL on your SickRage server.</p>
+								<br>
 								{{> afQuickField name='sonarrQUALITYPROFILEID'}}
+								<p class="text-muted">Select a Sonarr Quality Profile. The default is 1.</p>
+								<br>
 								{{> afQuickField name='sonarrROOTFOLDERPATH'}}
+								<p class="text-muted">Enter the root folder where tv shows are saved. For example C:\Media\TV.</p>
+								<br>
 								{{> afQuickField name='sonarrSEASONFOLDERS'}}
+								<p class="text-muted">Enabled Season Folders to organize seasons into individual folders within a show.</p>
+								<br>
 							</div>
 							<div role="tabpanel" class="tab-pane" id="notificationSettings">
 								{{> afQuickField name='pushbulletENABLED'}}
+								<p class="text-muted">Enabled Pushbullet to receive alerts.</p>
+								<br>
 								{{> afQuickField name='pushbulletAPI'}}
+								<p class="text-muted">Enter your API from Pushbullet. It can be found in Pushbullet Settings -> Access Token.</p>
+								<br>
 								{{> afQuickField name='pushoverENABLED'}}
+								<p class="text-muted">Enabled Pushover to receive alerts.</p>
+								<br>
 								{{> afQuickField name='pushoverAPI'}}
+								<p class="text-muted">Enter your API from Pushover.</p>
+								<br>
+								{{>afQuickField name='pushoverKEY'}}
+								<p class="text-muted">Enter your user or group key from Pushover.</p>
+								<br>
+								<br>
 							</div>
-							<div role="tabpanel" class="tab-pane" id="notificationSettings">
-								<p>About Page</p>
+							<div role="tabpanel" class="tab-pane" id="aboutSettings">
+								<p>
+									<strong>Branch: </strong> v0.6<br>
+									<strong>Version: </strong> v0.6.1-alpha
+								</p>
+								<p>
+									<strong>Project Website: </strong> <a href="http://plexrequests.8bits.ca/" target="_blank">plexrequests.8bits.ca</a><br>
+									<strong>GitHub Page: </strong> <a href="https://github.com/lokenx/plexrequests-meteor" target="_blank">lokenx / PlexRequests</a>
+								</p>
 							</div>
 						</div>
 						<button type="submit" class="btn btn-primary-outline btn-block">Update Settings</button>

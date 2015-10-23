@@ -4,6 +4,8 @@ AutoForm.hooks({
       if (result) {
         Bert.alert('Updated successfully', 'success');
       }
+      this.event.preventDefault();
+      return false;
     },
     onError: function(formType, error) {
       Bert.alert('Update failed, please try again', 'danger');
@@ -27,7 +29,8 @@ Template.admin.events({
     $(event.target).parent().removeClass("panel-primary")
     $(event.target).parent().addClass("panel-default")
   },
-  'submit #updateSettingsForm' : function () {
+  'submit #updateSettingsForm' : function (event) {
+    event.preventDefault();
     return false;
   }
 });
