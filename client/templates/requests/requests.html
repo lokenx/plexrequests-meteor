@@ -82,5 +82,17 @@
 		    </div>
 			</div>
 		{{/each}}
+
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+				{{#if Template.subscriptionsReady}}
+					{{#if hasMoreRequests}}
+						<button class="btn btn-primary btn-block load-more">View More</button>
+					{{/if}}
+				{{else}}
+					<div class="loading">Loading...</div>
+				{{/if}}
+			</div>
+		</div>
 	</div>
 </template>

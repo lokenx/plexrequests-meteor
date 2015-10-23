@@ -13,6 +13,38 @@ Template.requests.onCreated(function () {
 	this.filter = new ReactiveVar("All Requests");
 	this.sort = new ReactiveVar("Newest First");
 
+	// Loading requests on demand
+
+	var instance = this;
+	instance.loaded = new ReactiveVar(0);
+	instance.limit = new ReactiveVar(10);
+
+	instance.autorun(function () {
+		var subscription = instance.subscribe('movies', limit);
+		var limit = instance.limit.get();
+
+		if (subscription.ready()) {
+			instance.loaded.set(limit);
+		} else {
+			// Subscription is not ready yet
+		}
+	});
+
+	instance.requests = function() {
+		var selectedFilter = instance.filter.get();
+		var filter = {};
+		var selectedSort = instance.sort.get();
+		var sort = (selectedSort === "Newest First") ? {createdAt: -1} : {createdAt: 1};
+
+  	if (instance.searchType.get() === "Movies") {
+			if (selectedFilter !== "All Requests") {
+				filter = (selectedFilter === "Approved") ? {approved: true} : {downloaded: true};
+			}
+			return Movies.find(filter, {sort: sort, skip: 0, limit: instance.loaded.get()});
+  	} else {
+  		return TV.find();
+  	}
+	}
 });
 
 Template.requests.helpers({
@@ -48,21 +80,6 @@ Template.requests.helpers({
 	'activeSearch' : function () {
     return (Template.instance().searchType.get().length === this.length);
   },
-  'requests' : function () {
-		var selectedFilter = Template.instance().filter.get();
-		var filter = {};
-		var selectedSort = Template.instance().sort.get();
-		var sort = (selectedSort === "Newest First") ? {createdAt: -1} : {createdAt: 1};
-		
-  	if (Template.instance().searchType.get() === "Movies") {
-			if (selectedFilter !== "All Requests") {
-				filter = (selectedFilter === "Approved") ? {approved: true} : {downloaded: true};
-			}
-			return Movies.find(filter, {sort: sort});
-  	} else {
-  		return TV.find();
-  	}
-  },
 	'filterOptions' : function () {
 		return [{filter: "All Requests"}, {filter: "Approved"}, {filter: "Downloaded"}]
 	},
@@ -75,6 +92,12 @@ Template.requests.helpers({
 	'activeSort' : function () {
 		return (Template.instance().sort.get() == this.sort) ? '<i class="fa fa-check"></i> ' : "";
 	},
+  'requests': function () {
+    return Template.instance().requests();
+  },
+  'hasMoreRequests': function () {
+    return Template.instance().requests().count() >= Template.instance().limit.get();
+  }
 });
 
 Template.requests.events({
@@ -142,5 +165,11 @@ Template.requests.events({
 		var sort = event.target.text;
 		template.sort.set(sort);
 		return false;
-	}
+	},
+	'click .load-more': function (event, instance) {
+    var limit = instance.limit.get();
+    limit += 10;
+    instance.limit.set(limit);
+		return false;
+  }
 })

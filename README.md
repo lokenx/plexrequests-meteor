@@ -18,6 +18,7 @@ On first run navigate to http://localhost:3000/admin and create an admin account
   - Requests List Page
   - Settings Page (available at `/about`)
   - CouchPotato should work including downloaded status
+  - Sorting and filter options for Requests page
 
 **Things That DO NOT Work**
 
@@ -25,7 +26,6 @@ On first run navigate to http://localhost:3000/admin and create an admin account
   - Alerts via either service
   - Tests for CouchPotato/SickRage/Sonarr/Pushover/Pushbullet
   - Upgrading from previous installations
-  - Sorting and filter options for Requests page
 
 Please report any and all issues as you come across them. I'm actively working on this branch so check back often for new updates.
 
