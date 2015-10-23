@@ -1,9 +1,7 @@
 Meteor.methods({
-	"requestMovie": function(request) {
+	"requestTV": function(request) {
 		check(request, Object);
 		var poster = request.poster_path || "/";
-		var settings = Settings.find({}).fetch()[0];
-
 
 		// Check user request limit
 		var date = Date.now() - 6.048e8;
@@ -24,32 +22,30 @@ Meteor.methods({
 		}
 
 		// Check if it already exists in CouchPotato
-		if (settings.couchPotatoENABLED) {
-			try {
-				var checkCP = CouchPotato.mediaGet(imdb);
-				var status = (checkCP.status == "done") ? true : false;
-				if (!(checkCP.status === "false")) {
-					try {
-						Movies.insert({
-							title: request.title,
-							id: request.id,
-							imdb: imdb,
-							released: request.release_date,
-							user: request.user,
-							downloaded: status,
-							approved: true,
-							poster_path: poster
-						});
-						return 'exists';
-					} catch (error) {
-						console.log(error.message);
-						return false;
-					}
+		try {
+			var checkCP = CouchPotato.mediaGet(imdb);
+			var status = (checkCP.status == "done") ? true : false;
+			if (!(checkCP.status === "false")) {
+				try {
+					Movies.insert({
+						title: request.title,
+						id: request.id,
+						imdb: imdb,
+						released: request.release_date,
+						user: request.user,
+						downloaded: status,
+						approved: true,
+						poster_path: poster
+					});
+					return 'exists';
+				} catch (error) {
+					console.log(error.message);
+					return false;
 				}
-			} catch (error) {
-				console.log("Error checking Couch Potato:", error.message)
-				return false;
 			}
+		} catch (error) {
+			console.log("Error adding to Couch Potato:", error.message)
+			return false;
 		}
 
 		if (Settings.find({}).fetch()[0].approval) {
