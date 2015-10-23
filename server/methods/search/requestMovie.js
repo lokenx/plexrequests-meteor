@@ -23,7 +23,9 @@ Meteor.methods({
 
 		// Check if it already exists in CouchPotato
 		try {
-			if (CouchPotato.mediaGet(imdb)) {
+			var checkCP = CouchPotato.mediaGet(imdb);
+			var status = (checkCP.status == "done") ? true : false;
+			if (!(checkCP.status === "false")) {
 				try {
 					Movies.insert({
 						title: request.title,
@@ -31,7 +33,7 @@ Meteor.methods({
 						imdb: imdb,
 						released: request.released,
 						user: request.user,
-						downloaded: false,
+						downloaded: status,
 						approved: true,
 						poster_path: poster
 					});
