@@ -9,18 +9,20 @@ Meteor.methods({
 
 		if (request.imdb) {
 			try {
-				Movies.update(request._id, {$set: {approved: true}});
-
 				if (Settings.find({}).fetch()[0].couchPotatoENABLED) {
 					try {
-						var add = CouchPotato.movieAdd(imdb);
-						console.log(add);
-						return add;
+						if (CouchPotato.movieAdd(request.imdb)) {
+							Movies.update(request._id, {$set: {approved: true}});
+							return true;
+						} else {
+							return false;
+						}
 					} catch (error) {
 						console.log("Error adding to Couch Potato:", error.message)
 						return false;
 					}
 				} else {
+					Movies.update(request._id, {$set: {approved: true}});
 					return true;
 				}
 

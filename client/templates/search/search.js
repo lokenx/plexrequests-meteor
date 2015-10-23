@@ -98,6 +98,9 @@ Template.search.events({
         } else if (result === "limit") {
           Bert.alert("You've exceeded your weekly limit!", "warning");
           btn.html('<i class="fa fa-plus"></i> &nbsp; Request');
+        } else if (result === 'exists') {
+          Bert.alert("Movie has already been requested!", "warning");
+          btn.hide();
         }
       })
     }

@@ -21,6 +21,31 @@ Meteor.methods({
 			return false;
 		}
 
+		// Check if it already exists in CouchPotato
+		try {
+			if (CouchPotato.mediaGet(imdb)) {
+				try {
+					Movies.insert({
+						title: request.title,
+						id: request.id,
+						imdb: imdb,
+						released: request.released,
+						user: request.user,
+						downloaded: false,
+						approved: true,
+						poster_path: poster
+					});
+					return 'exists';
+				} catch (error) {
+					console.log(error.message);
+					return false;
+				}
+			}
+		} catch (error) {
+			console.log("Error adding to Couch Potato:", error.message)
+			return false;
+		}
+
 		if (Settings.find({}).fetch()[0].approval) {
 			// Approval required
 			// Add to DB but not CP

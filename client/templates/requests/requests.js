@@ -66,7 +66,7 @@ Template.requests.events({
 				//Alert error
 				console.log(error);
 				console.log(result);
-				Bert.alert("Unable to approve " + this.title +", please try again!", "danger");
+				Bert.alert("Unable to approve " + title +", please try again!", "danger");
 			} else {
 				// Alert success
 				Bert.alert("Approved " + title +"!", "success");
