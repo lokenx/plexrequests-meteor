@@ -82,13 +82,14 @@ Template.search.events({
   },
   'click .add-request': function (event) {
     var btn = $(event.target);
+    var tvBtn = $(".tv-request");
     var requestTitle = this.title;
-    // var username = Session.get("user");
     var request = this;
     request.user = Session.get("user");
+    request.episodes = $(event.target).attr("value");
 
-    btn.html('<i class="fa fa-spinner fa-spin"></i> &nbsp; Requesting...');
     if (this.media_type === "movie") {
+      btn.html('<i class="fa fa-spinner fa-spin"></i> &nbsp; Requesting...');
       Meteor.call("requestMovie", request, function (error, result) {
         if (error || result === false) {
           console.log("Error requesting, check server log");
@@ -106,7 +107,23 @@ Template.search.events({
         }
       })
     } else if (this.media_type === "tv") {
-
+      // tvBtn.html('<i class="fa fa-spinner fa-spin"></i> &nbsp; Requesting...');
+      Meteor.call("requestTV", request, function (error, result) {
+        if (error || result === false) {
+          console.log("Error requesting, check server log");
+          // tvBtn.html('<i class="fa fa-plus"></i> &nbsp; Request');
+          Bert.alert("Couldn't submit request, please try again!", "danger");
+        } else if (result === true) {
+          Bert.alert("Successfully requested " + requestTitle + "!", "success");
+          // tvBtn.hide();
+        } else if (result === "limit") {
+          Bert.alert("You've exceeded your weekly limit!", "warning");
+          // tvBtn.html('<i class="fa fa-plus"></i> &nbsp; Request');
+        } else if (result === 'exists') {
+          Bert.alert("Movie has already been requested!", "warning");
+          // tvBtn.hide();
+        }
+      })
     }
   }
 });
