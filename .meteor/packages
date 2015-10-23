@@ -27,6 +27,7 @@ ejson
 spacebars
 check
 aldeed:collection2
+aldeed:simple-schema
 iron:core@=1.0.8
 fortawesome:fontawesome
 accounts-password
