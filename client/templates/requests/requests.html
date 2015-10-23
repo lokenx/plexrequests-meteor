@@ -8,12 +8,14 @@
 		</div>
 
 	<!-- Selector between Movies/TV/etc -->
-		<div class="col-md-offset-2 col-md-8">
-			<ul class="search-selector">
-		  	{{#each searchOptions}}
-		  		<li><a href="#" class="{{#if activeSearch}}active-search{{/if}}">{{this}}</a></li>
-		  	{{/each}}
-			</ul>
+		<div class="row">
+			<div class="col-md-offset-2 col-md-8">
+				<ul class="search-selector">
+			  	{{#each searchOptions}}
+			  		<li><a href="#" class="{{#if activeSearch}}active-search{{/if}}">{{this}}</a></li>
+			  	{{/each}}
+				</ul>
+			</div>
 		</div>
 
 	<!-- List of content -->
