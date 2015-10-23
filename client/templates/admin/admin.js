@@ -8,6 +8,7 @@ AutoForm.hooks({
       return false;
     },
     onError: function(formType, error) {
+      console.log(error);
       Bert.alert('Update failed, please try again', 'danger');
     }
   }

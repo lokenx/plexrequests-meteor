@@ -24,7 +24,6 @@ callback-hook@1.0.4
 check@1.0.6
 coffeescript@1.0.10
 dburles:collection-helpers@1.0.3
-dburles:mongo-collection-instances@0.3.4
 ddp@1.2.2
 ddp-client@1.2.1
 ddp-common@1.2.1
@@ -54,7 +53,6 @@ iron:middleware-stack@1.0.10
 iron:router@1.0.10
 iron:url@1.0.9
 jquery@1.11.4
-lai:collection-extensions@0.1.4
 launch-screen@1.0.4
 less@2.5.0_3
 livedata@1.0.15
@@ -66,7 +64,6 @@ meteor@1.1.9
 meteor-base@1.0.1
 meteorhacks:async@1.0.0
 meteorhacks:npm@1.5.0
-meteortoys:toykit@2.1.1
 minifiers@1.1.7
 minimongo@1.0.10
 mobile-experience@1.0.1
@@ -74,7 +71,6 @@ mobile-status-bar@1.0.6
 momentjs:moment@2.10.6
 mongo@1.1.2
 mongo-id@1.0.1
-msavin:mongol@1.4.3
 npm-bcrypt@0.7.8_2
 npm-container@1.2.0
 npm-mongo@1.4.39_1

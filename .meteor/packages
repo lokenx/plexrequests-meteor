@@ -38,7 +38,6 @@ momentjs:moment
 twbs:bootstrap@4.0.0-alpha
 # ian:accounts-ui-bootstrap-3
 accounts-ui
-msavin:mongol
 zimme:active-route
 themeteorchef:bert
 aldeed:autoform
