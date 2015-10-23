@@ -17,7 +17,7 @@ On first run navigate to http://localhost:3000/admin and create an admin account
   - Approving / Deleting / Issues of Movies
   - Requests List Page
   - Settings Page (available at `/about`)
-  - CouchPotato/SickRage/Sonarr should all Work
+  - CouchPotato should work including downloaded status
 
 **Things That DO NOT Work**
 
