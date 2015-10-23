@@ -60,12 +60,16 @@ Template.requests.events({
     template.searchType.set(type);
   },
 	'click .approve-item' : function (event, template) {
+		var title = this.title;
 		Meteor.call("approveRequest", this, function(error, result) {
 			if (error || !(result)) {
 				//Alert error
 				console.log(error);
+				console.log(result);
+				Bert.alert("Unable to approve " + this.title +", please try again!", "danger");
 			} else {
 				// Alert success
+				Bert.alert("Approved " + title +"!", "success");
 			}
 		});
 	},

@@ -83,10 +83,11 @@ Template.search.events({
   'click .add-request': function (event) {
     var btn = $(event.target);
     var requestTitle = this.title;
+    var username = Session.get("user");
 
     btn.html('<i class="fa fa-spinner fa-spin"></i> &nbsp; Requesting...');
     if (this.media_type === "movie") {
-      Meteor.call("requestMovie", {id: this.id, title: this.title, released: this.release_date, poster_path: this.poster_path, user: "jdoe"}, function (error, result) {
+      Meteor.call("requestMovie", {id: this.id, title: this.title, released: this.release_date, poster_path: this.poster_path, user: username}, function (error, result) {
         if (error || result === false) {
           console.log("Error requesting, check server log");
           btn.html('<i class="fa fa-plus"></i> &nbsp; Request');
