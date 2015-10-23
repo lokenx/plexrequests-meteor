@@ -18,8 +18,22 @@
     font-weight: 300;
   }
 
-  .search-selector {
+  .selectors {
+    margin-top: 1rem;
     padding-bottom: 2rem;
+  }
+
+  .filter-sort {
+    text-align: right;
+
+    button {
+      border: 0;
+
+      &:hover, &:visited, &:active, &:focus {
+        background-color: transparent;
+        border: 0;
+      }
+    }
   }
 }
 

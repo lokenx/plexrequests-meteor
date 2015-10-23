@@ -7,14 +7,32 @@
 			</div>
 		</div>
 
-	<!-- Selector between Movies/TV/etc -->
-		<div class="row">
-			<div class="col-md-offset-2 col-md-8">
+	<!-- Selector between Movies/TV/etc  and Sort/Filter Options-->
+			<div class="row selectors">
+			<div class="col-md-offset-2 col-md-6">
 				<ul class="search-selector">
 			  	{{#each searchOptions}}
 			  		<li><a href="#" class="{{#if activeSearch}}active-search{{/if}}">{{this}}</a></li>
 			  	{{/each}}
 				</ul>
+			</div>
+			<div class="col-md-2">
+				<div class="filter-sort">
+					<div class="btn-group">
+					  <button type="button" class="btn btn-sm btn-secondary-outline dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					    Filter / Sort
+					  </button>
+					  <div class="dropdown-menu">
+							{{#each filterOptions}}
+					    	<a class="dropdown-item filter-select" href="#">{{{activeFilter}}}{{filter}}</a>
+							{{/each}}
+					    <div class="dropdown-divider"></div>
+							{{#each sortOptions}}
+								<a class="dropdown-item sort-select" href="#">{{{activeSort}}}{{sort}}</a>
+							{{/each}}
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 

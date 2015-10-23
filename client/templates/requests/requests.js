@@ -10,6 +10,9 @@ Template.requests.onCreated(function () {
     }
   });
 
+	this.filter = new ReactiveVar("All Requests");
+	this.sort = new ReactiveVar("Newest First");
+
 });
 
 Template.requests.helpers({
@@ -46,12 +49,32 @@ Template.requests.helpers({
     return (Template.instance().searchType.get().length === this.length);
   },
   'requests' : function () {
+		var selectedFilter = Template.instance().filter.get();
+		var filter = {};
+		var selectedSort = Template.instance().sort.get();
+		var sort = (selectedSort === "Newest First") ? {createdAt: -1} : {createdAt: 1};
+		
   	if (Template.instance().searchType.get() === "Movies") {
-			return Movies.find({}, {sort: {createdAt:-1}});
+			if (selectedFilter !== "All Requests") {
+				filter = (selectedFilter === "Approved") ? {approved: true} : {downloaded: true};
+			}
+			return Movies.find(filter, {sort: sort});
   	} else {
   		return TV.find();
   	}
-  }
+  },
+	'filterOptions' : function () {
+		return [{filter: "All Requests"}, {filter: "Approved"}, {filter: "Downloaded"}]
+	},
+	'activeFilter' : function () {
+		return (Template.instance().filter.get() == this.filter) ? '<i class="fa fa-check"></i> ' : "";
+	},
+	'sortOptions' : function () {
+		return [{sort: "Newest First"}, {sort: "Oldest First"}]
+	},
+	'activeSort' : function () {
+		return (Template.instance().sort.get() == this.sort) ? '<i class="fa fa-check"></i> ' : "";
+	},
 });
 
 Template.requests.events({
@@ -109,5 +132,15 @@ Template.requests.events({
 				Bert.alert("Cleared issues successfully", "success");
 			}
 		})
+	},
+	'click .filter-select' : function (event, template) {
+		var filter = event.target.text;
+		template.filter.set(filter);
+		return false;
+	},
+	'click .sort-select' : function (event, template) {
+		var sort = event.target.text;
+		template.sort.set(sort);
+		return false;
 	}
 })
