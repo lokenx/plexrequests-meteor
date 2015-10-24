@@ -99,17 +99,17 @@ Template.search.events({
       btn.html('<i class="fa fa-spinner fa-spin"></i> &nbsp; Requesting...');
       Meteor.call("requestMovie", request, function (error, result) {
         if (error || result === false) {
-          console.log("Error requesting, check server log");
+          console.log("Error requesting, please check server log");
           btn.html('<i class="fa fa-plus"></i> &nbsp; Request');
           Bert.alert("Couldn't submit request, please try again!", "danger");
         } else if (result === true) {
           Bert.alert("Successfully requested " + requestTitle + "!", "success");
           // btn.hide();
         } else if (result === "limit") {
-          Bert.alert("You've exceeded your weekly limit!", "warning");
+          Bert.alert("You've exceeded your weekly limit!", "info");
           btn.html('<i class="fa fa-plus"></i> &nbsp; Request');
         } else if (result === 'exists') {
-          Bert.alert("Movie has already been requested!", "warning");
+          Bert.alert("Movie has already been requested!", "info");
           // btn.hide();
         }
       })
@@ -117,17 +117,17 @@ Template.search.events({
       tvBtn.html('<i class="fa fa-spinner fa-spin"></i> &nbsp; Requesting... ');
       Meteor.call("requestTV", request, function (error, result) {
         if (error || result === false) {
-          console.log("Error requesting, check server log");
+          console.log("Error requesting, please check server log");
           tvBtn.html('<i class="fa fa-plus"></i> &nbsp; Request ');
           Bert.alert("Couldn't submit request, please try again!", "danger");
         } else if (result === true) {
           Bert.alert("Successfully requested " + requestTitle + "!", "success");
           // tvBtn.hide();
         } else if (result === "limit") {
-          Bert.alert("You've exceeded your weekly limit!", "warning");
+          Bert.alert("You've exceeded your weekly limit!", "info");
           tvBtn.html('<i class="fa fa-plus"></i> &nbsp; Request ');
         } else if (result === 'exists') {
-          Bert.alert("Movie has already been requested!", "warning");
+          Bert.alert("TV Show has already been requested!", "info");
           // tvBtn.hide();
         }
       })
