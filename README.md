@@ -19,10 +19,10 @@ On first run navigate to http://localhost:3000/admin and create an admin account
   - Settings Page (available at `/about`)
   - CouchPotato should work including downloaded status
   - Sorting and filter options for Requests page
+  - Requesting TV Shows
 
 **Things That DO NOT Work**
 
-  - Requesting TV Shows
   - Alerts via either service
   - Tests for CouchPotato/SickRage/Sonarr/Pushover/Pushbullet
   - Upgrading from previous installations
