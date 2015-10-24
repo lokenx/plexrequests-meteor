@@ -1,21 +1,23 @@
 Template.requests.onCreated(function () {
 	Session.set("searchOptions", []);
-  this.searchType = new ReactiveVar("Movies");
+
+	var instance = this;
+	instance.searchType = new ReactiveVar();
 
 	Meteor.call("searchOptions", function (error, result) {
-    if (result.length !== 0) {
-      Session.set("searchOptions", result);
-    } else {
-      Session.set("searchDisabled", true);
-    }
-  });
+		if (result.length !== 0) {
+			Session.set("searchOptions", result);
+			instance.searchType.set((Session.get("searchOptions")[0]));
+		} else {
+			Session.set("searchDisabled", true);
+			instance.searchType.set("none");
+		}
+	});
 
 	this.filter = new ReactiveVar("All Requests");
 	this.sort = new ReactiveVar("Newest First");
 
 	// Loading requests on demand
-
-	var instance = this;
 	instance.loaded = new ReactiveVar(0);
 	instance.limit = new ReactiveVar(10);
 

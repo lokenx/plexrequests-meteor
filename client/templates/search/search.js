@@ -2,17 +2,24 @@ Template.search.onCreated(function () {
   this.results = new ReactiveVar();
   this.error = new ReactiveVar(false);
   this.searching = new ReactiveVar(false);
-  this.searchType = new ReactiveVar("Movies");
+
   Session.set("searchOptions", []);
   Session.set("searchDisabled", false);
+
+  var instance = this;
 
   Meteor.call("searchOptions", function (error, result) {
     if (result.length !== 0) {
       Session.set("searchOptions", result);
+      instance.searchType = new ReactiveVar(Session.get("searchOptions")[0]);
     } else {
       Session.set("searchDisabled", true);
+      instance.searchType = new ReactiveVar("none");
     }
   });
+
+
+
 
 });
 
@@ -82,7 +89,7 @@ Template.search.events({
   },
   'click .add-request': function (event) {
     var btn = $(event.target);
-    var tvBtn = $(event.target).parent().parent().children();
+    var tvBtn = $(event.target).parent().parent().children().first();
     var requestTitle = this.title;
     var request = this;
     request.user = Session.get("user");
