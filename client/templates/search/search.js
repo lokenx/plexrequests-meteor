@@ -86,7 +86,7 @@ Template.search.events({
     var requestTitle = this.title;
     var request = this;
     request.user = Session.get("user");
-    request.episodes = $(event.target).attr("value");
+    request.episodes = ($(event.target).attr("value") === "true") ? true : false;
 
     if (this.media_type === "movie") {
       btn.html('<i class="fa fa-spinner fa-spin"></i> &nbsp; Requesting...');

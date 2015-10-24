@@ -41,7 +41,8 @@ Meteor.methods({
 							user: request.user,
 							status: status,
 							approved: true,
-							poster_path: poster
+							poster_path: poster,
+							episodes: request.episodes
 						});
 						return 'exists';
 					} catch (error) {
@@ -63,7 +64,8 @@ Meteor.methods({
 							user: request.user,
 							status: status,
 							approved: true,
-							poster_path: poster
+							poster_path: poster,
+							episodes: request.episodes
 						});
 						return 'exists';
 					} catch (error) {
@@ -89,7 +91,8 @@ Meteor.methods({
 					user: request.user,
 					status: {downloaded: 0, total: 0},
 					approved: false,
-					poster_path: poster
+					poster_path: poster,
+					episodes: request.episodes
 				});
 			} catch (error) {
 				console.log(error.message);
@@ -101,7 +104,8 @@ Meteor.methods({
 			//No approval required
 			if (settings.sickRageENABLED) {
 				try {
-					var add = SickRage.addShow(tvdb, request.episodes);
+					var episodes = (request.episodes === true) ? 1 : 0;
+					var add = SickRage.addShow(tvdb, episodes);
 				} catch (error) {
 					console.log("Error adding to SickRage:", error.message);
 					return false;
@@ -116,7 +120,8 @@ Meteor.methods({
 							user: request.user,
 							status: {downloaded: 0, total: 0},
 							approved: true,
-							poster_path: poster
+							poster_path: poster,
+							episodes: request.episodes
 						});
 						return true;
 					} catch (error) {
@@ -133,8 +138,7 @@ Meteor.methods({
 					var seasonFolder = settings.sonarrSEASONFOLDERS
 					var rootFolderPath = settings.sonarrROOTFOLDERPATH
 					// episodes should be true if you want new and old episodes
-					var episodes = (request.episodes == 1) ? true : false;
-					var add = Sonarr.seriesPost(tvdb,request.title, qualityProfileId, seasonFolder, rootFolderPath, episodes);
+					var add = Sonarr.seriesPost(tvdb,request.title, qualityProfileId, seasonFolder, rootFolderPath, request.episodes);
 				} catch (error) {
 					console.log("Error adding to Sonarr:", error.message);
 					return false;
@@ -149,7 +153,8 @@ Meteor.methods({
 							user: request.user,
 							status: {downloaded: 0, total: 0},
 							approved: true,
-							poster_path: poster
+							poster_path: poster,
+							episodes: request.episodes
 						});
 						return true;
 					} catch (error) {
@@ -170,7 +175,8 @@ Meteor.methods({
 						user: request.user,
 						status: {downloaded: 0, total: 0},
 						approved: true,
-						poster_path: poster
+						poster_path: poster,
+						episodes: request.episodes
 					});
 					return true;
 				} catch (error) {
