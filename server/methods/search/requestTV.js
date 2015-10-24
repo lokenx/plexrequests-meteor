@@ -134,7 +134,6 @@ Meteor.methods({
 					var rootFolderPath = settings.sonarrROOTFOLDERPATH
 					// episodes should be true if you want new and old episodes
 					var episodes = (request.episodes == 1) ? true : false;
-					console.log(request.episodes);
 					var add = Sonarr.seriesPost(tvdb,request.title, qualityProfileId, seasonFolder, rootFolderPath, episodes);
 				} catch (error) {
 					console.log("Error adding to Sonarr:", error.message);
