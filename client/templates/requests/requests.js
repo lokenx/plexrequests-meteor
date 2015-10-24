@@ -177,5 +177,11 @@ Template.requests.events({
     limit += 10;
     instance.limit.set(limit);
 		return false;
-  }
+  },
+	'click .return-to-top': function (event, instance) {
+		$('body,html').animate({
+        scrollTop : 0
+    }, 500);
+		return false;
+	}
 })

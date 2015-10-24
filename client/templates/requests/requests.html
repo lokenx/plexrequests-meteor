@@ -83,7 +83,7 @@
 			</div>
 		{{/each}}
 
-		<div class="row">
+		<div class="row load-more-footer">
 			<div class="col-md-8 col-md-offset-2">
 				{{#if Template.subscriptionsReady}}
 					{{#if hasMoreRequests}}
@@ -92,6 +92,7 @@
 				{{else}}
 					<div class="loading">Loading...</div>
 				{{/if}}
+				<button class="btn btn-secondary btn-block return-to-top">Return To Top</button>
 			</div>
 		</div>
 	</div>
