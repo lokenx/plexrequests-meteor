@@ -42,8 +42,11 @@ Template.requests.onCreated(function () {
 			}
 			return Movies.find(filter, {sort: sort, skip: 0, limit: instance.loaded.get()});
   	} else {
-  		return TV.find();
-  	}
+			if (selectedFilter !== "All Requests") {
+				filter = (selectedFilter === "Approved") ? {approved: true} : {"status.downloaded": {$gt: 0}};
+			}
+			return TV.find(filter, {sort: sort, skip: 0, limit: instance.loaded.get()});
+		}
 	}
 });
 
@@ -66,6 +69,7 @@ Template.requests.helpers({
   		approval = (this.downloaded) ? '<i class="fa fa-check success-icon"></i>': '<i class="fa fa-times error-icon"></i>';
   	} else {
   		//TV dowloaded:total
+			approval = this.status.downloaded + " / " + this.status.total;
   	}
   	return approval;
   },
