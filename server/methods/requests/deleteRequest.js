@@ -12,7 +12,15 @@ Meteor.methods({
 				Movies.remove(request._id);
 				return true;
 			} catch (error) {
-				console.log("Approval error -> " + error.message);
+				console.log("Deletion error -> " + error.message);
+				return false;
+			}
+		} else if (request.tvdb) {
+			try {
+				TV.remove(request._id);
+				return true;
+			} catch (error) {
+				console.log("Deletion error -> " + error.message);
 				return false;
 			}
 		}

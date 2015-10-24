@@ -10,6 +10,14 @@ Meteor.methods({
 				console.log("Adding issue error -> " + error.message);
 				return false;
 			}
+		} else if (request.tvdb) {
+			try {
+				TV.update(request._id, {$set: {issues: [] }});
+				return true;
+			} catch (error) {
+				console.log("Adding issue error -> " + error.message);
+				return false;
+			}
 		}
 	}
 });
