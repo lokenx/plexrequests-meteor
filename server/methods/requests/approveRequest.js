@@ -9,28 +9,42 @@ Meteor.methods({
 		}
 
 		if (request.imdb) {
+			// First confirm it doesn't exist already
 			try {
-				if (settings.couchPotatoENABLED) {
+				var checkCP = CouchPotato.mediaGet(request.imdb);
+				var status = (checkCP.status == "done") ? true : false;
+				if (checkCP.status !== "false" && checkCP !== false) {
 					try {
-						if (CouchPotato.movieAdd(request.imdb)) {
-							Movies.update(request._id, {$set: {approved: true}});
-							return true;
-						} else {
-							return false;
-						}
+						Movies.update(request._id, {$set: {approved: true, downloaded: status}});
+						return true;
 					} catch (error) {
-						console.log("Error adding to Couch Potato:", error.message)
+						console.log(error.message);
 						return false;
 					}
-				} else {
-					Movies.update(request._id, {$set: {approved: true}});
-					return true;
 				}
-
 			} catch (error) {
-				console.log("Approval error -> " + error.message);
+				console.log("Error checking Couch Potato:", error.message)
 				return false;
 			}
+
+			// Doesn't exist so try to add
+			if (settings.couchPotatoENABLED) {
+				try {
+					if (CouchPotato.movieAdd(request.imdb)) {
+						Movies.update(request._id, {$set: {approved: true}});
+						return true;
+					} else {
+						return false;
+					}
+				} catch (error) {
+					console.log("Error adding to Couch Potato:", error.message)
+					return false;
+				}
+			} else {
+				Movies.update(request._id, {$set: {approved: true}});
+				return true;
+			}
+
 		} else {
 			if (settings.sickRageENABLED) {
 				// First confirm it doesn't exist already

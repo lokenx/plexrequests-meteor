@@ -2,7 +2,7 @@ Meteor.methods({
 	"requestMovie": function(request) {
 		check(request, Object);
 		var poster = request.poster_path || "/";
-		var settings = Settings.find({}).fetch()[0];
+		var settings = Settings.find().fetch()[0];
 
 
 		// Check user request limit
@@ -28,7 +28,8 @@ Meteor.methods({
 			try {
 				var checkCP = CouchPotato.mediaGet(imdb);
 				var status = (checkCP.status == "done") ? true : false;
-				if (!(checkCP.status === "false")) {
+				console.log(checkCP)
+				if (checkCP.status !== "false" && checkCP !== false) {
 					try {
 						Movies.insert({
 							title: request.title,
