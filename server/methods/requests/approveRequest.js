@@ -85,10 +85,10 @@ Meteor.methods({
 				// First confirm it doesn't exist already
 				try {
 					if (settings.sonarrENABLED) {
-						var checkSonarr = Sonarr.seriesGet(tvdb);
+						var checkSonarr = Sonarr.seriesGet(request.tvdb);
 
 						if (checkSonarr) {
-							var status = Sonarr.seriesStats(tvdb);
+							var status = Sonarr.seriesStats(request.tvdb);
 							try {
 								TV.update(request._id, {$set: {approved: true, status: status}});
 								return true;
