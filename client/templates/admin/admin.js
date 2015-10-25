@@ -3,6 +3,7 @@ AutoForm.hooks({
     onSuccess: function(formType, result) {
       if (result) {
         Bert.alert('Updated successfully', 'success');
+        Meteor.call("settingsUpdate");
       }
       this.event.preventDefault();
       return false;
