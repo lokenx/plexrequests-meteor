@@ -116,8 +116,7 @@ Template.requests.events({
 		Meteor.call("approveRequest", this, function(error, result) {
 			if (error || !(result)) {
 				//Alert error
-				console.log(error);
-				console.log(result);
+				console.log("Error approving, please check server logs");
 				Bert.alert("Unable to approve " + title +", please try again!", "danger");
 			} else {
 				// Alert success

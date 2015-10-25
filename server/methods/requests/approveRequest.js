@@ -32,9 +32,10 @@ Meteor.methods({
 				return false;
 			}
 		} else {
-			if (settings.sickrageENABLED) {
+			if (settings.sickRageENABLED) {
 				try {
-					if (SickRage.addShow(request.tvdb, request.episodes)) {
+					var episodes = (request.episodes === true) ? 1 : 0;
+					if (SickRage.addShow(request.tvdb, episodes)) {
 						TV.update(request._id, {$set: {approved: true}});
 						return true;
 					} else {
@@ -48,11 +49,8 @@ Meteor.methods({
 				var qualityProfileId = settings.sonarrQUALITYPROFILEID
 				var seasonFolder = settings.sonarrSEASONFOLDERS
 				var rootFolderPath = settings.sonarrROOTFOLDERPATH
-				// episodes should be true if you want new and old episodes
-				var episodes = (request.episodes == 1) ? true : false;
-
 				try {
-					if (Sonarr.seriesPost(request.tvdb,request.title, qualityProfileId, seasonFolder, rootFolderPath, episodes)) {
+					if (Sonarr.seriesPost(request.tvdb,request.title, qualityProfileId, seasonFolder, rootFolderPath, request.episodes)) {
 						TV.update(request._id, {$set: {approved: true}});
 						return true;
 					} else {

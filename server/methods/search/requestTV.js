@@ -29,7 +29,6 @@ Meteor.methods({
 		try {
 			if (settings.sickRageENABLED) {
 				var checkSickRage = SickRage.checkShow(tvdb);
-
 				if (checkSickRage) {
 					var status = SickRage.statsShow(tvdb);
 					try {
@@ -137,7 +136,6 @@ Meteor.methods({
 					var qualityProfileId = settings.sonarrQUALITYPROFILEID
 					var seasonFolder = settings.sonarrSEASONFOLDERS
 					var rootFolderPath = settings.sonarrROOTFOLDERPATH
-					// episodes should be true if you want new and old episodes
 					var add = Sonarr.seriesPost(tvdb,request.title, qualityProfileId, seasonFolder, rootFolderPath, request.episodes);
 				} catch (error) {
 					console.log("Error adding to Sonarr:", error.message);
