@@ -13,18 +13,17 @@ On first run navigate to http://localhost:3000/admin and create an admin account
 **Things That Work**
 
   - Searching for Movies / TV Shows
-  - Requesting Movies
-  - Approving / Deleting / Issues of Movies
+  - Requesting Movies / TV Shows
+  - Approving / Deleting / Issues
   - Requests List Page
-  - Settings Page (available at `/about`)
-  - CouchPotato should work including downloaded status
+  - Settings Page (available at `/admin`)
+  - Download status of Movies / TV Shows
   - Sorting and filter options for Requests page
-  - Requesting TV Shows
 
 **Things That DO NOT Work**
 
   - Alerts via either service
-  - Tests for CouchPotato/SickRage/Sonarr/Pushover/Pushbullet
+  - Connectivity Tests for CouchPotato/SickRage/Sonarr/Pushover/Pushbullet
   - Upgrading from previous installations
 
 Please report any and all issues as you come across them. I'm actively working on this branch so check back often for new updates.
