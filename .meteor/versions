@@ -73,6 +73,7 @@ mobile-status-bar@1.0.6
 momentjs:moment@2.10.6
 mongo@1.1.2
 mongo-id@1.0.1
+multiply:iron-router-progress@1.0.2
 npm-bcrypt@0.7.8_2
 npm-container@1.2.0
 npm-mongo@1.4.39_1
