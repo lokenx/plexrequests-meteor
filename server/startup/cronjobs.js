@@ -1,11 +1,12 @@
 SyncedCron.add({
-    name: 'Update CouchPotato download status',
+    name: "Update download status'",
     schedule: function(parser) {
         return parser.text('every 1 hour');
         },
     job: function() {
         Meteor.call('updateCP');
-        return 'Updating CouchPotato download status';
+        Meteor.call('updateSickRage');
+        return 'Updating download status...';
     }
 });
 
