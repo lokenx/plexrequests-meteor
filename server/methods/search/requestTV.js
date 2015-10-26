@@ -16,7 +16,7 @@ Meteor.methods({
 		// Get TVDB
 		try {
 			var tvdb = TMDBSearch.externalIds(request.id, "tv");
-			if (tvdb === null) {
+			if (tvdb === null || tvdb === false) {
 				console.log(("Error getting TVDB ID, none found!"));
 				return false;
 			}
