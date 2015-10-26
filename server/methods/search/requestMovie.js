@@ -28,7 +28,6 @@ Meteor.methods({
 			try {
 				var checkCP = CouchPotato.mediaGet(imdb);
 				var status = (checkCP.status == "done") ? true : false;
-				console.log(checkCP)
 				if (checkCP.status !== "false" && checkCP !== false) {
 					try {
 						Movies.insert({
