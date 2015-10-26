@@ -14,6 +14,7 @@ Meteor.startup(function () {
 	CouchPotato.url = (settings.couchPotatoSSL) ? "https://" + settings.couchPotatoURL : "http://" + settings.couchPotatoURL;
 	CouchPotato.port = settings.couchPotatoPORT;
 	CouchPotato.api = settings.couchPotatoAPI;
+	CouchPotato.directory = settings.couchPotatoDIRECTORY || "";
 
 	//set SickRage on start-up
 	SickRage.url = (settings.sickRageSSL) ? "https://" + settings.sickRageURL : "http://" + settings.sickRageURL;
