@@ -181,9 +181,16 @@
 							</div>
 							<div role="tabpanel" class="tab-pane" id="aboutSettings">
 								<p>
-									<strong>Branch: </strong> v0.6<br>
+									<strong>Branch: </strong> {{branch}}<br>
 									<strong>Version: </strong> v0.6.8-alpha
 								</p>
+								{{#if update}}
+									<p>
+										<div class="alert alert-info" role="alert">
+	  									<strong>Heads up!</strong> There's a new update available!
+										</div>
+									</p>
+								{{/if}}
 								<p>
 									<strong>Project Website: </strong> <a href="http://plexrequests.8bits.ca/" target="_blank">plexrequests.8bits.ca</a><br>
 									<strong>GitHub Page: </strong> <a href="https://github.com/lokenx/plexrequests-meteor" target="_blank">lokenx / PlexRequests</a>

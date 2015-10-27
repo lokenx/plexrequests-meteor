@@ -18,7 +18,32 @@ AutoForm.hooks({
 Template.admin.helpers({
   settings: function(){
     return Settings.findOne({});
+  },
+  branch: function () {
+    return Template.instance().branch.get();
+  },
+  update: function () {
+    return Template.instance().update.get();
   }
+});
+
+Template.admin.onCreated(function(){
+  var instance = this;
+  instance.branch = new ReactiveVar("");
+  instance.update = new ReactiveVar(false);
+
+  Meteor.call("getBranch", function (error, result) {
+    if (result) {
+      instance.branch.set(result);
+    }
+  });
+
+  Meteor.call("checkForUpdate", function (error, result) {
+    if (result) {
+      instance.update.set(result)
+    }
+  });
+
 });
 
 Template.admin.events({
