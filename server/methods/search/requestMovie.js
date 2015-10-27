@@ -71,7 +71,7 @@ Meteor.methods({
 				return false;
 			}
 
-			Meteor.call("sendNotifications", request);
+			Meteor.call("sendNotifications", request, "request");
 			return true;
 		} else {
 			// No approval required
@@ -100,7 +100,7 @@ Meteor.methods({
 						console.log(error.message);
 						return false;
 					}
-					Meteor.call("sendNotifications", request);
+					Meteor.call("sendNotifications", request, "request");
 					return true;
 				} else {
 					return false;
@@ -117,7 +117,7 @@ Meteor.methods({
 						approved: true,
 						poster_path: poster
 					});
-					Meteor.call("sendNotifications", request);
+					Meteor.call("sendNotifications", request, "request");
 					return true;
 				} catch (error) {
 					console.log(error.message);

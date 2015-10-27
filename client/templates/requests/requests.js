@@ -148,7 +148,7 @@ Template.requests.events({
 		Meteor.call("addIssue", this, issue, function(error, result) {
 			if (error || !(result)) {
 				//Alert error
-				Bert.alert("Error adding an issue, please try again!", "danger");
+				Bert.alert("Error adding an issue, or it already exists. Please try again!", "danger");
 				console.log(error);
 			} else {
 				// Alert success

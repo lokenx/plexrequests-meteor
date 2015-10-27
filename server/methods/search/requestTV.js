@@ -97,7 +97,7 @@ Meteor.methods({
 				console.log(error.message);
 				return false;
 			}
-			Meteor.call("sendNotifications", request);
+			Meteor.call("sendNotifications", request, "request");
 			return true;
 		} else {
 			//No approval required
@@ -122,7 +122,7 @@ Meteor.methods({
 							poster_path: poster,
 							episodes: request.episodes
 						});
-						Meteor.call("sendNotifications", request);
+						Meteor.call("sendNotifications", request, "request");
 						return true;
 					} catch (error) {
 						console.log(error.message);
@@ -155,7 +155,7 @@ Meteor.methods({
 							poster_path: poster,
 							episodes: request.episodes
 						});
-						Meteor.call("sendNotifications", request);
+						Meteor.call("sendNotifications", request, "request");
 						return true;
 					} catch (error) {
 						console.log(error.message);
@@ -178,7 +178,7 @@ Meteor.methods({
 						poster_path: poster,
 						episodes: request.episodes
 					});
-					Meteor.call("sendNotifications", request);
+					Meteor.call("sendNotifications", request, "request");
 					return true;
 				} catch (error) {
 					console.log(error.message);

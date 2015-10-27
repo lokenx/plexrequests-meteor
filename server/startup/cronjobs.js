@@ -1,3 +1,7 @@
+SyncedCron.config({
+  log: false
+});
+
 SyncedCron.add({
     name: "Update download status",
     schedule: function(parser) {

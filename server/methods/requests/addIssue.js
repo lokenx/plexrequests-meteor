@@ -5,7 +5,14 @@ Meteor.methods({
 
 		if (request.imdb) {
 			try {
+				if (Movies.findOne(request._id).issues) {
+					if (Movies.findOne(request._id).issues.indexOf(issue) !== -1) {
+						return false;
+					}
+				}
 				Movies.update(request._id, {$push: {issues: issue}});
+				request.issues = issue;
+				Meteor.call("sendNotifications", request, "issue");
 				return true;
 			} catch (error) {
 				console.log("Adding issue error -> " + error.message);
@@ -14,6 +21,8 @@ Meteor.methods({
 		} else if (request.tvdb) {
 			try {
 				TV.update(request._id, {$push: {issues: issue}});
+				request.issues = issue;
+				Meteor.call("sendNotifications", request, "issue");
 				return true;
 			} catch (error) {
 				console.log("Adding issue error -> " + error.message);
