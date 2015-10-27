@@ -149,7 +149,6 @@ Template.requests.events({
 			if (error || !(result)) {
 				//Alert error
 				Bert.alert("Error adding an issue, or it already exists. Please try again!", "danger");
-				console.log(error);
 			} else {
 				// Alert success
 				Bert.alert("Added issue successfully!", "success");

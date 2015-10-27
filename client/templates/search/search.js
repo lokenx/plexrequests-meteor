@@ -60,7 +60,7 @@ Template.search.events({
     $('#search-input').trigger('keyup');
   },
   'keyup  #search-input': _.throttle(function (event, template) {
-    template.results.set([]);
+    // template.results.set([]);
 
     var searchterm = $(event.target).val().trim();
     var searchType = template.searchType.get();
