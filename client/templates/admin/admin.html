@@ -54,20 +54,24 @@
 								</p>
 								<br>
 								{{> afQuickField name='plexAuthenticationENABLED'}}
-								{{> afQuickField name='plexAuthenticationTOKEN' style="width:auto;"}}
+								{{> afQuickField name='plexAuthenticationTOKEN' style="width:auto;" size="25"}}
+								<br>
+								<br>
 
-								<form class="form-inline" id="tokenForm">
-								  <div class="form-group">
-								    <label class="sr-only" for="exampleInputEmail3">Plex Username</label>
-								    <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Plex Username">
-								  </div>
-								  <div class="form-group">
-								    <label class="sr-only" for="exampleInputPassword3">Password</label>
-								    <input type="password" class="form-control" id="exampleInputPassword3" placeholder="Password">
-								  </div>
-								  <button type="submit" class="btn btn-secondary-outline"><i class="fa fa-key"></i> Get token</button>
-								</form>
-
+								<div class="row">
+									<div class="col-sm-4">
+										<label class="sr-only" for="plexuser">Plex Username</label>
+								    <input type="email" class="form-control" id="plexuser" placeholder="Plex Username">
+									</div>
+									<div class="col-sm-4">
+										<label class="sr-only" for="plexpassword">Password</label>
+								    <input type="password" class="form-control" id="plexpassword" placeholder="Password">
+									</div>
+								</div>
+								<br>
+							  <button type="button" class="btn btn-secondary-outline" id="plexsubmit">Get token <i class="fa fa-key"></i></button>
+								<br>
+								<br>
 								<p class="text-muted">
 									Allow only users you've shared your library with to request content. Follow these
 									<a href="https://support.plex.tv/hc/en-us/articles/204059436-Finding-your-account-token-X-Plex-Token" target="_blank">instructions</a>
@@ -78,7 +82,7 @@
 								{{> afQuickField name='couchPotatoENABLED'}}
 								<p class="text-muted">Enable CouchPotato for automated movie downloading</p>
 								<br>
-								<p><button class="btn btn-info-outline" id="couchPotatoTest">Test CouchPotato server</button></p>
+								<p><button class="btn btn-secondary-outline" id="couchPotatoTest">Test CouchPotato server</button></p>
 								<p class="text-muted">Quickly test your CouchPotato server settings.</p>
 								<br>
 								{{> afQuickField name='couchPotatoURL'}}
@@ -100,7 +104,7 @@
 								{{> afQuickField name='sickRageENABLED'}}
 								<p class="text-muted">Enable SickRage for automated tv downloading.</p>
 								<br>
-								<p><button class="btn btn-info-outline" id="sickRageTest">Test SickRage server</button></p>
+								<p><button class="btn btn-secondary-outline" id="sickRageTest">Test SickRage server</button></p>
 								<p class="text-muted">Quickly test your SickRage server settings.</p>
 								<br>
 								{{> afQuickField name='sickRageURL'}}
@@ -123,7 +127,7 @@
 								{{> afQuickField name='sonarrENABLED'}}
 								<p class="text-muted">Enabled Sonarr for automated tv downloading.</p>
 								<br>
-								<p><button class="btn btn-info-outline" id="sonarrTest">Test Sonarr server</button></p>
+								<p><button class="btn btn-secondary-outline" id="sonarrTest">Test Sonarr server</button></p>
 								<p class="text-muted">Quickly test your Sonarr server settings.</p>
 								<br>
 								{{> afQuickField name='sonarrURL'}}
@@ -158,7 +162,7 @@
 								{{> afQuickField name='pushbulletAPI' size="40"}}
 								<p class="text-muted">Enter your API from Pushbullet. It can be found in Pushbullet Settings -> Access Token.</p>
 								<br>
-								<p><button class="btn btn-info-outline" id="pushbulletTest">Test Pushbullet</button></p>
+								<p><button class="btn btn-secondary-outline" id="pushbulletTest">Test Pushbullet</button></p>
 								<p class="text-muted">Quickly test your Pushbullet settings.</p>
 								<br>
 								{{> afQuickField name='pushoverENABLED'}}
@@ -170,7 +174,7 @@
 								{{>afQuickField name='pushoverUSER' size="40"}}
 								<p class="text-muted">Enter your user or group key from Pushover.</p>
 								<br>
-								<p><button class="btn btn-info-outline" id="pushoverTest">Test Pushover</button></p>
+								<p><button class="btn btn-secondary-outline" id="pushoverTest">Test Pushover</button></p>
 								<p class="text-muted">Quickly test your Pushbullet settings.</p>
 								<br>
 								<br>
@@ -178,7 +182,7 @@
 							<div role="tabpanel" class="tab-pane" id="aboutSettings">
 								<p>
 									<strong>Branch: </strong> v0.6<br>
-									<strong>Version: </strong> v0.6.7-alpha
+									<strong>Version: </strong> v0.6.8-alpha
 								</p>
 								<p>
 									<strong>Project Website: </strong> <a href="http://plexrequests.8bits.ca/" target="_blank">plexrequests.8bits.ca</a><br>

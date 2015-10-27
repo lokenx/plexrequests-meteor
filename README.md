@@ -21,12 +21,11 @@ On first run navigate to http://localhost:3000/admin and create an admin account
   - Sorting and filter options for Requests page
   - Alerts via either service
   - Connectivity Tests for CouchPotato/SickRage/Sonarr/Pushover/Pushbullet
+  - Retrieve Plex token
 
 **Things That DO NOT Work**
 
   - Upgrading from previous installations
-  - Retrieve Plex token
-  - Test Plex token
 
 Please report any and all issues as you come across them. I'm actively working on this branch so check back often for new updates.
 

@@ -36,6 +36,43 @@ Meteor.methods({
     friendsList.push(admintitle);
 
     return (isInArray(plexUsername.toLowerCase(), friendsList));
-  }
-})
+  },
+	'getPlexToken' : function (username,password) {
 
+		//clean password and username for authentication.
+		function authHeaderVal(username, password) {
+	    var authString = username + ':' + password;
+	    var buffer = new Buffer(authString.toString(), 'binary');
+	    return 'Basic ' + buffer.toString('base64');
+		}
+
+		try {
+			var plexstatus = Meteor.http.call("POST", "https://plex.tv/users/sign_in.xml", {
+	      headers: {
+		      'Authorization': authHeaderVal(username, password),
+		      'X-Plex-Client-Identifier': 'Request_Users',
+		      'X-Plex-Product': 'App',
+		      'X-Plex-Version': '1.0',
+		      'X-Plex-Device': 'App',
+		      'X-Plex-Platform': 'Meteor',
+		      'X-Plex-Platform-Version': '1.0',
+		      'X-Plex-Provides': 'controller'
+				}
+			});
+		} catch (error) {
+			var response = xml2js.parseStringSync(error.response.content);
+			throw new Meteor.Error(401, response.errors.error[0])
+		}
+
+
+    //Bad authentication comes back as 401, will need to add error handles, for now it just assumes that and lets user know
+    if (plexstatus.statusCode==201) {
+      var results = xml2js.parseStringSync(plexstatus.content);
+      var plexAuth = results.user.$.authenticationToken;
+      Settings.update({}, {$set: {plexAuthenticationTOKEN: plexAuth}});
+			return true;
+    } else {
+			return false;
+		}
+	}
+});

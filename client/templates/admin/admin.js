@@ -92,5 +92,21 @@ Template.admin.events({
         btn.html("Success!");
       }
     })
+  },
+  'click #plexsubmit' : function (event) {
+    event.preventDefault();
+    $('#plexsubmit').html("Getting Token... <i class='fa fa-spin fa-refresh'></i>");
+    var username = $('#plexuser').val();
+    var password = $('#plexpassword').val();
+    Meteor.call("getPlexToken", username, password, function (error, result) {
+      if (error) {
+        $("#plexsubmit").html('Get token <i class="fa fa-key"></i>');
+        Bert.alert(error.reason, "danger");
+      } else if (result) {
+        $("#plexsubmit").html('Get token <i class="fa fa-key"></i>');
+        Bert.alert("Successfully got token!", "success");
+      }
+    })
+    return false;
   }
 });
