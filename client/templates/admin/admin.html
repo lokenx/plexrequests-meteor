@@ -106,6 +106,9 @@
 								{{> afQuickField name='sickRageAPI' size="40"}}
 								<p class="text-muted">Enter your API from SickRage. It can be found in SickRage Settings -> Interface -> API Key.</p>
 								<br>
+								{{> afQuickField name='sickRageDIRECTORY' size="40"}}
+								<p class="text-muted">Enter your sub-directory for SickRage if used. It should also include the slash (/) at the start.</p>
+								<br>
 								{{> afQuickField name='sickRageSSL'}}
 								<p class="text-muted">Enabled if you use SSL on your SickRage server.</p>
 								<br>
@@ -122,6 +125,9 @@
 								<br>
 								{{> afQuickField name='sonarrAPI' size="40"}}
 								<p class="text-muted">Enter your API from Sonarr. It can be found in Sonarr Settings -> General.</p>
+								<br>
+								{{> afQuickField name='sonarrDIRECTORY' size="40"}}
+								<p class="text-muted">Enter your sub-directory for Sonarr if used. It should also include the slash (/) at the start.</p>
 								<br>
 								{{> afQuickField name='sonarrSSL'}}
 								<p class="text-muted">Enabled if you use SSL on your Sonarr server.</p>
@@ -157,7 +163,7 @@
 							<div role="tabpanel" class="tab-pane" id="aboutSettings">
 								<p>
 									<strong>Branch: </strong> v0.6<br>
-									<strong>Version: </strong> v0.6.4-alpha
+									<strong>Version: </strong> v0.6.5-alpha
 								</p>
 								<p>
 									<strong>Project Website: </strong> <a href="http://plexrequests.8bits.ca/" target="_blank">plexrequests.8bits.ca</a><br>

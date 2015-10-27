@@ -9,12 +9,14 @@ Meteor.methods({
 
     //set SickRage on start-up
     SickRage.url = (settings.sickRageSSL) ? "https://" + settings.sickRageURL : "http://" + settings.sickRageURL;
-    SickRage.port = settings.sickRagePORT
-    SickRage.api = settings.sickRageAPI
+    SickRage.port = settings.sickRagePORT;
+    SickRage.api = settings.sickRageAPI;
+    SickRage.directory = settings.sickRageDIRECTORY || "";
 
     //set Sonarr on start-up
     Sonarr.url = (settings.sonarrSSL) ? "https://" + settings.sonarrURL : "http://" + settings.sonarrURL;
-    Sonarr.port = settings.sonarrPORT
-    Sonarr.api = settings.sonarrAPI
+    Sonarr.port = settings.sonarrPORT;
+    Sonarr.api = settings.sonarrAPI;
+    Sonarr.directory = settings.sonarrDIRECTORY || "";
   }
 });
