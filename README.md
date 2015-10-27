@@ -8,6 +8,8 @@ Under no circumstances should you update your existing installation with this on
 
 Again--**DO NOT UPGRADE**--create a new installation to test and play around with.
 
+If you do upgrade, please not your existing settings will be printer to the server log, and be deleted from the app. Your admin account will remain in place however. This is done because the settings data is stored entirely differently and is not compatible.
+
 On first run navigate to http://localhost:3000/admin and create an admin account with an username and password. If this isn't done someone else can create the admin account to your applications. A notice will be added regarding this on start-up.
 
 **Things That Work**
@@ -22,10 +24,6 @@ On first run navigate to http://localhost:3000/admin and create an admin account
   - Alerts via either service
   - Connectivity Tests for CouchPotato/SickRage/Sonarr/Pushover/Pushbullet
   - Retrieve Plex token
-
-**Things That DO NOT Work**
-
-  - Upgrading from previous installations
 
 Please report any and all issues as you come across them. I'm actively working on this branch so check back often for new updates.
 
