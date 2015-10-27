@@ -1,8 +1,13 @@
 Meteor.startup(function () {
 
+	if (Settings.findOne({_id: "couchpotatosetting"})) {
+		Settings.remove({});
+		Settings.insert({});
+	}
+
 	if (Settings.find().count() === 0) {
 		console.log("Adding default settings");
-		Settings.insert({ });
+		Settings.insert({});
 	}
 
 	//set TheMovieDB API
