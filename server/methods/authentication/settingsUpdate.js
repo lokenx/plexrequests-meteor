@@ -18,5 +18,8 @@ Meteor.methods({
     Sonarr.port = settings.sonarrPORT;
     Sonarr.api = settings.sonarrAPI;
     Sonarr.directory = settings.sonarrDIRECTORY || "";
+  },
+  userCount : function () {
+    return Meteor.users.find({}).count();
   }
 });
