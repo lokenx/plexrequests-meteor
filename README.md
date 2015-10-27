@@ -19,12 +19,14 @@ On first run navigate to http://localhost:3000/admin and create an admin account
   - Settings Page (available at `/admin`)
   - Download status of Movies / TV Shows
   - Sorting and filter options for Requests page
+  - Alerts via either service
+  - Connectivity Tests for CouchPotato/SickRage/Sonarr/Pushover/Pushbullet
 
 **Things That DO NOT Work**
 
-  - Alerts via either service
-  - Connectivity Tests for CouchPotato/SickRage/Sonarr/Pushover/Pushbullet
   - Upgrading from previous installations
+  - Retrieve Plex token
+  - Test Plex token
 
 Please report any and all issues as you come across them. I'm actively working on this branch so check back often for new updates.
 
