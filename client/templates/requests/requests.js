@@ -54,8 +54,11 @@ Template.requests.onCreated(function () {
 
 Template.requests.helpers({
 	'poster_path' : function () {
-		var poster = (this.poster_path !== "/") ? "http://image.tmdb.org/t/p/w154" + this.poster_path : "poster-placeholder.png";
-    return poster;
+		if ((typeof this.poster_path === 'undefined') | (this.poster_path === "/")) {
+			return "poster-placeholder.png";
+		} else {
+			return "http://image.tmdb.org/t/p/w154" + this.poster_path;
+		}
   },
   'release_date' : function () {
   	return moment(this.released).format('MMMM Do, YYYY');
@@ -71,7 +74,11 @@ Template.requests.helpers({
   		approval = (this.downloaded) ? '<i class="fa fa-check success-icon"></i>': '<i class="fa fa-times error-icon"></i>';
   	} else {
   		//TV dowloaded:total
-			approval = this.status.downloaded + " / " + this.status.total;
+			if (typeof this.status !== "undefined") {
+				approval = this.status.downloaded + " / " + this.status.total;
+			} else {
+				approval = "0 / 0";
+			}
   	}
   	return approval;
   },
