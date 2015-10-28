@@ -35,4 +35,8 @@ Meteor.startup(function () {
 	Sonarr.port = settings.sonarrPORT;
 	Sonarr.api = settings.sonarrAPI;
 	Sonarr.directory = settings.sonarrDIRECTORY || "";
+
+
+	Meteor.call("getPosters");
+	
 });
