@@ -40,12 +40,42 @@ Template.requests.onCreated(function () {
 
   	if (instance.searchType.get() === "Movies") {
 			if (selectedFilter !== "All Requests") {
-				filter = (selectedFilter === "Approved") ? {approved: true} : {downloaded: true};
+				switch (selectedFilter) {
+					case "Approved":
+						filter = {approved: true}
+						break;
+					case "Not Approved":
+						filter = {approved: false}
+						break;
+					case "Downloaded":
+						filter = {downloaded: true};
+						break;
+					case "Not Downloaded":
+						filter = {downloaded: false};
+						break;
+					default:
+						filter = {};
+				}
 			}
 			return Movies.find(filter, {sort: sort, skip: 0, limit: instance.loaded.get()});
   	} else {
 			if (selectedFilter !== "All Requests") {
-				filter = (selectedFilter === "Approved") ? {approved: true} : {"status.downloaded": {$gt: 0}};
+				switch (selectedFilter) {
+					case "Approved":
+						filter = {approved: true}
+						break;
+					case "Not Approved":
+						filter = {approved: false}
+						break;
+					case "Downloaded":
+						filter = {"status.downloaded": {$gt: 0}};
+						break;
+					case "Not Downloaded":
+						filter = {"status.downloaded": {$lt: 1}};
+						break;
+					default:
+						filter = {};
+				}
 			}
 			return TV.find(filter, {sort: sort, skip: 0, limit: instance.loaded.get()});
 		}
@@ -94,7 +124,7 @@ Template.requests.helpers({
     return (Template.instance().searchType.get().length === this.length);
   },
 	'filterOptions' : function () {
-		return [{filter: "All Requests"}, {filter: "Approved"}, {filter: "Downloaded"}]
+		return [{filter: "All Requests"}, {filter: "Approved"}, {filter: "Not Approved"},{filter: "Downloaded"}, {filter: "Not Downloaded"}]
 	},
 	'activeFilter' : function () {
 		return (Template.instance().filter.get() == this.filter) ? '<i class="fa fa-check"></i> ' : "";
@@ -198,7 +228,7 @@ Template.requests.events({
 			} else if (!result) {
 				Bert.alert("An error occured, check server logs", "danger");
 			} else {
-				Bert.alert("Approved all requests!", "success");				
+				Bert.alert("Approved all requests!", "success");
 			}
 		})
 	}
