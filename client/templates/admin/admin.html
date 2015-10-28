@@ -83,10 +83,10 @@
 								<p class="text-muted">Enable CouchPotato for automated movie downloading</p>
 								<br>
 								<p><button class="btn btn-secondary-outline" id="couchPotatoTest">Test CouchPotato server</button></p>
-								<p class="text-muted">Quickly test your CouchPotato server settings.</p>
+								<p class="text-muted">Test your CouchPotato server. Remember to save your settings first!</p>
 								<br>
 								{{> afQuickField name='couchPotatoURL'}}
-								<p class="text-muted">Enter the IP address of your CouchPotato server. Do not include http:// or any slashes.</p>
+								<p class="text-muted">Enter the IP address or Hostname of your CouchPotato server. Do not include http:// or any slashes.</p>
 								<br>
 								{{> afQuickField name='couchPotatoPORT'}}
 								<p class="text-muted">Enter the port used by CouchPotato. The default is 5050.</p>
@@ -105,10 +105,10 @@
 								<p class="text-muted">Enable SickRage for automated tv downloading.</p>
 								<br>
 								<p><button class="btn btn-secondary-outline" id="sickRageTest">Test SickRage server</button></p>
-								<p class="text-muted">Quickly test your SickRage server settings.</p>
+								<p class="text-muted">Test your SickRage server. Remember to save your settings first!</p>
 								<br>
 								{{> afQuickField name='sickRageURL'}}
-								<p class="text-muted">Enter the IP address of your SickRage server. Do not include http:// or any slashes.</p>
+								<p class="text-muted">Enter the IP address or Hostname of your SickRage server. Do not include http:// or any slashes.</p>
 								<br>
 								{{> afQuickField name='sickRagePORT'}}
 								<p class="text-muted">Enter the port used by SickRage. The default is 8081.</p>
@@ -128,10 +128,10 @@
 								<p class="text-muted">Enabled Sonarr for automated tv downloading.</p>
 								<br>
 								<p><button class="btn btn-secondary-outline" id="sonarrTest">Test Sonarr server</button></p>
-								<p class="text-muted">Quickly test your Sonarr server settings.</p>
+								<p class="text-muted">QTest your Sonarr server. Remember to save your settings first!</p>
 								<br>
 								{{> afQuickField name='sonarrURL'}}
-								<p class="text-muted">Enter the IP address of your Sonarr server. Do not include http:// or any slashes.</p>
+								<p class="text-muted">Enter the IP address or Hostname of your Sonarr server. Do not include http:// or any slashes.</p>
 								<br>
 								{{> afQuickField name='sonarrPORT'}}
 								<p class="text-muted">Enter the port used by Sonarr. The default is 8989.</p>
@@ -163,7 +163,7 @@
 								<p class="text-muted">Enter your API from Pushbullet. It can be found in Pushbullet Settings -> Access Token.</p>
 								<br>
 								<p><button class="btn btn-secondary-outline" id="pushbulletTest">Test Pushbullet</button></p>
-								<p class="text-muted">Quickly test your Pushbullet settings.</p>
+								<p class="text-muted">Test your Pushbullet settings. Remember to save your settings first!</p>
 								<br>
 								{{> afQuickField name='pushoverENABLED'}}
 								<p class="text-muted">Enabled Pushover to receive alerts.</p>
@@ -175,14 +175,14 @@
 								<p class="text-muted">Enter your user or group key from Pushover.</p>
 								<br>
 								<p><button class="btn btn-secondary-outline" id="pushoverTest">Test Pushover</button></p>
-								<p class="text-muted">Quickly test your Pushover settings.</p>
+								<p class="text-muted">Test your Pushover settings. Remember to save your settings first!</p>
 								<br>
 								<br>
 							</div>
 							<div role="tabpanel" class="tab-pane" id="aboutSettings">
 								<p>
 									<strong>Branch: </strong> {{branch}}<br>
-									<strong>Version: </strong> v0.6.11
+									<strong>Version: </strong> v0.6.12
 								</p>
 								{{#if update}}
 									<p>
