@@ -18,7 +18,6 @@ Meteor.methods({
 		//Get IMDB ID
 		try {
 			var imdb = TMDBSearch.externalIds(request.id, "movie");
-			console.log(imdb);
 			if (imdb.indexOf("tt") === -1) {
 				console.log(("Error getting IMDB ID, none found!"));
 				return false;
