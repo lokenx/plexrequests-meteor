@@ -11,15 +11,17 @@ Meteor.methods({
 		if (request.imdb) {
 			// First confirm it doesn't exist already
 			try {
-				var checkCP = CouchPotato.mediaGet(request.imdb);
-				var status = (checkCP.status == "done") ? true : false;
-				if (checkCP.status !== "false" && checkCP !== false) {
-					try {
-						Movies.update(request._id, {$set: {approved: true, downloaded: status}});
-						return true;
-					} catch (error) {
-						console.log(error.message);
-						return false;
+				if (settings.couchPotatoENABLED) {
+					var checkCP = CouchPotato.mediaGet(request.imdb);
+					var status = (checkCP.status == "done") ? true : false;
+					if (checkCP.status !== "false" && checkCP !== false) {
+						try {
+							Movies.update(request._id, {$set: {approved: true, downloaded: status}});
+							return true;
+						} catch (error) {
+							console.log(error.message);
+							return false;
+						}
 					}
 				}
 			} catch (error) {

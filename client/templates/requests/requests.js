@@ -188,5 +188,18 @@ Template.requests.events({
         scrollTop : 0
     }, 500);
 		return false;
+	},
+	'click #approveAll': function (event) {
+		event.preventDefault();
+
+		Meteor.call("approveAll", function (error, result) {
+			if (error) {
+				Bert.alert(error.reason, "danger");
+			} else if (!result) {
+				Bert.alert("An error occured, check server logs", "danger");
+			} else {
+				Bert.alert("Approved all requests!", "success");				
+			}
+		})
 	}
 })

@@ -4,6 +4,11 @@
 			<div class="col-md-offset-2 col-md-8">
 			  <h1>Requests</h1>
 				<p>Below you can see yours and all other requests, as well as their download and approval status.</p>
+				{{#if currentUser}}
+				<p>
+					If you want to approve all Movies and TV Shows, click here <button class="btn btn-secondary-outline btn-sm" id="approveAll">Approve All</button>
+				</p>
+				{{/if}}
 			</div>
 		</div>
 
