@@ -5,7 +5,7 @@ Meteor.methods({
   },
   checkForUpdate : function () {
     var branch = Meteor.call('getBranch');
-    var currentVersion = "0.6.9";
+    var currentVersion = "0.6.10";
 
     try {
         var latestJson = HTTP.call("GET","https://api.github.com/repos/lokenx/plexrequests-meteor/contents/version.txt?ref=" + branch,{headers: {"User-Agent": "Meteor/1.1"}});
