@@ -88,6 +88,20 @@ Template.admin.events({
       }
     })
   },
+  'click #sonarrTest' : function (event) {
+    event.preventDefault();
+    var btn = $(event.target);
+    btn.html("Testing... <i class='fa fa-spin fa-refresh'></i>").removeClass().addClass("btn btn-info-outline");
+    Meteor.call("testSonarr", function (error, result) {
+      if (error || !result) {
+        btn.removeClass("btn-info-outline").addClass("btn-danger-outline");
+        btn.html("Error!");
+      } else {
+        btn.removeClass("btn-info-outline").addClass("btn-success-outline");
+        btn.html("Success!");
+      }
+    })
+  },
   'click #pushbulletTest' : function (event) {
     event.preventDefault();
     var btn = $(event.target);
