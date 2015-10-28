@@ -16,7 +16,7 @@ Meteor.methods({
       var poster = Meteor.call("tv", show.id);
       console.log(poster);
       if (!poster) { poster = "/" }
-      TV.update(tv._id, {$set: {
+      TV.update(show._id, {$set: {
         poster_path: poster
       }});
     });
