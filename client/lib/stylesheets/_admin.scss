@@ -1,0 +1,73 @@
+@media (max-width: 48em) {
+  .admin {
+    padding-top: 1rem;
+    padding-bottom: 3rem;
+  }
+}
+
+@media (min-width: 48em) {
+  .admin {
+    padding-top: 4rem;
+    padding-bottom: 3rem;
+  }
+}
+
+.settings {
+  padding-top: 2rem;
+  font-weight: 300;
+
+  label {
+    font-weight: 400;
+  }
+
+  .form-control {
+    width: auto;
+  }
+
+  a {
+    color: $primary-color;
+  }
+}
+
+#login-buttons {
+  .login-link-text {
+    color: $primary-text;
+  }
+}
+
+.tab-content {
+  padding: 1.5rem 0;
+}
+
+#tokenForm {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.admin {
+  .nav-link {
+    color: $primary-text;
+    font-size: 1.1rem;
+
+    &:hover {
+      border: 0;
+    }
+  }
+}
+
+.nav-tabs>li>.nav-link.active, .nav-tabs>li>.nav-link.active:hover, .nav-tabs>li>.nav-link.active:focus {
+  background-color: $background-color;
+  border: 0;
+  color: $primary-color;
+}
+
+.nav-tabs {
+  .nav-link {
+    .active {
+      &:focus {
+        background-color: $primary-color;
+        color: $primary-text
+      }
+    }
+  }
+}

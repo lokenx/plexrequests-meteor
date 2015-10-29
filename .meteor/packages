@@ -4,17 +4,48 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-meteor-platform
 http
-iron:router
-houston:admin
+iron:router@=1.0.10
 peerlibrary:xml2js
 u2622:persistent-session
 aslagle:reactive-table
 meteorhacks:npm
-# mizzao:bootstrap-3
-# twbs:bootstrap
 percolate:synced-cron
-
-
 npm-container
+standard-minifiers
+meteor-base
+mobile-experience
+mongo
+blaze-html-templates
+session
+jquery
+tracker
+logging
+reload
+random
+ejson
+spacebars
+check
+aldeed:collection2
+aldeed:simple-schema
+iron:core@=1.0.8
+fortawesome:fontawesome
+accounts-password
+reactive-var
+dburles:collection-helpers
+alanning:roles
+momentjs:moment
+twbs:bootstrap@4.0.0-alpha
+# ian:accounts-ui-bootstrap-3
+accounts-ui
+zimme:active-route
+themeteorchef:bert
+aldeed:autoform
+ongoworks:security
+fourseven:scss
+multiply:iron-router-progress
+
+lokenx:themoviedbsearch
+lokenx:couchpotatowrapper
+lokenx:sickragewrapper
+lokenx:sonarrwrapper

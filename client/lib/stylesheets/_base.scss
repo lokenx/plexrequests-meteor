@@ -1,0 +1,49 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic);
+@import url(https://fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic);
+
+body {
+  background-color: $background-color;
+  color: $primary-text;
+  font-family: 'Lato', sans-serif;
+}
+
+h1 {
+  color: $primary-color;
+  font-size: 3.5rem;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+}
+
+p {
+  font-size: 1.1rem;
+}
+
+
+// Button styling
+
+.btn-primary-outline {
+  color: $primary-color;
+  border-color: $primary-color;
+
+  &:hover {
+    background-color: $primary-color;
+    border-color: $primary-color;
+  }
+  &:focus {
+    background-color: $primary-color;
+    border-color: $primary-color;
+  }
+  &:active {
+    background-color: $primary-color;
+    border-color: $primary-color;
+  }
+}
+
+.item-buttons {
+  .open {
+    .btn-primary-outline {
+      background-color: $primary-color;
+      border-color: $primary-color;
+    }
+  }
+}

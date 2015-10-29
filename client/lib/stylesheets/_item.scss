@@ -1,0 +1,25 @@
+.item-divider {
+  border-bottom: 1px solid $primary-text;
+  margin: 2rem 0;
+}
+
+.item-body {
+  h4 {
+    a{
+      color: $primary-text;
+    }
+  }
+}
+
+.item-body {
+  p {
+    color: $secondary-text;
+    font-size: 1rem;
+  }
+}
+
+.item-body {
+  .item-buttons {
+    text-align: right;
+  }
+}
