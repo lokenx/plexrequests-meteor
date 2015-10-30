@@ -10,9 +10,9 @@ This is [Plex Requests](https://github.com/lokenx/plexrequests) but written with
 * Users can easily search the [TheMovieDB](https://www.themoviedb.org/) for content to request
 * Easily accessible list of requested movies and TV series
 * Simple and easy user authentication and request approval
-* [Couch Potato](https://couchpota.to/) integration for automatic downloads of movies
+* [CouchPotato](https://couchpota.to/) integration for automatic downloads of movies
 * [SickRage](https://github.com/SiCKRAGETV/SickRage) and [Sonarr](https://sonarr.tv/) integrationed for automatic TV Series downloads
-* [PushBullet](https://www.pushbullet.com/) and [PushOver](https://pushover.net/) notifications to keep up to date with requests
+* [Pushbullet](https://www.pushbullet.com/) and [Pushover](https://pushover.net/) notifications to keep up to date with requests
 
 ## Installation
 Installation is straightforward: please update to Meteor 1.2.1, clone the repo, `cd` into the directory, and run `meteor`. For Windows users check out this [blog post](http://8bits.ca/blog/installing-plexrequests-windows/) for installation instructions using Git!
