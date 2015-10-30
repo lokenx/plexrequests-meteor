@@ -1,10 +1,10 @@
 Meteor.methods({
   getBranch: function () {
-    return "dev";
+    return "sub-directory";
   },
   checkForUpdate : function () {
     var branch = Meteor.call('getBranch');
-    var currentVersion = "0.6.16";
+    var currentVersion = "0.6.17";
 
     try {
         var latestJson = HTTP.call("GET","https://api.github.com/repos/lokenx/plexrequests-meteor/contents/version.txt?ref=" + branch,{headers: {"User-Agent": "Meteor/1.1"}});
