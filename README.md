@@ -1,31 +1,29 @@
 # Plex Requests - Meteor Style!
 
-This is an early **ALPHA** release of the next version of Plex Requests! Please be aware that things will break, that I am 100% certain of.
+![plexrequestshomepage](PlexRequestsHome.jpg)
 
-**WARNING**
+This is [Plex Requests](https://github.com/lokenx/plexrequests) but written with Meteor! It's been updated with an approval system, basic issue reporting, and new visual style!
 
-Under no circumstances should you update your existing installation with this one. Create a separate folder, and install a fresh copy. The Settings side of things have been completed re-worked and I'm brainstorming ways to best moves your settings over when you upgrade. In addition more data is stored for requests (and some formats changed) and this hasn't been tested yet in an upgrade process.
+**A project website has been setup using [GitHub pages](http://plexrequests.8bits.ca/), please visit it for more details!**
 
-Again--**DO NOT UPGRADE**--create a new installation to test and play around with.
+## Features
+* Users can easily search the [TheMovieDB](https://www.themoviedb.org/) for content to request
+* Easily accessible list of requested movies and TV series
+* Simple and easy user authentication and request approval
+* [Couch Potato](https://couchpota.to/) integration for automatic downloads of movies
+* [SickRage](https://github.com/SiCKRAGETV/SickRage) and [Sonarr](https://sonarr.tv/) integrationed for automatic TV Series downloads
+* [PushBullet](https://www.pushbullet.com/) and [PushOver](https://pushover.net/) notifications to keep up to date with requests
 
-If you do upgrade, please not your existing settings will be printer to the server log, and be deleted from the app. Your admin account will remain in place however. This is done because the settings data is stored entirely differently and is not compatible.
+## Installation
+Installation is straightforward: please update to Meteor 1.2.1, clone the repo, `cd` into the directory, and run `meteor`. For Windows users check out this [blog post](http://8bits.ca/blog/installing-plexrequests-windows/) for installation instructions using Git!
 
-On first run navigate to http://localhost:3000/admin and create an admin account with an username and password. If this isn't done someone else can create the admin account to your applications. A notice will be added regarding this on start-up.
+On first run navigate to `http://localhost:3000/admin` and create an admin account with an email address and password. **If this isn't done someone else can create the admin account to your application.** This account is only used for logging in, email integration isn't enabled. Once logged in, you can configure your settings and get things going.
 
-**Things That Work**
+## FAQ
+Please visit the projects [GitHub page](http://plexrequests.8bits.ca/) for [FAQ page](http://plexrequests.8bits.ca/faq)
 
-  - Searching for Movies / TV Shows
-  - Requesting Movies / TV Shows
-  - Approving / Deleting / Issues
-  - Requests List Page
-  - Settings Page (available at `/admin`)
-  - Download status of Movies / TV Shows
-  - Sorting and filter options for Requests page
-  - Alerts via either service
-  - Connectivity Tests for CouchPotato/SickRage/Sonarr/Pushover/Pushbullet
-  - Retrieve Plex token
+## Contributors
+ [@jeradin](https://github.com/Jeradin) / [@jrudio](https://github.com/jrudio) / [@drzoidberg33](https://github.com/drzoidberg33) / [@SmallwoodDR82](https://github.com/SmallwoodDR82)
 
-Please report any and all issues as you come across them. I'm actively working on this branch so check back often for new updates.
-
-##License
+## License
 This application is licensed under The MIT License. The Plex logo, and name are copyright of Plex Inc.
