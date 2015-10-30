@@ -1,7 +1,6 @@
 Meteor.methods({
   getBranch: function () {
-    var currentBranch = Meteor.npmRequire('git-rev-sync');
-    return currentBranch.branch();
+    return "dev";
   },
   checkForUpdate : function () {
     var branch = Meteor.call('getBranch');
