@@ -1,5 +1,61 @@
 AutoForm.hooks({
-  updateSettingsForm: {
+  updateGeneralSettingsForm: {
+    onSuccess: function(formType, result) {
+      if (result) {
+        Bert.alert('Updated successfully', 'success');
+        Meteor.call("settingsUpdate");
+      }
+      this.event.preventDefault();
+      return false;
+    },
+    onError: function(formType, error) {
+      console.log(error);
+      Bert.alert('Update failed, please try again', 'danger');
+    }
+  },
+  updateCouchPotatoSettingsForm: {
+    onSuccess: function(formType, result) {
+      if (result) {
+        Bert.alert('Updated successfully', 'success');
+        Meteor.call("settingsUpdate");
+      }
+      this.event.preventDefault();
+      return false;
+    },
+    onError: function(formType, error) {
+      console.log(error);
+      Bert.alert('Update failed, please try again', 'danger');
+    }
+  },
+  updateSickRageSettingsForm: {
+    onSuccess: function(formType, result) {
+      if (result) {
+        Bert.alert('Updated successfully', 'success');
+        Meteor.call("settingsUpdate");
+      }
+      this.event.preventDefault();
+      return false;
+    },
+    onError: function(formType, error) {
+      console.log(error);
+      Bert.alert('Update failed, please try again', 'danger');
+    }
+  },
+  updateSonarrSettingsForm: {
+    onSuccess: function(formType, result) {
+      if (result) {
+        Bert.alert('Updated successfully', 'success');
+        Meteor.call("settingsUpdate");
+      }
+      this.event.preventDefault();
+      return false;
+    },
+    onError: function(formType, error) {
+      console.log(error);
+      Bert.alert('Update failed, please try again', 'danger');
+    }
+  },
+  updateNotificationsSettingsForm: {
     onSuccess: function(formType, result) {
       if (result) {
         Bert.alert('Updated successfully', 'success');
@@ -22,6 +78,9 @@ Template.admin.helpers({
   branch: function () {
     return Template.instance().branch.get();
   },
+  version: function () {
+    return Template.instance().version.get();
+  },
   update: function () {
     return Template.instance().update.get();
   }
@@ -30,11 +89,18 @@ Template.admin.helpers({
 Template.admin.onCreated(function(){
   var instance = this;
   instance.branch = new ReactiveVar("");
+  instance.version = new ReactiveVar("");
   instance.update = new ReactiveVar(false);
 
   Meteor.call("getBranch", function (error, result) {
     if (result) {
       instance.branch.set(result);
+    }
+  });
+
+  Meteor.call("getVersion", function (error, result) {
+    if (result) {
+      instance.version.set(result);
     }
   });
 
@@ -47,8 +113,17 @@ Template.admin.onCreated(function(){
 });
 
 Template.admin.events({
+  'click .list-group-item' : function (event, template) {
+    var target = $(event.target);
+    $('.list-group-item').removeClass("active");
+    target.toggleClass("active");
+
+    $('.settings-pane').hide();
+    $('#Settings' + target.text()).show();
+
+
+  },
   'show.bs.collapse .panel' : function (event, template) {
-    console.log($(event.target));
     $(event.target).parent().removeClass("panel-default")
     $(event.target).parent().addClass("panel-primary")
   },

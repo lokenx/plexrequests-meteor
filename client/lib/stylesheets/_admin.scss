@@ -26,6 +26,11 @@
 
   a {
     color: $primary-color;
+    text-decoration: none;
+
+    .list-group-item {
+      color: $primary-text;
+    }
   }
 }
 
@@ -44,30 +49,24 @@
   padding-bottom: 1.5rem;
 }
 
-.admin {
-  .nav-link {
-    color: $primary-text;
-    font-size: 1.1rem;
+.list-group-item {
+  background-color: $background-lighter;
+  border: none;
 
-    &:hover {
-      border: 0;
-    }
+  &:hover {
+    background-color: lighten($background-lighter, 5%);
   }
 }
 
-.nav-tabs>li>.nav-link.active, .nav-tabs>li>.nav-link.active:hover, .nav-tabs>li>.nav-link.active:focus {
-  background-color: $background-color;
-  border: 0;
+.list-group-item.active {
   color: $primary-color;
+  background-color: lighten($background-lighter, 5%);
+
+  &:hover {
+    background-color: lighten($background-lighter, 5%);
+  }
 }
 
-.nav-tabs {
-  .nav-link {
-    .active {
-      &:focus {
-        background-color: $primary-color;
-        color: $primary-text
-      }
-    }
-  }
+.settings-options {
+  padding-bottom: 2em;
 }
