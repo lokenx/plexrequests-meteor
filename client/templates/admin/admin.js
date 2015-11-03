@@ -120,16 +120,6 @@ Template.admin.events({
 
     $('.settings-pane').hide();
     $('#Settings' + target.text()).show();
-
-
-  },
-  'show.bs.collapse .panel' : function (event, template) {
-    $(event.target).parent().removeClass("panel-default")
-    $(event.target).parent().addClass("panel-primary")
-  },
-  'hide.bs.collapse .panel' : function (event, template) {
-    $(event.target).parent().removeClass("panel-primary")
-    $(event.target).parent().addClass("panel-default")
   },
   'submit #updateSettingsForm' : function (event) {
     event.preventDefault();
