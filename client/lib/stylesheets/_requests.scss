@@ -57,3 +57,25 @@
 .error-icon {
   color: $error-color;
 }
+
+.go-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: inline-block;
+  color: #ccc;
+  border: 1px solid #ccc;
+  padding: 6px 10px;
+  border-radius: 3px;
+  opacity: 0.5;
+
+  &:hover {
+    cursor: hand;
+    cursor: pointer;
+    opacity: .9;
+  }
+}
+
+.loading {
+  text-align: center;
+}
