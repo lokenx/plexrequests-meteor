@@ -12,6 +12,7 @@
 				<div class="col-md-2 col-md-offset-2">
 					<ul class="list-group settings-options">
 					  <a href="#"><li class="list-group-item active">General</li></a>
+					  <a href="#"><li class="list-group-item">Authentication</li></a>
 					  <a href="#"><li class="list-group-item">CouchPotato</li></a>
 					  <a href="#"><li class="list-group-item">SickRage</li></a>
 					  <a href="#"><li class="list-group-item">Sonarr</li></a>
@@ -38,11 +39,20 @@
 							Set a weekly request limit for your users. Hint: 0 means no limit
 						</p>
 						<br>
+						<button type="submit" class="btn btn-primary-outline btn-block">Update Settings</button>
+					{{/autoForm}}
+				</div>
+
+				<div class="col-md-6 settings-pane" style="display: none;" id="SettingsAuthentication">
+					{{#autoForm collection="Settings" doc=settings id="updateAuthenticationSettingsForm" type="update" resetOnSuccess="false"}}
 						{{> afQuickField name='plexAuthenticationENABLED'}}
+						<p class="text-muted">
+							Allow only users you've shared your library with to request content. Follow these
+							<a href="https://support.plex.tv/hc/en-us/articles/204059436-Finding-your-account-token-X-Plex-Token" target="_blank">instructions</a>
+							to retrieve your token. Alternatively use the form below to sign into Plex.tv and we'll get it for you.
+						</p>
 						{{> afQuickField name='plexAuthenticationTOKEN' style="width:auto;" size="25"}}
 						<br>
-						<br>
-
 						<div class="row">
 							<div class="col-sm-4">
 								<label class="sr-only" for="plexuser">Plex Username</label>
@@ -57,10 +67,10 @@
 						<button type="button" class="btn btn-secondary-outline" id="plexsubmit">Get token <i class="fa fa-key"></i></button>
 						<br>
 						<br>
+						<br>
+						{{>afQuickField name='plexBannedUSERS' size="40"}}
 						<p class="text-muted">
-							Allow only users you've shared your library with to request content. Follow these
-							<a href="https://support.plex.tv/hc/en-us/articles/204059436-Finding-your-account-token-X-Plex-Token" target="_blank">instructions</a>
-							to retrieve your token. Alternatively use the form above to sign into Plex.tv and we'll get it for you.
+							Plex username's entered above will not be allowed to login. Separate users with a comma but no spaces. For example <kbd>jsmith,jdoe</kbd>.
 						</p>
 						<br>
 						<button type="submit" class="btn btn-primary-outline btn-block">Update Settings</button>

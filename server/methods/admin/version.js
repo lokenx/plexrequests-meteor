@@ -1,9 +1,9 @@
 Meteor.methods({
   getBranch: function () {
-    return "dev";
+    return "master";
   },
   getVersion: function () {
-    return "0.6.19";
+    return "1.1.0";
   },
   checkForUpdate : function () {
     var branch = Meteor.call('getBranch');

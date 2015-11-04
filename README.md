@@ -4,9 +4,9 @@
 
 [![Join the chat at https://gitter.im/lokenx/plexrequests-meteor](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/lokenx/plexrequests-meteor?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-This is [Plex Requests](https://github.com/lokenx/plexrequests) but written with Meteor! It's been updated with an approval system, basic issue reporting, and a new visual style!
+> This is [Plex Requests](https://github.com/lokenx/plexrequests) but written with Meteor! It's been updated with an approval system, basic issue reporting, and a new visual style!
 
-**A project website has been setup using [GitHub pages](http://plexrequests.8bits.ca/), please visit it for more details!**
+**For those upgrading please refer to the [FAQs](http://localhost:4000/faq/#v1-upgrade-notes) for some important notes!**
 
 ## Features
 * Users can easily search the [TheMovieDB](https://www.themoviedb.org/) for content to request
@@ -26,6 +26,9 @@ Please visit the projects [GitHub page](http://plexrequests.8bits.ca/) for [FAQ 
 
 ## Contributors
  [@jeradin](https://github.com/Jeradin) / [@jrudio](https://github.com/jrudio) / [@drzoidberg33](https://github.com/drzoidberg33) / [@SmallwoodDR82](https://github.com/SmallwoodDR82)
+
+## Want to help out?
+Want to  make Plex Requests more awesome? Feel free to fork the repo and submit a pull request! Not a developer or rather not get your hands dirty? You can donate via [PayPal](https://www.paypal.me/plexrequests) to keep things going, or just simply to say thanks!
 
 ## License
 This application is licensed under The MIT License. The Plex logo, and name are copyright of Plex Inc.
