@@ -13,6 +13,20 @@ AutoForm.hooks({
       Bert.alert('Update failed, please try again', 'danger');
     }
   },
+  updateAuthenticationSettingsForm: {
+    onSuccess: function(formType, result) {
+      if (result) {
+        Bert.alert('Updated successfully', 'success');
+        Meteor.call("settingsUpdate");
+      }
+      this.event.preventDefault();
+      return false;
+    },
+    onError: function(formType, error) {
+      console.log(error);
+      Bert.alert('Update failed, please try again', 'danger');
+    }
+  },
   updateCouchPotatoSettingsForm: {
     onSuccess: function(formType, result) {
       if (result) {
