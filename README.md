@@ -4,9 +4,9 @@
 
 [![Join the chat at https://gitter.im/lokenx/plexrequests-meteor](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/lokenx/plexrequests-meteor?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-This is [Plex Requests](https://github.com/lokenx/plexrequests) but written with Meteor! It's been updated with an approval system, basic issue reporting, and a new visual style!
+> This is [Plex Requests](https://github.com/lokenx/plexrequests) but written with Meteor! It's been updated with an approval system, basic issue reporting, and a new visual style!
 
-**A project website has been setup using [GitHub pages](http://plexrequests.8bits.ca/), please visit it for more details!**
+**For those upgrading please refer to the [FAQs](http://localhost:4000/faq/#v1-upgrade-notes) for some important notes!**
 
 ## Features
 * Users can easily search the [TheMovieDB](https://www.themoviedb.org/) for content to request
