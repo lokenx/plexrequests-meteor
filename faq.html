@@ -9,6 +9,32 @@ permalink: /faq/
         <h2>Frequently Asked Questions</h2>
         <br>
 
+        <h4 id="v1-upgrade-notes">Important notes upgrading to v1.0.0</h4>
+        <p>
+          <ol>
+            <li>
+              <strong>Please backup your database!</strong> If you're running using <kbd>meteor</kbd> it's located in <kbd>plexrequests-meteor\.meteor\local\db</kbd>. Take that whole folder and move it somewhere safe!
+            </li>
+            <br>
+            <li>
+              Your settings won't be transferred over, so please set them back up again. They are outputted to the console log on first run if you don't want to go looking for API keys again
+            </li>
+            <br>
+            <li>
+              Your requests will come over, but will have a default status of unapproved. The only real downside is that their status won't auto-update. There's an approve all button to fix that up quickly.
+            </li>
+            <br>
+            <li>
+              Posters won't be immediately visible for everything. It checks posters on startup but it won't get them all as the API will limit. Start a few times and it'll fill in the old ones. New requests get them from the get go.
+            </li>
+            <br>
+            <li>
+              The admin page is over at <kbd>/admin</kbd>. There's no link when an admin is not logged in, but once you login there'll be a link in nav to go back there.
+            </li>
+          </ol>
+        </p>
+        <br>
+
         <h4 id="whats-this-new-account-business">What’s this new account business?</h4>
         <p>After some thought, and with the help of <a href="https://github.com/Jeradin">@jeradin</a>, users now require authentication to make requests. They just need their username so no passwords are required for ease of entry. A local token is also saved for future visits. Administrators can see who has submitted each requests, while users are not shown this information.</p>
         <br>
