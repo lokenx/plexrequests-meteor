@@ -8,6 +8,10 @@ Meteor.methods({
 		  return array.indexOf(value) > -1;
 		}
 
+		function checkArray(value, array) {
+		  return array.indexOf(value);
+		}
+
 		var plexToken = Settings.find({}).fetch()[0].plexAuthenticationTOKEN;
 
 		try {
@@ -34,6 +38,18 @@ Meteor.methods({
 
     //Add admin username to the list
     friendsList.push(admintitle);
+
+		// Remove banned users
+		var banned = Settings.find().fetch()[0].plexBannedUSERS;
+		if (banned) {
+			var bannedArray = banned.split(",");
+			for (var i = 0; i < bannedArray.length; i++) {
+				var checkBanned = checkArray(bannedArray[i], friendsList);
+				if ( checkBanned > -1) {
+					friendsList.splice(checkBanned, 1);
+				}
+			}
+		}
 
     return (isInArray(plexUsername.toLowerCase(), friendsList));
   },
