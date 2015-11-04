@@ -55,6 +55,9 @@ Template.requests.onCreated(function () {
 					case "Not Downloaded":
 						filter = {downloaded: false};
 						break;
+					case "Has Issues":
+						filter = {'issues.0': {$exists: true}};
+						break;
 					default:
 						filter = {};
 				}
@@ -74,6 +77,9 @@ Template.requests.onCreated(function () {
 						break;
 					case "Not Downloaded":
 						filter = {"status.downloaded": {$lt: 1}};
+						break;
+					case "Has Issues":
+						filter = {'issues.0': {$exists: true}};
 						break;
 					default:
 						filter = {};
@@ -126,7 +132,7 @@ Template.requests.helpers({
     return (Template.instance().searchType.get().length === this.length);
   },
 	'filterOptions' : function () {
-		return [{filter: "All Requests"}, {filter: "Approved"}, {filter: "Not Approved"},{filter: "Downloaded"}, {filter: "Not Downloaded"}]
+		return [{filter: "All Requests"}, {filter: "Approved"}, {filter: "Not Approved"},{filter: "Downloaded"}, {filter: "Not Downloaded"}, {filter: "Has Issues"}]
 	},
 	'activeFilter' : function () {
 		return (Template.instance().filter.get() == this.filter) ? '<i class="fa fa-check"></i> ' : "";
