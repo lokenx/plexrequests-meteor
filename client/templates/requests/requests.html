@@ -13,7 +13,7 @@
 		</div>
 
 	<!-- Selector between Movies/TV/etc  and Sort/Filter Options-->
-			<div class="row selectors">
+		<div class="row selectors">
 			<div class="col-md-offset-2 col-md-6">
 				<ul class="search-selector">
 			  	{{#each searchOptions}}
@@ -88,6 +88,11 @@
 			</div>
 		{{/each}}
 
+		<!-- Go to top button -->
+		<div class="go-to-top">
+  		<i class="fa fa-arrow-up"></i>
+		</div>
+
 		<div class="row load-more-footer">
 			<div class="col-md-8 col-md-offset-2">
 				{{#if Template.subscriptionsReady}}
@@ -97,7 +102,6 @@
 				{{else}}
 					<div class="loading">Loading...</div>
 				{{/if}}
-				<button class="btn btn-secondary btn-block return-to-top">Return To Top</button>
 			</div>
 		</div>
 	</div>
