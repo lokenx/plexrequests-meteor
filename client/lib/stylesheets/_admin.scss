@@ -26,11 +26,6 @@
 
   a {
     color: $primary-color;
-    text-decoration: none;
-
-    .list-group-item {
-      color: $primary-text;
-    }
   }
 }
 
@@ -49,24 +44,30 @@
   padding-bottom: 1.5rem;
 }
 
-.list-group-item {
-  background-color: $background-lighter;
-  border: none;
+.admin {
+  .nav-link {
+    color: $primary-text;
+    font-size: 1.1rem;
 
-  &:hover {
-    background-color: lighten($background-lighter, 5%);
+    &:hover {
+      border: 0;
+    }
   }
 }
 
-.list-group-item.active {
+.nav-tabs>li>.nav-link.active, .nav-tabs>li>.nav-link.active:hover, .nav-tabs>li>.nav-link.active:focus {
+  background-color: $background-color;
+  border: 0;
   color: $primary-color;
-  background-color: lighten($background-lighter, 5%);
-
-  &:hover {
-    background-color: lighten($background-lighter, 5%);
-  }
 }
 
-.settings-options {
-  padding-bottom: 2em;
+.nav-tabs {
+  .nav-link {
+    .active {
+      &:focus {
+        background-color: $primary-color;
+        color: $primary-text
+      }
+    }
+  }
 }
