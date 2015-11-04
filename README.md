@@ -2,15 +2,17 @@
 
 ![plexrequestshomepage](PlexRequestsHome.jpg)
 
-This is [Plex Requests](https://github.com/lokenx/plexrequests) but written with Meteor! It's been updated with an approval system, basic issue reporting, and new visual style!
+[![Join the chat at https://gitter.im/lokenx/plexrequests-meteor](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/lokenx/plexrequests-meteor?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+This is [Plex Requests](https://github.com/lokenx/plexrequests) but written with Meteor! It's been updated with an approval system, basic issue reporting, and a new visual style!
 
 **A project website has been setup using [GitHub pages](http://plexrequests.8bits.ca/), please visit it for more details!**
 
 ## Features
 * Users can easily search the [TheMovieDB](https://www.themoviedb.org/) for content to request
-* Easily accessible list of requested movies and TV series
+* Easily accessible list of requested Movies and TV series
 * Simple and easy user authentication and request approval
-* [CouchPotato](https://couchpota.to/) integration for automatic downloads of movies
+* [CouchPotato](https://couchpota.to/) integration for automatic downloads of Movies
 * [SickRage](https://github.com/SiCKRAGETV/SickRage) and [Sonarr](https://sonarr.tv/) integrationed for automatic TV Series downloads
 * [Pushbullet](https://www.pushbullet.com/) and [Pushover](https://pushover.net/) notifications to keep up to date with requests
 
