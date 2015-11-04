@@ -1,4 +1,6 @@
 Template.requests.onCreated(function () {
+	scroll();
+
 	Session.set("searchOptions", []);
 
 	var instance = this;
@@ -235,4 +237,12 @@ Template.requests.events({
 	'click .go-to-top': function () {
 		$('body').animate({ scrollTop: 0 }, "slow")
 	}
-})
+});
+
+var scroll = function () {
+	$(window).scroll(function() {
+		if($(window).scrollTop() + $(window).height() == $(document).height()) {
+			$('.load-more').trigger('click');
+		}
+	});
+}

@@ -93,15 +93,14 @@
   		<i class="fa fa-arrow-up"></i>
 		</div>
 
-		<div class="row load-more-footer">
+		<!-- Load more event trigger -->
+		<div class="load-more" style="display:none;"></div>
+
+		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
-				{{#if Template.subscriptionsReady}}
-					{{#if hasMoreRequests}}
-						<button class="btn btn-primary btn-block load-more">View More</button>
-					{{/if}}
-				{{else}}
-					<div class="loading">Loading...</div>
-				{{/if}}
+				{{#unless Template.subscriptionsReady}}
+					<h3 class="loading">Loading... <i class="fa fa-spin fa-refresh"></i></h3>
+				{{/unless}}
 			</div>
 		</div>
 	</div>
