@@ -6,7 +6,7 @@
 
 > This is [Plex Requests](https://github.com/lokenx/plexrequests) but written with Meteor! It's been updated with an approval system, basic issue reporting, and a new visual style!
 
-**For those upgrading please refer to the [FAQs](http://localhost:4000/faq/#v1-upgrade-notes) for some important notes!**
+**For those upgrading please refer to the [FAQs](http://plexrequests.8bits.ca/faq/#v1-upgrade-notes) for some important notes!**
 
 ## Features
 * Users can easily search the [TheMovieDB](https://www.themoviedb.org/) for content to request
