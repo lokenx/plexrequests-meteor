@@ -4,7 +4,7 @@
       &#9776;
     </button>
     <div class="collapse navbar-toggleable-sm" id="navBarItems">
-			<a class="navbar-brand" href="{{pathFor 'home'}}"><i class="fa fa-play-circle logo-icon"></i> Plex Requests {{#if currentUser}}<a href="{{pathFor 'admin'}}" class="admin-link">Admin</a>{{/if}}</a>
+			<a class="navbar-brand" href="/"><i class="fa fa-play-circle logo-icon"></i> Plex Requests {{#if currentUser}}<a href="{{pathFor 'admin'}}" class="admin-link">Admin</a>{{/if}}</a>
       <ul class="nav navbar-nav pull-right">
         {{#if plexAuth}}
           <li class="{{isActiveRoute regex='search'}} nav-item"><a href="{{pathFor 'search'}}" class="nav-link">Search</a></li>
