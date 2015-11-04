@@ -1,0 +1,107 @@
+<template name="requests">
+	<div class="requests">
+		<div class="row">
+			<div class="col-md-offset-2 col-md-8">
+			  <h1>Requests</h1>
+				<p>Below you can see yours and all other requests, as well as their download and approval status.</p>
+				{{#if currentUser}}
+				<p>
+					If you want to approve all Movies and TV Shows, click here <button class="btn btn-secondary-outline btn-sm" id="approveAll">Approve All</button>
+				</p>
+				{{/if}}
+			</div>
+		</div>
+
+	<!-- Selector between Movies/TV/etc  and Sort/Filter Options-->
+		<div class="row selectors">
+			<div class="col-md-offset-2 col-md-6">
+				<ul class="search-selector">
+			  	{{#each searchOptions}}
+			  		<li><a href="#" class="{{#if activeSearch}}active-search{{/if}}">{{this}}</a></li>
+			  	{{/each}}
+				</ul>
+			</div>
+			<div class="col-md-2">
+				<div class="filter-sort">
+					<div class="btn-group">
+					  <button type="button" class="btn btn-sm btn-secondary-outline dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					    Filter / Sort
+					  </button>
+					  <div class="dropdown-menu">
+							{{#each filterOptions}}
+					    	<a class="dropdown-item filter-select" href="#">{{{activeFilter}}}{{filter}}</a>
+							{{/each}}
+					    <div class="dropdown-divider"></div>
+							{{#each sortOptions}}
+								<a class="dropdown-item sort-select" href="#">{{{activeSort}}}{{sort}}</a>
+							{{/each}}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	<!-- List of content -->
+
+	  {{#each requests}}
+	  <div class="request-item">
+		  	<div class="row">
+		  		<div class="col-md-2 col-md-offset-2">
+		  			<img src="{{poster_path}}" class="img-responsive" alt="Poster">
+		  		</div>
+		  		<div class="col-md-4">
+		  			<ul class="request-details-list">
+			  			<li><strong>{{title}}</strong></li>
+			  			<li><strong>Release date:</strong> {{release_date}}</li>
+			  			<li><strong>Approved:</strong> {{{approval_status}}}</li>
+			  			<li><strong>Available:</strong> {{{download_status}}}</li>
+			  			{{{requesting_user}}}
+			  			<li><strong>Issues:</strong> {{issues}}</li>
+		  			</ul>
+		  		</div>
+		  		<div class="col-md-2 request-details-buttons">
+		  			{{#if currentUser}}
+			  			{{#unless approved}}<p><button class="btn btn-sm btn-success-outline approve-item">Approve</button></p>{{/unless}}
+			  			<p><button class="btn btn-sm btn-danger-outline delete-item">Delete</button></p>
+			  			<p><button class="btn btn-sm btn-info-outline clear-issues">Clear Issues</button></p>
+			  		{{/if}}
+			  		<p>
+			  			<div class="btn-group">
+							  <button type="button" class="btn btn-sm btn-warning-outline dropdown-toggle report-item" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							    Report Issue <span class="caret"></span>
+							  </button>
+							  <ul class="dropdown-menu">
+							    <li><a href="#" class="issue-select dropdown-item" data="Wrong Audio">Wrong audio</a></li>
+							    <li><a href="#" class="issue-select dropdown-item" data="No Subtitles">No subtitles</a></li>
+							    <li><a href="#" class="issue-select dropdown-item" data="Wrong Content">Wrong content</a></li>
+							    <li><a href="#" class="issue-select dropdown-item" data="Playback issues">Playback issues</a></li>
+							  </ul>
+							</div>
+			  		</p>
+		  		</div>
+		  	</div>
+	  	</div>
+			<div class="row">
+		    <div class="col-md-8 col-md-offset-2">
+		      <div class="item-divider"></div>
+		    </div>
+			</div>
+		{{/each}}
+
+		<!-- Go to top button -->
+		<div class="go-to-top">
+  		<i class="fa fa-arrow-up"></i>
+		</div>
+
+		<!-- Load more event trigger -->
+		<div class="load-more" style="display:none;"></div>
+
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+				{{#unless Template.subscriptionsReady}}
+					<h3 class="loading">Loading... <i class="fa fa-spin fa-refresh"></i></h3>
+				{{/unless}}
+			</div>
+		</div>
+	</div>
+</template>

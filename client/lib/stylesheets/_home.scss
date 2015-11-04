@@ -1,0 +1,25 @@
+@media (max-width: 48em) {
+  .home {
+    padding-top: 1rem;
+  }
+}
+
+@media (min-width: 48em) {
+  .home {
+    padding-top: 4rem;
+  }
+}
+
+#sign-in {
+  padding-top: 1rem;
+
+  .form-group {
+    padding-left: 0;
+  }
+}
+
+.home {
+  p {
+    font-weight: 300;
+  }
+}

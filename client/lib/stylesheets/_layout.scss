@@ -1,0 +1,15 @@
+.modal-content {
+  background-color: $background-color;
+
+  p {
+    font-weight: 300;
+  }
+
+  .close {
+    color: $primary-text;
+  }
+
+  .modal-title {
+    color: $primary-color;
+  }
+}
