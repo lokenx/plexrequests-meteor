@@ -27,5 +27,8 @@ Please visit the projects [GitHub page](http://plexrequests.8bits.ca/) for [FAQ 
 ## Contributors
  [@jeradin](https://github.com/Jeradin) / [@jrudio](https://github.com/jrudio) / [@drzoidberg33](https://github.com/drzoidberg33) / [@SmallwoodDR82](https://github.com/SmallwoodDR82)
 
+## Want to help out?
+Want to  make Plex Requests more awesome? Feel free to fork the repo and submit a pull request! Not a developer or rather not get your hands dirty? You can donate via [PayPal](https://www.paypal.me/plexrequests) to keep things going, or just simply to say thanks!
+
 ## License
 This application is licensed under The MIT License. The Plex logo, and name are copyright of Plex Inc.
