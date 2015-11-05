@@ -1,7 +1,5 @@
 accounts-base@1.2.2
 accounts-password@1.1.4
-accounts-ui@1.1.6
-accounts-ui-unstyled@1.1.8
 alanning:roles@1.2.14
 aldeed:autoform@5.7.1
 aldeed:collection2@2.5.0
@@ -94,6 +92,7 @@ routepolicy@1.0.6
 service-configuration@1.0.5
 session@1.1.1
 sha@1.0.4
+softwarerero:accounts-t9n@1.1.4
 spacebars@1.0.7
 spacebars-compiler@1.0.7
 srp@1.0.4
@@ -107,6 +106,8 @@ u2622:persistent-session@0.4.4
 ui@1.0.8
 underscore@1.0.4
 url@1.0.5
+useraccounts:bootstrap@1.12.4
+useraccounts:core@1.12.4
 webapp@1.2.3
 webapp-hashing@1.0.5
 zimme:active-route@2.3.2

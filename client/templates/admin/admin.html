@@ -3,9 +3,25 @@
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
 				<h1>Admin</h1>
-				<span class="login-buttons"> {{> loginButtons}} </span>
+
+				{{#if currentUser}}
+					<!-- <div class="row">
+						<div class="col-md-8 col-md-offset-2"> -->
+							{{> atNavButton}}
+						<!-- </div>
+					</div> -->
+				{{/if}}
+
 			</div>
 		</div>
+		{{#unless currentUser}}
+			<div class="row">
+				<div class="col-md-6 col-md-offset-2">
+					{{> atForm }}
+				</div>
+			</div>
+		{{/unless}}
+
 
 		{{#if currentUser}}
 			<div class="row settings">

@@ -27,10 +27,10 @@
   a {
     color: $primary-color;
     text-decoration: none;
+  }
 
-    .list-group-item {
-      color: $primary-text;
-    }
+  .list-group-item {
+    color: $primary-text;
   }
 }
 
@@ -54,6 +54,7 @@
   border: none;
 
   &:hover {
+    color: $primary-color;
     background-color: lighten($background-lighter, 5%);
   }
 }
@@ -63,10 +64,20 @@
   background-color: lighten($background-lighter, 5%);
 
   &:hover {
+    color: $primary-color;
     background-color: lighten($background-lighter, 5%);
   }
 }
 
 .settings-options {
   padding-bottom: 2em;
+}
+
+#at-btn, #at-nav-button {
+  background-color: transparent;
+  border: 1px solid #ccc;
+
+  &:hover {
+    background-color: #ccc;
+  }
 }

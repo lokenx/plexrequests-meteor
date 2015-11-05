@@ -36,13 +36,13 @@ dburles:collection-helpers
 alanning:roles
 momentjs:moment
 twbs:bootstrap@4.0.0-alpha
-accounts-ui
 zimme:active-route
 themeteorchef:bert
 aldeed:autoform
 ongoworks:security
 fourseven:scss
 multiply:iron-router-progress
+useraccounts:bootstrap
 
 lokenx:themoviedbsearch
 lokenx:couchpotatowrapper
