@@ -1,7 +1,7 @@
 <template name="admin">
 	<div class="admin">
 		<div class="row">
-			<div class="col-md-8 col-md-offset-2">
+			<div class="col-md-10 col-md-offset-1">
 				<h1>Admin</h1>
 
 				{{#if currentUser}}
@@ -16,7 +16,7 @@
 		</div>
 		{{#unless currentUser}}
 			<div class="row">
-				<div class="col-md-6 col-md-offset-2">
+				<div class="col-md-6 col-md-offset-1">
 					{{> atForm }}
 				</div>
 			</div>
@@ -25,7 +25,7 @@
 
 		{{#if currentUser}}
 			<div class="row settings">
-				<div class="col-md-2 col-md-offset-2">
+				<div class="col-md-2 col-md-offset-1">
 					<ul class="list-group settings-options">
 					  <a href="#"><li class="list-group-item active">General</li></a>
 					  <a href="#"><li class="list-group-item">Authentication</li></a>
@@ -37,7 +37,7 @@
 					</ul>
 				</div>
 				<!-- <br> -->
-				<div class="col-md-6 settings-pane" id="SettingsGeneral">
+				<div class="col-md-8 settings-pane" id="SettingsGeneral">
 					{{#autoForm collection="Settings" doc=settings id="updateGeneralSettingsForm" type="update" resetOnSuccess="false"}}
 						{{> afQuickField name='searchOptionsMOVIES'}}
 						{{> afQuickField name='searchOptionsTV'}}
@@ -59,7 +59,7 @@
 					{{/autoForm}}
 				</div>
 
-				<div class="col-md-6 settings-pane" style="display: none;" id="SettingsAuthentication">
+				<div class="col-md-8 settings-pane" style="display: none;" id="SettingsAuthentication">
 					{{#autoForm collection="Settings" doc=settings id="updateAuthenticationSettingsForm" type="update" resetOnSuccess="false"}}
 						{{> afQuickField name='plexAuthenticationENABLED'}}
 						<p class="text-muted">
@@ -93,7 +93,7 @@
 					{{/autoForm}}
 				</div>
 
-				<div class="col-md-6 settings-pane" style="display: none;" id="SettingsCouchPotato">
+				<div class="col-md-8 settings-pane" style="display: none;" id="SettingsCouchPotato">
 					{{#autoForm collection="Settings" doc=settings id="updateCouchPotatoSettingsForm" type="update" resetOnSuccess="false"}}
 						{{> afQuickField name='couchPotatoENABLED'}}
 						<p class="text-muted">Enable CouchPotato for automated movie downloading</p>
@@ -120,7 +120,7 @@
 					{{/autoForm}}
 				</div>
 
-				<div class="col-md-6 settings-pane" style="display: none;" id="SettingsSickRage">
+				<div class="col-md-8 settings-pane" style="display: none;" id="SettingsSickRage">
 					{{#autoForm collection="Settings" doc=settings id="updateSickRageSettingsForm" type="update" resetOnSuccess="false"}}
 						{{> afQuickField name='sickRageENABLED'}}
 						<p class="text-muted">Enable SickRage for automated tv downloading.</p>
@@ -147,7 +147,7 @@
 					{{/autoForm}}
 				</div>
 
-				<div class="col-md-6 settings-pane" style="display: none;" id="SettingsSonarr">
+				<div class="col-md-8 settings-pane" style="display: none;" id="SettingsSonarr">
 					{{#autoForm collection="Settings" doc=settings id="updateSonarrSettingsForm" type="update" resetOnSuccess="false"}}
 						{{> afQuickField name='sonarrENABLED'}}
 						<p class="text-muted">Enabled Sonarr for automated tv downloading.</p>
@@ -183,7 +183,7 @@
 					{{/autoForm}}
 				</div>
 
-				<div class="col-md-6 settings-pane" style="display: none;" id="SettingsNotifications">
+				<div class="col-md-8 settings-pane" style="display: none;" id="SettingsNotifications">
 					{{#autoForm collection="Settings" doc=settings id="updateNotificationsSettingsForm" type="update" resetOnSuccess="false"}}
 						{{> afQuickField name='pushbulletENABLED'}}
 						<p class="text-muted">Enabled Pushbullet to receive alerts.</p>
@@ -210,7 +210,7 @@
 					{{/autoForm}}
 				</div>
 
-				<div class="col-md-6 settings-pane" style="display: none;" id="SettingsAbout">
+				<div class="col-md-8 settings-pane" style="display: none;" id="SettingsAbout">
 					<p>
 						<strong>Branch: </strong> {{branch}}<br>
 						<strong>Version: </strong> {{version}}

@@ -1,7 +1,7 @@
 <template name="requests">
 	<div class="requests">
 		<div class="row">
-			<div class="col-md-offset-2 col-md-8">
+			<div class="col-md-offset-1 col-md-10">
 			  <h1>Requests</h1>
 				<p>Below you can see yours and all other requests, as well as their download and approval status.</p>
 				{{#if currentUser}}
@@ -14,7 +14,7 @@
 
 	<!-- Selector between Movies/TV/etc  and Sort/Filter Options-->
 		<div class="row selectors">
-			<div class="col-md-offset-2 col-md-6">
+			<div class="col-md-offset-1 col-md-8">
 				<ul class="search-selector">
 			  	{{#each searchOptions}}
 			  		<li><a href="#" class="{{#if activeSearch}}active-search{{/if}}">{{this}}</a></li>
@@ -46,10 +46,10 @@
 	  {{#each requests}}
 	  <div class="request-item">
 		  	<div class="row">
-		  		<div class="col-md-2 col-md-offset-2">
+		  		<div class="col-md-2 col-md-offset-1">
 		  			<img src="{{poster_path}}" class="img-responsive" alt="Poster">
 		  		</div>
-		  		<div class="col-md-4">
+		  		<div class="col-md-5">
 		  			<ul class="request-details-list">
 			  			<li><strong>{{title}}</strong></li>
 			  			<li><strong>Release date:</strong> {{release_date}}</li>
@@ -59,7 +59,7 @@
 			  			<li><strong>Issues:</strong> {{issues}}</li>
 		  			</ul>
 		  		</div>
-		  		<div class="col-md-2 request-details-buttons">
+		  		<div class="col-md-3 request-details-buttons">
 		  			{{#if currentUser}}
 			  			{{#unless approved}}<p><button class="btn btn-sm btn-success-outline approve-item">Approve</button></p>{{/unless}}
 			  			<p><button class="btn btn-sm btn-danger-outline delete-item">Delete</button></p>
@@ -82,7 +82,7 @@
 		  	</div>
 	  	</div>
 			<div class="row">
-		    <div class="col-md-8 col-md-offset-2">
+		    <div class="col-md-10 col-md-offset-1">
 		      <div class="item-divider"></div>
 		    </div>
 			</div>
@@ -97,7 +97,7 @@
 		<div class="load-more" style="display:none;"></div>
 
 		<div class="row">
-			<div class="col-md-8 col-md-offset-2">
+			<div class="col-md-10 col-md-offset-1">
 				{{#unless Template.subscriptionsReady}}
 					<h3 class="loading">Loading... <i class="fa fa-spin fa-refresh"></i></h3>
 				{{/unless}}
