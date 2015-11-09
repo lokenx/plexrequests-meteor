@@ -20,7 +20,7 @@ Template.home.events({
               Session.setAuth('auth', "true");
               Session.setAuth('user', plexUsername);
               Bert.alert( 'Successfully logged in!', 'success');
-              Router.go('/search');
+              Router.go('search.page');
           } else if (result === false) {
         		Bert.alert( 'Wrong username entered. Please try again!', 'danger');
             $('#submitButton').html('<i class="fa fa-user  fa-fw"></i> Sign In');
@@ -31,7 +31,7 @@ Template.home.events({
         Session.setAuth('auth', "true");
         Session.setAuth('user', plexUsername);
         Bert.alert( 'Successfully logged in!', 'success');
-        Router.go('/search');
+        Router.go('search.page');
       }
     });
 
