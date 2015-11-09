@@ -4,7 +4,7 @@
       &#9776;
     </button>
     <div class="collapse navbar-toggleable-sm" id="navBarItems">
-			<a class="navbar-brand" href="{{pathFor 'home'}}"><i class="fa fa-play-circle logo-icon"></i> Plex Requests {{#if currentUser}}<a href="{{pathFor 'admin'}}" class="admin-link">Admin</a>{{/if}}</a>
+			<a class="navbar-brand" href="{{pathFor 'home'}}"><i class="fa fa-play-circle logo-icon"></i> Plex Requests {{#if currentUser}}<a href="{{pathFor 'admin.page'}}" class="admin-link">Admin</a>{{/if}}</a>
       <ul class="nav navbar-nav pull-right">
         {{#if plexAuth}}
           <li class="{{isActiveRoute regex='search.page'}} nav-item"><a href="{{pathFor 'search.page'}}" class="nav-link">Search</a></li>
@@ -43,7 +43,7 @@
 						<strong>Thank you for installing and using Plex Requests!</strong>
 						<br>
 						<br>
-						Before you get started, please head over to the <a href="{{pathFor 'admin'}}">admin page</a> and create an account.
+						Before you get started, please head over to the <a href="{{pathFor 'admin.page'}}">admin page</a> and create an account.
 						You can then configre things and get going. Some highlights of the new version can be seen below:
 						<br>
 						<br>
