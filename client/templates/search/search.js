@@ -132,5 +132,8 @@ Template.search.events({
         }
       })
     }
-  }
+  },
+  'click .go-to-top': function () {
+		$('body').animate({ scrollTop: 0 }, "slow")
+	}
 });
