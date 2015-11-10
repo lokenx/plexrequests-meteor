@@ -19,7 +19,15 @@
 }
 
 .home {
-  p {
+  p, h3 {
     font-weight: 300;
+  }
+}
+
+a {
+  color: $primary-color;
+
+  &:hover {
+    color: $primary-color-lighter;
   }
 }
