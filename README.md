@@ -1,6 +1,6 @@
 # Plex Requests - Meteor Style!
 
-![plexrequestshomepage](http://plexrequests.8bits.ca/img/PlexRequestsPreview.png)
+![plexrequestshomepage](http://plexrequests.8bits.ca/img/preview.png)
 
 [![Join the chat at https://gitter.im/lokenx/plexrequests-meteor](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/lokenx/plexrequests-meteor?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
