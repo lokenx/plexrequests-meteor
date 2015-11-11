@@ -5,16 +5,17 @@ Template.home.events({
     $('#submitButton').html('<i class="fa fa-cog fa-spin  fa-fw"></i>  Signing In');
 
     plexUsername = $("#plex-username").val().toLowerCase();
+    plexPassword = $("#plex-password").val();
 
     Meteor.call('checkPlexAuthentication', function(error, data) {
       if (error) {
       	Bert.alert( 'There was an issue logging in. Please try again!', 'danger');
       	console.log("Issue checking authentication status: " + error.message);
       } else if (data) {
-        Meteor.call('checkPlexUser', plexUsername, function (error, result) {
+        Meteor.call('checkPlexUser', plexUsername, plexPassword, function (error, result) {
           if (error) {
-        		Bert.alert( 'There was an issue logging in. Please try again!', 'danger');
-            $('#submitButton').html('<i class="fa fa-user  fa-fw"></i> Sign In');
+        		Bert.alert( error.message, 'danger');
+            $('#submitButton').html('<i class="fa fa-user fa-fw"></i> Sign In');
             Session.setAuth('auth', "false");
           } else if (result === true) {
               Session.setAuth('auth', "true");
@@ -22,7 +23,7 @@ Template.home.events({
               Bert.alert( 'Successfully logged in!', 'success');
               Router.go('search.page');
           } else if (result === false) {
-        		Bert.alert( 'Wrong username entered. Please try again!', 'danger');
+        		Bert.alert( 'Invalid login. Please try again!', 'danger');
             $('#submitButton').html('<i class="fa fa-user  fa-fw"></i> Sign In');
             Session.setAuth('auth', false);
           }
