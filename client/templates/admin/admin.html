@@ -67,6 +67,11 @@
 							<a href="https://support.plex.tv/hc/en-us/articles/204059436-Finding-your-account-token-X-Plex-Token" target="_blank">instructions</a>
 							to retrieve your token. Alternatively use the form below to sign into Plex.tv and we'll get it for you.
 						</p>
+						{{> afQuickField name='plexAuthenticationPASSWORDS'}}
+						<p class="text-muted">
+							Enabled if you want users to login with both their usernames and passwords
+						</p>
+						<br>
 						{{> afQuickField name='plexAuthenticationTOKEN' style="width:auto;" size="25"}}
 						<br>
 						<div class="row">

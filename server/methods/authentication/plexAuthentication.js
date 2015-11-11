@@ -2,28 +2,34 @@ Meteor.methods({
 	'checkPlexAuthentication' : function () {
 		return Settings.find({}).fetch()[0].plexAuthenticationENABLED;
 	},
+	'checkPlexAuthenticationPasswords' : function () {
+		return Settings.find({}).fetch()[0].plexAuthenticationPASSWORDS;
+	},
 	'checkPlexUser' : function (plexUsername, plexPassword) {
 
-		//clean password and username for authentication.
-		function authHeaderVal(username, password) {
-	    var authString = username + ':' + password;
-	    var buffer = new Buffer(authString.toString(), 'binary');
-	    return 'Basic ' + buffer.toString('base64');
-		}
+		if (Settings.find({}).fetch()[0].plexAuthenticationPASSWORDS) {
+			// If passwords are required check full login
 
-		var headers = {
-			'Authorization': authHeaderVal(plexUsername, plexPassword),
-			'X-Plex-Client-Identifier': 'BGZQ8N25FYP3UHB6',
-			'X-Plex-Version': '1.2.0',
-			'X-Plex-Platform': 'Meteor',
-			'X-Plex-Device-Name': 'Plex Requests'
-		}
+			function authHeaderVal(username, password) {
+		    var authString = username + ':' + password;
+		    var buffer = new Buffer(authString.toString(), 'binary');
+		    return 'Basic ' + buffer.toString('base64');
+			}
 
-		try {
-			var result = Meteor.http.call("POST", "https://plex.tv/users/sign_in.json", {headers: headers});
-		} catch (error) {
-			throw new Meteor.Error(401, JSON.parse(error.message.substring(13)).error);
-			return false;
+			var headers = {
+				'Authorization': authHeaderVal(plexUsername, plexPassword),
+				'X-Plex-Client-Identifier': 'BGZQ8N25FYP3UHB6',
+				'X-Plex-Version': '1.2.0',
+				'X-Plex-Platform': 'Meteor',
+				'X-Plex-Device-Name': 'Plex Requests'
+			}
+
+			try {
+				var result = Meteor.http.call("POST", "https://plex.tv/users/sign_in.json", {headers: headers});
+			} catch (error) {
+				throw new Meteor.Error(401, JSON.parse(error.message.substring(13)).error);
+				return false;
+			}
 		}
 
 		function isInArray(value, array) {

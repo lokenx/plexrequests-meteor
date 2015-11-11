@@ -5,7 +5,7 @@ Template.home.events({
     $('#submitButton').html('<i class="fa fa-cog fa-spin  fa-fw"></i>  Signing In');
 
     plexUsername = $("#plex-username").val().toLowerCase();
-    plexPassword = $("#plex-password").val();
+    plexPassword = $("#plex-password").val() || '';
 
     Meteor.call('checkPlexAuthentication', function(error, data) {
       if (error) {
@@ -39,3 +39,19 @@ Template.home.events({
     return false;
 	}
 })
+
+Template.home.onCreated(function () {
+	var instance = this;
+
+	instance.requirePassword = new ReactiveVar(false);
+
+	Meteor.call("checkPlexAuthenticationPasswords", function (error, data) {
+		instance.requirePassword.set(data);
+	})
+})
+
+Template.home.helpers({
+	requirePassword: function () {
+		return Template.instance().requirePassword.get();
+	}
+});
