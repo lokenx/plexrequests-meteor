@@ -95,7 +95,7 @@ Template.requests.helpers({
 		if ((typeof this.poster_path === 'undefined') | (this.poster_path === "/")) {
 			return "poster-placeholder.png";
 		} else {
-			return "http://image.tmdb.org/t/p/w154" + this.poster_path;
+			return "https://image.tmdb.org/t/p/w154" + this.poster_path;
 		}
   },
   'release_date' : function () {
