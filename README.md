@@ -25,7 +25,7 @@ On first run navigate to `http://localhost:3000/admin` and create an admin accou
 Please visit the projects [GitHub page](http://plexrequests.8bits.ca/) for [FAQ page](http://plexrequests.8bits.ca/faq)
 
 ## Contributors
- [@jeradin](https://github.com/Jeradin) / [@jrudio](https://github.com/jrudio) / [@drzoidberg33](https://github.com/drzoidberg33) / [@SmallwoodDR82](https://github.com/SmallwoodDR82)
+ [@jeradin](https://github.com/Jeradin) / [@jrudio](https://github.com/jrudio) / [@drzoidberg33](https://github.com/drzoidberg33) / [@SmallwoodDR82](https://github.com/SmallwoodDR82) / [@camjac251](https://github.com/camjac251)
 
 ## Want to help out?
 Want to  make Plex Requests more awesome? Feel free to fork the repo and submit a pull request! Not a developer or rather not get your hands dirty? You can donate via [PayPal](https://www.paypal.me/plexrequests) to keep things going, or just simply to say thanks!
