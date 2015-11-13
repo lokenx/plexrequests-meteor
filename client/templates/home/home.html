@@ -3,15 +3,27 @@
 		<div class="home">
 			<h1>Login</h1>
 
-			<p>Want to watch a movie or tv show but it's not currently on Plex? Enter your Plex account username below to request content!</p>
+			<p>
+				Want to watch a movie or tv show but it's not currently on Plex? <br>
+				Login below with your Plex.tv username and password! <span title="Your login details are only used to authenticate your Plex account."><i class="fa fa-question-circle"></i></span>
+			</p>
 
-			<form id="sign-in" class="">
-				<div class="form-group col-sm-6">
-					<input type="text" class="form-control" placeholder="Plex Username" name="plex-username" id='plex-username' required autofocus>
-				</div>
-
+			<form class="form col-md-6" id="sign-in">
+				<fieldset>
+					<div class="form-group">
+				    <label for="plex-username">Plex.tv Username</label>
+				    <input type="text" class="form-control" id="plex-username" placeholder="Username">
+				  </div>
+					{{#if requirePassword}}
+					<div class="form-group">
+				    <label for="plex-password">Password</label>
+				    <input type="password" class="form-control" id="plex-password" placeholder="Password">
+				  </div>
+					{{/if}}
+				</fieldset>
 				<button class="btn btn-secondary-outline" type="submit" id="submitButton"><i class="fa fa-user fa-fw"></i> Sign In</button>
 			</form>
+
 		</div>
 	</div>
 </template>
