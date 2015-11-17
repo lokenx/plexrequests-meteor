@@ -17,7 +17,7 @@
 * [Pushbullet](https://www.pushbullet.com/) and [Pushover](https://pushover.net/) notifications to keep up to date with requests
 
 ## Installation
-Installation is straightforward: please update to Meteor 1.2.1, clone the repo, `cd` into the directory, and run `meteor`. For Windows users check out this [blog post](http://8bits.ca/blog/installing-plexrequests-windows/) for installation instructions using Git!
+Installation is straightforward: please update to Meteor 1.2.1, clone the repo, `cd` into the directory, and run `meteor`. For Windows users check out this [blog post](http://8bits.ca/posts/2015/installing-plex-requests-on-windows/) for installation instructions using Git!
 
 On first run navigate to `http://localhost:3000/admin` and create an admin account with an email address and password. **If this isn't done someone else can create the admin account to your application.** This account is only used for logging in, email integration isn't enabled. Once logged in, you can configure your settings and get things going.
 
