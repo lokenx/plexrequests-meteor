@@ -1,7 +1,7 @@
 Meteor.methods({
   'updateCP' : function () {
     if (!(Settings.find({}).fetch()[0].couchPotatoENABLED)) {
-      // console.log("Can't update CouchPotato status if it's not enabled");
+      // logger.error("Can't update CouchPotato status if it's not enabled");
       return false;
     }
 

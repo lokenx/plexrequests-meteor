@@ -33,6 +33,7 @@
 					  <a href="#"><li class="list-group-item">SickRage</li></a>
 					  <a href="#"><li class="list-group-item">Sonarr</li></a>
 					  <a href="#"><li class="list-group-item">Notifications</li></a>
+					  <a href="#"><li class="list-group-item">Logs</li></a>
 					  <a href="#"><li class="list-group-item">About</li></a>
 					</ul>
 				</div>
@@ -231,6 +232,10 @@
 						<strong>Project Website: </strong> <a href="http://plexrequests.8bits.ca/" target="_blank">plexrequests.8bits.ca</a><br>
 						<strong>GitHub Page: </strong> <a href="https://github.com/lokenx/plexrequests-meteor" target="_blank">lokenx / PlexRequests</a>
 					</p>
+				</div>
+
+				<div class="col-md-8 logs-pane" style="display: none;" id="SettingsLogs">
+					{{> logs }}
 				</div>
 			</div>
 		{{/if}}

@@ -18,7 +18,7 @@ Meteor.methods({
 
           return true;
         } catch (error) {
-          console.log('Pushbullet notification error: ' + error.response.data.error.message);
+          logger.error('Pushbullet notification error: ' + error.response.data.error.message);
           return true;
         }
       } else if (settings.pushoverENABLED) {
@@ -32,7 +32,7 @@ Meteor.methods({
 
           return true;
         } catch (error) {
-          console.log('Pushover notification error: ' + error.response.data.errors[0]);
+          logger.error('Pushover notification error: ' + error.response.data.errors[0]);
           return true;
         }
       }
@@ -48,7 +48,7 @@ Meteor.methods({
 
           return true;
         } catch (error) {
-          console.log('Pushbullet notification error: ' + error.response.data.error.message);
+          logger.error('Pushbullet notification error: ' + error.response.data.error.message);
           return true;
         }
       } else if (settings.pushoverENABLED) {
@@ -62,7 +62,7 @@ Meteor.methods({
 
           return true;
         } catch (error) {
-          console.log('Pushover notification error: ' + error.response.data.errors[0]);
+          logger.error('Pushover notification error: ' + error.response.data.errors[0]);
           return true;
         }
       }

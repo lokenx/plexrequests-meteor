@@ -10,7 +10,7 @@ Meteor.methods({
 			try {
 				var result = Meteor.call("TMDBSearch", searchterm, type)
 			} catch (error) {
-				console.log("TMDBSearch Error -> " + error.message);
+				logger.error("TMDBSearch Error -> " + error.message);
 				return [];
 			}
 			return result;

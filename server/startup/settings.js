@@ -1,15 +1,15 @@
 Meteor.startup(function () {
 
 	if (Settings.findOne({_id: "couchpotatosetting"})) {
-		console.log(Settings.find({}).fetch());
-		console.log("Removing old settings");
+		logger.error(Settings.find({}).fetch());
+		logger.error("Removing old settings");
 		Settings.remove({});
-		console.log("Adding new settings");
+		logger.error("Adding new settings");
 		Settings.insert({});
 	}
 
 	if (Settings.find().count() === 0) {
-		console.log("Adding default settings");
+		logger.error("Adding default settings");
 		Settings.insert({});
 	}
 

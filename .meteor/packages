@@ -9,9 +9,7 @@ iron:router@=1.0.10
 peerlibrary:xml2js
 u2622:persistent-session
 aslagle:reactive-table
-meteorhacks:npm
 percolate:synced-cron
-npm-container
 standard-minifiers
 meteor-base
 mobile-experience
@@ -43,8 +41,10 @@ ongoworks:security
 fourseven:scss
 multiply:iron-router-progress
 useraccounts:bootstrap
+npm-container
 
 lokenx:themoviedbsearch
 lokenx:couchpotatowrapper
 lokenx:sickragewrapper
 lokenx:sonarrwrapper
+meteorhacks:npm

@@ -17,11 +17,11 @@ Meteor.methods({
 		try {
 			var tvdb = TMDBSearch.externalIds(request.id, "tv");
 			if (typeof tvdb !== "number") {
-				console.log(("Error getting TVDB ID, none found!"));
+				logger.error(("Error getting TVDB ID, none found!"));
 				return false;
 			}
 		} catch (error) {
-			console.log("Error getting TVDB ID:", error.message);
+			logger.error("Error getting TVDB ID:", error.message);
 			return false;
 		}
 
@@ -45,7 +45,7 @@ Meteor.methods({
 						});
 						return 'exists';
 					} catch (error) {
-						console.log(error.message);
+						logger.error(error.message);
 						return false;
 					}
 				}
@@ -68,13 +68,13 @@ Meteor.methods({
 						});
 						return 'exists';
 					} catch (error) {
-						console.log(error.message);
+						logger.error(error.message);
 						return false;
 					}
 				}
 			}
 		} catch (error) {
-			console.log("Error checking SickRage/Sonarr:", error.message)
+			logger.error("Error checking SickRage/Sonarr:", error.message)
 			return false;
 		}
 
@@ -94,7 +94,7 @@ Meteor.methods({
 					episodes: request.episodes
 				});
 			} catch (error) {
-				console.log(error.message);
+				logger.error(error.message);
 				return false;
 			}
 			Meteor.call("sendNotifications", request, "request");
@@ -106,7 +106,7 @@ Meteor.methods({
 					var episodes = (request.episodes === true) ? 1 : 0;
 					var add = SickRage.addShow(tvdb, episodes);
 				} catch (error) {
-					console.log("Error adding to SickRage:", error.message);
+					logger.error("Error adding to SickRage:", error.message);
 					return false;
 				}
 				if (add) {
@@ -125,11 +125,11 @@ Meteor.methods({
 						Meteor.call("sendNotifications", request, "request");
 						return true;
 					} catch (error) {
-						console.log(error.message);
+						logger.error(error.message);
 						return false;
 					}
 				} else {
-					console.log("Error adding to SickRage");
+					logger.error("Error adding to SickRage");
 					return false;
 				}
 			} else if (settings.sonarrENABLED) {
@@ -139,7 +139,7 @@ Meteor.methods({
 					var rootFolderPath = settings.sonarrROOTFOLDERPATH
 					var add = Sonarr.seriesPost(tvdb,request.title, qualityProfileId, seasonFolder, rootFolderPath, request.episodes);
 				} catch (error) {
-					console.log("Error adding to Sonarr:", error.message);
+					logger.error("Error adding to Sonarr:", error.message);
 					return false;
 				}
 				if (add) {
@@ -158,11 +158,11 @@ Meteor.methods({
 						Meteor.call("sendNotifications", request, "request");
 						return true;
 					} catch (error) {
-						console.log(error.message);
+						logger.error(error.message);
 						return false;
 					}
 				} else {
-					console.log("Error adding to Sonarr");
+					logger.error("Error adding to Sonarr");
 					return false;
 				}
 			} else {
@@ -181,7 +181,7 @@ Meteor.methods({
 					Meteor.call("sendNotifications", request, "request");
 					return true;
 				} catch (error) {
-					console.log(error.message);
+					logger.error(error.message);
 					return false;
 				}
 			}

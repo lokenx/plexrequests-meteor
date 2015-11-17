@@ -19,11 +19,11 @@ Meteor.methods({
 		try {
 			var imdb = TMDBSearch.externalIds(request.id, "movie");
 			if (imdb.indexOf("tt") === -1) {
-				console.log(("Error getting IMDB ID, none found!"));
+				logger.error(("Error getting IMDB ID, none found!"));
 				return false;
 			}
 		} catch (error) {
-			console.log("Error getting IMDB ID:", error.message);
+			logger.error("Error getting IMDB ID:", error.message);
 			return false;
 		}
 
@@ -46,12 +46,12 @@ Meteor.methods({
 						});
 						return 'exists';
 					} catch (error) {
-						console.log(error.message);
+						logger.error(error.message);
 						return false;
 					}
 				}
 			} catch (error) {
-				console.log("Error checking Couch Potato:", error.message)
+				logger.error("Error checking Couch Potato:", error.message)
 				return false;
 			}
 		}
@@ -71,7 +71,7 @@ Meteor.methods({
 					poster_path: poster
 				});
 			} catch (error) {
-				console.log(error.message);
+				logger.error(error.message);
 				return false;
 			}
 
@@ -84,7 +84,7 @@ Meteor.methods({
 				try {
 					var add = CouchPotato.movieAdd(imdb);
 				} catch (error) {
-					console.log("Error adding to Couch Potato:", error.message)
+					logger.error("Error adding to Couch Potato:", error.message)
 					return false;
 				}
 
@@ -101,7 +101,7 @@ Meteor.methods({
 							poster_path: poster
 						});
 					} catch (error) {
-						console.log(error.message);
+						logger.error(error.message);
 						return false;
 					}
 					Meteor.call("sendNotifications", request, "request");
@@ -124,7 +124,7 @@ Meteor.methods({
 					Meteor.call("sendNotifications", request, "request");
 					return true;
 				} catch (error) {
-					console.log(error.message);
+					logger.error(error.message);
 					return false;
 				}
 			}

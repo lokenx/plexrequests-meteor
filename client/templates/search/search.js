@@ -71,7 +71,7 @@ Template.search.events({
       template.error.set(false);
       Meteor.call("searchContent", searchterm, searchType, function (error, result) {
         if (error) {
-          console.log(error);
+          logger.error(error);
           template.searching.set(false);
           template.error.set(true);
         } else if (result.length) {
@@ -99,7 +99,7 @@ Template.search.events({
       btn.html('<i class="fa fa-spinner fa-spin"></i> &nbsp; Requesting...');
       Meteor.call("requestMovie", request, function (error, result) {
         if (error || result === false) {
-          console.log("Error requesting, please check server log");
+          logger.error("Error requesting, please check server log");
           btn.html('<i class="fa fa-plus"></i> &nbsp; Request');
           Bert.alert("Couldn't submit request, please try again!", "danger");
         } else if (result === true) {
@@ -117,7 +117,7 @@ Template.search.events({
       tvBtn.html('<i class="fa fa-spinner fa-spin"></i> &nbsp; Requesting... ');
       Meteor.call("requestTV", request, function (error, result) {
         if (error || result === false) {
-          console.log("Error requesting, please check server log");
+          logger.error("Error requesting, please check server log");
           tvBtn.html('<i class="fa fa-plus"></i> &nbsp; Request ');
           Bert.alert("Couldn't submit request, please try again!", "danger");
         } else if (result === true) {

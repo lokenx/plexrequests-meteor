@@ -1,0 +1,4 @@
+{"level":"info","message":"Getting logs...","timestamp":"2015-11-16T19:37:02.980Z"}
+{"level":"warn","message":"jax failed to login","timestamp":"2015-11-16T19:47:43.051Z"}
+{"level":"warn","message":"tom failed to login","timestamp":"2015-11-16T19:49:05.944Z"}
+{"level":"error","message":"Error testing Pushover: application token is invalid","timestamp":"2015-11-16T20:09:48.012Z"}

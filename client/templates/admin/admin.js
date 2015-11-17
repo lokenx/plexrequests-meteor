@@ -9,7 +9,7 @@ AutoForm.hooks({
       return false;
     },
     onError: function(formType, error) {
-      console.log(error);
+      logger.error(error);
       Bert.alert('Update failed, please try again', 'danger');
     }
   },
@@ -23,7 +23,7 @@ AutoForm.hooks({
       return false;
     },
     onError: function(formType, error) {
-      console.log(error);
+      logger.error(error);
       Bert.alert('Update failed, please try again', 'danger');
     }
   },
@@ -37,7 +37,7 @@ AutoForm.hooks({
       return false;
     },
     onError: function(formType, error) {
-      console.log(error);
+      logger.error(error);
       Bert.alert('Update failed, please try again', 'danger');
     }
   },
@@ -51,7 +51,7 @@ AutoForm.hooks({
       return false;
     },
     onError: function(formType, error) {
-      console.log(error);
+      logger.error(error);
       Bert.alert('Update failed, please try again', 'danger');
     }
   },
@@ -65,7 +65,7 @@ AutoForm.hooks({
       return false;
     },
     onError: function(formType, error) {
-      console.log(error);
+      logger.error(error);
       Bert.alert('Update failed, please try again', 'danger');
     }
   },
@@ -79,7 +79,7 @@ AutoForm.hooks({
       return false;
     },
     onError: function(formType, error) {
-      console.log(error);
+      logger.error(error);
       Bert.alert('Update failed, please try again', 'danger');
     }
   }
