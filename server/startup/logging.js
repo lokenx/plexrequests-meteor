@@ -12,11 +12,11 @@ Meteor.startup(function () {
   }
 
   logger.add(logger.transports.File, {
-    filename: Path.join(application_root + '\logs.log'),
+    filename: Path.join(application_root + '/logs.log'),
     handleExceptions: true,
     humanReadableUnhandledException: true,
     exitOnError: false,
-    maxsize: 100,
+    maxsize: 10000000,
     maxFiles: 3
   });
 

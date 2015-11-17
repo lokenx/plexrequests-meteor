@@ -4,8 +4,9 @@ Meteor.methods({
     check(limit, Number);
 
     var options = {
+      from: new Date - 24 * 60 * 60 * 1000,
+      until: new Date,
       limit: limit,
-      start: start,
       order: 'desc',
       fields: ['message', 'level', 'timestamp']
     };
