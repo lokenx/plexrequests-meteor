@@ -6,7 +6,7 @@ aldeed:collection2@2.5.0
 aldeed:simple-schema@1.3.3
 amplify@1.0.0
 anti:i18n@0.4.3
-aslagle:reactive-table@0.8.16
+aslagle:reactive-table@0.8.18
 autoupdate@1.2.4
 babel-compiler@5.8.24_1
 babel-runtime@0.1.4
@@ -57,7 +57,7 @@ livedata@1.0.15
 localstorage@1.0.5
 logging@1.0.8
 lokenx:couchpotatowrapper@0.0.7
-lokenx:sickragewrapper@0.0.6
+lokenx:sickragewrapper@0.0.7
 lokenx:sonarrwrapper@0.0.4
 lokenx:themoviedbsearch@0.4.7
 meteor@1.1.10
@@ -92,7 +92,7 @@ routepolicy@1.0.6
 service-configuration@1.0.5
 session@1.1.1
 sha@1.0.4
-softwarerero:accounts-t9n@1.1.4
+softwarerero:accounts-t9n@1.1.6
 spacebars@1.0.7
 spacebars-compiler@1.0.7
 srp@1.0.4

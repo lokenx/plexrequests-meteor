@@ -12,7 +12,7 @@ Meteor.methods({
 				Movies.remove(request._id);
 				return true;
 			} catch (error) {
-				console.log("Deletion error -> " + error.message);
+				logger.error("Deletion error -> " + error.message);
 				return false;
 			}
 		} else if (request.tvdb) {
@@ -20,7 +20,7 @@ Meteor.methods({
 				TV.remove(request._id);
 				return true;
 			} catch (error) {
-				console.log("Deletion error -> " + error.message);
+				logger.error("Deletion error -> " + error.message);
 				return false;
 			}
 		}

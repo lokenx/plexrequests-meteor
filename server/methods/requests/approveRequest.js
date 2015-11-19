@@ -19,13 +19,13 @@ Meteor.methods({
 							Movies.update(request._id, {$set: {approved: true, downloaded: status}});
 							return true;
 						} catch (error) {
-							console.log(error.message);
+							logger.error(error.message);
 							return false;
 						}
 					}
 				}
 			} catch (error) {
-				console.log("Error checking Couch Potato:", error.message)
+				logger.error("Error checking Couch Potato:", error.message)
 				return false;
 			}
 
@@ -39,7 +39,7 @@ Meteor.methods({
 						return false;
 					}
 				} catch (error) {
-					console.log("Error adding to Couch Potato:", error.message)
+					logger.error("Error adding to Couch Potato:", error.message)
 					return false;
 				}
 			} else {
@@ -59,13 +59,13 @@ Meteor.methods({
 								TV.update(request._id, {$set: {approved: true, status: status}});
 								return true;
 							} catch (error) {
-								console.log(error.message);
+								logger.error(error.message);
 								return false;
 							}
 						}
 					}
 				} catch (error) {
-					console.log("Error checking SickRage:", error.message)
+					logger.error("Error checking SickRage:", error.message)
 					return false;
 				}
 
@@ -76,11 +76,11 @@ Meteor.methods({
 						TV.update(request._id, {$set: {approved: true}});
 						return true;
 					} else {
-						console.log("Error adding to SickRage");
+						logger.error("Error adding to SickRage");
 						return false;
 					}
 				} catch (e) {
-					console.log("Error adding to SickRage:", error.message);
+					logger.error("Error adding to SickRage:", error.message);
 					return false;
 				}
 			} else if (settings.sonarrENABLED) {
@@ -95,13 +95,13 @@ Meteor.methods({
 								TV.update(request._id, {$set: {approved: true, status: status}});
 								return true;
 							} catch (error) {
-								console.log(error.message);
+								logger.error(error.message);
 								return false;
 							}
 						}
 					}
 				} catch (error) {
-					console.log("Error checking Sonarr:", error.message)
+					logger.error("Error checking Sonarr:", error.message)
 					return false;
 				}
 
@@ -116,7 +116,7 @@ Meteor.methods({
 						return false;
 					}
 				} catch (error) {
-					console.log("Error adding to Sonarr:", error.message);
+					logger.error("Error adding to Sonarr:", error.message);
 					return false;
 				}
 			} else {

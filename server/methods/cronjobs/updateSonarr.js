@@ -1,7 +1,7 @@
 Meteor.methods({
   'updateSonarr' : function () {
     if (!(Settings.find({}).fetch()[0].sonarrENABLED)) {
-      // console.log("Can't update CouchPotato status if it's not enabled");
+      // logger.error("Can't update CouchPotato status if it's not enabled");
       return false;
     }
 
