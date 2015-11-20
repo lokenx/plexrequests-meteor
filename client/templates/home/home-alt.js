@@ -3,7 +3,7 @@ Template.homealt.onRendered(function () {
 
   instance.redirect = Meteor.setTimeout(function() {
     Router.go('search.page')
-  }, 5000);
+  }, 4100);
 
   Meteor.setInterval(function(){
     var countdown = instance.countdown.get();
@@ -12,7 +12,7 @@ Template.homealt.onRendered(function () {
 });
 
 Template.homealt.onCreated(function () {
-  this.countdown = new ReactiveVar(5);
+  this.countdown = new ReactiveVar(4);
 });
 
 Template.homealt.helpers({
