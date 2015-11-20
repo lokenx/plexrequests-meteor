@@ -2,8 +2,7 @@
 
 ![plexrequestspreview](http://plexrequests.8bits.ca/img/preview.png "PlexRequests")
 
-[![Join the chat at https://gitter.im/lokenx/plexrequests-meteor](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/lokenx/plexrequests-meteor?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
+[![Join the chat at https://gitter.im/lokenx/plexrequests-meteor](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/lokenx/plexrequests-meteor?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/lokenx/plexrequests-meteor.svg)](http://isitmaintained.com/project/lokenx/plexrequests-meteor "Average time to resolve an issue") [![Percentage of issues still open](http://isitmaintained.com/badge/open/lokenx/plexrequests-meteor.svg)](http://isitmaintained.com/project/lokenx/plexrequests-meteor "Percentage of issues still open")
 > This is [Plex Requests](https://github.com/lokenx/plexrequests) but written with Meteor! It's been updated with an approval system, basic issue reporting, and a new visual style!
 
 **For those upgrading please refer to the [FAQs](http://plexrequests.8bits.ca/faq/#v1-upgrade-notes) for some important notes!**
@@ -13,7 +12,7 @@
 * Easily accessible list of requested Movies and TV series
 * Simple and easy user authentication and request approval
 * [CouchPotato](https://couchpota.to/) integration for automatic downloads of Movies
-* [SickRage](https://github.com/SiCKRAGETV/SickRage) and [Sonarr](https://sonarr.tv/) integrationed for automatic TV Series downloads
+* [SickRage](https://github.com/SickRage/SickRage) and [Sonarr](https://sonarr.tv/) integrationed for automatic TV Series downloads
 * [Pushbullet](https://www.pushbullet.com/) and [Pushover](https://pushover.net/) notifications to keep up to date with requests
 
 ## Installation
