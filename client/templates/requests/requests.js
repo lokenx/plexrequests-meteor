@@ -148,7 +148,10 @@ Template.requests.helpers({
   },
   'hasMoreRequests': function () {
     return Template.instance().requests().count() >= Template.instance().limit.get();
-  }
+  },
+	'searchType': function (type) {
+		return Template.instance().searchType.get() === type;
+	}
 });
 
 Template.requests.events({
