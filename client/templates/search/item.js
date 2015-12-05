@@ -6,22 +6,28 @@ Template.item.helpers({
     return this.poster_path != "";
   },
   'isTV' : function () {
-  	return this.media_type === "tv";
+    return this.media_type === "tv";
   },
   'isRequested' : function () {
-  	if (this.media_type === "tv") {
-  		if (TV.findOne({id: this.id})) {
-  			return true;
-  		} else {
-  			return false;
-  		}
-  	}
- 		else if (this.media_type === "movie") {
-  		if (Movies.findOne({id: this.id})) {
-  			return true;
-  		} else {
-  			return false;
-  		}
-  	}
+    if (this.media_type === "tv") {
+      var doc = TV.findOne({id: this.id});
+      if (!doc) {
+        return false;
+      } else if (doc.status.downloaded > 0) {
+        return "Downloaded"
+      } else {
+        return "Requested"
+      }
+    }
+    else if (this.media_type === "movie") {
+      var doc = Movies.findOne({id: this.id});
+      if (!doc) {
+        return false;
+      } else if (doc.downloaded) {
+        return "Downloaded"
+      } else {
+        return "Requested"
+      }
+    }
   }
 })
