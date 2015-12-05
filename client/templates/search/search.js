@@ -66,7 +66,7 @@ Template.search.events({
     var searchType = template.searchType.get();
     var results = [];
 
-    if (searchterm.length > 2) {
+    if (searchterm.length > 1) {
       template.searching.set(true);
       template.error.set(false);
       Meteor.call("searchContent", searchterm, searchType, function (error, result) {
