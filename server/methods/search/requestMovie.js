@@ -44,7 +44,13 @@ Meteor.methods({
 							approved: true,
 							poster_path: poster
 						});
-						return 'exists';
+
+						if (status) {
+							return 'exists';
+						} else {
+							return true;
+						}
+
 					} catch (error) {
 						logger.error(error.message);
 						return false;
