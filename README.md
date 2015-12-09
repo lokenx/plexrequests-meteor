@@ -5,7 +5,7 @@
 [![Join the chat at https://gitter.im/lokenx/plexrequests-meteor](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/lokenx/plexrequests-meteor?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/lokenx/plexrequests-meteor.svg)](http://isitmaintained.com/project/lokenx/plexrequests-meteor "Average time to resolve an issue") [![Percentage of issues still open](http://isitmaintained.com/badge/open/lokenx/plexrequests-meteor.svg)](http://isitmaintained.com/project/lokenx/plexrequests-meteor "Percentage of issues still open")
 > This is [Plex Requests](https://github.com/lokenx/plexrequests) but written with Meteor! It's been updated with an approval system, basic issue reporting, and a new visual style!
 
-**For those upgrading please refer to the [FAQs](http://plexrequests.8bits.ca/faq/#v1-upgrade-notes) for some important notes!**
+**I will be away for the next 3-4 weeks travelling for the holiday season. Responses to issues will be slow, and no new changes will be pushed until I return. --lokenx**
 
 ## Features
 * Users can easily search the [TheMovieDB](https://www.themoviedb.org/) for content to request
