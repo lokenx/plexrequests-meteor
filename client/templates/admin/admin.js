@@ -92,6 +92,14 @@ Template.admin.helpers({
   branch: function () {
     return Template.instance().branch.get();
   },
+  sonarrProfiles: function () {
+    return Template.instance().sonarrProfiles.get().map(function (profile) {
+      return {
+        label: profile.name,
+        value: profile.id,
+      };
+    });
+  },
   version: function () {
     return Template.instance().version.get();
   },
@@ -105,6 +113,7 @@ Template.admin.onCreated(function(){
   instance.branch = new ReactiveVar("");
   instance.version = new ReactiveVar("");
   instance.update = new ReactiveVar(false);
+  instance.sonarrProfiles = new ReactiveVar([]);
 
   Meteor.call("getBranch", function (error, result) {
     if (result) {
@@ -121,6 +130,12 @@ Template.admin.onCreated(function(){
   Meteor.call("checkForUpdate", function (error, result) {
     if (result) {
       instance.update.set(result)
+    }
+  });
+
+  Meteor.call("sonarrProfiles", function (error, result) {
+    if (result) {
+      instance.sonarrProfiles.set(result);
     }
   });
 

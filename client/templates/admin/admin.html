@@ -176,8 +176,8 @@
 						{{> afQuickField name='sonarrSSL'}}
 						<p class="text-muted">Enabled if you use SSL on your Sonarr server.</p>
 						<br>
-						{{> afQuickField name='sonarrQUALITYPROFILEID'}}
-						<p class="text-muted">Select a Sonarr Quality Profile. The default is 1.</p>
+						{{> afQuickField name='sonarrQUALITYPROFILEID' type='select' options=sonarrProfiles firstOption=false}}
+						<p class="text-muted">Select a Sonarr Quality Profile.</p>
 						<br>
 						{{> afQuickField name='sonarrROOTFOLDERPATH'}}
 						<p class="text-muted">Enter the root folder where tv shows are saved. For example C:\Media\TV.</p>
