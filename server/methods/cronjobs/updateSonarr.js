@@ -9,7 +9,9 @@ Meteor.methods({
 
     tv.forEach(function (show) {
       var status = Sonarr.seriesStats(show.tvdb);
-      TV.update(show, {$set: {status: status}});
+      if (status) {
+        TV.update(show, {$set: {status: status}});        
+      }
     });
 
     return true;
