@@ -51,6 +51,9 @@ Meteor.methods({
       return false;
     }
 
+		var users = [];
+		var admintitle = '';
+		
 		xml2js.parseString(friendsXML.content, {mergeAttrs : true, explicitArray : false} ,function (err, result) {
 			users = result['MediaContainer']['User'];
 		});
