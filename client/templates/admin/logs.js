@@ -25,7 +25,7 @@ Template.logs.onCreated(function () {
 
   Meteor.call("getLogs", 0, 100, function (error, data) {
     if (error) {
-      logger.error(error)
+      console.error(error)
     }
 
     instance.logs.set(data);

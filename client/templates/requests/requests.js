@@ -164,7 +164,7 @@ Template.requests.events({
 		Meteor.call("approveRequest", this, function(error, result) {
 			if (error || !(result)) {
 				//Alert error
-				logger.error("Error approving, please check server logs");
+				console.error("Error approving, please check server logs");
 				Bert.alert("Unable to approve " + title +", please try again!", "danger");
 			} else {
 				// Alert success
@@ -177,7 +177,7 @@ Template.requests.events({
 			Meteor.call("deleteRequest", this, function(error, result) {
 				if (error || !(result)) {
 					//Alert error
-					logger.error(error);
+					console.error(error);
 				} else {
 					// Alert success with undo option
 				}
@@ -200,7 +200,7 @@ Template.requests.events({
 		Meteor.call("clearIssues", this, function (error, result) {
 			if (error || !(result)) {
 				//Alert error
-				logger.error(error);
+				console.error(error);
 				Bert.alert("Error clearing issues, please try again!", "danger");
 			} else {
 				// Alert success

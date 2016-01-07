@@ -10,7 +10,7 @@ Template.home.events({
     Meteor.call('checkPlexAuthentication', function(error, data) {
       if (error) {
       	Bert.alert( 'There was an issue logging in. Please try again!', 'danger');
-      	logger.error("Issue checking authentication status: " + error.message);
+      	console.error("Issue checking authentication status: " + error.message);
       } else if (data) {
         Meteor.call('checkPlexUser', plexUsername, plexPassword, function (error, result) {
           if (error) {
