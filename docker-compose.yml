@@ -1,0 +1,13 @@
+# docker-compose.yml
+
+dashboard:
+  image: jkaberg/docker-plexrequests-meteor
+  ports:
+   - "8989:80"
+  links:
+   - mongo
+  environment:
+   - MONGO_URL=mongodb://mongo:27017/plexrequests
+
+mongo:
+  image: mongo:latest
