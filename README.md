@@ -20,6 +20,13 @@ Installation is straightforward: please update to Meteor 1.2.1, clone the repo, 
 
 On first run navigate to `http://localhost:3000/admin` and create an admin account with an email address and password. **If this isn't done someone else can create the admin account to your application.** This account is only used for logging in, email integration isn't enabled. Once logged in, you can configure your settings and get things going.
 
+## Docker
+To use the bundled docker-compose simply run it with
+
+```docker-compose up```
+
+(add -d to run it as a daemon)
+
 ## FAQ
 Please visit the projects [GitHub page](http://plexrequests.8bits.ca/) for [FAQ page](http://plexrequests.8bits.ca/faq)
 
