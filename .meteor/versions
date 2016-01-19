@@ -58,7 +58,7 @@ localstorage@1.0.5
 logging@1.0.8
 lokenx:couchpotatowrapper@0.0.7
 lokenx:sickragewrapper@0.0.7
-lokenx:sonarrwrapper@0.0.7
+lokenx:sonarrwrapper@0.0.8
 lokenx:themoviedbsearch@0.4.7
 meteor@1.1.10
 meteor-base@1.0.1
