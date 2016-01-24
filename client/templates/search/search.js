@@ -127,7 +127,7 @@ Template.search.events({
           Bert.alert("You've exceeded your weekly limit!", "info");
           tvBtn.html('<i class="fa fa-plus"></i> &nbsp; Request ');
         } else if (result === 'exists') {
-          Bert.alert("TV Show is already on Plex!", "info");
+          Bert.alert("TV Show has already been requested!", "info");
           // tvBtn.hide();
         }
       })
