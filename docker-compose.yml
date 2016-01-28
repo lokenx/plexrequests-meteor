@@ -8,6 +8,7 @@ dashboard:
    - mongo
   environment:
    - MONGO_URL=mongodb://mongo:27017/plexrequests
+   - ROOT_URL=http://localhost/
 
 mongo:
   image: mongo:latest
