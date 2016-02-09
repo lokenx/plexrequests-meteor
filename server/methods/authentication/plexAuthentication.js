@@ -53,7 +53,7 @@ Meteor.methods({
 
 		var users = [];
 		var admintitle = '';
-		
+
 		xml2js.parseString(friendsXML.content, {mergeAttrs : true, explicitArray : false} ,function (err, result) {
 			users = result['MediaContainer']['User'];
 		});
@@ -64,8 +64,13 @@ Meteor.methods({
 
 		var friendsList = [];
 
-		for (var i = 0; i < users.length; i++) {
-		 	friendsList.push( users[i].title.toLowerCase() );
+		// Check if an array of users or a single user is returned
+		if (users.length) {
+			for (var i = 0; i < users.length; i++) {
+			 	friendsList.push( users[i].title.toLowerCase() );
+			}
+		} else if (users.title) {
+			friendsList.push( users.title.toLowerCase() );
 		}
 
     //Add admin username to the list
