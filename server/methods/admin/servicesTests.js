@@ -40,5 +40,21 @@ Meteor.methods({
       logger.error("Error testing Pushover: " + error.response.data.errors[0])
       throw new Meteor.Error(401, error.response.data.errors[0]);
     }
+  },
+  testSlack: function () {
+    var settings = Settings.find().fetch()[0];
+    var webhookUrl = settings.slackAPI;
+
+    try {
+      var test = HTTP.post(webhookUrl,
+          {data: {text: 'Plex Requests Test notification'},
+            timeout: 4000});
+
+      logger.info("Slack tested successfully")
+      return true;
+    } catch (error) {
+      logger.error("Error testing Slack: " + error.response.content)
+      throw new Meteor.Error(401, error.response.content);
+    }
   }
 });

@@ -4,16 +4,16 @@ Meteor.methods({
     check(style, String);
 
     var settings = Settings.find().fetch()[0];
-    var type = (request.media_type === "tv") ? "TV Show" : "Movie";
+    var type = (request.media_type === 'tv') ? 'TV Show' : 'Movie';
 
-    if (style === "request") {
+    if (style === 'request') {
       if (settings.pushbulletENABLED) {
         var access_token = Settings.find().fetch()[0].pushbulletAPI;
 
         try {
-          var test = HTTP.post("https://api.pushbullet.com/v2/pushes",
+          var test = HTTP.post('https://api.pushbullet.com/v2/pushes',
             {headers: {'Access-Token': access_token},
-            params: {type: 'note', title: 'Plex Requests ' + type, body: request.title + " requested by " + request.user},
+            params: {type: 'note', title: 'Plex Requests ' + type, body: request.title + ' requested by ' + request.user},
             timeout: 4000});
 
           return true;
@@ -26,13 +26,26 @@ Meteor.methods({
         var user_key = settings.pushoverUSER;
 
         try {
-          var test = HTTP.post("https://api.pushover.net/1/messages.json",
-            {params: {token: access_token, user: user_key, title: 'Plex Requests ' + type, message: request.title + " requested by " + request.user},
+          var test = HTTP.post('https://api.pushover.net/1/messages.json',
+            {params: {token: access_token, user: user_key, title: 'Plex Requests ' + type, message: request.title + ' requested by ' + request.user},
             timeout: 4000});
 
           return true;
         } catch (error) {
           logger.error('Pushover notification error: ' + error.response.data.errors[0]);
+          return true;
+        }
+      } else if (settings.slackENABLED) {
+        var webhookUrl = settings.slackAPI;
+
+        try {
+          var test = HTTP.post(webhookUrl,
+            {data: {text: 'New ' + type + " Request:\n" +  request.title + ' requested by ' + request.user},
+            timeout: 4000});
+
+          return true;
+        } catch (error) {
+          logger.error('Slack notification error: ' + error.response.content);
           return true;
         }
       }
@@ -41,9 +54,9 @@ Meteor.methods({
         var access_token = Settings.find().fetch()[0].pushbulletAPI;
 
         try {
-          var test = HTTP.post("https://api.pushbullet.com/v2/pushes",
+          var test = HTTP.post('https://api.pushbullet.com/v2/pushes',
             {headers: {'Access-Token': access_token},
-            params: {type: 'note', title: 'Plex Requests ' + type + " Issue", body: request.title + " Issues: " + request.issues.toString() + " (" + request.user + ")"},
+            params: {type: 'note', title: 'Plex Requests ' + type + ' Issue', body: request.title + ' Issues: ' + request.issues.toString() + ' (' + request.user + ')'},
             timeout: 4000});
 
           return true;
@@ -56,13 +69,26 @@ Meteor.methods({
         var user_key = settings.pushoverUSER;
 
         try {
-          var test = HTTP.post("https://api.pushover.net/1/messages.json",
-            {params: {token: access_token, user: user_key, title: 'Plex Requests ' + type + " Issue", message: request.title + " Issues: " + request.issues.toString() + " (" + request.user + ")"},
+          var test = HTTP.post('https://api.pushover.net/1/messages.json',
+            {params: {token: access_token, user: user_key, title: 'Plex Requests ' + type + ' Issue', message: request.title + ' Issues: ' + request.issues.toString() + ' (' + request.user + ')'},
             timeout: 4000});
 
           return true;
         } catch (error) {
           logger.error('Pushover notification error: ' + error.response.data.errors[0]);
+          return true;
+        }
+      } else if (settings.slackENABLED) {
+        var webhookUrl = settings.slackAPI;
+
+        try {
+          var test = HTTP.post(webhookUrl,
+              {data: {text: request.title + ' Issues: ' + request.issues.toString() + ' (' + request.user + ')'},
+                timeout: 4000});
+
+          return true;
+        } catch (error) {
+          logger.error('Slack notification error: ' + error.response.content);
           return true;
         }
       }
