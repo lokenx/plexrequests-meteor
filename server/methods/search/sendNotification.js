@@ -8,10 +8,10 @@ Meteor.methods({
 
     if (style === 'request') {
       if (settings.pushbulletENABLED) {
-        var access_token = Settings.find().fetch()[0].pushbulletAPI;
+        var access_token = settings.pushbulletAPI;
 
         try {
-          var test = HTTP.post('https://api.pushbullet.com/v2/pushes',
+          HTTP.post('https://api.pushbullet.com/v2/pushes',
             {headers: {'Access-Token': access_token},
             params: {type: 'note', title: 'Plex Requests ' + type, body: request.title + ' requested by ' + request.user},
             timeout: 4000});
@@ -26,7 +26,7 @@ Meteor.methods({
         var user_key = settings.pushoverUSER;
 
         try {
-          var test = HTTP.post('https://api.pushover.net/1/messages.json',
+          HTTP.post('https://api.pushover.net/1/messages.json',
             {params: {token: access_token, user: user_key, title: 'Plex Requests ' + type, message: request.title + ' requested by ' + request.user},
             timeout: 4000});
 
@@ -37,11 +37,28 @@ Meteor.methods({
         }
       } else if (settings.slackENABLED) {
         var webhookUrl = settings.slackAPI;
+        var username = settings.slackUsername;
+        var channel = settings.slackChannel;
+        var data = {
+          text: request.user + ' requested ' + type + ' <' + request.link + '|' + request.title + ' (' + request.year + ')>'
+        };
+
+        if (username) {
+          data.username = username;
+        }
+        if (channel) {
+          data.channel = channel;
+        }
 
         try {
-          var test = HTTP.post(webhookUrl,
-            {data: {text: 'New ' + type + " Request:\n" +  request.title + ' requested by ' + request.user},
-            timeout: 4000});
+          console.log(request)
+          HTTP.post(
+              webhookUrl,
+              {
+                data: data,
+                timeout: 4000
+              }
+          );
 
           return true;
         } catch (error) {
@@ -51,10 +68,10 @@ Meteor.methods({
       }
     } else {
       if (settings.pushbulletENABLED) {
-        var access_token = Settings.find().fetch()[0].pushbulletAPI;
+        var access_token = settings.pushbulletAPI;
 
         try {
-          var test = HTTP.post('https://api.pushbullet.com/v2/pushes',
+          HTTP.post('https://api.pushbullet.com/v2/pushes',
             {headers: {'Access-Token': access_token},
             params: {type: 'note', title: 'Plex Requests ' + type + ' Issue', body: request.title + ' Issues: ' + request.issues.toString() + ' (' + request.user + ')'},
             timeout: 4000});
@@ -69,7 +86,7 @@ Meteor.methods({
         var user_key = settings.pushoverUSER;
 
         try {
-          var test = HTTP.post('https://api.pushover.net/1/messages.json',
+          HTTP.post('https://api.pushover.net/1/messages.json',
             {params: {token: access_token, user: user_key, title: 'Plex Requests ' + type + ' Issue', message: request.title + ' Issues: ' + request.issues.toString() + ' (' + request.user + ')'},
             timeout: 4000});
 
@@ -82,7 +99,7 @@ Meteor.methods({
         var webhookUrl = settings.slackAPI;
 
         try {
-          var test = HTTP.post(webhookUrl,
+          HTTP.post(webhookUrl,
               {data: {text: request.title + ' Issues: ' + request.issues.toString() + ' (' + request.user + ')'},
                 timeout: 4000});
 
