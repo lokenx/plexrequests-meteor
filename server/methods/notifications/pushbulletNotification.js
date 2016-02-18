@@ -3,9 +3,6 @@ Meteor.methods({
     var access_token = settings.pushbulletAPI;
     var pushbullet_url = settings.pushbulletURL;
 
-    console.log(pushbullet_url);
-    console.log(access_token);
-
     try {
       HTTP.post(
         pushbullet_url,
