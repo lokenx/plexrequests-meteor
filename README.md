@@ -13,7 +13,7 @@
 * Simple and easy user authentication and request approval
 * [CouchPotato](https://couchpota.to/) integration for automatic downloads of Movies
 * [SickRage](https://github.com/SickRage/SickRage) and [Sonarr](https://sonarr.tv/) integrationed for automatic TV Series downloads
-* [Pushbullet](https://www.pushbullet.com/) and [Pushover](https://pushover.net/) notifications to keep up to date with requests
+* [Pushbullet](https://www.pushbullet.com/), [Pushover](https://pushover.net/) and [Slack](https://slack.com/) notifications to keep up to date with requests
 
 ## Installation
 Installation is straightforward: please update to Meteor 1.2.1, clone the repo, `cd` into the directory, and run `meteor`. For Windows users check out this [blog post](http://8bits.ca/posts/2015/installing-plex-requests-on-windows/) for installation instructions using Git!
