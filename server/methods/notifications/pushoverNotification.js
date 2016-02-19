@@ -2,7 +2,7 @@ Meteor.methods({
   "sendPushoverNotification": function (settings, title, message) {
     var access_token = settings.pushoverAPI;
     var user_key = settings.pushoverUSER;
-    var pushover_url = settings.pushoverURL;
+    var pushover_url = 'https://api.pushover.net/1/messages.json';
 
     try {
       HTTP.post(

@@ -1,7 +1,7 @@
 Meteor.methods({
   "sendPushbulletNotification": function (settings, title, body) {
     var access_token = settings.pushbulletAPI;
-    var pushbullet_url = settings.pushbulletURL;
+    var pushbullet_url = 'https://api.pushbullet.com/v2/pushes';
 
     try {
       HTTP.post(
