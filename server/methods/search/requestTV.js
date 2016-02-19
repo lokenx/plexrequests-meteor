@@ -74,7 +74,7 @@ Meteor.methods({
 				}
 			}
 		} catch (error) {
-			logger.error("Error checking SickRage/Sonarr:", error.message)
+			logger.error("Error checking SickRage/Sonarr:", error.message);
 			return false;
 		}
 
@@ -134,9 +134,9 @@ Meteor.methods({
 				}
 			} else if (settings.sonarrENABLED) {
 				try {
-					var qualityProfileId = settings.sonarrQUALITYPROFILEID
-					var seasonFolder = settings.sonarrSEASONFOLDERS
-					var rootFolderPath = settings.sonarrROOTFOLDERPATH
+					var qualityProfileId = settings.sonarrQUALITYPROFILEID;
+					var seasonFolder = settings.sonarrSEASONFOLDERS;
+					var rootFolderPath = settings.sonarrROOTFOLDERPATH;
 					var add = Sonarr.seriesPost(tvdb,request.title, qualityProfileId, seasonFolder, rootFolderPath, request.episodes);
 				} catch (error) {
 					logger.error("Error adding to Sonarr:", error.message);

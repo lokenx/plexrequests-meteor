@@ -9,7 +9,7 @@ Meteor.methods({
 
     movies.forEach(function (movie) {
       var result = CouchPotato.mediaGet(movie.imdb);
-			var status = (result.status == "done") ? true : false;
+			var status = result.status == "done";
 
       if (result.status === "false") {
         // Not in CouchPotato anymore

@@ -13,7 +13,7 @@ Meteor.methods({
 			try {
 				if (settings.couchPotatoENABLED) {
 					var checkCP = CouchPotato.mediaGet(request.imdb);
-					var status = (checkCP.status == "done") ? true : false;
+					var status = checkCP.status == "done";
 					if (checkCP.status !== "false" && checkCP !== false) {
 						try {
 							Movies.update(request._id, {$set: {approved: true, downloaded: status}});
@@ -25,7 +25,7 @@ Meteor.methods({
 					}
 				}
 			} catch (error) {
-				logger.error("Error checking Couch Potato:", error.message)
+				logger.error("Error checking Couch Potato:", error.message);
 				return false;
 			}
 
@@ -39,7 +39,7 @@ Meteor.methods({
 						return false;
 					}
 				} catch (error) {
-					logger.error("Error adding to Couch Potato:", error.message)
+					logger.error("Error adding to Couch Potato:", error.message);
 					return false;
 				}
 			} else {
@@ -65,7 +65,7 @@ Meteor.methods({
 						}
 					}
 				} catch (error) {
-					logger.error("Error checking SickRage:", error.message)
+					logger.error("Error checking SickRage:", error.message);
 					return false;
 				}
 
@@ -101,13 +101,13 @@ Meteor.methods({
 						}
 					}
 				} catch (error) {
-					logger.error("Error checking Sonarr:", error.message)
+					logger.error("Error checking Sonarr:", error.message);
 					return false;
 				}
 
-				var qualityProfileId = settings.sonarrQUALITYPROFILEID
-				var seasonFolder = settings.sonarrSEASONFOLDERS
-				var rootFolderPath = settings.sonarrROOTFOLDERPATH
+				var qualityProfileId = settings.sonarrQUALITYPROFILEID;
+				var seasonFolder = settings.sonarrSEASONFOLDERS;
+				var rootFolderPath = settings.sonarrROOTFOLDERPATH;
 				try {
 					if (Sonarr.seriesPost(request.tvdb,request.title, qualityProfileId, seasonFolder, rootFolderPath, request.episodes)) {
 						TV.update(request._id, {$set: {approved: true}});
