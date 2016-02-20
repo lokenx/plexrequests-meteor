@@ -8,8 +8,6 @@ Meteor.startup(function () {
 		Settings.insert({});
 	}
 
-	console.log("foo");
-
 	if (Settings.find().count() === 0) {
 		logger.error("Adding default settings");
 		Settings.insert({});
