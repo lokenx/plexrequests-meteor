@@ -1,11 +1,10 @@
 Template.home.events({
 	'submit #sign-in': function (event) {
 
-
     $('#submitButton').html('<i class="fa fa-cog fa-spin  fa-fw"></i>  Signing In');
 
-    plexUsername = $("#plex-username").val().toLowerCase();
-    plexPassword = $("#plex-password").val() || '';
+    var plexUsername = $("#plex-username").val().toLowerCase();
+    var plexPassword = $("#plex-password").val() || '';
 
     Meteor.call('checkPlexAuthentication', function(error, data) {
       if (error) {
