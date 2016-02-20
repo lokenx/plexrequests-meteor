@@ -38,7 +38,7 @@ Template.home.events({
 
     return false;
 	}
-})
+});
 
 Template.home.onCreated(function () {
 	var instance = this;
@@ -48,7 +48,7 @@ Template.home.onCreated(function () {
 	Meteor.call("checkPlexAuthenticationPasswords", function (error, data) {
 		instance.requirePassword.set(data);
 	})
-})
+});
 
 Template.home.helpers({
 	requirePassword: function () {

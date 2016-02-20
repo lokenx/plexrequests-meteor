@@ -11,10 +11,10 @@ Template.registerHelper('auth', function () {
 		} else {
 			return false;
 		}
-	}
+	};
 	return auth();
 });
 
 Template.registerHelper('plexAuth', function () {
-	return (Session.get("auth") === "true") ? true : false;
-})
+	return Session.get("auth") === "true";
+});

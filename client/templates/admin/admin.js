@@ -254,7 +254,7 @@ Template.admin.events({
         $("#plexsubmit").html('Get token <i class="fa fa-key"></i>');
         Bert.alert("Successfully got token!", "success");
       }
-    })
+    });
     return false;
   }
 });

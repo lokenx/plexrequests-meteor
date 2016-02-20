@@ -44,10 +44,10 @@ Template.requests.onCreated(function () {
 			if (selectedFilter !== "All Requests") {
 				switch (selectedFilter) {
 					case "Approved":
-						filter = {approved: true}
+						filter = {approved: true};
 						break;
 					case "Not Approved":
-						filter = {approved: false}
+						filter = {approved: false};
 						break;
 					case "Downloaded":
 						filter = {downloaded: true};
@@ -67,10 +67,10 @@ Template.requests.onCreated(function () {
 			if (selectedFilter !== "All Requests") {
 				switch (selectedFilter) {
 					case "Approved":
-						filter = {approved: true}
+						filter = {approved: true};
 						break;
 					case "Not Approved":
-						filter = {approved: false}
+						filter = {approved: false};
 						break;
 					case "Downloaded":
 						filter = {"status.downloaded": {$gt: 0}};
@@ -254,4 +254,4 @@ var scroll = function () {
 			$('.load-more').trigger('click');
 		}
 	});
-}
+};

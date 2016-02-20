@@ -1,6 +1,6 @@
 Template.layout.events({
 	'click #logoutUser' : function () {
-		Session.clearAuth()
+		Session.clearAuth();
 		Router.go('/');
 		Bert.alert("Successfully logged out!", "success");
 	}

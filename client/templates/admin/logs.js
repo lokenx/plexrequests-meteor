@@ -31,4 +31,4 @@ Template.logs.onCreated(function () {
     instance.logs.set(data);
 
   })
-})
+});
