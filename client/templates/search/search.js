@@ -60,11 +60,8 @@ Template.search.events({
     $('#search-input').trigger('keyup');
   },
   'keyup  #search-input': _.throttle(function (event, template) {
-    // template.results.set([]);
-
     var searchterm = $(event.target).val().trim();
     var searchType = template.searchType.get();
-    var results = [];
 
     if (searchterm.length > 1) {
       template.searching.set(true);
@@ -93,7 +90,7 @@ Template.search.events({
     var requestTitle = this.title;
     var request = this;
     request.user = Session.get("user");
-    request.episodes = ($(event.target).attr("value") === "true") ? true : false;
+    request.episodes = $(event.target).attr("value") === "true";
 
     if (this.media_type === "movie") {
       btn.html('<i class="fa fa-spinner fa-spin"></i> &nbsp; Requesting...');

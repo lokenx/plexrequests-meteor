@@ -25,9 +25,9 @@ Meteor.methods({
       }
       if (settings.slackENABLED) {
         Meteor.call(
-            "sendSlackNotification",
-            settings,
-            request.user + ' requested ' + type + ' <' + request.link + '|' + request.title + ' (' + request.year + ')>'
+          "sendSlackNotification",
+          settings,
+          request.user + ' requested ' + type + ' <' + request.link + '|' + request.title + ' (' + request.year + ')>'
         )
       }
     } else {
@@ -49,9 +49,9 @@ Meteor.methods({
       }
       if (settings.slackENABLED) {
         Meteor.call(
-            "sendSlackNotification",
-            settings,
-            request.title + ' Issues: ' + request.issues.toString() + ' (' + request.user + ')'
+          "sendSlackNotification",
+          settings,
+          request.title + ' Issues: ' + request.issues.toString() + ' (' + request.user + ')'
         )
       }
     }

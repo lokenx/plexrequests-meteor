@@ -44,10 +44,10 @@ Template.requests.onCreated(function () {
 			if (selectedFilter !== "All Requests") {
 				switch (selectedFilter) {
 					case "Approved":
-						filter = {approved: true}
+						filter = {approved: true};
 						break;
 					case "Not Approved":
-						filter = {approved: false}
+						filter = {approved: false};
 						break;
 					case "Downloaded":
 						filter = {downloaded: true};
@@ -67,10 +67,10 @@ Template.requests.onCreated(function () {
 			if (selectedFilter !== "All Requests") {
 				switch (selectedFilter) {
 					case "Approved":
-						filter = {approved: true}
+						filter = {approved: true};
 						break;
 					case "Not Approved":
-						filter = {approved: false}
+						filter = {approved: false};
 						break;
 					case "Downloaded":
 						filter = {"status.downloaded": {$gt: 0}};
@@ -186,7 +186,9 @@ Template.requests.events({
 	},
 	'click .issue-select' : function (event, template) {
 		var issue = event.target.text;
-		Meteor.call("addIssue", this, issue, function(error, result) {
+		var request = this;
+		request.user = Session.get("user");
+		Meteor.call("addIssue", request, issue, function(error, result) {
 			if (error || !(result)) {
 				//Alert error
 				Bert.alert("Error adding an issue, or it already exists. Please try again!", "danger");
@@ -254,4 +256,4 @@ var scroll = function () {
 			$('.load-more').trigger('click');
 		}
 	});
-}
+};

@@ -96,7 +96,7 @@ Template.admin.helpers({
     return Template.instance().sonarrProfiles.get().map(function (profile) {
       return {
         label: profile.name,
-        value: profile.id,
+        value: profile.id
       };
     });
   },
@@ -254,7 +254,7 @@ Template.admin.events({
         $("#plexsubmit").html('Get token <i class="fa fa-key"></i>');
         Bert.alert("Successfully got token!", "success");
       }
-    })
+    });
     return false;
   }
 });

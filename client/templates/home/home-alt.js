@@ -19,11 +19,11 @@ Template.homealt.helpers({
   countdown: function () {
     return Template.instance().countdown.get();
   }
-})
+});
 
 Template.homealt.onDestroyed(function () {
   // Required so that if you hit back button numerous times
   // you don't view the page while the timeout is still active
   var instance = this;
   Meteor.clearTimeout(instance.redirect);
-})
+});
