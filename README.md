@@ -14,6 +14,8 @@
 * [CouchPotato](https://couchpota.to/) integration for automatic downloads of Movies
 * [SickRage](https://github.com/SickRage/SickRage) and [Sonarr](https://sonarr.tv/) integrationed for automatic TV Series downloads
 * [Pushbullet](https://www.pushbullet.com/), [Pushover](https://pushover.net/) and [Slack](https://slack.com/) notifications to keep up to date with requests
+    * You can now push notifications to a custom channel to easily notify others whenever new content is requested and added. Users only need to
+        subscribe to the channel to start recieving notifications. Visit the [Channel Creation Page](https://www.pushbullet.com/my-channel) to learn more about how to create and distribute your own channel.
 
 ## Installation
 Installation is straightforward: please update to Meteor 1.2.1, clone the repo, `cd` into the directory, and run `meteor`. For Windows users check out this [blog post](http://8bits.ca/posts/2015/installing-plex-requests-on-windows/) for installation instructions using Git!
