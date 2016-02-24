@@ -1,6 +1,7 @@
 Meteor.methods({
   "sendPushbulletNotification": function (settings, title, body) {
     var access_token = settings.pushbulletAPI;
+    var channel_tag = settings.pushbulletChannel;
     var pushbullet_url = 'https://api.pushbullet.com/v2/pushes';
 
     try {
@@ -13,7 +14,8 @@ Meteor.methods({
           params: {
             type: 'note',
             title: title,
-            body: body
+            body: body,
+            channel: channel_tag
           },
           timeout: 4000
         }
