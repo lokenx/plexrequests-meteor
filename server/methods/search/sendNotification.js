@@ -5,30 +5,22 @@ Meteor.methods({
 
     var settings = Settings.find().fetch()[0];
     var type = (request.media_type === 'tv') ? 'TV Show' : 'Movie';
+    var message = Meteor.call(
+		"setTestVARS", 
+		settings.customNotificationTITLE, 
+		settings.customNotificationTEXT, 
+		request
+		);
 
-    if (style === 'request') {
+	if (style === 'request') {
       if (settings.pushbulletENABLED) {
-        Meteor.call(
-          "sendPushbulletNotification",
-          settings,
-          'Plex Requests ' + type,
-          request.title + ' requested by ' + request.user
-        )
+        Meteor.call("sendPushbulletNotification", settings, message.title, message.body)
       }
       if (settings.pushoverENABLED) {
-        Meteor.call(
-          "sendPushoverNotification",
-          settings,
-          'Plex Requests ' + type,
-          request.title + ' requested by ' + request.user
-        )
+        Meteor.call("sendPushoverNotification", settings, message.title, message.body)
       }
       if (settings.slackENABLED) {
-        Meteor.call(
-          "sendSlackNotification",
-          settings,
-          request.user + ' requested ' + type + ' <' + request.link + '|' + request.title + ' (' + request.year + ')>'
-        )
+        Meteor.call("sendSlackNotification", settings, message.title + ":\\n" + message.body)
       }
     } else {
       if (settings.pushbulletENABLED) {
