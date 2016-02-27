@@ -191,8 +191,15 @@
 
 				<div class="col-md-8 settings-pane" style="display: none;" id="SettingsNotifications">
 					{{#autoForm collection="Settings" doc=settings id="updateNotificationsSettingsForm" type="update" resetOnSuccess="false"}}
+						{{> afQuickField name='customNotificationTITLE' size="40"}}
+						<p class="text-muted"> Enter custom notification title</p>
+						<br>
+						{{> afQuickField name='customNotificationTEXT' size="40"}}
+						<p class="text-muted"> Enter custom notification text</p>
+						<br>
+
 						{{> afQuickField name='pushbulletENABLED'}}
-						<p class="text-muted">Enabled Pushbullet to receive alerts.</p>
+						<p class="text-muted">Enable Pushbullet to receive alerts.</p>
 						<br>
 						{{> afQuickField name='pushbulletAPI' size="40"}}
 						<p class="text-muted">Enter your API from Pushbullet. It can be found in Pushbullet Settings -> Access Token.</p>
