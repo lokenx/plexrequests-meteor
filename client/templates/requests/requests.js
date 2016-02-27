@@ -120,6 +120,14 @@ Template.requests.helpers({
   	}
   	return approval;
   },
+  'available': function () {
+	if (this.imdb) {
+		return (this.downloaded) ? true : false;
+	}
+	else {
+		return;
+	}
+  },
   'requesting_user' : function () {
   	if (Meteor.user()) {
   		return "<li><strong>User:</strong> " + this.user + "</li>";
@@ -247,6 +255,28 @@ Template.requests.events({
 	},
 	'click .go-to-top': function () {
 		$('body').animate({ scrollTop: 0 }, "slow")
+	},
+	'click .mark-available': function (event, template) {
+		var movie = this;
+		Meteor.call('markAvailability', movie, true, function(error, res) {
+
+			if (error) {
+				console.error(error);
+				Bert.alert("Error marking as available, please try again!", "danger");
+			}
+			Bert.alert(movie.title + " marked as available!", "success");
+		})
+	},
+	'click .mark-unavailable': function (event, template) {
+		var movie = this;
+		Meteor.call('markAvailability', movie, false, function(error, res) {
+
+			if (error) {
+				console.error(error);
+				Bert.alert("Error marking as unavailable, please try again!", "danger");
+			}
+			Bert.alert(movie.title + " marked as unavailable!", "success");
+		})
 	}
 });
 
