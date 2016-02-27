@@ -1,7 +1,7 @@
 Meteor.methods({
   'updateCP' : function () {
     if (!(Settings.find({}).fetch()[0].couchPotatoENABLED)) {
-      // console.log("Can't update CouchPotato status if it's not enabled");
+      // logger.error("Can't update CouchPotato status if it's not enabled");
       return false;
     }
 
@@ -9,7 +9,7 @@ Meteor.methods({
 
     movies.forEach(function (movie) {
       var result = CouchPotato.mediaGet(movie.imdb);
-			var status = (result.status == "done") ? true : false;
+			var status = result.status == "done";
 
       if (result.status === "false") {
         // Not in CouchPotato anymore

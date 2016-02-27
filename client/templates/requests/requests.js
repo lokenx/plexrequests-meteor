@@ -44,10 +44,10 @@ Template.requests.onCreated(function () {
 			if (selectedFilter !== "All Requests") {
 				switch (selectedFilter) {
 					case "Approved":
-						filter = {approved: true}
+						filter = {approved: true};
 						break;
 					case "Not Approved":
-						filter = {approved: false}
+						filter = {approved: false};
 						break;
 					case "Downloaded":
 						filter = {downloaded: true};
@@ -67,10 +67,10 @@ Template.requests.onCreated(function () {
 			if (selectedFilter !== "All Requests") {
 				switch (selectedFilter) {
 					case "Approved":
-						filter = {approved: true}
+						filter = {approved: true};
 						break;
 					case "Not Approved":
-						filter = {approved: false}
+						filter = {approved: false};
 						break;
 					case "Downloaded":
 						filter = {"status.downloaded": {$gt: 0}};
@@ -95,7 +95,7 @@ Template.requests.helpers({
 		if ((typeof this.poster_path === 'undefined') | (this.poster_path === "/")) {
 			return "poster-placeholder.png";
 		} else {
-			return "http://image.tmdb.org/t/p/w154" + this.poster_path;
+			return "https://image.tmdb.org/t/p/w154" + this.poster_path;
 		}
   },
   'release_date' : function () {
@@ -148,7 +148,10 @@ Template.requests.helpers({
   },
   'hasMoreRequests': function () {
     return Template.instance().requests().count() >= Template.instance().limit.get();
-  }
+  },
+	'searchType': function (type) {
+		return Template.instance().searchType.get() === type;
+	}
 });
 
 Template.requests.events({
@@ -161,7 +164,7 @@ Template.requests.events({
 		Meteor.call("approveRequest", this, function(error, result) {
 			if (error || !(result)) {
 				//Alert error
-				console.log("Error approving, please check server logs");
+				console.error("Error approving, please check server logs");
 				Bert.alert("Unable to approve " + title +", please try again!", "danger");
 			} else {
 				// Alert success
@@ -174,7 +177,7 @@ Template.requests.events({
 			Meteor.call("deleteRequest", this, function(error, result) {
 				if (error || !(result)) {
 					//Alert error
-					console.log(error);
+					console.error(error);
 				} else {
 					// Alert success with undo option
 				}
@@ -183,7 +186,9 @@ Template.requests.events({
 	},
 	'click .issue-select' : function (event, template) {
 		var issue = event.target.text;
-		Meteor.call("addIssue", this, issue, function(error, result) {
+		var request = this;
+		request.user = Session.get("user");
+		Meteor.call("addIssue", request, issue, function(error, result) {
 			if (error || !(result)) {
 				//Alert error
 				Bert.alert("Error adding an issue, or it already exists. Please try again!", "danger");
@@ -197,7 +202,7 @@ Template.requests.events({
 		Meteor.call("clearIssues", this, function (error, result) {
 			if (error || !(result)) {
 				//Alert error
-				console.log(error);
+				console.error(error);
 				Bert.alert("Error clearing issues, please try again!", "danger");
 			} else {
 				// Alert success
@@ -251,4 +256,4 @@ var scroll = function () {
 			$('.load-more').trigger('click');
 		}
 	});
-}
+};

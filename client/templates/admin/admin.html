@@ -1,15 +1,31 @@
 <template name="admin">
 	<div class="admin">
 		<div class="row">
-			<div class="col-md-8 col-md-offset-2">
+			<div class="col-md-10 col-md-offset-1">
 				<h1>Admin</h1>
-				<span class="login-buttons"> {{> loginButtons}} </span>
+
+				{{#if currentUser}}
+					<!-- <div class="row">
+						<div class="col-md-8 col-md-offset-2"> -->
+							{{> atNavButton}}
+						<!-- </div>
+					</div> -->
+				{{/if}}
+
 			</div>
 		</div>
+		{{#unless currentUser}}
+			<div class="row">
+				<div class="col-md-6 col-md-offset-1">
+					{{> atForm }}
+				</div>
+			</div>
+		{{/unless}}
+
 
 		{{#if currentUser}}
 			<div class="row settings">
-				<div class="col-md-2 col-md-offset-2">
+				<div class="col-md-2 col-md-offset-1">
 					<ul class="list-group settings-options">
 					  <a href="#"><li class="list-group-item active">General</li></a>
 					  <a href="#"><li class="list-group-item">Authentication</li></a>
@@ -17,11 +33,12 @@
 					  <a href="#"><li class="list-group-item">SickRage</li></a>
 					  <a href="#"><li class="list-group-item">Sonarr</li></a>
 					  <a href="#"><li class="list-group-item">Notifications</li></a>
+					  <a href="#"><li class="list-group-item">Logs</li></a>
 					  <a href="#"><li class="list-group-item">About</li></a>
 					</ul>
 				</div>
 				<!-- <br> -->
-				<div class="col-md-6 settings-pane" id="SettingsGeneral">
+				<div class="col-md-8 settings-pane" id="SettingsGeneral">
 					{{#autoForm collection="Settings" doc=settings id="updateGeneralSettingsForm" type="update" resetOnSuccess="false"}}
 						{{> afQuickField name='searchOptionsMOVIES'}}
 						{{> afQuickField name='searchOptionsTV'}}
@@ -43,7 +60,7 @@
 					{{/autoForm}}
 				</div>
 
-				<div class="col-md-6 settings-pane" style="display: none;" id="SettingsAuthentication">
+				<div class="col-md-8 settings-pane" style="display: none;" id="SettingsAuthentication">
 					{{#autoForm collection="Settings" doc=settings id="updateAuthenticationSettingsForm" type="update" resetOnSuccess="false"}}
 						{{> afQuickField name='plexAuthenticationENABLED'}}
 						<p class="text-muted">
@@ -51,6 +68,11 @@
 							<a href="https://support.plex.tv/hc/en-us/articles/204059436-Finding-your-account-token-X-Plex-Token" target="_blank">instructions</a>
 							to retrieve your token. Alternatively use the form below to sign into Plex.tv and we'll get it for you.
 						</p>
+						{{> afQuickField name='plexAuthenticationPASSWORDS'}}
+						<p class="text-muted">
+							Enabled if you want users to login with both their usernames and passwords
+						</p>
+						<br>
 						{{> afQuickField name='plexAuthenticationTOKEN' style="width:auto;" size="25"}}
 						<br>
 						<div class="row">
@@ -77,7 +99,7 @@
 					{{/autoForm}}
 				</div>
 
-				<div class="col-md-6 settings-pane" style="display: none;" id="SettingsCouchPotato">
+				<div class="col-md-8 settings-pane" style="display: none;" id="SettingsCouchPotato">
 					{{#autoForm collection="Settings" doc=settings id="updateCouchPotatoSettingsForm" type="update" resetOnSuccess="false"}}
 						{{> afQuickField name='couchPotatoENABLED'}}
 						<p class="text-muted">Enable CouchPotato for automated movie downloading</p>
@@ -104,7 +126,7 @@
 					{{/autoForm}}
 				</div>
 
-				<div class="col-md-6 settings-pane" style="display: none;" id="SettingsSickRage">
+				<div class="col-md-8 settings-pane" style="display: none;" id="SettingsSickRage">
 					{{#autoForm collection="Settings" doc=settings id="updateSickRageSettingsForm" type="update" resetOnSuccess="false"}}
 						{{> afQuickField name='sickRageENABLED'}}
 						<p class="text-muted">Enable SickRage for automated tv downloading.</p>
@@ -131,7 +153,7 @@
 					{{/autoForm}}
 				</div>
 
-				<div class="col-md-6 settings-pane" style="display: none;" id="SettingsSonarr">
+				<div class="col-md-8 settings-pane" style="display: none;" id="SettingsSonarr">
 					{{#autoForm collection="Settings" doc=settings id="updateSonarrSettingsForm" type="update" resetOnSuccess="false"}}
 						{{> afQuickField name='sonarrENABLED'}}
 						<p class="text-muted">Enabled Sonarr for automated tv downloading.</p>
@@ -154,8 +176,8 @@
 						{{> afQuickField name='sonarrSSL'}}
 						<p class="text-muted">Enabled if you use SSL on your Sonarr server.</p>
 						<br>
-						{{> afQuickField name='sonarrQUALITYPROFILEID'}}
-						<p class="text-muted">Select a Sonarr Quality Profile. The default is 1.</p>
+						{{> afQuickField name='sonarrQUALITYPROFILEID' type='select' options=sonarrProfiles firstOption=false}}
+						<p class="text-muted">Select a Sonarr Quality Profile.</p>
 						<br>
 						{{> afQuickField name='sonarrROOTFOLDERPATH'}}
 						<p class="text-muted">Enter the root folder where tv shows are saved. For example C:\Media\TV.</p>
@@ -167,19 +189,30 @@
 					{{/autoForm}}
 				</div>
 
-				<div class="col-md-6 settings-pane" style="display: none;" id="SettingsNotifications">
+				<div class="col-md-8 settings-pane" style="display: none;" id="SettingsNotifications">
 					{{#autoForm collection="Settings" doc=settings id="updateNotificationsSettingsForm" type="update" resetOnSuccess="false"}}
+						{{> afQuickField name='customNotificationTITLE' size="40"}}
+						<p class="text-muted"> Enter custom notification title</p>
+						<br>
+						{{> afQuickField name='customNotificationTEXT' size="40"}}
+						<p class="text-muted"> Enter custom notification text</p>
+						<br>
+
 						{{> afQuickField name='pushbulletENABLED'}}
-						<p class="text-muted">Enabled Pushbullet to receive alerts.</p>
+						<p class="text-muted">Enable Pushbullet to receive alerts.</p>
 						<br>
 						{{> afQuickField name='pushbulletAPI' size="40"}}
 						<p class="text-muted">Enter your API from Pushbullet. It can be found in Pushbullet Settings -> Access Token.</p>
 						<br>
+						{{> afQuickField name='pushbulletChannel' size="40"}}
+						<p class="text-muted"> Push Notifications to a channel. Must be the owner of the channel, click <a href="https://www.pushbullet.com/my-channel"> here </a> to create a new channel.</p>
+						<br>
+
 						<p><button class="btn btn-secondary-outline" id="pushbulletTest">Test Pushbullet</button></p>
 						<p class="text-muted">Test your Pushbullet settings. Remember to save your settings first!</p>
 						<br>
 						{{> afQuickField name='pushoverENABLED'}}
-						<p class="text-muted">Enabled Pushover to receive alerts.</p>
+<p class="text-muted">Enabled Pushover to receive alerts.</p>
 						<br>
 						{{> afQuickField name='pushoverAPI' size="40"}}
 						<p class="text-muted">Enter your API from Pushover.</p>
@@ -190,11 +223,28 @@
 						<p><button class="btn btn-secondary-outline" id="pushoverTest">Test Pushover</button></p>
 						<p class="text-muted">Test your Pushover settings. Remember to save your settings first!</p>
 						<br>
+
+						{{> afQuickField name='slackENABLED'}}
+						<p class="text-muted">Enabled Slack to receive alerts.</p>
+						<br>
+						{{> afQuickField name='slackAPI' size="40"}}
+						<p class="text-muted">Enter your webhook url from Slack.</p>
+						<br>
+						{{> afQuickField name='slackUsername' size="40"}}
+						<p class="text-muted">The Slackbot Name.</p>
+						<br>
+						{{> afQuickField name='slackChannel' size="40"}}
+						<p class="text-muted">The Slackbot Channel with # for channel or @ for user.</p>
+						<br>
+						<p><button class="btn btn-secondary-outline" id="slackTest">Test Slack</button></p>
+						<p class="text-muted">Test your Slack settings. Remember to save your settings first!</p>
+						<br>
+
 						<button type="submit" class="btn btn-primary-outline btn-block">Update Settings</button>
 					{{/autoForm}}
 				</div>
 
-				<div class="col-md-6 settings-pane" style="display: none;" id="SettingsAbout">
+				<div class="col-md-8 settings-pane" style="display: none;" id="SettingsAbout">
 					<p>
 						<strong>Branch: </strong> {{branch}}<br>
 						<strong>Version: </strong> {{version}}
@@ -210,6 +260,10 @@
 						<strong>Project Website: </strong> <a href="http://plexrequests.8bits.ca/" target="_blank">plexrequests.8bits.ca</a><br>
 						<strong>GitHub Page: </strong> <a href="https://github.com/lokenx/plexrequests-meteor" target="_blank">lokenx / PlexRequests</a>
 					</p>
+				</div>
+
+				<div class="col-md-8 settings-pane" style="display: none;" id="SettingsLogs">
+					{{> logs }}
 				</div>
 			</div>
 		{{/if}}

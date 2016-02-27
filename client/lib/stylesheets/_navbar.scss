@@ -31,8 +31,9 @@
 
 // Admin link
 .admin-link {
-  color: rgba(255, 255, 255, .5);
+  color: rgba(255, 255, 255, .5) !important;
   padding-left: 0.5rem;
+  padding-top: .5rem;
   font-size: 1rem;
   &:hover {
     color: rgba(255, 255, 255, .7);

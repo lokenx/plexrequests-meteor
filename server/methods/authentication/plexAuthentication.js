@@ -2,7 +2,35 @@ Meteor.methods({
 	'checkPlexAuthentication' : function () {
 		return Settings.find({}).fetch()[0].plexAuthenticationENABLED;
 	},
-	'checkPlexUser' : function (plexUsername) {
+	'checkPlexAuthenticationPasswords' : function () {
+		return Settings.find({}).fetch()[0].plexAuthenticationPASSWORDS;
+	},
+	'checkPlexUser' : function (plexUsername, plexPassword) {
+
+		if (Settings.find({}).fetch()[0].plexAuthenticationPASSWORDS) {
+			// If passwords are required check full login
+
+			function authHeaderVal(username, password) {
+		    var authString = username + ':' + password;
+		    var buffer = new Buffer(authString.toString(), 'binary');
+		    return 'Basic ' + buffer.toString('base64');
+			}
+
+			var headers = {
+				'Authorization': authHeaderVal(plexUsername, plexPassword),
+				'X-Plex-Client-Identifier': 'BGZQ8N25FYP3UHB6',
+				'X-Plex-Version': '1.2.0',
+				'X-Plex-Platform': 'Meteor',
+				'X-Plex-Device-Name': 'Plex Requests'
+			};
+
+			try {
+				Meteor.http.call("POST", "https://plex.tv/users/sign_in.json", {headers: headers});
+			} catch (error) {
+				logger.warn(plexUsername + " failed to login");
+				throw new Meteor.Error(401, JSON.parse(error.message.substring(13)).error);
+			}
+		}
 
 		function isInArray(value, array) {
 		  return array.indexOf(value) > -1;
@@ -18,9 +46,12 @@ Meteor.methods({
       var friendsXML = Meteor.http.call("GET", "https://plex.tv/pms/friends/all?X-Plex-Token="+plexToken);
       var accountXML = Meteor.http.call("GET", "https://plex.tv/users/account?X-Plex-Token="+plexToken);
     } catch (error) {
-      console.log("Error checking Plex Users: " + error.message);
+      logger.error("Error checking Plex Users: " + error.message);
       return false;
     }
+
+		var users = [];
+		var admintitle = '';
 
 		xml2js.parseString(friendsXML.content, {mergeAttrs : true, explicitArray : false} ,function (err, result) {
 			users = result['MediaContainer']['User'];
@@ -32,8 +63,13 @@ Meteor.methods({
 
 		var friendsList = [];
 
-		for (var i = 0; i < users.length; i++) {
-		 	friendsList.push( users[i].title.toLowerCase() );
+		// Check if an array of users or a single user is returned
+		if (users.length) {
+			for (var i = 0; i < users.length; i++) {
+			 	friendsList.push( users[i].title.toLowerCase() );
+			}
+		} else if (users.title) {
+			friendsList.push( users.title.toLowerCase() );
 		}
 
     //Add admin username to the list
@@ -66,17 +102,15 @@ Meteor.methods({
 			var plexstatus = Meteor.http.call("POST", "https://plex.tv/users/sign_in.xml", {
 	      headers: {
 		      'Authorization': authHeaderVal(username, password),
-		      'X-Plex-Client-Identifier': 'Request_Users',
-		      'X-Plex-Product': 'App',
-		      'X-Plex-Version': '1.0',
-		      'X-Plex-Device': 'App',
-		      'X-Plex-Platform': 'Meteor',
-		      'X-Plex-Platform-Version': '1.0',
-		      'X-Plex-Provides': 'controller'
+					'X-Plex-Client-Identifier': 'BGZQ8N25FYP3UHB6',
+					'X-Plex-Version': '1.2.0',
+					'X-Plex-Platform': 'Meteor',
+					'X-Plex-Device-Name': 'Plex Requests'
 				}
 			});
 		} catch (error) {
 			var response = xml2js.parseStringSync(error.response.content);
+			logger.error(response.errors.error[0]);
 			throw new Meteor.Error(401, response.errors.error[0])
 		}
 
@@ -88,6 +122,7 @@ Meteor.methods({
       Settings.update({}, {$set: {plexAuthenticationTOKEN: plexAuth}});
 			return true;
     } else {
+			logger.error("Error getting Plex token");
 			return false;
 		}
 	}

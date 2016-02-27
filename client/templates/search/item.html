@@ -3,7 +3,7 @@
     <div class="item-poster">
       <div class="col-sm-3">
         {{#if posterExists}}
-          <img src="http://image.tmdb.org/t/p/w154{{poster_path}}" class="img-responsive" alt="Poster">
+          <img src="https://image.tmdb.org/t/p/w154{{poster_path}}" class="img-responsive" alt="Poster">
         {{/if}}
       </div>
     </div>
@@ -15,7 +15,7 @@
         </p>
         <div class="item-buttons">
           {{#if isRequested}}
-            <button class="btn btn-success-outline already-requested" disabled><i class="fa fa-check"></i> &nbsp; Requested</button>
+            <button class="btn btn-success-outline already-requested" disabled><i class="fa fa-check"></i> &nbsp; {{isRequested}}</button>
           {{else}}
             {{#if isTV}}
               <div class="btn-group" role="group">

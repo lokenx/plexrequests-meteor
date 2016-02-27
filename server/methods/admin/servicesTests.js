@@ -1,4 +1,43 @@
 Meteor.methods({
+  setTestVARS: function (t, b, request) {
+		
+	    var tags = {
+		title: "<title>",
+        type: "<type>",
+        user: "<user>",
+        issues: "<issues>",
+        release: "<year>",
+        link: "<link>"
+	    };
+		
+		if (request === 'test') {
+			var req = {
+				title: "A Test Movie",
+				type: "request",
+				user: "test_user",
+				release: "2020",
+				link: "https//:plex.tv"
+			};
+
+		} else {var req = request;}
+
+		var message_title = t.replace(tags.title, req.title);
+	    var message_title = message_title.replace(tags.type, req.type);
+		var message_title = message_title.replace(tags.user, req.user);
+		var message_title = message_title.replace(tags.issues, req.issues);
+		var message_title = message_title.replace(tags.release, req.release);
+		var message_title = message_title.replace(tags.link, req.link);
+
+		var message_body = b.replace(tags.title, req.title);
+		var message_body = message_body.replace(tags.type, req.type);
+		var message_body = message_body.replace(tags.user, req.user);
+		var message_body = message_body.replace(tags.issues, req.issues);
+		var message_body = message_body.replace(tags.release, req.release);
+		var message_body = message_body.replace(tags.link, req.link);
+		
+		var r = {title: message_title, body: message_body}
+		return r
+  },	  
   testCouchPotato: function () {
     return CouchPotato.appAvailable();
   },
@@ -9,32 +48,36 @@ Meteor.methods({
     return Sonarr.systemStatus();
   },
   testPushbulllet: function () {
-    var access_token = Settings.find().fetch()[0].pushbulletAPI;
-
+    var settings = Settings.find().fetch()[0];
     try {
-      var test = HTTP.post("https://api.pushbullet.com/v2/pushes",
-        {headers: {'Access-Token': access_token},
-        params: {type: 'note', title: 'Plex Requests', body: 'Test notification!'},
-        timeout: 4000});
-
-      return true;
+	  var message = Meteor.call("setTestVARS", settings.customNotificationTITLE, settings.customNotificationTEXT, request = 'test');
+	  Meteor.call("sendPushbulletNotification", settings, message.title, message.body);
+      logger.info("Pushbullet tested successfully");
     } catch (error) {
-      throw new Meteor.Error(401, error.response.data.error.message);
+      throw new Meteor.Error(401, error);
     }
+    logger.info("Pushbullet tested successfully");
+    return true;
   },
   testPushover: function () {
     var settings = Settings.find().fetch()[0];
-    var access_token = settings.pushoverAPI;
-    var user_key = settings.pushoverUSER;
-
     try {
-      var test = HTTP.post("https://api.pushover.net/1/messages.json",
-        {params: {token: access_token, user: user_key, title: 'Plex Requests', message: 'Test notification'},
-        timeout: 4000});
-
-      return true;
+      Meteor.call("sendPushoverNotification", settings, 'Pushover Requests', 'Test notification');
+      logger.info("Pushover tested successfully");
     } catch (error) {
-      throw new Meteor.Error(401, error.response.data.errors[0]);
+      throw new Meteor.Error(401, error);
     }
+    logger.info("Pushover tested successfully");
+    return true;
+  },
+  testSlack: function () {
+    var settings = Settings.find().fetch()[0];
+    try {
+      Meteor.call("sendSlackNotification", settings, 'Plex Requests Test notification');
+    } catch (error) {
+      throw new Meteor.Error(401, error);
+    }
+    logger.info("Slack tested successfully");
+    return true;
   }
 });

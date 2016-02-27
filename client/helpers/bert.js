@@ -1,5 +1,5 @@
 Bert.defaults = {
-  hideDelay: 3500,
-	style: 'growl-bottom-right',
+  hideDelay: 4500,
+	style: 'fixed-bottom',
   type: 'default'
 };

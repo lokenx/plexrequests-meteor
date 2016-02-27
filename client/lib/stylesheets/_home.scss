@@ -12,6 +12,7 @@
 
 #sign-in {
   padding-top: 1rem;
+  padding-left: 0;
 
   .form-group {
     padding-left: 0;
@@ -19,7 +20,15 @@
 }
 
 .home {
-  p {
+  p, h3 {
     font-weight: 300;
+  }
+}
+
+a {
+  color: $primary-color;
+
+  &:hover {
+    color: $primary-color-lighter;
   }
 }

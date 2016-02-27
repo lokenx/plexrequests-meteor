@@ -1,10 +1,28 @@
 {
   "dependencies": {
-    "git-rev-sync": {
-      "version": "1.0.0",
+    "winston": {
+      "version": "2.1.0",
       "dependencies": {
-        "graceful-fs": {
-          "version": "3.0.8"
+        "async": {
+          "version": "1.0.0"
+        },
+        "colors": {
+          "version": "1.0.3"
+        },
+        "cycle": {
+          "version": "1.0.3"
+        },
+        "eyes": {
+          "version": "0.1.8"
+        },
+        "isstream": {
+          "version": "0.1.2"
+        },
+        "pkginfo": {
+          "version": "0.3.1"
+        },
+        "stack-trace": {
+          "version": "0.0.9"
         }
       }
     }

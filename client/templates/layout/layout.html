@@ -4,15 +4,16 @@
       &#9776;
     </button>
     <div class="collapse navbar-toggleable-sm" id="navBarItems">
-			<a class="navbar-brand" href="/"><i class="fa fa-play-circle logo-icon"></i> Plex Requests {{#if currentUser}}<a href="{{pathFor 'admin'}}" class="admin-link">Admin</a>{{/if}}</a>
+			<a class="navbar-brand" href="{{pathFor 'home'}}"><i class="fa fa-play-circle logo-icon"></i> Plex Requests</a>
+			<a class="navbar-brand admin-link" href="{{pathFor 'admin.page'}}">Admin</a>
       <ul class="nav navbar-nav pull-right">
         {{#if plexAuth}}
-          <li class="{{isActiveRoute regex='search'}} nav-item"><a href="{{pathFor 'search'}}" class="nav-link">Search</a></li>
+          <li class="{{isActiveRoute regex='search.page'}} nav-item"><a href="{{pathFor 'search.page'}}" class="nav-link">Search</a></li>
         {{/if}}
         {{#if auth}}
-          <li class="{{isActiveRoute 'requests'}} nav-item"><a href="{{pathFor 'requests'}}" class="nav-link">Requests</a></li>
+          <li class="{{isActiveRoute 'requests.page'}} nav-item"><a href="{{pathFor 'requests.page'}}" class="nav-link">Requests</a></li>
           {{#unless plexAuth}}
-            <li class="nav-item"><a href="/" class="nav-link">Login</a></li>
+            <li class="nav-item"><a href="{{pathFor 'home'}}" class="nav-link">Login</a></li>
           {{/unless}}
         {{/if}}
         {{#if plexAuth}}
@@ -43,8 +44,8 @@
 						<strong>Thank you for installing and using Plex Requests!</strong>
 						<br>
 						<br>
-						Before you get started, please head over to the <a href="{{pathFor 'admin'}}">admin page</a> and create an account.
-						You can then configre things and get going. Some highlights of the new version can be seen below:
+						Before you get started, please head over to the <a href="{{pathFor 'admin.page'}}">admin page</a> and create an account.
+						You can then configure things and get going. Some highlights of the new version can be seen below:
 						<br>
 						<br>
 						<ul>

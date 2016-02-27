@@ -3,17 +3,17 @@ Meteor.methods({
     return "dev";
   },
   getVersion: function () {
-    return "1.1.0";
+    return "1.7.1";
   },
   checkForUpdate : function () {
     var branch = Meteor.call('getBranch');
-    var currentVersion = Meteor.call('getVersion')
+    var currentVersion = Meteor.call('getVersion');
 
     try {
         var latestJson = HTTP.call("GET","https://api.github.com/repos/lokenx/plexrequests-meteor/contents/version.txt?ref=" + branch,{headers: {"User-Agent": "Meteor/1.1"}});
     }
     catch (err) {
-        console.log(err);
+        logger.log("Error checking for update: " + err);
         return false;
     }
 
@@ -22,7 +22,8 @@ Meteor.methods({
     var latestVersion = latestVersion64.slice(0, - 1);
 
     if (latestVersion > currentVersion) {
-        return true;
+      logger.info("New update available");
+      return true;
     } else {
       return false
     }
