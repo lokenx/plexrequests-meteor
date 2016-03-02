@@ -21,6 +21,7 @@ caching-html-compiler@1.0.2
 callback-hook@1.0.4
 check@1.1.0
 coffeescript@1.0.11
+davidyaha:collection2-migrations@0.0.6
 dburles:collection-helpers@1.0.4
 ddp@1.2.2
 ddp-client@1.2.1
@@ -58,8 +59,8 @@ localstorage@1.0.5
 logging@1.0.8
 lokenx:couchpotatowrapper@0.0.7
 lokenx:sickragewrapper@0.0.7
-lokenx:sonarrwrapper@0.0.4
-lokenx:themoviedbsearch@0.4.7
+lokenx:sonarrwrapper@0.0.10
+lokenx:themoviedbsearch@0.4.8
 meteor@1.1.10
 meteor-base@1.0.1
 meteorhacks:async@1.0.0

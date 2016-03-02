@@ -9,7 +9,7 @@ AutoForm.hooks({
       return false;
     },
     onError: function(formType, error) {
-      logger.error(error);
+      console.error(error);
       Bert.alert('Update failed, please try again', 'danger');
     }
   },
@@ -23,7 +23,7 @@ AutoForm.hooks({
       return false;
     },
     onError: function(formType, error) {
-      logger.error(error);
+      console.error(error);
       Bert.alert('Update failed, please try again', 'danger');
     }
   },
@@ -37,7 +37,7 @@ AutoForm.hooks({
       return false;
     },
     onError: function(formType, error) {
-      logger.error(error);
+      console.error(error);
       Bert.alert('Update failed, please try again', 'danger');
     }
   },
@@ -51,7 +51,7 @@ AutoForm.hooks({
       return false;
     },
     onError: function(formType, error) {
-      logger.error(error);
+      console.error(error);
       Bert.alert('Update failed, please try again', 'danger');
     }
   },
@@ -65,7 +65,7 @@ AutoForm.hooks({
       return false;
     },
     onError: function(formType, error) {
-      logger.error(error);
+      console.error(error);
       Bert.alert('Update failed, please try again', 'danger');
     }
   },
@@ -79,7 +79,7 @@ AutoForm.hooks({
       return false;
     },
     onError: function(formType, error) {
-      logger.error(error);
+      console.error(error);
       Bert.alert('Update failed, please try again', 'danger');
     }
   }
@@ -91,6 +91,14 @@ Template.admin.helpers({
   },
   branch: function () {
     return Template.instance().branch.get();
+  },
+  sonarrProfiles: function () {
+    return Template.instance().sonarrProfiles.get().map(function (profile) {
+      return {
+        label: profile.name,
+        value: profile.id
+      };
+    });
   },
   version: function () {
     return Template.instance().version.get();
@@ -105,6 +113,7 @@ Template.admin.onCreated(function(){
   instance.branch = new ReactiveVar("");
   instance.version = new ReactiveVar("");
   instance.update = new ReactiveVar(false);
+  instance.sonarrProfiles = new ReactiveVar([]);
 
   Meteor.call("getBranch", function (error, result) {
     if (result) {
@@ -121,6 +130,12 @@ Template.admin.onCreated(function(){
   Meteor.call("checkForUpdate", function (error, result) {
     if (result) {
       instance.update.set(result)
+    }
+  });
+
+  Meteor.call("sonarrProfiles", function (error, result) {
+    if (result) {
+      instance.sonarrProfiles.set(result);
     }
   });
 
@@ -211,6 +226,21 @@ Template.admin.events({
       }
     })
   },
+  'click #slackTest' : function (event) {
+    event.preventDefault();
+    var btn = $(event.target);
+    btn.html("Testing... <i class='fa fa-spin fa-refresh'></i>").removeClass().addClass("btn btn-info-outline");
+    Meteor.call("testSlack", function (error, result) {
+      if (error || !result) {
+        btn.removeClass("btn-info-outline").addClass("btn-danger-outline");
+        btn.html("Error!");
+        Bert.alert(error.reason, "danger");
+      } else if (result) {
+        btn.removeClass("btn-info-outline").addClass("btn-success-outline");
+        btn.html("Success!");
+      }
+    })
+  },
   'click #plexsubmit' : function (event) {
     event.preventDefault();
     $('#plexsubmit').html("Getting Token... <i class='fa fa-spin fa-refresh'></i>");
@@ -224,7 +254,7 @@ Template.admin.events({
         $("#plexsubmit").html('Get token <i class="fa fa-key"></i>');
         Bert.alert("Successfully got token!", "success");
       }
-    })
+    });
     return false;
   }
 });

@@ -13,7 +13,7 @@
         {{#if auth}}
           <li class="{{isActiveRoute 'requests.page'}} nav-item"><a href="{{pathFor 'requests.page'}}" class="nav-link">Requests</a></li>
           {{#unless plexAuth}}
-            <li class="nav-item"><a href="/" class="nav-link">Login</a></li>
+            <li class="nav-item"><a href="{{pathFor 'home'}}" class="nav-link">Login</a></li>
           {{/unless}}
         {{/if}}
         {{#if plexAuth}}
@@ -45,7 +45,7 @@
 						<br>
 						<br>
 						Before you get started, please head over to the <a href="{{pathFor 'admin.page'}}">admin page</a> and create an account.
-						You can then configre things and get going. Some highlights of the new version can be seen below:
+						You can then configure things and get going. Some highlights of the new version can be seen below:
 						<br>
 						<br>
 						<ul>

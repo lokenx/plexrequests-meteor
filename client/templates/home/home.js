@@ -1,16 +1,15 @@
 Template.home.events({
 	'submit #sign-in': function (event) {
 
-
     $('#submitButton').html('<i class="fa fa-cog fa-spin  fa-fw"></i>  Signing In');
 
-    plexUsername = $("#plex-username").val().toLowerCase();
-    plexPassword = $("#plex-password").val() || '';
+    var plexUsername = $("#plex-username").val().toLowerCase();
+    var plexPassword = $("#plex-password").val() || '';
 
     Meteor.call('checkPlexAuthentication', function(error, data) {
       if (error) {
       	Bert.alert( 'There was an issue logging in. Please try again!', 'danger');
-      	logger.error("Issue checking authentication status: " + error.message);
+      	console.error("Issue checking authentication status: " + error.message);
       } else if (data) {
         Meteor.call('checkPlexUser', plexUsername, plexPassword, function (error, result) {
           if (error) {
@@ -38,7 +37,7 @@ Template.home.events({
 
     return false;
 	}
-})
+});
 
 Template.home.onCreated(function () {
 	var instance = this;
@@ -48,7 +47,7 @@ Template.home.onCreated(function () {
 	Meteor.call("checkPlexAuthenticationPasswords", function (error, data) {
 		instance.requirePassword.set(data);
 	})
-})
+});
 
 Template.home.helpers({
 	requirePassword: function () {

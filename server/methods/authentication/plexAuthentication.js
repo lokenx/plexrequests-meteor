@@ -22,14 +22,13 @@ Meteor.methods({
 				'X-Plex-Version': '1.2.0',
 				'X-Plex-Platform': 'Meteor',
 				'X-Plex-Device-Name': 'Plex Requests'
-			}
+			};
 
 			try {
-				var result = Meteor.http.call("POST", "https://plex.tv/users/sign_in.json", {headers: headers});
+				Meteor.http.call("POST", "https://plex.tv/users/sign_in.json", {headers: headers});
 			} catch (error) {
 				logger.warn(plexUsername + " failed to login");
 				throw new Meteor.Error(401, JSON.parse(error.message.substring(13)).error);
-				return false;
 			}
 		}
 
@@ -53,7 +52,7 @@ Meteor.methods({
 
 		var users = [];
 		var admintitle = '';
-		
+
 		xml2js.parseString(friendsXML.content, {mergeAttrs : true, explicitArray : false} ,function (err, result) {
 			users = result['MediaContainer']['User'];
 		});
@@ -64,8 +63,13 @@ Meteor.methods({
 
 		var friendsList = [];
 
-		for (var i = 0; i < users.length; i++) {
-		 	friendsList.push( users[i].title.toLowerCase() );
+		// Check if an array of users or a single user is returned
+		if (users.length) {
+			for (var i = 0; i < users.length; i++) {
+			 	friendsList.push( users[i].title.toLowerCase() );
+			}
+		} else if (users.title) {
+			friendsList.push( users.title.toLowerCase() );
 		}
 
     //Add admin username to the list
@@ -106,7 +110,7 @@ Meteor.methods({
 			});
 		} catch (error) {
 			var response = xml2js.parseStringSync(error.response.content);
-			logger.error(response.errors.error[0])
+			logger.error(response.errors.error[0]);
 			throw new Meteor.Error(401, response.errors.error[0])
 		}
 
@@ -118,7 +122,7 @@ Meteor.methods({
       Settings.update({}, {$set: {plexAuthenticationTOKEN: plexAuth}});
 			return true;
     } else {
-			logger.error("Error getting Plex token")
+			logger.error("Error getting Plex token");
 			return false;
 		}
 	}

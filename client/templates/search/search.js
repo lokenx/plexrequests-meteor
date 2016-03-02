@@ -60,18 +60,15 @@ Template.search.events({
     $('#search-input').trigger('keyup');
   },
   'keyup  #search-input': _.throttle(function (event, template) {
-    // template.results.set([]);
-
     var searchterm = $(event.target).val().trim();
     var searchType = template.searchType.get();
-    var results = [];
 
     if (searchterm.length > 1) {
       template.searching.set(true);
       template.error.set(false);
       Meteor.call("searchContent", searchterm, searchType, function (error, result) {
         if (error) {
-          logger.error(error);
+          console.error(error);
           template.searching.set(false);
           template.error.set(true);
         } else if (result.length) {
@@ -93,13 +90,13 @@ Template.search.events({
     var requestTitle = this.title;
     var request = this;
     request.user = Session.get("user");
-    request.episodes = ($(event.target).attr("value") === "true") ? true : false;
+    request.episodes = $(event.target).attr("value") === "true";
 
     if (this.media_type === "movie") {
       btn.html('<i class="fa fa-spinner fa-spin"></i> &nbsp; Requesting...');
       Meteor.call("requestMovie", request, function (error, result) {
         if (error || result === false) {
-          logger.error("Error requesting, please check server log");
+          console.error("Error requesting, please check server log");
           btn.html('<i class="fa fa-plus"></i> &nbsp; Request');
           Bert.alert("Couldn't submit request, please try again!", "danger");
         } else if (result === true) {
@@ -117,7 +114,7 @@ Template.search.events({
       tvBtn.html('<i class="fa fa-spinner fa-spin"></i> &nbsp; Requesting... ');
       Meteor.call("requestTV", request, function (error, result) {
         if (error || result === false) {
-          logger.error("Error requesting, please check server log");
+          console.error("Error requesting, please check server log");
           tvBtn.html('<i class="fa fa-plus"></i> &nbsp; Request ');
           Bert.alert("Couldn't submit request, please try again!", "danger");
         } else if (result === true) {
@@ -127,7 +124,7 @@ Template.search.events({
           Bert.alert("You've exceeded your weekly limit!", "info");
           tvBtn.html('<i class="fa fa-plus"></i> &nbsp; Request ');
         } else if (result === 'exists') {
-          Bert.alert("TV Show is already on Plex!", "info");
+          Bert.alert("TV Show has already been requested!", "info");
           // tvBtn.hide();
         }
       })

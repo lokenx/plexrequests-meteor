@@ -69,19 +69,27 @@
 			  			{{#unless approved}}<p><button class="btn btn-sm btn-success-outline approve-item">Approve</button></p>{{/unless}}
 			  			<p><button class="btn btn-sm btn-danger-outline delete-item">Delete</button></p>
 			  			<p><button class="btn btn-sm btn-info-outline clear-issues">Clear Issues</button></p>
-			  		{{/if}}
+
+						{{#if searchType 'Movies'}}
+							{{#if available}}
+								<p><button class="btn btn-sm btn-secondary-outline mark-unavailable">Mark Unavailable</button></p>
+							{{else}}
+								<p><button class="btn btn-sm btn-success-outline mark-available">Mark Available</button></p>
+							{{/if}}
+			  			{{/if}}
+		  			{{/if}}
 			  		<p>
-			  			<div class="btn-group">
-							  <button type="button" class="btn btn-sm btn-warning-outline dropdown-toggle report-item" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							    Report Issue <span class="caret"></span>
-							  </button>
-							  <ul class="dropdown-menu">
-							    <li><a href="#" class="issue-select dropdown-item" data="Wrong Audio">Wrong audio</a></li>
-							    <li><a href="#" class="issue-select dropdown-item" data="No Subtitles">No subtitles</a></li>
-							    <li><a href="#" class="issue-select dropdown-item" data="Wrong Content">Wrong content</a></li>
-							    <li><a href="#" class="issue-select dropdown-item" data="Playback issues">Playback issues</a></li>
-							  </ul>
-							</div>
+						<div class="btn-group">
+						  <button type="button" class="btn btn-sm btn-warning-outline dropdown-toggle report-item" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Report Issue <span class="caret"></span>
+						  </button>
+						  <ul class="dropdown-menu">
+							<li><a href="#" class="issue-select dropdown-item" data="Wrong Audio">Wrong audio</a></li>
+							<li><a href="#" class="issue-select dropdown-item" data="No Subtitles">No subtitles</a></li>
+							<li><a href="#" class="issue-select dropdown-item" data="Wrong Content">Wrong content</a></li>
+							<li><a href="#" class="issue-select dropdown-item" data="Playback issues">Playback issues</a></li>
+						  </ul>
+						</div>
 			  		</p>
 		  		</div>
 		  	</div>
