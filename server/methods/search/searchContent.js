@@ -6,37 +6,18 @@ Meteor.methods({
 
 		if (searchType !== "Music") {
 			var type = (searchType === "Movies") ? "movie" : "tv";
-			
-			    if (type === "tv") {
-		    		
-                    try {
-					    var result = Meteor.call("TVMAZESearch", searchterm, type)
-                    				
-			        } catch (error) {
-				        logger.error("TVMAZESearch Error -> " + error.message);
-				        return [];
-			        
-                    }
-			    
-                } else if (type === "movie") {
-		    		
-                    try {
-				        var result = Meteor.call("TMDBSearch", searchterm, type)
-                    				
-			        } catch (error) {
-				        logger.error("TMDBSearch Error -> " + error.message);
-				        return [];
-			        
-                    }
-			    }
-		
-            return result;
-		
-        } else {
+
+			try {
+				var result = Meteor.call("TMDBSearch", searchterm, type)
+			} catch (error) {
+				logger.error("TMDBSearch Error -> " + error.message);
+				return [];
+			}
+			return result;
+		} else {
 			return [];
 		}	
 	},
-
 	"searchOptions": function () {
 		var options = [];
 
