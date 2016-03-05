@@ -95,8 +95,16 @@ Template.requests.helpers({
 		if ((typeof this.poster_path === 'undefined') | (this.poster_path === "/")) {
 			return "poster-placeholder.png";
 		} else {
-			return "https://image.tmdb.org/t/p/w154" + this.poster_path;
+                return this.poster_path;
 		}
+
+  },
+  'link' : function () {
+    var link = 'http://tvmaze.com/shows/' + this.id + '/' + this.title;
+    return link;
+  },
+  'year' : function () {
+  	return moment(this.released).format('YYYY');
   },
   'release_date' : function () {
   	return moment(this.released).format('MMMM Do, YYYY');

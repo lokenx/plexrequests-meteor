@@ -47,15 +47,21 @@
 	  <div class="request-item">
 		  	<div class="row">
 		  		<div class="col-md-2 col-md-offset-1">
+
+				{{#if searchType 'TV Shows'}}
 		  			<img src="{{poster_path}}" class="img-responsive" alt="Poster">
-		  		</div>
+		  		{{/if}}
+				{{#if searchType 'Movies'}}
+		  			<img src="http://image.tmdb.org/t/p/original{{poster_path}}" class="img-responsive" alt="Poster">
+		  		{{/if}}
+                </div>
 		  		<div class="col-md-5">
 		  			<ul class="request-details-list">
 							{{#if searchType 'Movies'}}
-			  				<li><a href="http://www.dereferer.org/?http://www.imdb.com/title/{{imdb}}" target="_blank"><strong>{{title}}</strong></a></li>
+			  				<h4><li><a href="http://www.dereferer.org/?http://www.imdb.com/title/{{imdb}}" target="_blank"><strong>{{title}}</strong></a></li></h4>
 							{{/if}}
 							{{#if searchType 'TV Shows'}}
-								<li><a href="http://www.dereferer.org/?http://thetvdb.com/?tab=series&id={{tvdb}}" target="_blank"><strong>{{title}}</strong></a></li>
+                           <h4> <li><a href="http://www.dereferer.org/?{{link}}" target="_blank"><strong>{{title}} ({{year}})</strong></a></li></h4>
 							{{/if}}
 			  			<li><strong>Release date:</strong> {{release_date}}</li>
 			  			<li><strong>Approved:</strong> {{{approval_status}}}</li>
