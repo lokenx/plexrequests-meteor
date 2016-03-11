@@ -88,7 +88,7 @@ Meteor.methods({
 					tvdb: tvdb,
 					released: request.release_date,
 					user: request.user,
-					status: {downloaded: 0, total: 0},
+					status: {downloaded: 0, total: request.number_of_episodes},
 					approved: false,
 					poster_path: poster,
 					episodes: request.episodes
@@ -117,7 +117,7 @@ Meteor.methods({
 							tvdb: tvdb,
 							released: request.release_date,
 							user: request.user,
-							status: {downloaded: 0, total: 0},
+							status: {downloaded: 0, total: request.number_of_episodes},
 							approved: true,
 							poster_path: poster,
 							episodes: request.episodes
@@ -150,7 +150,7 @@ Meteor.methods({
 							tvdb: tvdb,
 							released: request.release_date,
 							user: request.user,
-							status: {downloaded: 0, total: 0},
+							status: {downloaded: 0, total: request.number_of_episodes},
 							approved: true,
 							poster_path: poster,
 							episodes: request.episodes
@@ -173,7 +173,7 @@ Meteor.methods({
 						tvdb: tvdb,
 						released: request.release_date,
 						user: request.user,
-						status: {downloaded: 0, total: 0},
+						status: {downloaded: 0, total: request.number_of_episodes},
 						approved: true,
 						poster_path: poster,
 						episodes: request.episodes
