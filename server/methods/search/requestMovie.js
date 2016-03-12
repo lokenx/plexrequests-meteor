@@ -5,6 +5,10 @@ Meteor.methods({
 		var settings = Settings.find().fetch()[0];
 
 
+		console.log('Searching Plex:')
+		console.log(PlexHelpers.checkMovie(request.title));
+		console.log('Finished!');
+
 		// Check user request limit
 		var date = Date.now() - 6.048e8;
 		var weeklyLimit = Settings.find({}).fetch()[0].weeklyLimit;
