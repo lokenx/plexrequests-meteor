@@ -1,11 +1,15 @@
-var checkMovieQuery = function(imdb) {
-  PlexServer.query("/search?query=" + imdb).then(function (results) {
+var checkMovieQuery = function(request, callback) {
+  PlexServer.query("/search?query=" + request.title).then(function (results) {
     var filteredResults = results._children.filter(function (result) {
-      if ((result.type === 'movie') || (result.type === 'show') || (result.type === 'Video')) {
-        return result;
+      if ((result.title === request.title) && (result.year == request.year)) {
+        return true;
       }
     });
-    return filteredResults;
+    return (filteredResults.length != 0) ? callback(null, true): callback(null, false);
+  })
+  .catch(function (error) {
+    logger.error('Error checking PMS:', error);
+    return callback(null, false);
   });
 };
 
