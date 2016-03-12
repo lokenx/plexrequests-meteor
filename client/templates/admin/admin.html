@@ -89,6 +89,10 @@
 						<button type="button" class="btn btn-secondary-outline" id="plexsubmit">Get token <i class="fa fa-key"></i></button>
 						<br>
 						<br>
+						{{> afQuickField name='plexServerIP'}}
+						<p class="text-muted">
+							IP address of your Plex Media Server to retrieval availability status of requests
+						</p>
 						<br>
 						{{>afQuickField name='plexBannedUSERS' size="40"}}
 						<p class="text-muted">
