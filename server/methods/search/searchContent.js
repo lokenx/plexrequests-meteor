@@ -10,10 +10,10 @@ Meteor.methods({
 			    if (type === "tv") {
 		    		
                     try {
-					    var result = Meteor.call("TVMAZESearch", searchterm, type)
+					    var result = Meteor.call("tvmaze", searchterm, type)
                     				
 			        } catch (error) {
-				        logger.error("TVMAZESearch Error -> " + error.message);
+				        logger.error("tvmaze Error -> " + error.message);
 				        return [];
 			        
                     }
@@ -22,7 +22,9 @@ Meteor.methods({
 		    		
                     try {
 				        var result = Meteor.call("TMDBSearch", searchterm, type)
-                    				
+						var tmp = result.link
+						result.link = "https://image.tmdb.org/t/p/w184" + tmp;
+
 			        } catch (error) {
 				        logger.error("TMDBSearch Error -> " + error.message);
 				        return [];

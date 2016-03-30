@@ -28,8 +28,9 @@ Meteor.methods({
                     status: stat,
                     approved: approved,
                     poster_path: poster,
-                    episodes: request.episodes
-                });
+                    episodes: request.episodes,
+					link: request.link
+				});
         }
 
 		// Check if it already exists in SickRage or Sonarr

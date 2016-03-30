@@ -58,10 +58,10 @@
 		  		<div class="col-md-5">
 		  			<ul class="request-details-list">
 							{{#if searchType 'Movies'}}
-			  				<h4><li><a href="http://www.dereferer.org/?http://www.imdb.com/title/{{imdb}}" target="_blank"><strong>{{title}}</strong></a></li></h4>
+			  				<h4><li><a href="http://www.imdb.com/title/{{imdb}}" target="_blank"><strong>{{title}}</strong></a></li></h4>
 							{{/if}}
 							{{#if searchType 'TV Shows'}}
-                           <h4> <li><a href="http://www.dereferer.org/?{{link}}" target="_blank"><strong>{{title}} ({{year}})</strong></a></li></h4>
+                           <h4> <li><a href="{{link}}" target="_blank"><strong>{{title}} ({{year}})</strong></a></li></h4>
 							{{/if}}
 			  			<li><strong>Release date:</strong> {{release_date}}</li>
 			  			<li><strong>Approved:</strong> {{{approval_status}}}</li>
