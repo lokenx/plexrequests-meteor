@@ -1,7 +1,7 @@
 Meteor.methods({
 	"requestMovie": function(request) {
 		check(request, Object);
-		var poster = request.poster_path || "/";
+		var poster = "https://image.tmdb.org/t/p/w154" + request.poster_path || "/";
 		var settings = Settings.find().fetch()[0];
 
 

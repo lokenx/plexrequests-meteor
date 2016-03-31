@@ -12,8 +12,9 @@ Meteor.methods({
 		if (weeklyLimit !== 0 && (userRequestTotal >= weeklyLimit) && !(Meteor.user()) ) {
 			return "limit";
 		}
+
         var tvdb = request.tvdb;
-        function insertTV(request, stat, approved) 
+        function insertTV(request, stat, approved)
         {
                 if (stat === undefined) {
                     stat = {downloaded: 0, total: 0};
@@ -27,11 +28,12 @@ Meteor.methods({
                     status: stat,
                     approved: approved,
                     poster_path: poster,
-                    episodes: request.episodes
-                });
+                    episodes: request.episodes,
+					link: request.link
+				});
         }
-		
-// Check if it already exists in SickRage or Sonarr
+
+		// Check if it already exists in SickRage or Sonarr
 		try {
 			if (settings.sickRageENABLED) {
 			    if (SickRage.checkShow(tvdb)) {
@@ -39,23 +41,23 @@ Meteor.methods({
                 	    var stat = SickRage.statsShow(tvdb);
 				        insertTV(request, stat, true);
                         return "exists";
-                    } 
+                    }
                     catch (error) {
                         logger.error(error.message);
                         return false
                     }
-                }                      
+                }
 			} else if (settings.sonarrENABLED) {
-                if (Sonarr.seriesGet(tvdb)) {   
+                if (Sonarr.seriesGet(tvdb)) {
 				    try {
                         var stat = Sonarr.seriesStats(tvdb);
                         insertTV(request, stat, true);
                         return "exists";
-                    } 
+                    }
                     catch (error) {
                         logger.error(error.message);
                         return false
-                    }                      
+                    }
                 }
 			}
         }
@@ -75,7 +77,7 @@ Meteor.methods({
 				try {
 					var episodes = (request.episodes === true) ? 1 : 0;
 					var add = SickRage.addShow(tvdb, episodes);
-				} 
+				}
                 catch (error) {
 					logger.error("Error adding to SickRage:", error.message);
 					return false;
@@ -85,7 +87,7 @@ Meteor.methods({
                         insertTV(request, undefined, true);
 						Meteor.call("sendNotifications", request, "request");
 						return true;
-					} 
+					}
                     catch (error) {
                 	    logger.error(error.message);
 						return false;
@@ -101,7 +103,7 @@ Meteor.methods({
 					var seasonFolder = settings.sonarrSEASONFOLDERS;
 					var rootFolderPath = settings.sonarrROOTFOLDERPATH;
 					var add = Sonarr.seriesPost(tvdb,request.title, qualityProfileId, seasonFolder, rootFolderPath, request.episodes);
-				} 
+				}
                 catch (error) {
 					logger.error("Error adding to Sonarr:", error.message);
 					return false;
@@ -111,7 +113,7 @@ Meteor.methods({
                         insertTV(request, undefined, true);
 						Meteor.call("sendNotifications", request, "request");
                         return true;
-					} 
+					}
                     catch (error) {
 						logger.error(error.message);
 						return false;
@@ -125,7 +127,7 @@ Meteor.methods({
                     insertTV(request, undefined, true);
 					meteor.call("sendNotifications", request, "request");
                     return true;
-				} 
+				}
                 catch (error) {
 					logger.error(error.message);
 					return false;
