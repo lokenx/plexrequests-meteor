@@ -38,5 +38,6 @@ Meteor.startup(function () {
 
 
 	Meteor.call("getPosters");
+	Meteor.call("updatePosters");
 	
 });
