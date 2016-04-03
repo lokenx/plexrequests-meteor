@@ -5,6 +5,12 @@
 [![Join the chat at https://gitter.im/lokenx/plexrequests-meteor](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/lokenx/plexrequests-meteor?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/lokenx/plexrequests-meteor.svg)](http://isitmaintained.com/project/lokenx/plexrequests-meteor "Average time to resolve an issue") [![Percentage of issues still open](http://isitmaintained.com/badge/open/lokenx/plexrequests-meteor.svg)](http://isitmaintained.com/project/lokenx/plexrequests-meteor "Percentage of issues still open")
 > This is [Plex Requests](https://github.com/lokenx/plexrequests) but written with Meteor! It's been updated with an approval system, basic issue reporting, and a new visual style!
 
+### :warning: Warning regarding Meteor 1.3 :warning:
+
+Meteor recently updated to 1.3, and while we don't expect any issues we advise you don't update your installation yet. You will get prompted to run `meteor update` once the update has downloaded in the background. Please refrain from running it, until we can confirm everything will continue to work.
+
+---
+
 **Interested in a cross platform .Net Plex Requests? Check out [Plex Requests.Net](https://github.com/tidusjar/PlexRequests.Net)!**
 
 ## Features
@@ -33,7 +39,7 @@ To use the bundled docker-compose simply run it with
 Please visit the projects [GitHub page](http://plexrequests.8bits.ca/) for [FAQ page](http://plexrequests.8bits.ca/faq)
 
 ## Contributors
- [@leonkunert](https://github.com/leonkunert) / [@jeradin](https://github.com/Jeradin) / [@jrudio](https://github.com/jrudio) / [@drzoidberg33](https://github.com/drzoidberg33) / [@SmallwoodDR82](https://github.com/SmallwoodDR82) / [@camjac251](https://github.com/camjac251)
+ [@rigrassm](https://github.com/rigrassm) / [@leonkunert](https://github.com/leonkunert) / [@jeradin](https://github.com/Jeradin) / [@jrudio](https://github.com/jrudio) / [@drzoidberg33](https://github.com/drzoidberg33) / [@SmallwoodDR82](https://github.com/SmallwoodDR82) / [@camjac251](https://github.com/camjac251)
 
 ## Want to help out?
 Want to  make Plex Requests more awesome? Feel free to fork the repo and submit a pull request! Not a developer or rather not get your hands dirty? You can donate via [PayPal](https://www.paypal.me/plexrequests) to keep things going, or just simply to say thanks!
