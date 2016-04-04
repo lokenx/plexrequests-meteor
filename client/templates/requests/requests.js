@@ -95,7 +95,8 @@ Template.requests.helpers({
 		if ((typeof this.poster_path === 'undefined') | (this.poster_path === "/")) {
 			return "poster-placeholder.png";
 		} else {
-                return this.poster_path;
+            var s_poster_path = this.poster_path.replace("http", "https");    
+			return s_poster_path;
 		}
 
   },
