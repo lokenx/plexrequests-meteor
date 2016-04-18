@@ -95,7 +95,7 @@ Template.requests.helpers({
 		if ((typeof this.poster_path === 'undefined') | (this.poster_path === "/")) {
 			return "poster-placeholder.png";
 		} else {
-            var s_poster_path = this.poster_path.replace("http:", "https:");    
+            var s_poster_path = this.poster_path.replace("http:", "https:");
 			return s_poster_path;
 		}
 
@@ -110,6 +110,9 @@ Template.requests.helpers({
   'release_date' : function () {
   	return moment(this.released).format('MMMM Do, YYYY');
   },
+	'created_at': function () {
+		return moment(this.createdAt).format('MMMM Do, YYYY');
+	},
   'approval_status' : function () {
   	var approval = (this.approved) ? '<i class="fa fa-check success-icon"></i>': '<i class="fa fa-times error-icon"></i>';
   	return approval;
