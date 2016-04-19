@@ -132,13 +132,6 @@ Template.admin.onCreated(function(){
       instance.update.set(result)
     }
   });
-
-  Meteor.call("sonarrProfiles", function (error, result) {
-    if (result) {
-      instance.sonarrProfiles.set(result);
-    }
-  });
-
 });
 
 Template.admin.events({
@@ -256,5 +249,14 @@ Template.admin.events({
       }
     });
     return false;
+  },
+
+  'click #getSonarrProfiles': function (event) {
+    event.preventDefault();
+    Meteor.call("sonarrProfiles", function (error, result) {
+      if (result) {
+        instance.sonarrProfiles.set(result);
+      }
+    });
   }
 });
