@@ -251,12 +251,18 @@ Template.admin.events({
     return false;
   },
 
-  'click #getSonarrProfiles': function (event) {
+  'click #getSonarrProfiles': function (event, template) {
     event.preventDefault();
+    var btn = $(event.target);
+    btn.html("Get Profiles <i class='fa fa-spin fa-refresh'></i>").removeClass().addClass("btn btn-info-outline");
     Meteor.call("sonarrProfiles", function (error, result) {
-      if (result) {
-        instance.sonarrProfiles.set(result);
+      if (result.length) {
+        template.sonarrProfiles.set(result);
+        Bert.alert('Retrieved Sonarr Profiles!', "success");
+      } else {
+        Bert.alert('Unable to retrieve Sonarr Profiles!', "danger");
       }
+      btn.html("Get Profiles");
     });
   }
 });
