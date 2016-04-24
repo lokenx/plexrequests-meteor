@@ -62,7 +62,7 @@ Meteor.methods({
 			}
 		}
 
-		if (settings.approval) {
+		if (settings.movieApproval) {
 			// Approval required
 			// Add to DB but not CP
 			try {
