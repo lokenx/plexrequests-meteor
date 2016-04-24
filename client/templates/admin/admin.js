@@ -105,6 +105,12 @@ Template.admin.helpers({
   },
   update: function () {
     return Template.instance().update.get();
+  },
+  latestVersion: function () {
+    return Template.instance().latestVersion.get();
+  },
+  latestNotes: function () {
+    return Template.instance().latestNotes.get();
   }
 });
 
@@ -114,6 +120,8 @@ Template.admin.onCreated(function(){
   instance.version = new ReactiveVar("");
   instance.update = new ReactiveVar(false);
   instance.sonarrProfiles = new ReactiveVar([]);
+  instance.latestVersion = new ReactiveVar("");
+  instance.latestNotes = new ReactiveVar("");
 
   Meteor.call("getBranch", function (error, result) {
     if (result) {
@@ -131,6 +139,15 @@ Template.admin.onCreated(function(){
     if (result) {
       instance.update.set(result)
     }
+  });
+
+  HTTP.get('https://api.github.com/repos/lokenx/plexrequests-meteor/releases', function (error, result) {
+    if (error) {
+      console.error('Error retrieving release notes: ' + error)
+    }
+    instance.latestVersion.set(result.data[0].name);
+    var notesArray = result.data[0].body.split("- ");
+    instance.latestNotes.set(notesArray.filter(Boolean));
   });
 });
 
