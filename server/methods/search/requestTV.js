@@ -65,7 +65,7 @@ Meteor.methods({
 			logger.error("Error checking SickRage/Sonarr:", error.message);
 			return false;
 		}
-        if (settings.approval) {
+        if (settings.tvApproval) {
 			// Approval required
 			// Add to DB but not SickRage/Sonarr
 			insertTV(request, undefined, false);
@@ -125,7 +125,7 @@ Meteor.methods({
     		} else {
 				try {
                     insertTV(request, undefined, true);
-					meteor.call("sendNotifications", request, "request");
+					Meteor.call("sendNotifications", request, "request");
                     return true;
 				}
                 catch (error) {
