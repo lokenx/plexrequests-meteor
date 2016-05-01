@@ -1,5 +1,9 @@
 <template name="logs">
   {{#if logs.file}}
     {{> reactiveTable settings=settings}}
+  {{else}}
+    <div class="col-sm-8 col-md-offset-1">
+      <div class="alert alert-warning" role="alert">No logs found!</div>
+    </div>
   {{/if}}
 </template>
