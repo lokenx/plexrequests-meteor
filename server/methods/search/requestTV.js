@@ -6,7 +6,7 @@ Meteor.methods({
 
 		// Check user request limit
 		var date = Date.now() - 6.048e8;
-		var weeklyLimit = Settings.find({}).fetch()[0].weeklyLimit;
+		var weeklyLimit = Settings.find({}).fetch()[0].tvWeeklyLimit;
 		var userRequestTotal = TV.find({user:request.user, createdAt: {"$gte": date} }).fetch().length;
 
 		if (weeklyLimit !== 0 && (userRequestTotal >= weeklyLimit) && !(Meteor.user()) ) {
