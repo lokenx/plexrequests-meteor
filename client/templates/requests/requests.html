@@ -64,6 +64,9 @@
                            <h4> <li><a href="{{link}}" target="_blank"><strong>{{title}} ({{year}})</strong></a></li></h4>
 							{{/if}}
 			  			<li><strong>Release date:</strong> {{release_date}}</li>
+							{{#if searchType 'TV Shows'}}
+			  			<li><strong>Type:</strong> {{episodes}}</li>
+						{{/if}}
 			  			<li><strong>Approved:</strong> {{{approval_status}}}</li>
 			  			<li><strong>Available:</strong> {{{download_status}}}</li>
 			  			{{{requesting_user}}}

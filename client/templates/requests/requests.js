@@ -100,6 +100,16 @@ Template.requests.helpers({
 		}
 
   },
+
+  'episodes' : function () {
+	if (this.episodes){
+		return "All Episodes";
+	} else {
+		return "New Episodes";
+	}
+
+  },
+
   'link' : function () {
     var link = 'http://tvmaze.com/shows/' + this.id + '/' + this.title;
     return link;
