@@ -52,9 +52,14 @@
 							Choose whether you would like to approve Movie or TV requests
 						</p>
 						<br>
-						{{> afQuickField name='weeklyLimit' style="width:auto;"}}
+						{{> afQuickField name='tvWeeklyLimit' style="width:auto;"}}
 						<p class="text-muted">
-							Set a weekly request limit for your users. Hint: 0 means no limit
+							Set a TV weekly request limit for your users. Hint: 0 means no limit
+						</p>
+						<br>
+						{{> afQuickField name='movieWeeklyLimit' style="width:auto;"}}
+						<p class="text-muted">
+							Set a Movie weekly request limit for your users. Hint: 0 means no limit
 						</p>
 						<br>
 						<button type="submit" class="btn btn-primary-outline btn-block">Update Settings</button>
