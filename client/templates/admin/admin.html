@@ -268,10 +268,16 @@
 						<strong>Project Website: </strong> <a href="http://plexrequests.8bits.ca/" target="_blank">plexrequests.8bits.ca</a><br>
 						<strong>GitHub Page: </strong> <a href="https://github.com/lokenx/plexrequests-meteor" target="_blank">lokenx / PlexRequests</a>
 					</p>
-					<br>
 					<p><strong>{{ latestVersion }}</strong></p>
 					<ul>
 						{{#each latestNotes}}
+							<li>{{ this }}</li>
+						{{/each}}
+					</ul>
+					<br />
+					<p><strong>{{ previousVersion }}</strong></p>
+					<ul>
+						{{#each previousNotes}}
 							<li>{{ this }}</li>
 						{{/each}}
 					</ul>

@@ -111,6 +111,12 @@ Template.admin.helpers({
   },
   latestNotes: function () {
     return Template.instance().latestNotes.get();
+  },
+  previousVersion: function () {
+    return Template.instance().previousVersion.get();
+  },
+  previousNotes: function () {
+    return Template.instance().previousNotes.get();
   }
 });
 
@@ -122,6 +128,8 @@ Template.admin.onCreated(function(){
   instance.sonarrProfiles = new ReactiveVar([]);
   instance.latestVersion = new ReactiveVar("");
   instance.latestNotes = new ReactiveVar("");
+  instance.previousVersion = new ReactiveVar("");
+  instance.previousNotes = new ReactiveVar("");
 
   Meteor.call("getBranch", function (error, result) {
     if (result) {
@@ -148,6 +156,10 @@ Template.admin.onCreated(function(){
     instance.latestVersion.set(result.data[0].name);
     var notesArray = result.data[0].body.split("- ");
     instance.latestNotes.set(notesArray.filter(Boolean));
+
+    instance.previousVersion.set(result.data[1].name);
+    var notesArray = result.data[1].body.split("- ");
+    instance.previousNotes.set(notesArray.filter(Boolean));
   });
 });
 
