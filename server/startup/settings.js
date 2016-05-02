@@ -37,7 +37,7 @@ Meteor.startup(function () {
 	Sonarr.directory = settings.sonarrDIRECTORY || "";
 
 
-	Meteor.call("getPosters");
+	// Meteor.call("getPosters");
 	Meteor.call("updatePosters");
 	
 });
