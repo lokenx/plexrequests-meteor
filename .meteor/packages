@@ -43,10 +43,8 @@ multiply:iron-router-progress
 useraccounts:bootstrap
 npm-container
 
-lokenx:themoviedbsearch
 lokenx:couchpotatowrapper
 lokenx:sickragewrapper
 lokenx:sonarrwrapper
 meteorhacks:npm
 davidyaha:collection2-migrations
-rigrassm:tvmaze

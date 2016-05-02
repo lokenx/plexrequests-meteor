@@ -145,6 +145,15 @@ Template.requests.helpers({
   		return "<li><strong>User:</strong> " + this.user + "</li>";
   	}
   },
+  'season_count' : function () {
+      var count;  
+      if (this.seasons !== -1) {
+            count = this.seasons
+        } else {
+           count = "N/A" 
+        }
+      return count
+  },
   "searchOptions": function () {
     return Session.get("searchOptions");
 	},
