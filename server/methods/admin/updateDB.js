@@ -4,7 +4,6 @@ Meteor.methods({
 		for(i=0;i<results.length;i++){
             var response = HTTP.call("GET", "http://api.tvmaze.com/shows/" + results[i].id + "/seasons", {})
             var seasons = response.data; 
-            console.log(results[i].id + " | " + results[i].title + " | " + seasons.length); 
            
             TV.update({_id: results[i]._id}, { $set: {seasons: seasons.length}});
 		}
