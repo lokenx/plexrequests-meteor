@@ -19,6 +19,11 @@ Meteor.methods({
                 if (stat === undefined) {
                     stat = {downloaded: 0, total: 0};
                 }
+                
+                if (request.seasons){ 
+                    var seasonList = request.seasons; 
+                };
+
                 TV.insert({
                     title: request.title,
                     id: request.id,
@@ -29,8 +34,9 @@ Meteor.methods({
                     approved: approved,
                     poster_path: poster,
                     episodes: request.episodes,
-					link: request.link
-				});
+					link: request.link,
+                    seasons: seasonList.length
+                });
         }
 
 		// Check if it already exists in SickRage or Sonarr
