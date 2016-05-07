@@ -21,7 +21,7 @@ Meteor.methods({
     var latestVersion64 = new Buffer(latestJson64, "base64").toString();
     var latestVersion = latestVersion64.slice(0, - 1);
 
-    if (parseInt(latestVersion.replace(/\./g, "")) > parseInt(currentVersion.replace(/\./g, ""))) {
+    if (latestVersion != currentVersion) {
       logger.info("New update available");
       return true;
     } else {
