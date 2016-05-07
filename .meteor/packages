@@ -10,7 +10,6 @@ peerlibrary:xml2js
 u2622:persistent-session
 aslagle:reactive-table
 percolate:synced-cron
-standard-minifiers
 meteor-base
 mobile-experience
 mongo
@@ -48,3 +47,5 @@ lokenx:sickragewrapper
 lokenx:sonarrwrapper
 meteorhacks:npm
 davidyaha:collection2-migrations
+standard-minifier-css
+standard-minifier-js
