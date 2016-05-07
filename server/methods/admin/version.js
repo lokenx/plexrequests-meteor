@@ -3,7 +3,7 @@ Meteor.methods({
     return "master";
   },
   getVersion: function () {
-    return "1.11.0";
+    return "1.11.1";
   },
   checkForUpdate : function () {
     var branch = Meteor.call('getBranch');
