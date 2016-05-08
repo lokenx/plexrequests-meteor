@@ -64,6 +64,7 @@ Meteor.methods({
 
         
         function approvedUser(user) {
+            //Check if user is pre-approved
             var approved = Settings.find({}).fetch()[0].plexApprovedUSERS;
             if(approved) {
                 var approvedArray = approved.split(",");
