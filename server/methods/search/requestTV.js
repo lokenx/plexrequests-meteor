@@ -38,7 +38,8 @@ Meteor.methods({
                     seasons: seasonList.length
                 });
         }
-
+        request["notification_type"] = "request"
+        request["media_type"] = "TV Series"
 		// Check if it already exists in SickRage or Sonarr
 		try {
 			if (settings.sickRageENABLED) {
@@ -75,7 +76,7 @@ Meteor.methods({
 			// Approval required
 			// Add to DB but not SickRage/Sonarr
 			insertTV(request, undefined, false);
-			Meteor.call("sendNotifications", request, "request");
+			Meteor.call("sendNotifications", request);
 			return true;
 		} else {
 			//No approval required
@@ -91,7 +92,7 @@ Meteor.methods({
                 if (add) {
 					try {
                         insertTV(request, undefined, true);
-						Meteor.call("sendNotifications", request, "request");
+						Meteor.call("sendNotifications", request);
 						return true;
 					}
                     catch (error) {
@@ -117,7 +118,7 @@ Meteor.methods({
     			if (add) {
 					try {
                         insertTV(request, undefined, true);
-						Meteor.call("sendNotifications", request, "request");
+						Meteor.call("sendNotifications", request);
                         return true;
 					}
                     catch (error) {
@@ -131,7 +132,7 @@ Meteor.methods({
     		} else {
 				try {
                     insertTV(request, undefined, true);
-					Meteor.call("sendNotifications", request, "request");
+					Meteor.call("sendNotifications", request);
                     return true;
 				}
                 catch (error) {

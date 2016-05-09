@@ -3,7 +3,9 @@ Meteor.methods({
 		check(request, Object);
 		var poster = "https://image.tmdb.org/t/p/w154" + request.poster_path || "/";
 		var settings = Settings.find().fetch()[0];
-
+        
+        request["notification_type"] = "request";
+        request["media_type"] = "Movie";
 
 		// Check user request limit
 		var date = Date.now() - 6.048e8;
@@ -43,7 +45,7 @@ Meteor.methods({
 							downloaded: status,
 							approved: true,
 							poster_path: poster
-						});
+                        });
 
 						if (status) {
 							return 'exists';
@@ -81,7 +83,7 @@ Meteor.methods({
 				return false;
 			}
 
-			Meteor.call("sendNotifications", request, "request");
+			Meteor.call("sendNotifications", request);
 			return true;
 		} else {
 			// No approval required
@@ -110,7 +112,7 @@ Meteor.methods({
 						logger.error(error.message);
 						return false;
 					}
-					Meteor.call("sendNotifications", request, "request");
+					Meteor.call("sendNotifications", request);
 					return true;
 				} else {
 					return false;
@@ -127,7 +129,7 @@ Meteor.methods({
 						approved: true,
 						poster_path: poster
 					});
-					Meteor.call("sendNotifications", request, "request");
+					Meteor.call("sendNotifications", request);
 					return true;
 				} catch (error) {
 					logger.error(error.message);
