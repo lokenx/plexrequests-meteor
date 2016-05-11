@@ -1,9 +1,14 @@
 Meteor.methods({
-	'updatePosters': function() {
-		var results = TV.find({poster_path: /^\//}).fetch();
-		for(i=0;i<results.length;i++){
-			TV.update({_id: results[i]._id}, { $set: {poster_path: "https://image.tmdb.org/t/p/w154"+results[i].poster_path}});
+	'updateSeasons': function() {
+		var results = TV.find({seasons: -1}).fetch();
+		for(i = 0; i < results.length; i++) {
+			try {
+				var response = HTTP.call("GET", "http://api.tvmaze.com/shows/" + results[i].id + "/seasons", {});
+				var seasons = response.data;
+				TV.update({_id: results[i]._id}, { $set: {seasons: seasons.length}});
+			} catch (e) {
+				logger.warn("[Not Found]: Couldn't update seasons for", results[i].title);
+			}
 		}
 	}
 });
-

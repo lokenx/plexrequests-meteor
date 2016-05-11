@@ -36,8 +36,6 @@ Meteor.startup(function () {
 	Sonarr.api = settings.sonarrAPI;
 	Sonarr.directory = settings.sonarrDIRECTORY || "";
 
+	Meteor.call("updateSeasons");
 
-	Meteor.call("getPosters");
-	Meteor.call("updatePosters");
-	
 });

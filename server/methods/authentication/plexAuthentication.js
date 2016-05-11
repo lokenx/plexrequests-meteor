@@ -64,14 +64,15 @@ Meteor.methods({
 		var friendsList = [];
 
 		// Check if an array of users or a single user is returned
-		if (users.length) {
-			for (var i = 0; i < users.length; i++) {
-			 	friendsList.push( users[i].title.toLowerCase() );
-			}
-		} else if (users.title) {
-			friendsList.push( users.title.toLowerCase() );
+		if (typeof users !== 'undefined'){
+			if (users.length) {
+				for (var i = 0; i < users.length; i++) {
+				 	friendsList.push( users[i].title.toLowerCase() );
+				}
+			} else if (users.title) {
+				friendsList.push( users.title.toLowerCase() );
+				}	  
 		}
-
     //Add admin username to the list
     friendsList.push(admintitle);
 

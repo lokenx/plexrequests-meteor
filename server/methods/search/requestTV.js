@@ -6,7 +6,7 @@ Meteor.methods({
 
 		// Check user request limit
 		var date = Date.now() - 6.048e8;
-		var weeklyLimit = Settings.find({}).fetch()[0].weeklyLimit;
+		var weeklyLimit = Settings.find({}).fetch()[0].tvWeeklyLimit;
 		var userRequestTotal = TV.find({user:request.user, createdAt: {"$gte": date} }).fetch().length;
 
 		if (weeklyLimit !== 0 && (userRequestTotal >= weeklyLimit) && !(Meteor.user()) ) {
@@ -19,6 +19,11 @@ Meteor.methods({
                 if (stat === undefined) {
                     stat = {downloaded: 0, total: 0};
                 }
+                
+                if (request.seasons){ 
+                    var seasonList = request.seasons; 
+                };
+
                 TV.insert({
                     title: request.title,
                     id: request.id,
@@ -29,8 +34,9 @@ Meteor.methods({
                     approved: approved,
                     poster_path: poster,
                     episodes: request.episodes,
-					link: request.link
-				});
+					link: request.link,
+                    seasons: seasonList.length
+                });
         }
 
 		// Check if it already exists in SickRage or Sonarr
@@ -65,7 +71,7 @@ Meteor.methods({
 			logger.error("Error checking SickRage/Sonarr:", error.message);
 			return false;
 		}
-        if (settings.approval) {
+        if (settings.tvApproval) {
 			// Approval required
 			// Add to DB but not SickRage/Sonarr
 			insertTV(request, undefined, false);
@@ -125,7 +131,7 @@ Meteor.methods({
     		} else {
 				try {
                     insertTV(request, undefined, true);
-					meteor.call("sendNotifications", request, "request");
+					Meteor.call("sendNotifications", request, "request");
                     return true;
 				}
                 catch (error) {

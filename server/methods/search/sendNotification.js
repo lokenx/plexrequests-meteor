@@ -20,7 +20,7 @@ Meteor.methods({
         Meteor.call("sendPushoverNotification", settings, message.title, message.body)
       }
       if (settings.slackENABLED) {
-        Meteor.call("sendSlackNotification", settings, message.title + ":\\n" + message.body)
+        Meteor.call("sendSlackNotification", settings, message.title + ":\n" + message.body)
       }
     } else {
       if (settings.pushbulletENABLED) {

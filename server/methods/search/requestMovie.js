@@ -7,7 +7,7 @@ Meteor.methods({
 
 		// Check user request limit
 		var date = Date.now() - 6.048e8;
-		var weeklyLimit = Settings.find({}).fetch()[0].weeklyLimit;
+		var weeklyLimit = Settings.find({}).fetch()[0].movieWeeklyLimit;
 		var userRequestTotal = Movies.find({user:request.user, createdAt: {"$gte": date} }).fetch().length;
 
 		if (weeklyLimit !== 0 && (userRequestTotal >= weeklyLimit) && !(Meteor.user()) ) {
@@ -62,7 +62,7 @@ Meteor.methods({
 			}
 		}
 
-		if (settings.approval) {
+		if (settings.movieApproval) {
 			// Approval required
 			// Add to DB but not CP
 			try {

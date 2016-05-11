@@ -62,11 +62,17 @@
 							{{/if}}
 							{{#if searchType 'TV Shows'}}
                            <h4> <li><a href="{{link}}" target="_blank"><strong>{{title}} ({{year}})</strong></a></li></h4>
-							{{/if}}
-			  			<li><strong>Release date:</strong> {{release_date}}</li>
+									
+                            <li><strong>Seasons:</strong> {{season_count}}</li>
+							
+			  			<li><strong>Type:</strong> {{episodes}}</li>
+{{/if}}
+						
+<li><strong>Release date:</strong> {{release_date}}</li>
 			  			<li><strong>Approved:</strong> {{{approval_status}}}</li>
 			  			<li><strong>Available:</strong> {{{download_status}}}</li>
 			  			{{{requesting_user}}}
+							<li><strong>Requested date:</strong> {{created_at}}</li>
 			  			<li><strong>Issues:</strong> {{issues}}</li>
 		  			</ul>
 		  		</div>

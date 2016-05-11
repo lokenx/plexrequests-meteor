@@ -3,7 +3,7 @@ Meteor.methods({
     return "master";
   },
   getVersion: function () {
-    return "1.8.7";
+    return "1.11.2";
   },
   checkForUpdate : function () {
     var branch = Meteor.call('getBranch');
@@ -21,7 +21,7 @@ Meteor.methods({
     var latestVersion64 = new Buffer(latestJson64, "base64").toString();
     var latestVersion = latestVersion64.slice(0, - 1);
 
-    if (latestVersion > currentVersion) {
+    if (latestVersion != currentVersion) {
       logger.info("New update available");
       return true;
     } else {
