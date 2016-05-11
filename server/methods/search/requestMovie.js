@@ -62,7 +62,22 @@ Meteor.methods({
 			}
 		}
 
-		if (settings.movieApproval) {
+        
+		function approvedUser(user) {
+			//Check if user is pre-approved
+			var approved = Settings.find({}).fetch()[0].plexApprovedUSERS;
+			if(approved) {
+				var approvedArray = approved.split(",");
+				for (var i = 0; i < approvedArray.length; i++) {
+					if(user == approvedArray[i]) {
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+        
+		if (settings.movieApproval && !approvedUser(request.user)) {
 			// Approval required
 			// Add to DB but not CP
 			try {

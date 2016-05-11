@@ -71,7 +71,22 @@ Meteor.methods({
 			logger.error("Error checking SickRage/Sonarr:", error.message);
 			return false;
 		}
-        if (settings.tvApproval) {
+        
+		function approvedUser(user) {
+			//Check if user is pre-approved
+			var approved = Settings.find({}).fetch()[0].plexApprovedUSERS;
+			if(approved) {
+				var approvedArray = approved.split(",");
+				for (var i = 0; i < approvedArray.length; i++) {
+					if(user == approvedArray[i]) {
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+
+		if (settings.tvApproval && approvedUser(request.user)) {
 			// Approval required
 			// Add to DB but not SickRage/Sonarr
 			insertTV(request, undefined, false);
