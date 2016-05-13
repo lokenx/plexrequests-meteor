@@ -72,7 +72,9 @@ Meteor.methods({
 			logger.error("Error checking SickRage/Sonarr:", error.message);
 			return false;
 		}
-        if (settings.tvApproval) {
+		
+		//If approval needed and user does not have override permission
+        if (settings.tvApproval && !Permissions.find({permUSER: request.user}).fetch()[0].permAPPROVAL) {
 			// Approval required
 			// Add to DB but not SickRage/Sonarr
 			insertTV(request, undefined, false);

@@ -63,8 +63,9 @@ Meteor.methods({
 				return false;
 			}
 		}
-
-		if (settings.movieApproval) {
+		
+		//If approval needed and user does not have override permission
+		if (settings.movieApproval && !Permissions.find({permUSER: request.user}).fetch()[0].permAPPROVAL) {
 			// Approval required
 			// Add to DB but not CP
 			try {

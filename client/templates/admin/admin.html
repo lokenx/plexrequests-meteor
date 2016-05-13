@@ -29,6 +29,9 @@
 					<ul class="list-group settings-options">
 					  <a href="#"><li class="list-group-item active">General</li></a>
 					  <a href="#"><li class="list-group-item">Authentication</li></a>
+					  {{#if plexUserPERMISSIONS}}
+					    <a href="#"><li class="list-group-item">Users</li></a>
+					  {{/if}}
 					  <a href="#"><li class="list-group-item">CouchPotato</li></a>
 					  <a href="#"><li class="list-group-item">SickRage</li></a>
 					  <a href="#"><li class="list-group-item">Sonarr</li></a>
@@ -78,6 +81,10 @@
 						<p class="text-muted">
 							Enabled if you want users to login with both their usernames and passwords
 						</p>
+						{{> afQuickField name='plexUserPERMISSIONS'}}
+						<p class="text-muted">
+							Allows for per-user permissions. Hint: Shows USERS tab
+						</p>
 						<br>
 						{{> afQuickField name='plexAuthenticationTOKEN' style="width:auto;" size="25"}}
 						<br>
@@ -95,16 +102,36 @@
 						<button type="button" class="btn btn-secondary-outline" id="plexsubmit">Get token <i class="fa fa-key"></i></button>
 						<br>
 						<br>
-						<br>
-						{{>afQuickField name='plexBannedUSERS' size="40"}}
-						<p class="text-muted">
-							Plex username's entered above will not be allowed to login. Separate users with a comma but no spaces. For example <kbd>jsmith,jdoe</kbd>.
-						</p>
-						<br>
 						<button type="submit" class="btn btn-primary-outline btn-block">Update Settings</button>
 					{{/autoForm}}
 				</div>
 
+				{{#if plexUserPERMISSIONS}}
+					<div class="col-md-8 settings-pane" style="display: none;" id="SettingsUsers">
+						{{#autoForm collection="Permissions" doc=settings id="updateUsersSettingsForm" type="update" resetOnSuccess="false"}}
+							<div class="row">
+								<div class="col-md-12">
+									<p>User Management</p>
+									<p class="text-muted">No Approval: This user will always have their requests automatically approved</p>
+									<p class="text-muted">No Limit: No request limits apply to this user</p>
+									<p class="text-muted">Banned: Banned users are prevented from logging in</p>
+								</div>
+							</div>
+							<div class="row">
+							  <div class="col-md-12">
+								<div class="item-divider"></div>
+							  </div>
+							</div>
+      							
+								<!--
+								TODO: Permissions Each GUI
+								-->
+
+							<button type="submit" class="btn btn-primary-outline btn-block">Update Settings</button>
+						{{/autoForm}}
+					</div>
+				{{/if}}
+				
 				<div class="col-md-8 settings-pane" style="display: none;" id="SettingsCouchPotato">
 					{{#autoForm collection="Settings" doc=settings id="updateCouchPotatoSettingsForm" type="update" resetOnSuccess="false"}}
 						{{> afQuickField name='couchPotatoENABLED'}}

@@ -27,6 +27,20 @@ AutoForm.hooks({
       Bert.alert('Update failed, please try again', 'danger');
     }
   },
+  updateUsersSettingsForm: {
+    onSuccess: function(formType, result) {
+      if (result) {
+        Bert.alert('Updated successfully', 'success');
+        Meteor.call("settingsUpdate");
+      }
+      this.event.preventDefault();
+      return false;
+    },
+    onError: function(formType, error) {
+      console.error(error);
+      Bert.alert('Update failed, please try again', 'danger');
+    }
+  },
   updateCouchPotatoSettingsForm: {
     onSuccess: function(formType, result) {
       if (result) {
@@ -166,6 +180,12 @@ Template.admin.onCreated(function(){
 Template.admin.events({
   'click .list-group-item' : function (event, template) {
     var target = $(event.target);
+	  
+	//Update permissions collection
+	if(target.text() == "Users") {
+		Meteor.call("permissionsUpdateUsers");
+	}
+	  
     $('.list-group-item').removeClass("active");
     target.toggleClass("active");
 
