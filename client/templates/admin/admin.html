@@ -200,12 +200,37 @@
 
 				<div class="col-md-8 settings-pane" style="display: none;" id="SettingsNotifications">
 					{{#autoForm collection="Settings" doc=settings id="updateNotificationsSettingsForm" type="update" resetOnSuccess="false"}}
+
 						{{> afQuickField name='customNotificationTITLE' size="40"}}
                         <p class="text-muted"> Enter custom notification title</p>
                         <br>
                         {{> afQuickField name='customNotificationTEXT' size="40"}}
                         <p class="text-muted"> Enter custom notification text</p>
                         <br>
+						
+                        {{> afQuickField name='iftttENABLED'}}
+						<p class="text-muted">Enabled IFTTT Maker.</p>
+						<br>
+                        {{> afQuickField name='iftttMAKERAPI' size="40"}}
+                        <p class="text-muted"> IFTTT Maker API Key</p>
+                        <br>
+                        {{> afQuickField name='iftttMAKERCHANNEL' size="40"}}
+                        <p class="text-muted"> IFTTT Maker Channel Name</p>
+                        <br>
+                        {{> afQuickField name='iftttMAKERVALUE1' size="40"}}
+                        <p class="text-muted"> IFTTT Optional Value 1</p>
+						<br>
+						{{> afQuickField name='iftttMAKERVALUE2' size="40"}}
+						<p class="text-muted"> IFTTT Optional Value 2</p>
+						<br>
+						{{> afQuickField name='iftttMAKERVALUE3' size="40"}}
+						<p class="text-muted"> IFTTT Optional Value 3</p>
+						<br>
+
+						<p><button class="btn btn-secondary-outline" id="iftttTest">Test IFTTT Maker</button></p>
+						<p class="text-muted">Test your IFTTT Maker channel. Remember to save your settings first!</p>
+						<br>
+                        
                         {{> afQuickField name='pushbulletENABLED'}}
 						<p class="text-muted">Enabled Pushbullet to receive alerts.</p>
 						<br>

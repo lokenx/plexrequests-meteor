@@ -218,6 +218,21 @@ Template.admin.events({
       }
     })
   },
+  'click #iftttTest' : function (event) {
+    event.preventDefault();
+    var btn = $(event.target);
+    btn.html("Testing... <i class='fa fa-spin fa-refresh'></i>").removeClass().addClass("btn btn-info-outline");
+    Meteor.call("testIFTTT", function (error, result) {
+      if (error || !result) {
+        btn.removeClass("btn-info-outline").addClass("btn-danger-outline");
+        btn.html("Error!");
+        Bert.alert(error.reason, "danger");
+      } else if (result) {
+        btn.removeClass("btn-info-outline").addClass("btn-success-outline");
+        btn.html("Success!");
+      }
+    })
+  },
   'click #pushbulletTest' : function (event) {
     event.preventDefault();
     var btn = $(event.target);
