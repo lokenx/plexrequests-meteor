@@ -1,7 +1,7 @@
 # This is an template unit file for starting plexrequests-meteor with systemd
  
 [Unit]
-Description=Meteor Daemon
+Description=Plexrequests-Meteor Meteor Daemon
 
 [Service]
 Type=simple
