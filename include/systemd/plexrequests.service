@@ -1,0 +1,22 @@
+# This is an template unit file for starting plexrequests-meteor with systemd
+ 
+[Unit]
+Description=Plexrequests-Meteor Meteor Daemon
+
+[Service]
+Type=simple
+
+# Path to root directory of the plexrequests application folder
+WorkingDirectory=/path/to/plexrequests-meteor
+
+# Set the username plex requests should be run as. May be set to any username
+User=plex 
+
+# Set the group plex requests should be run as. May be set to any group
+Group=plex 
+
+# Path to meteor executable, users can add extra arguments here just like they would from the command line. ex) --port 3333
+ExecStart=/usr/local/bin/meteor
+
+[Install]
+WantedBy=multi-user.target
