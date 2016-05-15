@@ -131,6 +131,12 @@ Template.admin.helpers({
   },
   previousNotes: function () {
     return Template.instance().previousNotes.get();
+  },
+  permissionUser: function () {
+	return Permissions.find({}).fetch();
+  },
+  makeUniqueID: function () {
+    return "update-each-" + this._id;
   }
 });
 

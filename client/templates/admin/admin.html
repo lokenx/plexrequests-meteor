@@ -108,27 +108,42 @@
 
 				{{#if plexUserPERMISSIONS}}
 					<div class="col-md-8 settings-pane" style="display: none;" id="SettingsUsers">
-						{{#autoForm collection="Permissions" doc=settings id="updateUsersSettingsForm" type="update" resetOnSuccess="false"}}
+						<div class="row">
+							<div class="col-md-12">
+								<p>User Management</p>
+								<p class="text-muted">No Approval: This user will always have their requests automatically approved</p>
+								<p class="text-muted">No Limit: No request limits apply to this user</p>
+								<p class="text-muted">Banned: Banned users are prevented from logging in</p>
+							</div>
+						</div>
+						<div class="row">
+						  <div class="col-md-12">
+							<div class="item-divider"></div>
+						  </div>
+						</div>
+						{{#each permissionUser}}
+						{{#autoForm collection="Permissions" doc=this id=makeUniqueID type="update" resetOnSuccess="false" autosave=true}}
 							<div class="row">
-								<div class="col-md-12">
-									<p>User Management</p>
-									<p class="text-muted">No Approval: This user will always have their requests automatically approved</p>
-									<p class="text-muted">No Limit: No request limits apply to this user</p>
-									<p class="text-muted">Banned: Banned users are prevented from logging in</p>
-								</div>
+							  <div class="col-md-3" align="center">
+								<p>{{{permUSER}}}</p>
+							  </div>
+							  <div class="col-md-3">
+								{{> afQuickField name='permAPPROVAL'}}
+							  </div>
+							  <div class="col-md-3">
+								{{> afQuickField name='permLIMIT'}}
+							  </div>
+							  <div class="col-md-3">
+								{{> afQuickField name='permBANNED'}}
+							  </div>
 							</div>
 							<div class="row">
 							  <div class="col-md-12">
 								<div class="item-divider"></div>
 							  </div>
 							</div>
-      							
-								<!--
-								TODO: Permissions Each GUI
-								-->
-
-							<button type="submit" class="btn btn-primary-outline btn-block">Update Settings</button>
 						{{/autoForm}}
+						{{/each}}
 					</div>
 				{{/if}}
 				

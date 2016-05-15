@@ -12,7 +12,7 @@ Meteor.methods({
 		var weeklyLimit = Settings.find({}).fetch()[0].movieWeeklyLimit;
 		var userRequestTotal = Movies.find({user:request.user, createdAt: {"$gte": date} }).fetch().length;
 
-		if (weeklyLimit !== 0 && (userRequestTotal >= weeklyLimit) && !(Meteor.user()) ) {
+		if (weeklyLimit !== 0 && (userRequestTotal >= weeklyLimit) && !(Meteor.user()) && !Permissions.find({permUSER: request.user}).fetch()[0].permLIMIT) {
 			return "limit";
 		}
 
