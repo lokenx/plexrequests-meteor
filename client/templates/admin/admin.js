@@ -188,6 +188,18 @@ Template.admin.events({
     event.preventDefault();
     return false;
   },
+  'click #usersSettingsSubmit' : function (event) {
+    event.preventDefault();
+	
+	try {
+		$('*[id^="update-each-"]').submit();
+		Bert.alert('Updated successfully', 'success');
+	}
+	catch(error) {
+		console.error(error);
+		Bert.alert('Update failed, please try again', 'danger');
+	}
+  },
   'click #couchPotatoTest' : function (event) {
     event.preventDefault();
     var btn = $(event.target);

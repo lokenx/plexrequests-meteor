@@ -122,7 +122,7 @@
 						  </div>
 						</div>
 						{{#each permissionUser}}
-						{{#autoForm collection="Permissions" doc=this id=makeUniqueID type="update" resetOnSuccess="false" autosave=true}}
+						{{#autoForm collection="Permissions" doc=this id=makeUniqueID type="update" resetOnSuccess="false"}}
 							<div class="row">
 							  <div class="col-md-3" align="center">
 								<p>{{{permUSER}}}</p>
@@ -144,6 +144,7 @@
 							</div>
 						{{/autoForm}}
 						{{/each}}
+						<button type="submit" class="btn btn-primary-outline btn-block" id="usersSettingsSubmit">Update Settings</button>
 					</div>
 				{{/if}}
 				
