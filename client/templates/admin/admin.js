@@ -117,6 +117,12 @@ Template.admin.helpers({
   },
   previousNotes: function () {
     return Template.instance().previousNotes.get();
+  },
+  permissionUser: function () {
+	return Permissions.find({}).fetch();
+  },
+  makeUniqueID: function () {
+    return "update-each-" + this._id;
   }
 });
 
@@ -166,6 +172,12 @@ Template.admin.onCreated(function(){
 Template.admin.events({
   'click .list-group-item' : function (event, template) {
     var target = $(event.target);
+	  
+	//Update permissions collection
+	if(target.text() == "Users") {
+		Meteor.call("permissionsUpdateUsers");
+	}
+	  
     $('.list-group-item').removeClass("active");
     target.toggleClass("active");
 
@@ -175,6 +187,18 @@ Template.admin.events({
   'submit #updateSettingsForm' : function (event) {
     event.preventDefault();
     return false;
+  },
+  'click #usersSettingsSubmit' : function (event) {
+    event.preventDefault();
+	
+	try {
+		$('*[id^="update-each-"]').submit();
+		Bert.alert('Updated successfully', 'success');
+	}
+	catch(error) {
+		console.error(error);
+		Bert.alert('Update failed, please try again', 'danger');
+	}
   },
   'click #couchPotatoTest' : function (event) {
     event.preventDefault();

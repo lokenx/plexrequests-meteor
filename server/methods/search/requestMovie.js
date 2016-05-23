@@ -12,7 +12,7 @@ Meteor.methods({
 		var weeklyLimit = Settings.find({}).fetch()[0].movieWeeklyLimit;
 		var userRequestTotal = Movies.find({user:request.user, createdAt: {"$gte": date} }).fetch().length;
 
-		if (weeklyLimit !== 0 && (userRequestTotal >= weeklyLimit) && !(Meteor.user()) ) {
+		if (weeklyLimit !== 0 && (userRequestTotal >= weeklyLimit) && !(Meteor.user()) && !Permissions.find({permUSER: request.user}).fetch()[0].permLIMIT) {
 			return "limit";
 		}
 
@@ -63,8 +63,9 @@ Meteor.methods({
 				return false;
 			}
 		}
-
-		if (settings.movieApproval) {
+		
+		//If approval needed and user does not have override permission
+		if (settings.movieApproval && !Permissions.find({permUSER: request.user}).fetch()[0].permAPPROVAL) {
 			// Approval required
 			// Add to DB but not CP
 			try {
