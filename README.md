@@ -19,25 +19,26 @@
 ## Overview
 
    * Movie data is searched and retrieved from [TheMovieDB](https://www.themoviedb.org/)
-   * TV Show data is searched and retrieved from [TVMaze](http://www.tvmaze.com/) 
+   * TV Show data is searched and retrieved from [TVMaze](http://www.tvmaze.com/)
    * Easily accessible list of requested Movies and TV series
    * Simple and easy user authentication and request approval
+   * Improved user permissions management :star2:
 
 ## Downloader Integrations
 
    * **[CouchPotato](https://couchpota.to/)** Automated Movie Download Application
    * **[SickRage](https://github.com/SickRage/SickRage)** Automated TV Series Download Application
    * **[Sonarr](https://sonarr.tv/)** Automated TV Series Download Application
-   
+
 ## Notifications
 
    * **Providers**
       1. **[Pushbullet](https://www.pushbullet.com/)**
       2. **[Pushover](https://pushover.net/)**
       3. **[Slack](https://slack.com/)**
-   
+
    * **Pushbullet Channels**
-      * You can now push notifications to a custom channel to easily notify others whenever new content is requested and added. Users only need to subscribe to the channel to start recieving notifications. 
+      * You can now push notifications to a custom channel to easily notify others whenever new content is requested and added. Users only need to subscribe to the channel to start recieving notifications.
       * Visit the **[Channel Creation Page](https://www.pushbullet.com/my-channel)** to learn more about how to create and distribute your own channel.
 
    * **Custom Notifications**
@@ -69,7 +70,7 @@
 Please visit the projects [GitHub page](http://plexrequests.8bits.ca/) for [FAQ page](http://plexrequests.8bits.ca/faq)
 
 ## Contributors
- [@rigrassm](https://github.com/rigrassm) / [@leonkunert](https://github.com/leonkunert) / [@jeradin](https://github.com/Jeradin) / [@jrudio](https://github.com/jrudio) / [@drzoidberg33](https://github.com/drzoidberg33) / [@SmallwoodDR82](https://github.com/SmallwoodDR82) / [@camjac251](https://github.com/camjac251)
+ [@rigrassm](https://github.com/rigrassm) / [@Qw-in](https://github.com/Qw-in) / [@leonkunert](https://github.com/leonkunert) / [@jeradin](https://github.com/Jeradin) / [@jrudio](https://github.com/jrudio) / [@drzoidberg33](https://github.com/drzoidberg33) / [@SmallwoodDR82](https://github.com/SmallwoodDR82) / [@camjac251](https://github.com/camjac251)
 
 ## Want to help out?
 Want to  make Plex Requests more awesome? Feel free to fork the repo and submit a pull request! Not a developer or rather not get your hands dirty? You can donate via [PayPal](https://www.paypal.me/plexrequests) to keep things going, or just simply to say thanks!
