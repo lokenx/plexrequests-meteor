@@ -43,7 +43,7 @@ Meteor.methods({
 							released: request.release_date,
 							user: request.user,
 							downloaded: status,
-							approved: true,
+							approved: 1,
 							poster_path: poster
                         });
 
@@ -76,7 +76,7 @@ Meteor.methods({
 					released: request.release_date,
 					user: request.user,
 					downloaded: false,
-					approved: false,
+					approved: 0,
 					poster_path: poster
 				});
 			} catch (error) {
@@ -106,7 +106,7 @@ Meteor.methods({
 							released: request.release_date,
 							user: request.user,
 							downloaded: false,
-							approved: true,
+							approved: 1,
 							poster_path: poster
 						});
 					} catch (error) {
@@ -127,7 +127,7 @@ Meteor.methods({
 						released: request.release_date,
 						user: request.user,
 						downloaded: false,
-						approved: true,
+						approved: 1,
 						poster_path: poster
 					});
 					Meteor.call("sendNotifications", request);

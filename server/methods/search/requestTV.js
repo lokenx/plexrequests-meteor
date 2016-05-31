@@ -46,7 +46,7 @@ Meteor.methods({
 			    if (SickRage.checkShow(tvdb)) {
 				    try {
                 	    var stat = SickRage.statsShow(tvdb);
-				        insertTV(request, stat, true);
+				        insertTV(request, stat, 1);
                         return "exists";
                     }
                     catch (error) {
@@ -58,7 +58,7 @@ Meteor.methods({
                 if (Sonarr.seriesGet(tvdb)) {
 				    try {
                         var stat = Sonarr.seriesStats(tvdb);
-                        insertTV(request, stat, true);
+                        insertTV(request, stat, 1);
                         return "exists";
                     }
                     catch (error) {
@@ -77,7 +77,7 @@ Meteor.methods({
         if (settings.tvApproval && !Permissions.find({permUSER: request.user}).fetch()[0].permAPPROVAL) {
 			// Approval required
 			// Add to DB but not SickRage/Sonarr
-			insertTV(request, undefined, false);
+			insertTV(request, undefined, 0);
 			Meteor.call("sendNotifications", request);
 			return true;
 		} else {
@@ -93,7 +93,7 @@ Meteor.methods({
 				}
                 if (add) {
 					try {
-                        insertTV(request, undefined, true);
+                        insertTV(request, undefined, 1);
 						Meteor.call("sendNotifications", request);
 						return true;
 					}
@@ -119,7 +119,7 @@ Meteor.methods({
 				}
     			if (add) {
 					try {
-                        insertTV(request, undefined, true);
+                        insertTV(request, undefined, 1);
 						Meteor.call("sendNotifications", request);
                         return true;
 					}
@@ -133,7 +133,7 @@ Meteor.methods({
 				}
     		} else {
 				try {
-                    insertTV(request, undefined, true);
+                    insertTV(request, undefined, 1);
 					Meteor.call("sendNotifications", request);
                     return true;
 				}
