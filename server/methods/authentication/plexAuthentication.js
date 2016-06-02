@@ -39,55 +39,20 @@ Meteor.methods({
 		function checkArray(value, array) {
 		  return array.indexOf(value);
 		}
-
-		var plexToken = Settings.find({}).fetch()[0].plexAuthenticationTOKEN;
-
-		try {
-      var friendsXML = Meteor.http.call("GET", "https://plex.tv/pms/friends/all?X-Plex-Token="+plexToken);
-      var accountXML = Meteor.http.call("GET", "https://plex.tv/users/account?X-Plex-Token="+plexToken);
-    } catch (error) {
-      logger.error("Error checking Plex Users: " + error.message);
-      return false;
-    }
-
-		var users = [];
-		var admintitle = '';
-
-		xml2js.parseString(friendsXML.content, {mergeAttrs : true, explicitArray : false} ,function (err, result) {
-			users = result['MediaContainer']['User'];
-		});
-
-		xml2js.parseString(accountXML.content, {mergeAttrs : true, explicitArray : false} ,function (err, result) {
-			admintitle = result['user']['title'].toLowerCase();
-		});
-
-		var friendsList = [];
-
-		// Check if an array of users or a single user is returned
-		if (users.length) {
-			for (var i = 0; i < users.length; i++) {
-			 	friendsList.push( users[i].title.toLowerCase() );
-			}
-		} else if (users.title) {
-			friendsList.push( users.title.toLowerCase() );
+		
+		//Update users in permissions
+		Meteor.call("permissionsUpdateUsers");
+		
+		//Get friendslist and bannedlist
+		var friendsList = Meteor.call("getPlexFriendlist");
+		var bannedList = Permissions.find({permBANNED: true}, {fields: {_id: 0, permUSER: 1, permBANNED: 1}}).fetch();
+		
+		//Remove banned users
+		for(var i = 0; i < bannedList.length; i++) {
+			friendsList.splice(friendsList.indexOf(bannedList[i].permUSER), 1);
 		}
-
-    //Add admin username to the list
-    friendsList.push(admintitle);
-
-		// Remove banned users
-		var banned = Settings.find().fetch()[0].plexBannedUSERS;
-		if (banned) {
-			var bannedArray = banned.split(",");
-			for (var i = 0; i < bannedArray.length; i++) {
-				var checkBanned = checkArray(bannedArray[i], friendsList);
-				if ( checkBanned > -1) {
-					friendsList.splice(checkBanned, 1);
-				}
-			}
-		}
-
-    return (isInArray(plexUsername.toLowerCase(), friendsList));
+		
+    	return (isInArray(plexUsername.toLowerCase(), friendsList));
   },
 	'getPlexToken' : function (username,password) {
 
@@ -115,15 +80,55 @@ Meteor.methods({
 		}
 
 
-    //Bad authentication comes back as 401, will need to add error handles, for now it just assumes that and lets user know
-    if (plexstatus.statusCode==201) {
-      var results = xml2js.parseStringSync(plexstatus.content);
-      var plexAuth = results.user.$.authenticationToken;
-      Settings.update({}, {$set: {plexAuthenticationTOKEN: plexAuth}});
-			return true;
-    } else {
-			logger.error("Error getting Plex token");
-			return false;
+		//Bad authentication comes back as 401, will need to add error handles, for now it just assumes that and lets user know
+		if (plexstatus.statusCode==201) {
+		  var results = xml2js.parseStringSync(plexstatus.content);
+		  var plexAuth = results.user.$.authenticationToken;
+		  Settings.update({}, {$set: {plexAuthenticationTOKEN: plexAuth}});
+				return true;
+		} else {
+				logger.error("Error getting Plex token");
+				return false;
+			}
+		},
+	'getPlexFriendlist' : function () {
+		var plexToken = Settings.find({}).fetch()[0].plexAuthenticationTOKEN;
+
+		try {
+		  var friendsXML = Meteor.http.call("GET", "https://plex.tv/pms/friends/all?X-Plex-Token="+plexToken);
+		  var accountXML = Meteor.http.call("GET", "https://plex.tv/users/account?X-Plex-Token="+plexToken);
+		} catch (error) {
+		  logger.error("Error checking Plex Users: " + error.message);
+		  return false;
 		}
+
+		var users = [];
+		var admintitle = '';
+
+		xml2js.parseString(friendsXML.content, {mergeAttrs : true, explicitArray : false} ,function (err, result) {
+			users = result['MediaContainer']['User'];
+		});
+
+		xml2js.parseString(accountXML.content, {mergeAttrs : true, explicitArray : false} ,function (err, result) {
+			admintitle = result['user']['title'].toLowerCase();
+		});
+
+		var friendsList = [];
+
+		// Check if an array of users or a single user is returned
+		if (typeof users !== 'undefined'){
+			if (users.length) {
+				for (var i = 0; i < users.length; i++) {
+					friendsList.push( users[i].title.toLowerCase() );
+				}
+			} else if (users.title) {
+				friendsList.push( users.title.toLowerCase() );
+				}	  
+		}
+
+		//Add admin username to the list
+		friendsList.push(admintitle);
+
+		return(friendsList);
 	}
 });

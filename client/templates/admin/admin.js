@@ -105,6 +105,24 @@ Template.admin.helpers({
   },
   update: function () {
     return Template.instance().update.get();
+  },
+  latestVersion: function () {
+    return Template.instance().latestVersion.get();
+  },
+  latestNotes: function () {
+    return Template.instance().latestNotes.get();
+  },
+  previousVersion: function () {
+    return Template.instance().previousVersion.get();
+  },
+  previousNotes: function () {
+    return Template.instance().previousNotes.get();
+  },
+  permissionUser: function () {
+	return Permissions.find({}).fetch();
+  },
+  makeUniqueID: function () {
+    return "update-each-" + this._id;
   }
 });
 
@@ -114,6 +132,10 @@ Template.admin.onCreated(function(){
   instance.version = new ReactiveVar("");
   instance.update = new ReactiveVar(false);
   instance.sonarrProfiles = new ReactiveVar([]);
+  instance.latestVersion = new ReactiveVar("");
+  instance.latestNotes = new ReactiveVar("");
+  instance.previousVersion = new ReactiveVar("");
+  instance.previousNotes = new ReactiveVar("");
 
   Meteor.call("getBranch", function (error, result) {
     if (result) {
@@ -133,17 +155,29 @@ Template.admin.onCreated(function(){
     }
   });
 
-  Meteor.call("sonarrProfiles", function (error, result) {
-    if (result) {
-      instance.sonarrProfiles.set(result);
+  HTTP.get('https://api.github.com/repos/lokenx/plexrequests-meteor/releases', function (error, result) {
+    if (error) {
+      console.error('Error retrieving release notes: ' + error)
     }
-  });
+    instance.latestVersion.set(result.data[0].name);
+    var notesArray = result.data[0].body.split("- ");
+    instance.latestNotes.set(notesArray.filter(Boolean));
 
+    instance.previousVersion.set(result.data[1].name);
+    var notesArray = result.data[1].body.split("- ");
+    instance.previousNotes.set(notesArray.filter(Boolean));
+  });
 });
 
 Template.admin.events({
   'click .list-group-item' : function (event, template) {
     var target = $(event.target);
+	  
+	//Update permissions collection
+	if(target.text() == "Users") {
+		Meteor.call("permissionsUpdateUsers");
+	}
+	  
     $('.list-group-item').removeClass("active");
     target.toggleClass("active");
 
@@ -153,6 +187,18 @@ Template.admin.events({
   'submit #updateSettingsForm' : function (event) {
     event.preventDefault();
     return false;
+  },
+  'click #usersSettingsSubmit' : function (event) {
+    event.preventDefault();
+	
+	try {
+		$('*[id^="update-each-"]').submit();
+		Bert.alert('Updated successfully', 'success');
+	}
+	catch(error) {
+		console.error(error);
+		Bert.alert('Update failed, please try again', 'danger');
+	}
   },
   'click #couchPotatoTest' : function (event) {
     event.preventDefault();
@@ -191,6 +237,21 @@ Template.admin.events({
         btn.removeClass("btn-info-outline").addClass("btn-danger-outline");
         btn.html("Error!");
       } else {
+        btn.removeClass("btn-info-outline").addClass("btn-success-outline");
+        btn.html("Success!");
+      }
+    })
+  },
+  'click #iftttTest' : function (event) {
+    event.preventDefault();
+    var btn = $(event.target);
+    btn.html("Testing... <i class='fa fa-spin fa-refresh'></i>").removeClass().addClass("btn btn-info-outline");
+    Meteor.call("testIFTTT", function (error, result) {
+      if (error || !result) {
+        btn.removeClass("btn-info-outline").addClass("btn-danger-outline");
+        btn.html("Error!");
+        Bert.alert(error.reason, "danger");
+      } else if (result) {
         btn.removeClass("btn-info-outline").addClass("btn-success-outline");
         btn.html("Success!");
       }
@@ -256,5 +317,20 @@ Template.admin.events({
       }
     });
     return false;
+  },
+
+  'click #getSonarrProfiles': function (event, template) {
+    event.preventDefault();
+    var btn = $(event.target);
+    btn.html("Get Profiles <i class='fa fa-spin fa-refresh'></i>").removeClass().addClass("btn btn-info-outline");
+    Meteor.call("sonarrProfiles", function (error, result) {
+      if (result.length) {
+        template.sonarrProfiles.set(result);
+        Bert.alert('Retrieved Sonarr Profiles!', "success");
+      } else {
+        Bert.alert('Unable to retrieve Sonarr Profiles!', "danger");
+      }
+      btn.html("Get Profiles");
+    });
   }
 });

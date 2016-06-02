@@ -29,6 +29,9 @@
 					<ul class="list-group settings-options">
 					  <a href="#"><li class="list-group-item active">General</li></a>
 					  <a href="#"><li class="list-group-item">Authentication</li></a>
+					  {{#if plexUserPERMISSIONS}}
+					    <a href="#"><li class="list-group-item">Users</li></a>
+					  {{/if}}
 					  <a href="#"><li class="list-group-item">CouchPotato</li></a>
 					  <a href="#"><li class="list-group-item">SickRage</li></a>
 					  <a href="#"><li class="list-group-item">Sonarr</li></a>
@@ -46,14 +49,20 @@
 							Choose the type of content that can be requested
 						</p>
 						<br>
-						{{> afQuickField name='approval'}}
+						{{> afQuickField name='movieApproval'}}
+						{{> afQuickField name='tvApproval'}}
 						<p class="text-muted">
-							Choose whether you would like to approve all requests
+							Choose whether you would like to approve Movie or TV requests
 						</p>
 						<br>
-						{{> afQuickField name='weeklyLimit' style="width:auto;"}}
+						{{> afQuickField name='tvWeeklyLimit' style="width:auto;"}}
 						<p class="text-muted">
-							Set a weekly request limit for your users. Hint: 0 means no limit
+							Set a TV weekly request limit for your users. Hint: 0 means no limit
+						</p>
+						<br>
+						{{> afQuickField name='movieWeeklyLimit' style="width:auto;"}}
+						<p class="text-muted">
+							Set a Movie weekly request limit for your users. Hint: 0 means no limit
 						</p>
 						<br>
 						<button type="submit" class="btn btn-primary-outline btn-block">Update Settings</button>
@@ -72,6 +81,10 @@
 						<p class="text-muted">
 							Enabled if you want users to login with both their usernames and passwords
 						</p>
+						{{> afQuickField name='plexUserPERMISSIONS'}}
+						<p class="text-muted">
+							Allows for per-user permissions. Hint: Shows USERS tab
+						</p>
 						<br>
 						{{> afQuickField name='plexAuthenticationTOKEN' style="width:auto;" size="25"}}
 						<br>
@@ -89,16 +102,52 @@
 						<button type="button" class="btn btn-secondary-outline" id="plexsubmit">Get token <i class="fa fa-key"></i></button>
 						<br>
 						<br>
-						<br>
-						{{>afQuickField name='plexBannedUSERS' size="40"}}
-						<p class="text-muted">
-							Plex username's entered above will not be allowed to login. Separate users with a comma but no spaces. For example <kbd>jsmith,jdoe</kbd>.
-						</p>
-						<br>
 						<button type="submit" class="btn btn-primary-outline btn-block">Update Settings</button>
 					{{/autoForm}}
 				</div>
 
+				{{#if plexUserPERMISSIONS}}
+					<div class="col-md-8 settings-pane" style="display: none;" id="SettingsUsers">
+						<div class="row">
+							<div class="col-md-12">
+								<p>User Management</p>
+								<p class="text-muted">No Approval: This user will always have their requests automatically approved</p>
+								<p class="text-muted">No Limit: No request limits apply to this user</p>
+								<p class="text-muted">Banned: Banned users are prevented from logging in</p>
+							</div>
+						</div>
+						<div class="row">
+						  <div class="col-md-12">
+							<div class="item-divider"></div>
+						  </div>
+						</div>
+						{{#each permissionUser}}
+						{{#autoForm collection="Permissions" doc=this id=makeUniqueID type="update" resetOnSuccess="false"}}
+							<div class="row">
+							  <div class="col-md-3" align="center">
+								<p>{{{permUSER}}}</p>
+							  </div>
+							  <div class="col-md-3">
+								{{> afQuickField name='permAPPROVAL'}}
+							  </div>
+							  <div class="col-md-3">
+								{{> afQuickField name='permLIMIT'}}
+							  </div>
+							  <div class="col-md-3">
+								{{> afQuickField name='permBANNED'}}
+							  </div>
+							</div>
+							<div class="row">
+							  <div class="col-md-12">
+								<div class="item-divider"></div>
+							  </div>
+							</div>
+						{{/autoForm}}
+						{{/each}}
+						<button type="submit" class="btn btn-primary-outline btn-block" id="usersSettingsSubmit">Update Settings</button>
+					</div>
+				{{/if}}
+				
 				<div class="col-md-8 settings-pane" style="display: none;" id="SettingsCouchPotato">
 					{{#autoForm collection="Settings" doc=settings id="updateCouchPotatoSettingsForm" type="update" resetOnSuccess="false"}}
 						{{> afQuickField name='couchPotatoENABLED'}}
@@ -177,6 +226,9 @@
 						<p class="text-muted">Enabled if you use SSL on your Sonarr server.</p>
 						<br>
 						{{> afQuickField name='sonarrQUALITYPROFILEID' type='select' options=sonarrProfiles firstOption=false}}
+						<button class="btn btn-info-outline" id="getSonarrProfiles">Get Profiles</button>
+						<br>
+						<br>
 						<p class="text-muted">Select a Sonarr Quality Profile.</p>
 						<br>
 						{{> afQuickField name='sonarrROOTFOLDERPATH'}}
@@ -191,7 +243,38 @@
 
 				<div class="col-md-8 settings-pane" style="display: none;" id="SettingsNotifications">
 					{{#autoForm collection="Settings" doc=settings id="updateNotificationsSettingsForm" type="update" resetOnSuccess="false"}}
-						{{> afQuickField name='pushbulletENABLED'}}
+
+						{{> afQuickField name='customNotificationTITLE' size="40"}}
+                        <p class="text-muted"> Enter custom notification title</p>
+                        <br>
+                        {{> afQuickField name='customNotificationTEXT' size="40"}}
+                        <p class="text-muted"> Enter custom notification text</p>
+                        <br>
+						
+                        {{> afQuickField name='iftttENABLED'}}
+						<p class="text-muted">Enabled IFTTT Maker.</p>
+						<br>
+                        {{> afQuickField name='iftttMAKERAPI' size="40"}}
+                        <p class="text-muted"> IFTTT Maker API Key</p>
+                        <br>
+                        {{> afQuickField name='iftttMAKERCHANNEL' size="40"}}
+                        <p class="text-muted"> IFTTT Maker Channel Name</p>
+                        <br>
+                        {{> afQuickField name='iftttMAKERVALUE1' size="40"}}
+                        <p class="text-muted"> IFTTT Optional Value 1</p>
+						<br>
+						{{> afQuickField name='iftttMAKERVALUE2' size="40"}}
+						<p class="text-muted"> IFTTT Optional Value 2</p>
+						<br>
+						{{> afQuickField name='iftttMAKERVALUE3' size="40"}}
+						<p class="text-muted"> IFTTT Optional Value 3</p>
+						<br>
+
+						<p><button class="btn btn-secondary-outline" id="iftttTest">Test IFTTT Maker</button></p>
+						<p class="text-muted">Test your IFTTT Maker channel. Remember to save your settings first!</p>
+						<br>
+                        
+                        {{> afQuickField name='pushbulletENABLED'}}
 						<p class="text-muted">Enabled Pushbullet to receive alerts.</p>
 						<br>
 						{{> afQuickField name='pushbulletAPI' size="40"}}
@@ -253,6 +336,19 @@
 						<strong>Project Website: </strong> <a href="http://plexrequests.8bits.ca/" target="_blank">plexrequests.8bits.ca</a><br>
 						<strong>GitHub Page: </strong> <a href="https://github.com/lokenx/plexrequests-meteor" target="_blank">lokenx / PlexRequests</a>
 					</p>
+					<p><strong>{{ latestVersion }}</strong></p>
+					<ul>
+						{{#each latestNotes}}
+							<li>{{ this }}</li>
+						{{/each}}
+					</ul>
+					<br />
+					<p><strong>{{ previousVersion }}</strong></p>
+					<ul>
+						{{#each previousNotes}}
+							<li>{{ this }}</li>
+						{{/each}}
+					</ul>
 				</div>
 
 				<div class="col-md-8 settings-pane" style="display: none;" id="SettingsLogs">

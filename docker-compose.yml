@@ -1,7 +1,7 @@
 # docker-compose.yml
 
 dashboard:
-  image: jkaberg/docker-plexrequests-meteor
+  image: lokenx/plexrequests-meteor
   ports:
    - "8989:80"
   links:

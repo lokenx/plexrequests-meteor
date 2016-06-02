@@ -1,16 +1,18 @@
 Meteor.methods({
 	"requestMovie": function(request) {
 		check(request, Object);
-		var poster = request.poster_path || "/";
+		var poster = "https://image.tmdb.org/t/p/w154" + request.poster_path || "/";
 		var settings = Settings.find().fetch()[0];
-
+        
+        request["notification_type"] = "request";
+        request["media_type"] = "Movie";
 
 		// Check user request limit
 		var date = Date.now() - 6.048e8;
-		var weeklyLimit = Settings.find({}).fetch()[0].weeklyLimit;
+		var weeklyLimit = Settings.find({}).fetch()[0].movieWeeklyLimit;
 		var userRequestTotal = Movies.find({user:request.user, createdAt: {"$gte": date} }).fetch().length;
 
-		if (weeklyLimit !== 0 && (userRequestTotal >= weeklyLimit) && !(Meteor.user()) ) {
+		if (weeklyLimit !== 0 && (userRequestTotal >= weeklyLimit) && !(Meteor.user()) && !Permissions.find({permUSER: request.user}).fetch()[0].permLIMIT) {
 			return "limit";
 		}
 
@@ -43,7 +45,7 @@ Meteor.methods({
 							downloaded: status,
 							approved: true,
 							poster_path: poster
-						});
+                        });
 
 						if (status) {
 							return 'exists';
@@ -61,8 +63,9 @@ Meteor.methods({
 				return false;
 			}
 		}
-
-		if (settings.approval) {
+		
+		//If approval needed and user does not have override permission
+		if (settings.movieApproval && !Permissions.find({permUSER: request.user}).fetch()[0].permAPPROVAL) {
 			// Approval required
 			// Add to DB but not CP
 			try {
@@ -81,7 +84,7 @@ Meteor.methods({
 				return false;
 			}
 
-			Meteor.call("sendNotifications", request, "request");
+			Meteor.call("sendNotifications", request);
 			return true;
 		} else {
 			// No approval required
@@ -110,7 +113,7 @@ Meteor.methods({
 						logger.error(error.message);
 						return false;
 					}
-					Meteor.call("sendNotifications", request, "request");
+					Meteor.call("sendNotifications", request);
 					return true;
 				} else {
 					return false;
@@ -127,7 +130,7 @@ Meteor.methods({
 						approved: true,
 						poster_path: poster
 					});
-					Meteor.call("sendNotifications", request, "request");
+					Meteor.call("sendNotifications", request);
 					return true;
 				} catch (error) {
 					logger.error(error.message);

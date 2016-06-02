@@ -8,6 +8,9 @@ Template.item.helpers({
   'isTV' : function () {
     return this.media_type === "tv";
   },
+  'isMovie' : function () {
+    return this.media_type === "movie";
+  },
   'isRequested' : function () {
     if (this.media_type === "tv") {
       var doc = TV.findOne({id: this.id});

@@ -6,98 +6,79 @@ Meteor.methods({
 
 		// Check user request limit
 		var date = Date.now() - 6.048e8;
-		var weeklyLimit = Settings.find({}).fetch()[0].weeklyLimit;
+		var weeklyLimit = Settings.find({}).fetch()[0].tvWeeklyLimit;
 		var userRequestTotal = TV.find({user:request.user, createdAt: {"$gte": date} }).fetch().length;
 
-		if (weeklyLimit !== 0 && (userRequestTotal >= weeklyLimit) && !(Meteor.user()) ) {
+		if (weeklyLimit !== 0 && (userRequestTotal >= weeklyLimit) && !(Meteor.user()) && !Permissions.find({permUSER: request.user}).fetch()[0].permLIMIT) {
 			return "limit";
 		}
 
-		// Get TVDB
-		try {
-			var tvdb = TMDBSearch.externalIds(request.id, "tv");
-			if (typeof tvdb !== "number") {
-				logger.error(("Error getting TVDB ID, none found!"));
-				return false;
-			}
-		} catch (error) {
-			logger.error("Error getting TVDB ID:", error.message);
-			return false;
-		}
+        var tvdb = request.tvdb;
+        function insertTV(request, stat, approved)
+        {
+                if (stat === undefined) {
+                    stat = {downloaded: 0, total: 0};
+                }
+                
+                if (request.seasons){ 
+                    var seasonList = request.seasons; 
+                };
 
+                TV.insert({
+                    title: request.title,
+                    id: request.id,
+                    tvdb: request.tvdb,
+                    released: request.release_date,
+                    user: request.user,
+                    status: stat,
+                    approved: approved,
+                    poster_path: poster,
+                    episodes: request.episodes,
+					link: request.link,
+                    seasons: seasonList.length
+                });
+        }
+        request["notification_type"] = "request"
+        request["media_type"] = "TV Series"
 		// Check if it already exists in SickRage or Sonarr
 		try {
 			if (settings.sickRageENABLED) {
-				var checkSickRage = SickRage.checkShow(tvdb);
-				if (checkSickRage) {
-					var status = SickRage.statsShow(tvdb);
-					try {
-						TV.insert({
-							title: request.title,
-							id: request.id,
-							tvdb: tvdb,
-							released: request.release_date,
-							user: request.user,
-							status: status,
-							approved: true,
-							poster_path: poster,
-							episodes: request.episodes
-						});
-						return 'exists';
-					} catch (error) {
-						logger.error(error.message);
-						return false;
-					}
-				}
+			    if (SickRage.checkShow(tvdb)) {
+				    try {
+                	    var stat = SickRage.statsShow(tvdb);
+				        insertTV(request, stat, true);
+                        return "exists";
+                    }
+                    catch (error) {
+                        logger.error(error.message);
+                        return false
+                    }
+                }
 			} else if (settings.sonarrENABLED) {
-				var checkSonarr = Sonarr.seriesGet(tvdb);
-
-				if (checkSonarr) {
-					var status = Sonarr.seriesStats(tvdb);
-					try {
-						TV.insert({
-							title: request.title,
-							id: request.id,
-							tvdb: tvdb,
-							released: request.release_date,
-							user: request.user,
-							status: status,
-							approved: true,
-							poster_path: poster,
-							episodes: request.episodes
-						});
-						return 'exists';
-					} catch (error) {
-						logger.error(error.message);
-						return false;
-					}
-				}
+                if (Sonarr.seriesGet(tvdb)) {
+				    try {
+                        var stat = Sonarr.seriesStats(tvdb);
+                        insertTV(request, stat, true);
+                        return "exists";
+                    }
+                    catch (error) {
+                        logger.error(error.message);
+                        return false
+                    }
+                }
 			}
-		} catch (error) {
+        }
+        catch (error) {
 			logger.error("Error checking SickRage/Sonarr:", error.message);
 			return false;
 		}
-
-		if (settings.approval) {
+		
+		//If approval needed and user does not have override permission
+        if (settings.tvApproval && !Permissions.find({permUSER: request.user}).fetch()[0].permAPPROVAL) {
 			// Approval required
 			// Add to DB but not SickRage/Sonarr
-			try {
-				TV.insert({
-					title: request.title,
-					id: request.id,
-					tvdb: tvdb,
-					released: request.release_date,
-					user: request.user,
-					status: {downloaded: 0, total: 0},
-					approved: false,
-					poster_path: poster,
-					episodes: request.episodes
-				});
-			} catch (error) {
-				logger.error(error.message);
-				return false;
-			}
-			Meteor.call("sendNotifications", request, "request");
+			insertTV(request, undefined, false);
+			Meteor.call("sendNotifications", request);
 			return true;
 		} else {
 			//No approval required
@@ -105,30 +86,23 @@ Meteor.methods({
 				try {
 					var episodes = (request.episodes === true) ? 1 : 0;
 					var add = SickRage.addShow(tvdb, episodes);
-				} catch (error) {
+				}
+                catch (error) {
 					logger.error("Error adding to SickRage:", error.message);
 					return false;
 				}
-				if (add) {
+                if (add) {
 					try {
-						TV.insert({
-							title: request.title,
-							id: request.id,
-							tvdb: tvdb,
-							released: request.release_date,
-							user: request.user,
-							status: {downloaded: 0, total: 0},
-							approved: true,
-							poster_path: poster,
-							episodes: request.episodes
-						});
-						Meteor.call("sendNotifications", request, "request");
+                        insertTV(request, undefined, true);
+						Meteor.call("sendNotifications", request);
 						return true;
-					} catch (error) {
-						logger.error(error.message);
+					}
+                    catch (error) {
+                	    logger.error(error.message);
 						return false;
 					}
-				} else {
+
+                } else {
 					logger.error("Error adding to SickRage");
 					return false;
 				}
@@ -138,26 +112,18 @@ Meteor.methods({
 					var seasonFolder = settings.sonarrSEASONFOLDERS;
 					var rootFolderPath = settings.sonarrROOTFOLDERPATH;
 					var add = Sonarr.seriesPost(tvdb,request.title, qualityProfileId, seasonFolder, rootFolderPath, request.episodes);
-				} catch (error) {
+				}
+                catch (error) {
 					logger.error("Error adding to Sonarr:", error.message);
 					return false;
 				}
-				if (add) {
+    			if (add) {
 					try {
-						TV.insert({
-							title: request.title,
-							id: request.id,
-							tvdb: tvdb,
-							released: request.release_date,
-							user: request.user,
-							status: {downloaded: 0, total: 0},
-							approved: true,
-							poster_path: poster,
-							episodes: request.episodes
-						});
-						Meteor.call("sendNotifications", request, "request");
-						return true;
-					} catch (error) {
+                        insertTV(request, undefined, true);
+						Meteor.call("sendNotifications", request);
+                        return true;
+					}
+                    catch (error) {
 						logger.error(error.message);
 						return false;
 					}
@@ -165,22 +131,13 @@ Meteor.methods({
 					logger.error("Error adding to Sonarr");
 					return false;
 				}
-			} else {
+    		} else {
 				try {
-					TV.insert({
-						title: request.title,
-						id: request.id,
-						tvdb: tvdb,
-						released: request.release_date,
-						user: request.user,
-						status: {downloaded: 0, total: 0},
-						approved: true,
-						poster_path: poster,
-						episodes: request.episodes
-					});
-					Meteor.call("sendNotifications", request, "request");
-					return true;
-				} catch (error) {
+                    insertTV(request, undefined, true);
+					Meteor.call("sendNotifications", request);
+                    return true;
+				}
+                catch (error) {
 					logger.error(error.message);
 					return false;
 				}
