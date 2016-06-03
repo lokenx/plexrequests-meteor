@@ -44,10 +44,10 @@ Template.requests.onCreated(function () {
 			if (selectedFilter !== "All Requests") {
 				switch (selectedFilter) {
 					case "Approved":
-						filter = {approved: 1};
+						filter = {approval_status: 1};
 						break;
 					case "Not Approved":
-						filter = {approved: 0};
+						filter = {approval_status: 0};
 						break;
 					case "Downloaded":
 						filter = {downloaded: true};
@@ -56,7 +56,7 @@ Template.requests.onCreated(function () {
 						filter = {downloaded: false};
 						break;
 					case "Denied":
-						filter = {approved: 2};
+						filter = {approval_status: 2};
 						break;
 					case "Has Issues":
 						filter = {'issues.0': {$exists: true}};
@@ -70,10 +70,10 @@ Template.requests.onCreated(function () {
 			if (selectedFilter !== "All Requests") {
 				switch (selectedFilter) {
 					case "Approved":
-						filter = {approved: 1};
+						filter = {approval_status: 1};
 						break;
 					case "Not Approved":
-						filter = {approved: 0};
+						filter = {approval_status: 0};
 						break;
 					case "Downloaded":
 						filter = {"status.downloaded": {$gt: 0}};
@@ -82,7 +82,7 @@ Template.requests.onCreated(function () {
 						filter = {"status.downloaded": {$lt: 1}};
 						break;
 					case "Denied":
-						filter = {approved: 2};
+						filter = {approval_status: 2};
 						break;
 					case "Has Issues":
 						filter = {'issues.0': {$exists: true}};
@@ -130,7 +130,7 @@ Template.requests.helpers({
 		return moment(this.createdAt).format('MMMM Do, YYYY');
 },
   'approved_show' : function () {
-	  switch(this.approved) {
+	  switch(this.approval_status) {
 		case 0:
 			return true;
 			break;
@@ -145,7 +145,7 @@ Template.requests.helpers({
 	}
   },
   'denied_show' : function () {
-	  switch(this.approved) {
+	  switch(this.approval_status) {
 		case 0:
 			return true;
 			break;
@@ -163,7 +163,7 @@ Template.requests.helpers({
 	
 	var approval;
 	  
-	switch(this.approved) {
+	switch(this.approval_status) {
     case 0:
         approval = '<strong>Approved:</strong> <i class="fa fa-times error-icon"></i>';
         break;

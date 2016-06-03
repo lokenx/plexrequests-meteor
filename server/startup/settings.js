@@ -37,5 +37,6 @@ Meteor.startup(function () {
 	Sonarr.directory = settings.sonarrDIRECTORY || "";
 
 	Meteor.call("updateSeasons");
+	Meteor.call("updateApproved");
 
 });

@@ -14,8 +14,8 @@ Meteor.methods({
     return true;
   },
   denyAll: function () {
-    var movies = Movies.find({approved: 0}).fetch();
-    var tv = TV.find({approved: 0}).fetch();
+    var movies = Movies.find({approval_status: 0}).fetch();
+    var tv = TV.find({approval_status: 0}).fetch();
 
     movies.forEach(function (movie) {
       Meteor.call("denyRequest", movie);

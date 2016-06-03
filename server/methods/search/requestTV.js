@@ -9,7 +9,11 @@ Meteor.methods({
 		var weeklyLimit = Settings.find({}).fetch()[0].tvWeeklyLimit;
 		var userRequestTotal = TV.find({user:request.user, createdAt: {"$gte": date} }).fetch().length;
 
-		if (weeklyLimit !== 0 && (userRequestTotal >= weeklyLimit) && !(Meteor.user()) && !Permissions.find({permUSER: request.user}).fetch()[0].permLIMIT) {
+		if (weeklyLimit !== 0 
+			&& (userRequestTotal >= weeklyLimit) 
+			&& !(Meteor.user()) 
+			&& !Permissions.find({permUSER: request.user}).fetch()[0].permLIMIT) {
+			
 			return "limit";
 		}
 
@@ -31,7 +35,7 @@ Meteor.methods({
                     released: request.release_date,
                     user: request.user,
                     status: stat,
-                    approved: approved,
+                    approval_status: approved,
                     poster_path: poster,
                     episodes: request.episodes,
 					link: request.link,
@@ -74,7 +78,9 @@ Meteor.methods({
 		}
 		
 		//If approval needed and user does not have override permission
-        if (settings.tvApproval && !Permissions.find({permUSER: request.user}).fetch()[0].permAPPROVAL) {
+        if (settings.tvApproval 
+			&& !Permissions.find({permUSER: request.user}).fetch()[0].permAPPROVAL) {
+			
 			// Approval required
 			// Add to DB but not SickRage/Sonarr
 			insertTV(request, undefined, 0);
