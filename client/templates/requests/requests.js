@@ -216,7 +216,7 @@ Template.requests.helpers({
         }
       return count
   },
-  "searchOptions": function () {
+  'searchOptions': function () {
     return Session.get("searchOptions");
 	},
 	'activeSearch' : function () {
@@ -264,17 +264,47 @@ Template.requests.events({
 		});
 	},
 	'click .deny-item' : function (event, template) {
-		var title = this.title;
-		Meteor.call("denyRequest", this, function(error, result) {
-			if (error || !(result)) {
-				//Alert error
-				console.error("Error denying, please check server logs");
-				Bert.alert("Unable to deny " + title +", please try again!", "danger");
-			} else {
-				// Alert success
-				Bert.alert("Denied " + title +"!", "success");
-			}
-		});
+		//Set Model values and Show
+		$('#denyModelID').text(this._id);
+		$('#denyModelTitle').text(this.title);
+		$('#denyModel').modal('show');
+	},
+	'click .deny-confirm' : function (event, template) {
+		
+		//Get values
+		var id = $('#denyModelID').text();
+		var reason = $('#denyModelReason').val();
+		var title = $('#denyModelTitle').text();
+		
+		//Hide the model
+		$('#denyModel').modal('hide');
+		
+		//Deny all
+		if(id == "ALL") {
+			Meteor.call("denyAll", reason, function(error, result) {
+				if (error || !(result)) {
+					//Alert error
+					console.error("Error denying, please check server logs");
+					Bert.alert("Unable to deny all, please try again!", "danger");
+				} else {
+					// Alert success
+					Bert.alert("Denied all!", "success");
+				}
+			});
+		}
+		//Deny Request
+		else {
+			Meteor.call("denyRequest", id, reason, function(error, result) {
+				if (error || !(result)) {
+					//Alert error
+					console.error("Error denying, please check server logs");
+					Bert.alert("Unable to deny " + title +", please try again!", "danger");
+				} else {
+					// Alert success
+					Bert.alert("Denied " + title +"!", "success");
+				}
+			});
+		}
 	},
 	'click .delete-item' : function (event, template) {
 		if (window.confirm("Are you sure you want to delete " + this.title + "?")) {
@@ -351,16 +381,11 @@ Template.requests.events({
 	},
 	'click #denyAll': function (event) {
 		event.preventDefault();
-
-		Meteor.call("denyAll", function (error, result) {
-			if (error) {
-				Bert.alert(error.reason, "danger");
-			} else if (!result) {
-				Bert.alert("An error occured, check server logs", "danger");
-			} else {
-				Bert.alert("Denied all requests!", "success");
-			}
-		})
+		
+		//Set values
+		$('#denyModelID').text("ALL");
+		$('#denyModelTitle').text("Deny All");
+		$('#denyModel').modal('show');
 	},
 	'click .go-to-top': function () {
 		$('body').animate({ scrollTop: 0 }, "slow")

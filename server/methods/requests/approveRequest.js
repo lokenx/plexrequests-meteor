@@ -125,31 +125,35 @@ Meteor.methods({
 			}
 		}
 	},
-	"denyRequest": function(request) {
+	"denyRequest": function(docID, reason) {
 		// If not logged in return without doing anything
 		if (!Meteor.user()) {
 			return false;
 		}
 		
-		//For movies
-		if (request.imdb) {
-			try{
+		//Set default reason
+		if(reason == ""){
+			reason = "This request has been denied";
+		}
+		
+		//Check if movie
+		if(Movies.findOne({_id: docID}) != undefined) {
+			try {
 				//Update db
-				Movies.update(request._id, {$set: {approval_status: 2}});
+				Movies.update(docID, {$set: {approval_status: 2, denied_reason: reason}});
 				return true;
-				
+
 			} catch (error) {
 				logger.error("Error denying Movie", error.message);
 				return false;
 			}
 		}
-		//For TV
-		else{
-			try{
+		else {
+			try {
 				//Update db
-				TV.update(request._id, {$set: {approval_status: 2}});
+				TV.update(docID, {$set: {approval_status: 2, denied_reason: reason}});
 				return true;
-				
+
 			} catch (error) {
 				logger.error("Error denying TV show", error.message);
 				return false;
