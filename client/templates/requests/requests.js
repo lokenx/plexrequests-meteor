@@ -49,6 +49,9 @@ Template.requests.onCreated(function () {
 					case "Not Approved":
 						filter = {approval_status: 0};
 						break;
+					case "My Requests":
+						filter = {"user": this.user};
+						break;
 					case "Downloaded":
 						filter = {downloaded: true};
 						break;
@@ -77,6 +80,9 @@ Template.requests.onCreated(function () {
 						break;
 					case "Downloaded":
 						filter = {"status.downloaded": {$gt: 0}};
+						break;
+					case "My Requests":
+						filter = {"user": this.user};
 						break;
 					case "Not Downloaded":
 						filter = {"status.downloaded": {$lt: 1}};
@@ -203,9 +209,7 @@ Template.requests.helpers({
 	}
   },
   'requesting_user' : function () {
-  	if (Meteor.user()) {
   		return "<li><strong>User:</strong> " + this.user + "</li>";
-  	}
   },
   'season_count' : function () {
       var count;  
@@ -223,7 +227,7 @@ Template.requests.helpers({
     return (Template.instance().searchType.get().length === this.length);
   },
 	'filterOptions' : function () {
-		return [{filter: "All Requests"}, {filter: "Approved"}, {filter: "Not Approved"},{filter: "Downloaded"}, {filter: "Not Downloaded"}, {filter: "Denied"}, {filter: "Has Issues"}]
+		return [{filter: "All Requests"}, {filter: "Approved"}, {filter: "Not Approved"},{filter: "Downloaded"}, {filter: "My Requests"}, {filter: "Not Downloaded"}, {filter: "Denied"}, {filter: "Has Issues"}]
 	},
 	'activeFilter' : function () {
 		return (Template.instance().filter.get() == this.filter) ? '<i class="fa fa-check"></i> ' : "";
