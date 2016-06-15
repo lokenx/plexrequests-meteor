@@ -6,7 +6,7 @@
 				<p>Below you can see yours and all other requests, as well as their download and approval status.</p>
 				{{#if currentUser}}
 				<p>
-					Movies and TV:  <button class="btn btn-secondary-outline btn-sm" id="approveAll">Approve All</button>  <button class="btn btn-secondary-outline btn-sm" id="denyAll">Deny All</button>
+					If you want to approve all Movies and TV Shows, click here <button class="btn btn-secondary-outline btn-sm" id="approveAll">Approve All</button>
 				</p>
 				{{/if}}
 			</div>
@@ -57,25 +57,28 @@
                 </div>
 		  		<div class="col-md-5">
 		  			<ul class="request-details-list">
-						{{#if searchType 'Movies'}}
-						<h4><li><a href="http://www.imdb.com/title/{{imdb}}" target="_blank"><strong>{{title}}</strong></a></li></h4>
-						{{/if}}
-						{{#if searchType 'TV Shows'}}
-						<h4> <li><a href="{{link}}" target="_blank"><strong>{{title}} ({{year}})</strong></a></li></h4>		
-						<li><strong>Seasons:</strong> {{season_count}}</li>
-						<li><strong>Type:</strong> {{episodes}}</li>
-						{{/if}}
-						<li><strong>Release date:</strong> {{release_date}}</li>
-			  			<li>{{{approval_status}}}</li>
+							{{#if searchType 'Movies'}}
+			  				<h4><li><a href="http://www.imdb.com/title/{{imdb}}" target="_blank"><strong>{{title}}</strong></a></li></h4>
+							{{/if}}
+							{{#if searchType 'TV Shows'}}
+                           <h4> <li><a href="{{link}}" target="_blank"><strong>{{title}} ({{year}})</strong></a></li></h4>
+									
+                            <li><strong>Seasons:</strong> {{season_count}}</li>
+							
+			  			<li><strong>Type:</strong> {{episodes}}</li>
+{{/if}}
+						
+<li><strong>Release date:</strong> {{release_date}}</li>
+			  			<li><strong>Approved:</strong> {{{approval_status}}}</li>
 			  			<li><strong>Available:</strong> {{{download_status}}}</li>
-						<li><strong>User:</strong> {{{requesting_user}}}</li>
-						<li><strong>Requested date:</strong> {{created_at}}</li>
+			  			{{{requesting_user}}}
+							<li><strong>Requested date:</strong> {{created_at}}</li>
 			  			<li><strong>Issues:</strong> {{issues}}</li>
 		  			</ul>
 		  		</div>
 		  		<div class="col-md-3 request-details-buttons">
 		  			{{#if currentUser}}
-					<p>{{#if approved_show}}<button class="btn btn-sm btn-success-outline approve-item">Approve</button>{{/if}}   {{#if denied_show}}<button class="btn btn-sm btn-danger-outline deny-item">Deny</button>{{/if}}</p>
+			  			{{#unless approved}}<p><button class="btn btn-sm btn-success-outline approve-item">Approve</button></p>{{/unless}}
 			  			<p><button class="btn btn-sm btn-danger-outline delete-item">Delete</button></p>
 			  			<p><button class="btn btn-sm btn-info-outline clear-issues">Clear Issues</button></p>
 
