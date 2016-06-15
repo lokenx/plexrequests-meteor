@@ -44,16 +44,19 @@ Template.requests.onCreated(function () {
 			if (selectedFilter !== "All Requests") {
 				switch (selectedFilter) {
 					case "Approved":
-						filter = {approved: true};
+						filter = {approval_status: 1};
 						break;
 					case "Not Approved":
-						filter = {approved: false};
+						filter = {approval_status: 0};
 						break;
 					case "Downloaded":
 						filter = {downloaded: true};
 						break;
 					case "Not Downloaded":
 						filter = {downloaded: false};
+						break;
+					case "Denied":
+						filter = {approval_status: 2};
 						break;
 					case "Has Issues":
 						filter = {'issues.0': {$exists: true}};
@@ -67,16 +70,19 @@ Template.requests.onCreated(function () {
 			if (selectedFilter !== "All Requests") {
 				switch (selectedFilter) {
 					case "Approved":
-						filter = {approved: true};
+						filter = {approval_status: 1};
 						break;
 					case "Not Approved":
-						filter = {approved: false};
+						filter = {approval_status: 0};
 						break;
 					case "Downloaded":
 						filter = {"status.downloaded": {$gt: 0}};
 						break;
 					case "Not Downloaded":
 						filter = {"status.downloaded": {$lt: 1}};
+						break;
+					case "Denied":
+						filter = {approval_status: 2};
 						break;
 					case "Has Issues":
 						filter = {'issues.0': {$exists: true}};
@@ -120,11 +126,57 @@ Template.requests.helpers({
   'release_date' : function () {
   	return moment(this.released).format('MMMM Do, YYYY');
   },
-	'created_at': function () {
+  'created_at': function () {
 		return moment(this.createdAt).format('MMMM Do, YYYY');
-	},
+},
+  'approved_show' : function () {
+	  switch(this.approval_status) {
+		case 0:
+			return true;
+			break;
+		case 1:
+			return false;
+			break;
+		case 2:
+			return true;
+			break;
+		default:
+			console.error("Approval integer out of range")
+	}
+  },
+  'denied_show' : function () {
+	  switch(this.approval_status) {
+		case 0:
+			return true;
+			break;
+		case 1:
+			return false;
+			break;
+		case 2:
+			return false;
+			break;
+		default:
+			console.error("Approval integer out of range")
+	}
+  },
   'approval_status' : function () {
-  	var approval = (this.approved) ? '<i class="fa fa-check success-icon"></i>': '<i class="fa fa-times error-icon"></i>';
+	
+	var approval;
+	  
+	switch(this.approval_status) {
+    case 0:
+        approval = '<strong>Approved:</strong> <i class="fa fa-times error-icon"></i>';
+        break;
+    case 1:
+        approval = '<strong>Approved:</strong> <i class="fa fa-check success-icon"></i>';
+        break;
+    case 2:
+		approval = '<strong>Denied:</strong> <font color="#db524b">' + this.denied_reason + '</font></i>';
+		break;
+	default:
+        console.error("Approval integer out of range")
+	}
+	
   	return approval;
   },
   'download_status' : function () {
@@ -164,14 +216,14 @@ Template.requests.helpers({
         }
       return count
   },
-  "searchOptions": function () {
+  'searchOptions': function () {
     return Session.get("searchOptions");
 	},
 	'activeSearch' : function () {
     return (Template.instance().searchType.get().length === this.length);
   },
 	'filterOptions' : function () {
-		return [{filter: "All Requests"}, {filter: "Approved"}, {filter: "Not Approved"},{filter: "Downloaded"}, {filter: "Not Downloaded"}, {filter: "Has Issues"}]
+		return [{filter: "All Requests"}, {filter: "Approved"}, {filter: "Not Approved"},{filter: "Downloaded"}, {filter: "Not Downloaded"}, {filter: "Denied"}, {filter: "Has Issues"}]
 	},
 	'activeFilter' : function () {
 		return (Template.instance().filter.get() == this.filter) ? '<i class="fa fa-check"></i> ' : "";
@@ -210,6 +262,49 @@ Template.requests.events({
 				Bert.alert("Approved " + title +"!", "success");
 			}
 		});
+	},
+	'click .deny-item' : function (event, template) {
+		//Set Model values and Show
+		$('#denyModelID').text(this._id);
+		$('#denyModelTitle').text(this.title);
+		$('#denyModel').modal('show');
+	},
+	'click .deny-confirm' : function (event, template) {
+		
+		//Get values
+		var id = $('#denyModelID').text();
+		var reason = $('#denyModelReason').val();
+		var title = $('#denyModelTitle').text();
+		
+		//Hide the model
+		$('#denyModel').modal('hide');
+		
+		//Deny all
+		if(id == "ALL") {
+			Meteor.call("denyAll", reason, function(error, result) {
+				if (error || !(result)) {
+					//Alert error
+					console.error("Error denying, please check server logs");
+					Bert.alert("Unable to deny all, please try again!", "danger");
+				} else {
+					// Alert success
+					Bert.alert("Denied all!", "success");
+				}
+			});
+		}
+		//Deny Request
+		else {
+			Meteor.call("denyRequest", id, reason, function(error, result) {
+				if (error || !(result)) {
+					//Alert error
+					console.error("Error denying, please check server logs");
+					Bert.alert("Unable to deny " + title +", please try again!", "danger");
+				} else {
+					// Alert success
+					Bert.alert("Denied " + title +"!", "success");
+				}
+			});
+		}
 	},
 	'click .delete-item' : function (event, template) {
 		if (window.confirm("Are you sure you want to delete " + this.title + "?")) {
@@ -283,6 +378,14 @@ Template.requests.events({
 				Bert.alert("Approved all requests!", "success");
 			}
 		})
+	},
+	'click #denyAll': function (event) {
+		event.preventDefault();
+		
+		//Set values
+		$('#denyModelID').text("ALL");
+		$('#denyModelTitle').text("Deny All");
+		$('#denyModel').modal('show');
 	},
 	'click .go-to-top': function () {
 		$('body').animate({ scrollTop: 0 }, "slow")

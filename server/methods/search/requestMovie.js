@@ -12,7 +12,12 @@ Meteor.methods({
 		var weeklyLimit = Settings.find({}).fetch()[0].movieWeeklyLimit;
 		var userRequestTotal = Movies.find({user:request.user, createdAt: {"$gte": date} }).fetch().length;
 
-		if (weeklyLimit !== 0 && (userRequestTotal >= weeklyLimit) && !(Meteor.user()) && !Permissions.find({permUSER: request.user}).fetch()[0].permLIMIT) {
+		if (weeklyLimit !== 0 
+			&& (userRequestTotal >= weeklyLimit) 
+			&& !(Meteor.user()) 
+			//Check if user has override permission
+			&& (!settings.plexAuthenticationENABLED || !Permissions.find({permUSER: request.user}).fetch()[0].permLIMIT)) {
+			
 			return "limit";
 		}
 
@@ -43,7 +48,7 @@ Meteor.methods({
 							released: request.release_date,
 							user: request.user,
 							downloaded: status,
-							approved: true,
+							approval_status: 1,
 							poster_path: poster
                         });
 
@@ -65,7 +70,10 @@ Meteor.methods({
 		}
 		
 		//If approval needed and user does not have override permission
-		if (settings.movieApproval && !Permissions.find({permUSER: request.user}).fetch()[0].permAPPROVAL) {
+		if (settings.movieApproval 
+			//Check if user has override permission
+			&& (!settings.plexAuthenticationENABLED || !Permissions.find({permUSER: request.user}).fetch()[0].permAPPROVAL)) {
+			
 			// Approval required
 			// Add to DB but not CP
 			try {
@@ -76,7 +84,7 @@ Meteor.methods({
 					released: request.release_date,
 					user: request.user,
 					downloaded: false,
-					approved: false,
+					approval_status: 0,
 					poster_path: poster
 				});
 			} catch (error) {
@@ -106,7 +114,7 @@ Meteor.methods({
 							released: request.release_date,
 							user: request.user,
 							downloaded: false,
-							approved: true,
+							approval_status: 1,
 							poster_path: poster
 						});
 					} catch (error) {
@@ -127,7 +135,7 @@ Meteor.methods({
 						released: request.release_date,
 						user: request.user,
 						downloaded: false,
-						approved: true,
+						approval_status: 1,
 						poster_path: poster
 					});
 					Meteor.call("sendNotifications", request);

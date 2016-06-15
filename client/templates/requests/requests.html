@@ -6,7 +6,7 @@
 				<p>Below you can see yours and all other requests, as well as their download and approval status.</p>
 				{{#if currentUser}}
 				<p>
-					If you want to approve all Movies and TV Shows, click here <button class="btn btn-secondary-outline btn-sm" id="approveAll">Approve All</button>
+					Movies and TV:  <button class="btn btn-secondary-outline btn-sm" id="approveAll">Approve All</button>  <button class="btn btn-secondary-outline btn-sm" id="denyAll">Deny All</button>
 				</p>
 				{{/if}}
 			</div>
@@ -40,6 +40,28 @@
 				</div>
 			</div>
 		</div>
+		
+		
+		<!-- Deny model -->
+		<div class="modal fade" id="denyModel" role="dialog">
+			<div class="modal-dialog">
+
+			  <!-- Modal content-->
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <button type="button" class="close" data-dismiss="modal">&times;</button>
+				  <h4 class="modal-title" id="denyModelTitle">Deny</h4>
+				</div>
+				<div class="modal-body">
+				  <input type="hidden" value="" id="denyModelID" />
+				  <input type="text" class="form-control" id="denyModelReason" placeholder="Reason for denying request">
+				</div>
+				<div class="modal-footer">
+				  <button class="btn btn-default btn-danger-outline deny-confirm">Deny</button>  
+				</div>
+			  </div>
+			</div>
+		</div>
 
 	<!-- List of content -->
 
@@ -57,31 +79,34 @@
                 </div>
 		  		<div class="col-md-5">
 		  			<ul class="request-details-list">
-							{{#if searchType 'Movies'}}
-			  				<h4><li><a href="http://www.imdb.com/title/{{imdb}}" target="_blank"><strong>{{title}}</strong></a></li></h4>
-							{{/if}}
-							{{#if searchType 'TV Shows'}}
-                           <h4> <li><a href="{{link}}" target="_blank"><strong>{{title}} ({{year}})</strong></a></li></h4>
-									
-                            <li><strong>Seasons:</strong> {{season_count}}</li>
-							
-			  			<li><strong>Type:</strong> {{episodes}}</li>
-{{/if}}
-						
-<li><strong>Release date:</strong> {{release_date}}</li>
-			  			<li><strong>Approved:</strong> {{{approval_status}}}</li>
+						{{#if searchType 'Movies'}}
+						<h4><li><a href="http://www.imdb.com/title/{{imdb}}" target="_blank"><strong>{{title}}</strong></a></li></h4>
+						{{/if}}
+						{{#if searchType 'TV Shows'}}
+						<h4> <li><a href="{{link}}" target="_blank"><strong>{{title}} ({{year}})</strong></a></li></h4>		
+						<li><strong>Seasons:</strong> {{season_count}}</li>
+						<li><strong>Type:</strong> {{episodes}}</li>
+						{{/if}}
+						<li><strong>Release date:</strong> {{release_date}}</li>
+			  			<li>{{{approval_status}}}</li>
 			  			<li><strong>Available:</strong> {{{download_status}}}</li>
 			  			{{{requesting_user}}}
-							<li><strong>Requested date:</strong> {{created_at}}</li>
+						<li><strong>Requested date:</strong> {{created_at}}</li>
 			  			<li><strong>Issues:</strong> {{issues}}</li>
 		  			</ul>
 		  		</div>
 		  		<div class="col-md-3 request-details-buttons">
 		  			{{#if currentUser}}
-			  			{{#unless approved}}<p><button class="btn btn-sm btn-success-outline approve-item">Approve</button></p>{{/unless}}
+						<p>
+							{{#if approved_show}}
+								<button class="btn btn-sm btn-success-outline approve-item">Approve</button>    
+							{{/if}}
+							{{#if denied_show}}
+								<button class="btn btn-sm btn-danger-outline deny-item" data-toggle="model" data-target="#denyModel">Deny</button>
+							{{/if}}
+						</p>
 			  			<p><button class="btn btn-sm btn-danger-outline delete-item">Delete</button></p>
 			  			<p><button class="btn btn-sm btn-info-outline clear-issues">Clear Issues</button></p>
-
 						{{#if searchType 'Movies'}}
 							{{#if available}}
 								<p><button class="btn btn-sm btn-secondary-outline mark-unavailable">Mark Unavailable</button></p>

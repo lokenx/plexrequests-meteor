@@ -9,7 +9,12 @@ Meteor.methods({
 		var weeklyLimit = Settings.find({}).fetch()[0].tvWeeklyLimit;
 		var userRequestTotal = TV.find({user:request.user, createdAt: {"$gte": date} }).fetch().length;
 
-		if (weeklyLimit !== 0 && (userRequestTotal >= weeklyLimit) && !(Meteor.user()) && !Permissions.find({permUSER: request.user}).fetch()[0].permLIMIT) {
+		if (weeklyLimit !== 0 
+			&& (userRequestTotal >= weeklyLimit) 
+			&& !(Meteor.user()) 
+			//Check if user has override permission
+			&& (!settings.plexAuthenticationENABLED || !Permissions.find({permUSER: request.user}).fetch()[0].permLIMIT)) {
+			
 			return "limit";
 		}
 
@@ -31,7 +36,7 @@ Meteor.methods({
                     released: request.release_date,
                     user: request.user,
                     status: stat,
-                    approved: approved,
+                    approval_status: approved,
                     poster_path: poster,
                     episodes: request.episodes,
 					link: request.link,
@@ -46,7 +51,7 @@ Meteor.methods({
 			    if (SickRage.checkShow(tvdb)) {
 				    try {
                 	    var stat = SickRage.statsShow(tvdb);
-				        insertTV(request, stat, true);
+				        insertTV(request, stat, 1);
                         return "exists";
                     }
                     catch (error) {
@@ -58,7 +63,7 @@ Meteor.methods({
                 if (Sonarr.seriesGet(tvdb)) {
 				    try {
                         var stat = Sonarr.seriesStats(tvdb);
-                        insertTV(request, stat, true);
+                        insertTV(request, stat, 1);
                         return "exists";
                     }
                     catch (error) {
@@ -74,10 +79,13 @@ Meteor.methods({
 		}
 		
 		//If approval needed and user does not have override permission
-        if (settings.tvApproval && !Permissions.find({permUSER: request.user}).fetch()[0].permAPPROVAL) {
+        if (settings.tvApproval 
+			//Check if user has override permission
+			&& (!settings.plexAuthenticationENABLED || !Permissions.find({permUSER: request.user}).fetch()[0].permAPPROVAL)) {
+			
 			// Approval required
 			// Add to DB but not SickRage/Sonarr
-			insertTV(request, undefined, false);
+			insertTV(request, undefined, 0);
 			Meteor.call("sendNotifications", request);
 			return true;
 		} else {
@@ -93,7 +101,7 @@ Meteor.methods({
 				}
                 if (add) {
 					try {
-                        insertTV(request, undefined, true);
+                        insertTV(request, undefined, 1);
 						Meteor.call("sendNotifications", request);
 						return true;
 					}
@@ -119,7 +127,7 @@ Meteor.methods({
 				}
     			if (add) {
 					try {
-                        insertTV(request, undefined, true);
+                        insertTV(request, undefined, 1);
 						Meteor.call("sendNotifications", request);
                         return true;
 					}
@@ -133,7 +141,7 @@ Meteor.methods({
 				}
     		} else {
 				try {
-                    insertTV(request, undefined, true);
+                    insertTV(request, undefined, 1);
 					Meteor.call("sendNotifications", request);
                     return true;
 				}
