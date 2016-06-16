@@ -1,11 +1,11 @@
 <template name="layout">
-	<nav class="navbar navbar-dark" style="background-color: #000;">
+  <nav class="navbar navbar-dark" style="background-color: #000;">
     <button class="navbar-toggler hidden-md-up" type="button" data-toggle="collapse" data-target="#navBarItems">
       &#9776;
     </button>
     <div class="collapse navbar-toggleable-sm" id="navBarItems">
-			<a class="navbar-brand" href="{{pathFor 'home'}}"><i class="fa fa-play-circle logo-icon"></i> Plex Requests</a>
-			<a class="navbar-brand admin-link" href="{{pathFor 'admin.page'}}">Admin</a>
+      <a class="navbar-brand" href="{{pathFor 'home'}}"><i class="fa fa-play-circle logo-icon"></i> Plex Requests</a>
+      <a class="navbar-brand admin-link" href="{{pathFor 'admin.page'}}">Admin</a>
       <ul class="nav navbar-nav pull-right">
         {{#if plexAuth}}
           <li class="{{isActiveRoute regex='search.page'}} nav-item"><a href="{{pathFor 'search.page'}}" class="nav-link">Search</a></li>
@@ -21,55 +21,55 @@
         {{/if}}
       </ul>
     </div>
-	</nav>
+  </nav>
 
   <div class="container">
 
-  <!-- Search bar and results list -->
+    <!-- Search bar and results list -->
 
-  {{> yield}}
+    {{> yield}}
 
-	<div class="modal fade" id="first-run-modal">
-	  <div class="modal-dialog" role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	          <span aria-hidden="true">&times;</span>
-	          <span class="sr-only">Close</span>
-	        </button>
-	        <h4 class="modal-title">Welcome to Plex Requests</h4>
-	      </div>
-	      <div class="modal-body">
-					<p>
-						<strong>Thank you for installing and using Plex Requests!</strong>
-						<br>
-						<br>
-						Before you get started, please head over to the <a href="{{pathFor 'admin.page'}}">admin page</a> and create an account.
-						You can then configure things and get going. Some highlights of the new version can be seen below:
-						<br>
-						<br>
-						<ul>
-							<li>
-								Approval system for requests
-							</li>
-							<li>
-								Enabled or disable search categories
-							</li>
-							<li>
-								Users can report issues with content
-							</li>
-							<li>
-								Improved visual style
-							</li>
-						</ul>
-					</p>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-primary-outline" data-dismiss="modal">Close</button>
-	      </div>
-	    </div><!-- /.modal-content -->
-	  </div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->
+    <div class="modal fade" id="first-run-modal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+              <span class="sr-only">Close</span>
+            </button>
+            <h4 class="modal-title">Welcome to Plex Requests</h4>
+          </div>
+          <div class="modal-body">
+            <p>
+              <strong>Thank you for installing and using Plex Requests!</strong>
+              <br>
+              <br>
+              Before you get started, please head over to the <a href="{{pathFor 'admin.page'}}">admin page</a> and create an account.
+              You can then configure things and get going. Some highlights of the new version can be seen below:
+              <br>
+              <br>
+              <ul>
+                <li>
+                  Approval system for requests
+                </li>
+                <li>
+                  Enabled or disable search categories
+                </li>
+                <li>
+                  Users can report issues with content
+                </li>
+                <li>
+                  Improved visual style
+                </li>
+              </ul>
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary-outline" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
 
   </div>

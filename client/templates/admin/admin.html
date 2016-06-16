@@ -1,360 +1,358 @@
 <template name="admin">
-	<div class="admin">
-		<div class="row">
-			<div class="col-md-10 col-md-offset-1">
-				<h1>Admin</h1>
+  <div class="admin">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        <h1>Admin</h1>
 
-				{{#if currentUser}}
-					<!-- <div class="row">
-						<div class="col-md-8 col-md-offset-2"> -->
-							{{> atNavButton}}
-						<!-- </div>
-					</div> -->
-				{{/if}}
+        {{#if currentUser}}
+          <!-- <div class="row">
+            <div class="col-md-8 col-md-offset-2"> -->
+              {{> atNavButton}}
+            <!-- </div>
+          </div> -->
+        {{/if}}
 
-			</div>
-		</div>
-		{{#unless currentUser}}
-			<div class="row">
-				<div class="col-md-6 col-md-offset-1">
-					{{> atForm }}
-				</div>
-			</div>
-		{{/unless}}
+      </div>
+    </div>
+    
+    {{#unless currentUser}}
+      <div class="row">
+        <div class="col-md-6 col-md-offset-1">
+          {{> atForm }}
+        </div>
+      </div>
+    {{/unless}}
 
+    {{#if currentUser}}
+      <div class="row settings">
+        <div class="col-md-2 col-md-offset-1">
+          <ul class="list-group settings-options">
+            <a href="#"><li class="list-group-item active">General</li></a>
+            <a href="#"><li class="list-group-item">Authentication</li></a>
+            {{#if plexUserPERMISSIONS}}
+              <a href="#"><li class="list-group-item">Users</li></a>
+            {{/if}}
+            <a href="#"><li class="list-group-item">CouchPotato</li></a>
+            <a href="#"><li class="list-group-item">SickRage</li></a>
+            <a href="#"><li class="list-group-item">Sonarr</li></a>
+            <a href="#"><li class="list-group-item">Notifications</li></a>
+            <a href="#"><li class="list-group-item">Logs</li></a>
+            <a href="#"><li class="list-group-item">About</li></a>
+          </ul>
+        </div>
+        <!-- <br> -->
+        <div class="col-md-8 settings-pane" id="SettingsGeneral">
+          {{#autoForm collection="Settings" doc=settings id="updateGeneralSettingsForm" type="update" resetOnSuccess="false"}}
+            {{> afQuickField name='searchOptionsMOVIES'}}
+            {{> afQuickField name='searchOptionsTV'}}
+            <p class="text-muted">
+              Choose the type of content that can be requested
+            </p>
+            <br>
+            {{> afQuickField name='movieApproval'}}
+            {{> afQuickField name='tvApproval'}}
+            <p class="text-muted">
+              Choose whether you would like to approve Movie or TV requests
+            </p>
+            <br>
+            {{> afQuickField name='tvWeeklyLimit' style="width:auto;"}}
+            <p class="text-muted">
+              Set a TV weekly request limit for your users. Hint: 0 means no limit
+            </p>
+            <br>
+            {{> afQuickField name='movieWeeklyLimit' style="width:auto;"}}
+            <p class="text-muted">
+              Set a Movie weekly request limit for your users. Hint: 0 means no limit
+            </p>
+            <br>
+            <button type="submit" class="btn btn-primary-outline btn-block">Update Settings</button>
+          {{/autoForm}}
+        </div>
 
-		{{#if currentUser}}
-			<div class="row settings">
-				<div class="col-md-2 col-md-offset-1">
-					<ul class="list-group settings-options">
-					  <a href="#"><li class="list-group-item active">General</li></a>
-					  <a href="#"><li class="list-group-item">Authentication</li></a>
-					  {{#if plexUserPERMISSIONS}}
-					    <a href="#"><li class="list-group-item">Users</li></a>
-					  {{/if}}
-					  <a href="#"><li class="list-group-item">CouchPotato</li></a>
-					  <a href="#"><li class="list-group-item">SickRage</li></a>
-					  <a href="#"><li class="list-group-item">Sonarr</li></a>
-					  <a href="#"><li class="list-group-item">Notifications</li></a>
-					  <a href="#"><li class="list-group-item">Logs</li></a>
-					  <a href="#"><li class="list-group-item">About</li></a>
-					</ul>
-				</div>
-				<!-- <br> -->
-				<div class="col-md-8 settings-pane" id="SettingsGeneral">
-					{{#autoForm collection="Settings" doc=settings id="updateGeneralSettingsForm" type="update" resetOnSuccess="false"}}
-						{{> afQuickField name='searchOptionsMOVIES'}}
-						{{> afQuickField name='searchOptionsTV'}}
-						<p class="text-muted">
-							Choose the type of content that can be requested
-						</p>
-						<br>
-						{{> afQuickField name='movieApproval'}}
-						{{> afQuickField name='tvApproval'}}
-						<p class="text-muted">
-							Choose whether you would like to approve Movie or TV requests
-						</p>
-						<br>
-						{{> afQuickField name='tvWeeklyLimit' style="width:auto;"}}
-						<p class="text-muted">
-							Set a TV weekly request limit for your users. Hint: 0 means no limit
-						</p>
-						<br>
-						{{> afQuickField name='movieWeeklyLimit' style="width:auto;"}}
-						<p class="text-muted">
-							Set a Movie weekly request limit for your users. Hint: 0 means no limit
-						</p>
-						<br>
-						<button type="submit" class="btn btn-primary-outline btn-block">Update Settings</button>
-					{{/autoForm}}
-				</div>
+        <div class="col-md-8 settings-pane" style="display: none;" id="SettingsAuthentication">
+          {{#autoForm collection="Settings" doc=settings id="updateAuthenticationSettingsForm" type="update" resetOnSuccess="false"}}
+            {{> afQuickField name='plexAuthenticationENABLED'}}
+            <p class="text-muted">
+              Allow only users you've shared your library with to request content. Follow these
+              <a href="https://support.plex.tv/hc/en-us/articles/204059436-Finding-your-account-token-X-Plex-Token" target="_blank">instructions</a>
+              to retrieve your token. Alternatively use the form below to sign into Plex.tv and we'll get it for you.
+            </p>
+            {{> afQuickField name='plexAuthenticationPASSWORDS'}}
+            <p class="text-muted">
+              Enabled if you want users to login with both their usernames and passwords
+            </p>
+            {{> afQuickField name='plexUserPERMISSIONS'}}
+            <p class="text-muted">
+              Allows for per-user permissions. Hint: Shows USERS tab
+            </p>
+            <br>
+            {{> afQuickField name='plexAuthenticationTOKEN' style="width:auto;" size="25"}}
+            <br>
+            <div class="row">
+              <div class="col-sm-4">
+                <label class="sr-only" for="plexuser">Plex Username</label>
+                <input type="email" class="form-control" id="plexuser" placeholder="Plex Username">
+              </div>
+              <div class="col-sm-4">
+                <label class="sr-only" for="plexpassword">Password</label>
+                <input type="password" class="form-control" id="plexpassword" placeholder="Password">
+              </div>
+            </div>
+            <br>
+            <button type="button" class="btn btn-secondary-outline" id="plexsubmit">Get token <i class="fa fa-key"></i></button>
+            <br>
+            <br>
+            <button type="submit" class="btn btn-primary-outline btn-block">Update Settings</button>
+          {{/autoForm}}
+        </div>
 
-				<div class="col-md-8 settings-pane" style="display: none;" id="SettingsAuthentication">
-					{{#autoForm collection="Settings" doc=settings id="updateAuthenticationSettingsForm" type="update" resetOnSuccess="false"}}
-						{{> afQuickField name='plexAuthenticationENABLED'}}
-						<p class="text-muted">
-							Allow only users you've shared your library with to request content. Follow these
-							<a href="https://support.plex.tv/hc/en-us/articles/204059436-Finding-your-account-token-X-Plex-Token" target="_blank">instructions</a>
-							to retrieve your token. Alternatively use the form below to sign into Plex.tv and we'll get it for you.
-						</p>
-						{{> afQuickField name='plexAuthenticationPASSWORDS'}}
-						<p class="text-muted">
-							Enabled if you want users to login with both their usernames and passwords
-						</p>
-						{{> afQuickField name='plexUserPERMISSIONS'}}
-						<p class="text-muted">
-							Allows for per-user permissions. Hint: Shows USERS tab
-						</p>
-						<br>
-						{{> afQuickField name='plexAuthenticationTOKEN' style="width:auto;" size="25"}}
-						<br>
-						<div class="row">
-							<div class="col-sm-4">
-								<label class="sr-only" for="plexuser">Plex Username</label>
-								<input type="email" class="form-control" id="plexuser" placeholder="Plex Username">
-							</div>
-							<div class="col-sm-4">
-								<label class="sr-only" for="plexpassword">Password</label>
-								<input type="password" class="form-control" id="plexpassword" placeholder="Password">
-							</div>
-						</div>
-						<br>
-						<button type="button" class="btn btn-secondary-outline" id="plexsubmit">Get token <i class="fa fa-key"></i></button>
-						<br>
-						<br>
-						<button type="submit" class="btn btn-primary-outline btn-block">Update Settings</button>
-					{{/autoForm}}
-				</div>
+        {{#if plexUserPERMISSIONS}}
+          <div class="col-md-8 settings-pane" style="display: none;" id="SettingsUsers">
+            <div class="row">
+              <div class="col-md-12">
+                <p>User Management</p>
+                <p class="text-muted">No Approval: This user will always have their requests automatically approved</p>
+                <p class="text-muted">No Limit: No request limits apply to this user</p>
+                <p class="text-muted">Banned: Banned users are prevented from logging in</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+              <div class="item-divider"></div>
+              </div>
+            </div>
+            {{#each permissionUser}}
+              {{#autoForm collection="Permissions" doc=this id=makeUniqueID type="update" resetOnSuccess="false"}}
+                <div class="row">
+                  <div class="col-md-3" align="center">
+                    <p>{{{permUSER}}}</p>
+                  </div>
+                  <div class="col-md-3">
+                    {{> afQuickField name='permAPPROVAL'}}
+                  </div>
+                  <div class="col-md-3">
+                    {{> afQuickField name='permLIMIT'}}
+                  </div>
+                  <div class="col-md-3">
+                    {{> afQuickField name='permBANNED'}}
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                  <div class="item-divider"></div>
+                  </div>
+                </div>
+              {{/autoForm}}
+            {{/each}}
+            <button type="submit" class="btn btn-primary-outline btn-block" id="usersSettingsSubmit">Update Settings</button>
+          </div>
+        {{/if}}
+        
+        <div class="col-md-8 settings-pane" style="display: none;" id="SettingsCouchPotato">
+          {{#autoForm collection="Settings" doc=settings id="updateCouchPotatoSettingsForm" type="update" resetOnSuccess="false"}}
+            {{> afQuickField name='couchPotatoENABLED'}}
+            <p class="text-muted">Enable CouchPotato for automated movie downloading</p>
+            <br>
+            <p><button class="btn btn-secondary-outline" id="couchPotatoTest">Test CouchPotato server</button></p>
+            <p class="text-muted">Test your CouchPotato server. Remember to save your settings first!</p>
+            <br>
+            {{> afQuickField name='couchPotatoURL'}}
+            <p class="text-muted">Enter the IP address or Hostname of your CouchPotato server. Do not include http:// or any slashes.</p>
+            <br>
+            {{> afQuickField name='couchPotatoPORT'}}
+            <p class="text-muted">Enter the port used by CouchPotato. The default is 5050.</p>
+            <br>
+            {{> afQuickField name='couchPotatoAPI' size="40"}}
+            <p class="text-muted">Enter your API from CouchPotato. It can be found in CouchPotato Settings -> General -> API Key.</p>
+            <br>
+            {{> afQuickField name='couchPotatoDIRECTORY' size="40"}}
+            <p class="text-muted">Enter your sub-directory for CouchPotato if used. It should also include the slash (/) at the start.</p>
+            <br>
+            {{> afQuickField name='couchPotatoSSL'}}
+            <p class="text-muted">Enable this if you use SSL on your CouchPotato server.</p>
+            <br>
+            <button type="submit" class="btn btn-primary-outline btn-block">Update Settings</button>
+          {{/autoForm}}
+        </div>
 
-				{{#if plexUserPERMISSIONS}}
-					<div class="col-md-8 settings-pane" style="display: none;" id="SettingsUsers">
-						<div class="row">
-							<div class="col-md-12">
-								<p>User Management</p>
-								<p class="text-muted">No Approval: This user will always have their requests automatically approved</p>
-								<p class="text-muted">No Limit: No request limits apply to this user</p>
-								<p class="text-muted">Banned: Banned users are prevented from logging in</p>
-							</div>
-						</div>
-						<div class="row">
-						  <div class="col-md-12">
-							<div class="item-divider"></div>
-						  </div>
-						</div>
-						{{#each permissionUser}}
-						{{#autoForm collection="Permissions" doc=this id=makeUniqueID type="update" resetOnSuccess="false"}}
-							<div class="row">
-							  <div class="col-md-3" align="center">
-								<p>{{{permUSER}}}</p>
-							  </div>
-							  <div class="col-md-3">
-							  {{> afQuickField name='permAPPROVAL'}}
-							  </div>
-							  <div class="col-md-3">
-							  {{> afQuickField name='permLIMIT'}}
-							  </div>
-							  <div class="col-md-3">
-							  {{> afQuickField name='permBANNED'}}
-							  </div>
-							</div>
-							<div class="row">
-							  <div class="col-md-12">
-								<div class="item-divider"></div>
-							  </div>
-							</div>
-						{{/autoForm}}
-						{{/each}}
-						<button type="submit" class="btn btn-primary-outline btn-block" id="usersSettingsSubmit">Update Settings</button>
-					</div>
-				{{/if}}
-				
-				<div class="col-md-8 settings-pane" style="display: none;" id="SettingsCouchPotato">
-					{{#autoForm collection="Settings" doc=settings id="updateCouchPotatoSettingsForm" type="update" resetOnSuccess="false"}}
-						{{> afQuickField name='couchPotatoENABLED'}}
-						<p class="text-muted">Enable CouchPotato for automated movie downloading</p>
-						<br>
-						<p><button class="btn btn-secondary-outline" id="couchPotatoTest">Test CouchPotato server</button></p>
-						<p class="text-muted">Test your CouchPotato server. Remember to save your settings first!</p>
-						<br>
-						{{> afQuickField name='couchPotatoURL'}}
-						<p class="text-muted">Enter the IP address or Hostname of your CouchPotato server. Do not include http:// or any slashes.</p>
-						<br>
-						{{> afQuickField name='couchPotatoPORT'}}
-						<p class="text-muted">Enter the port used by CouchPotato. The default is 5050.</p>
-						<br>
-						{{> afQuickField name='couchPotatoAPI' size="40"}}
-						<p class="text-muted">Enter your API from CouchPotato. It can be found in CouchPotato Settings -> General -> API Key.</p>
-						<br>
-						{{> afQuickField name='couchPotatoDIRECTORY' size="40"}}
-						<p class="text-muted">Enter your sub-directory for CouchPotato if used. It should also include the slash (/) at the start.</p>
-						<br>
-						{{> afQuickField name='couchPotatoSSL'}}
-						<p class="text-muted">Enable this if you use SSL on your CouchPotato server.</p>
-						<br>
-						<button type="submit" class="btn btn-primary-outline btn-block">Update Settings</button>
-					{{/autoForm}}
-				</div>
+        <div class="col-md-8 settings-pane" style="display: none;" id="SettingsSickRage">
+          {{#autoForm collection="Settings" doc=settings id="updateSickRageSettingsForm" type="update" resetOnSuccess="false"}}
+            {{> afQuickField name='sickRageENABLED'}}
+            <p class="text-muted">Enable SickRage for automated tv downloading.</p>
+            <br>
+            <p><button class="btn btn-secondary-outline" id="sickRageTest">Test SickRage server</button></p>
+            <p class="text-muted">Test your SickRage server. Remember to save your settings first!</p>
+            <br>
+            {{> afQuickField name='sickRageURL'}}
+            <p class="text-muted">Enter the IP address or Hostname of your SickRage server. Do not include http:// or any slashes.</p>
+            <br>
+            {{> afQuickField name='sickRagePORT'}}
+            <p class="text-muted">Enter the port used by SickRage. The default is 8081.</p>
+            <br>
+            {{> afQuickField name='sickRageAPI' size="40"}}
+            <p class="text-muted">Enter your API from SickRage. It can be found in SickRage Settings -> Interface -> API Key.</p>
+            <br>
+            {{> afQuickField name='sickRageDIRECTORY' size="40"}}
+            <p class="text-muted">Enter your sub-directory for SickRage if used. It should also include the slash (/) at the start.</p>
+            <br>
+            {{> afQuickField name='sickRageSSL'}}
+            <p class="text-muted">Enabled if you use SSL on your SickRage server.</p>
+            <br>
+            <button type="submit" class="btn btn-primary-outline btn-block">Update Settings</button>
+          {{/autoForm}}
+        </div>
 
-				<div class="col-md-8 settings-pane" style="display: none;" id="SettingsSickRage">
-					{{#autoForm collection="Settings" doc=settings id="updateSickRageSettingsForm" type="update" resetOnSuccess="false"}}
-						{{> afQuickField name='sickRageENABLED'}}
-						<p class="text-muted">Enable SickRage for automated tv downloading.</p>
-						<br>
-						<p><button class="btn btn-secondary-outline" id="sickRageTest">Test SickRage server</button></p>
-						<p class="text-muted">Test your SickRage server. Remember to save your settings first!</p>
-						<br>
-						{{> afQuickField name='sickRageURL'}}
-						<p class="text-muted">Enter the IP address or Hostname of your SickRage server. Do not include http:// or any slashes.</p>
-						<br>
-						{{> afQuickField name='sickRagePORT'}}
-						<p class="text-muted">Enter the port used by SickRage. The default is 8081.</p>
-						<br>
-						{{> afQuickField name='sickRageAPI' size="40"}}
-						<p class="text-muted">Enter your API from SickRage. It can be found in SickRage Settings -> Interface -> API Key.</p>
-						<br>
-						{{> afQuickField name='sickRageDIRECTORY' size="40"}}
-						<p class="text-muted">Enter your sub-directory for SickRage if used. It should also include the slash (/) at the start.</p>
-						<br>
-						{{> afQuickField name='sickRageSSL'}}
-						<p class="text-muted">Enabled if you use SSL on your SickRage server.</p>
-						<br>
-						<button type="submit" class="btn btn-primary-outline btn-block">Update Settings</button>
-					{{/autoForm}}
-				</div>
+        <div class="col-md-8 settings-pane" style="display: none;" id="SettingsSonarr">
+          {{#autoForm collection="Settings" doc=settings id="updateSonarrSettingsForm" type="update" resetOnSuccess="false"}}
+            {{> afQuickField name='sonarrENABLED'}}
+            <p class="text-muted">Enabled Sonarr for automated tv downloading.</p>
+            <br>
+            <p><button class="btn btn-secondary-outline" id="sonarrTest">Test Sonarr server</button></p>
+            <p class="text-muted">Test your Sonarr server. Remember to save your settings first!</p>
+            <br>
+            {{> afQuickField name='sonarrURL'}}
+            <p class="text-muted">Enter the IP address or Hostname of your Sonarr server. Do not include http:// or any slashes.</p>
+            <br>
+            {{> afQuickField name='sonarrPORT'}}
+            <p class="text-muted">Enter the port used by Sonarr. The default is 8989.</p>
+            <br>
+            {{> afQuickField name='sonarrAPI' size="40"}}
+            <p class="text-muted">Enter your API from Sonarr. It can be found in Sonarr Settings -> General.</p>
+            <br>
+            {{> afQuickField name='sonarrDIRECTORY' size="40"}}
+            <p class="text-muted">Enter your sub-directory for Sonarr if used. It should also include the slash (/) at the start.</p>
+            <br>
+            {{> afQuickField name='sonarrSSL'}}
+            <p class="text-muted">Enabled if you use SSL on your Sonarr server.</p>
+            <br>
+            {{> afQuickField name='sonarrQUALITYPROFILEID' type='select' options=sonarrProfiles firstOption=false}}
+            <button class="btn btn-info-outline" id="getSonarrProfiles">Get Profiles</button>
+            <br>
+            <br>
+            <p class="text-muted">Select a Sonarr Quality Profile.</p>
+            <br>
+            {{> afQuickField name='sonarrROOTFOLDERPATH'}}
+            <p class="text-muted">Enter the root folder where tv shows are saved. For example C:\Media\TV.</p>
+            <br>
+            {{> afQuickField name='sonarrSEASONFOLDERS'}}
+            <p class="text-muted">Enabled Season Folders to organize seasons into individual folders within a show.</p>
+            <br>
+            <button type="submit" class="btn btn-primary-outline btn-block">Update Settings</button>
+          {{/autoForm}}
+        </div>
 
-				<div class="col-md-8 settings-pane" style="display: none;" id="SettingsSonarr">
-					{{#autoForm collection="Settings" doc=settings id="updateSonarrSettingsForm" type="update" resetOnSuccess="false"}}
-						{{> afQuickField name='sonarrENABLED'}}
-						<p class="text-muted">Enabled Sonarr for automated tv downloading.</p>
-						<br>
-						<p><button class="btn btn-secondary-outline" id="sonarrTest">Test Sonarr server</button></p>
-						<p class="text-muted">Test your Sonarr server. Remember to save your settings first!</p>
-						<br>
-						{{> afQuickField name='sonarrURL'}}
-						<p class="text-muted">Enter the IP address or Hostname of your Sonarr server. Do not include http:// or any slashes.</p>
-						<br>
-						{{> afQuickField name='sonarrPORT'}}
-						<p class="text-muted">Enter the port used by Sonarr. The default is 8989.</p>
-						<br>
-						{{> afQuickField name='sonarrAPI' size="40"}}
-						<p class="text-muted">Enter your API from Sonarr. It can be found in Sonarr Settings -> General.</p>
-						<br>
-						{{> afQuickField name='sonarrDIRECTORY' size="40"}}
-						<p class="text-muted">Enter your sub-directory for Sonarr if used. It should also include the slash (/) at the start.</p>
-						<br>
-						{{> afQuickField name='sonarrSSL'}}
-						<p class="text-muted">Enabled if you use SSL on your Sonarr server.</p>
-						<br>
-						{{> afQuickField name='sonarrQUALITYPROFILEID' type='select' options=sonarrProfiles firstOption=false}}
-						<button class="btn btn-info-outline" id="getSonarrProfiles">Get Profiles</button>
-						<br>
-						<br>
-						<p class="text-muted">Select a Sonarr Quality Profile.</p>
-						<br>
-						{{> afQuickField name='sonarrROOTFOLDERPATH'}}
-						<p class="text-muted">Enter the root folder where tv shows are saved. For example C:\Media\TV.</p>
-						<br>
-						{{> afQuickField name='sonarrSEASONFOLDERS'}}
-						<p class="text-muted">Enabled Season Folders to organize seasons into individual folders within a show.</p>
-						<br>
-						<button type="submit" class="btn btn-primary-outline btn-block">Update Settings</button>
-					{{/autoForm}}
-				</div>
-
-				<div class="col-md-8 settings-pane" style="display: none;" id="SettingsNotifications">
-					{{#autoForm collection="Settings" doc=settings id="updateNotificationsSettingsForm" type="update" resetOnSuccess="false"}}
-
-						{{> afQuickField name='customNotificationTITLE' size="40"}}
-                        <p class="text-muted"> Enter custom notification title</p>
-                        <br>
-                        {{> afQuickField name='customNotificationTEXT' size="40"}}
-                        <p class="text-muted"> Enter custom notification text</p>
-                        <br>
-						
-                        {{> afQuickField name='iftttENABLED'}}
-						<p class="text-muted">Enabled IFTTT Maker.</p>
-						<br>
-                        {{> afQuickField name='iftttMAKERAPI' size="40"}}
-                        <p class="text-muted"> IFTTT Maker API Key</p>
-                        <br>
-                        {{> afQuickField name='iftttMAKERCHANNEL' size="40"}}
-                        <p class="text-muted"> IFTTT Maker Channel Name</p>
-                        <br>
-                        {{> afQuickField name='iftttMAKERVALUE1' size="40"}}
-                        <p class="text-muted"> IFTTT Optional Value 1</p>
-						<br>
-						{{> afQuickField name='iftttMAKERVALUE2' size="40"}}
-						<p class="text-muted"> IFTTT Optional Value 2</p>
-						<br>
-						{{> afQuickField name='iftttMAKERVALUE3' size="40"}}
-						<p class="text-muted"> IFTTT Optional Value 3</p>
-						<br>
-
-						<p><button class="btn btn-secondary-outline" id="iftttTest">Test IFTTT Maker</button></p>
-						<p class="text-muted">Test your IFTTT Maker channel. Remember to save your settings first!</p>
-						<br>
+        <div class="col-md-8 settings-pane" style="display: none;" id="SettingsNotifications">
+          {{#autoForm collection="Settings" doc=settings id="updateNotificationsSettingsForm" type="update" resetOnSuccess="false"}}
+            {{> afQuickField name='customNotificationTITLE' size="40"}}
+            <p class="text-muted"> Enter custom notification title</p>
+            <br>
+            {{> afQuickField name='customNotificationTEXT' size="40"}}
+            <p class="text-muted"> Enter custom notification text</p>
+            <br>
+          
+            {{> afQuickField name='iftttENABLED'}}
+            <p class="text-muted">Enabled IFTTT Maker.</p>
+            <br>
+            {{> afQuickField name='iftttMAKERAPI' size="40"}}
+            <p class="text-muted"> IFTTT Maker API Key</p>
+            <br>
+            {{> afQuickField name='iftttMAKERCHANNEL' size="40"}}
+            <p class="text-muted"> IFTTT Maker Channel Name</p>
+            <br>
+            {{> afQuickField name='iftttMAKERVALUE1' size="40"}}
+            <p class="text-muted"> IFTTT Optional Value 1</p>
+            <br>
+            {{> afQuickField name='iftttMAKERVALUE2' size="40"}}
+            <p class="text-muted"> IFTTT Optional Value 2</p>
+            <br>
+            {{> afQuickField name='iftttMAKERVALUE3' size="40"}}
+            <p class="text-muted"> IFTTT Optional Value 3</p>
+            <br>
+            <p><button class="btn btn-secondary-outline" id="iftttTest">Test IFTTT Maker</button></p>
+            <p class="text-muted">Test your IFTTT Maker channel. Remember to save your settings first!</p>
+            <br>
                         
-                        {{> afQuickField name='pushbulletENABLED'}}
-						<p class="text-muted">Enabled Pushbullet to receive alerts.</p>
-						<br>
-						{{> afQuickField name='pushbulletAPI' size="40"}}
-						<p class="text-muted">Enter your API from Pushbullet. It can be found in Pushbullet Settings -> Access Token.</p>
-						<br>
-						{{> afQuickField name='pushbulletChannel' size="40"}}
-						<p class="text-muted"> Push Notifications to a channel. Must be the owner of the channel, click <a href="https://www.pushbullet.com/my-channel"> here </a> to create a new channel.</p>
-						<br>
+            {{> afQuickField name='pushbulletENABLED'}}
+            <p class="text-muted">Enabled Pushbullet to receive alerts.</p>
+            <br>
+            {{> afQuickField name='pushbulletAPI' size="40"}}
+            <p class="text-muted">Enter your API from Pushbullet. It can be found in Pushbullet Settings -> Access Token.</p>
+            <br>
+            {{> afQuickField name='pushbulletChannel' size="40"}}
+            <p class="text-muted"> Push Notifications to a channel. Must be the owner of the channel, click <a href="https://www.pushbullet.com/my-channel"> here </a> to create a new channel.</p>
+            <br>
 
-						<p><button class="btn btn-secondary-outline" id="pushbulletTest">Test Pushbullet</button></p>
-						<p class="text-muted">Test your Pushbullet settings. Remember to save your settings first!</p>
-						<br>
-						{{> afQuickField name='pushoverENABLED'}}
-						<p class="text-muted">Enabled Pushover to receive alerts.</p>
-						<br>
-						{{> afQuickField name='pushoverAPI' size="40"}}
-						<p class="text-muted">Enter your API from Pushover.</p>
-						<br>
-						{{>afQuickField name='pushoverUSER' size="40"}}
-						<p class="text-muted">Enter your user or group key from Pushover.</p>
-						<br>
-						<p><button class="btn btn-secondary-outline" id="pushoverTest">Test Pushover</button></p>
-						<p class="text-muted">Test your Pushover settings. Remember to save your settings first!</p>
-						<br>
+            <p><button class="btn btn-secondary-outline" id="pushbulletTest">Test Pushbullet</button></p>
+            <p class="text-muted">Test your Pushbullet settings. Remember to save your settings first!</p>
+            <br>
+            {{> afQuickField name='pushoverENABLED'}}
+            <p class="text-muted">Enabled Pushover to receive alerts.</p>
+            <br>
+            {{> afQuickField name='pushoverAPI' size="40"}}
+            <p class="text-muted">Enter your API from Pushover.</p>
+            <br>
+            {{>afQuickField name='pushoverUSER' size="40"}}
+            <p class="text-muted">Enter your user or group key from Pushover.</p>
+            <br>
+            <p><button class="btn btn-secondary-outline" id="pushoverTest">Test Pushover</button></p>
+            <p class="text-muted">Test your Pushover settings. Remember to save your settings first!</p>
+            <br>
 
-						{{> afQuickField name='slackENABLED'}}
-						<p class="text-muted">Enabled Slack to receive alerts.</p>
-						<br>
-						{{> afQuickField name='slackAPI' size="40"}}
-						<p class="text-muted">Enter your webhook url from Slack.</p>
-						<br>
-						{{> afQuickField name='slackUsername' size="40"}}
-						<p class="text-muted">The Slackbot Name.</p>
-						<br>
-						{{> afQuickField name='slackChannel' size="40"}}
-						<p class="text-muted">The Slackbot Channel with # for channel or @ for user.</p>
-						<br>
-						<p><button class="btn btn-secondary-outline" id="slackTest">Test Slack</button></p>
-						<p class="text-muted">Test your Slack settings. Remember to save your settings first!</p>
-						<br>
+            {{> afQuickField name='slackENABLED'}}
+            <p class="text-muted">Enabled Slack to receive alerts.</p>
+            <br>
+            {{> afQuickField name='slackAPI' size="40"}}
+            <p class="text-muted">Enter your webhook url from Slack.</p>
+            <br>
+            {{> afQuickField name='slackUsername' size="40"}}
+            <p class="text-muted">The Slackbot Name.</p>
+            <br>
+            {{> afQuickField name='slackChannel' size="40"}}
+            <p class="text-muted">The Slackbot Channel with # for channel or @ for user.</p>
+            <br>
+            <p><button class="btn btn-secondary-outline" id="slackTest">Test Slack</button></p>
+            <p class="text-muted">Test your Slack settings. Remember to save your settings first!</p>
+            <br>
 
-						<button type="submit" class="btn btn-primary-outline btn-block">Update Settings</button>
-					{{/autoForm}}
-				</div>
+            <button type="submit" class="btn btn-primary-outline btn-block">Update Settings</button>
+          {{/autoForm}}
+        </div>
 
-				<div class="col-md-8 settings-pane" style="display: none;" id="SettingsAbout">
-					<p>
-						<strong>Branch: </strong> {{branch}}<br>
-						<strong>Version: </strong> {{version}}
-					</p>
-					{{#if update}}
-						<p>
-							<div class="alert alert-info" role="alert">
-								<strong>Heads up!</strong> There's a new update available!
-							</div>
-						</p>
-					{{/if}}
-					<p>
-						<strong>Project Website: </strong> <a href="http://plexrequests.8bits.ca/" target="_blank">plexrequests.8bits.ca</a><br>
-						<strong>GitHub Page: </strong> <a href="https://github.com/lokenx/plexrequests-meteor" target="_blank">lokenx / PlexRequests</a>
-					</p>
-					<p><strong>{{ latestVersion }}</strong></p>
-					<ul>
-						{{#each latestNotes}}
-							<li>{{ this }}</li>
-						{{/each}}
-					</ul>
-					<br />
-					<p><strong>{{ previousVersion }}</strong></p>
-					<ul>
-						{{#each previousNotes}}
-							<li>{{ this }}</li>
-						{{/each}}
-					</ul>
-				</div>
+        <div class="col-md-8 settings-pane" style="display: none;" id="SettingsAbout">
+          <p>
+            <strong>Branch: </strong> {{branch}}<br>
+            <strong>Version: </strong> {{version}}
+          </p>
+          {{#if update}}
+            <p>
+              <div class="alert alert-info" role="alert">
+                <strong>Heads up!</strong> There's a new update available!
+              </div>
+            </p>
+          {{/if}}
+          <p>
+            <strong>Project Website: </strong> <a href="http://plexrequests.8bits.ca/" target="_blank">plexrequests.8bits.ca</a><br>
+            <strong>GitHub Page: </strong> <a href="https://github.com/lokenx/plexrequests-meteor" target="_blank">lokenx / PlexRequests</a>
+          </p>
+          <p><strong>{{ latestVersion }}</strong></p>
+          <ul>
+            {{#each latestNotes}}
+              <li>{{ this }}</li>
+            {{/each}}
+          </ul>
+          <br />
+          <p><strong>{{ previousVersion }}</strong></p>
+          <ul>
+            {{#each previousNotes}}
+              <li>{{ this }}</li>
+            {{/each}}
+          </ul>
+        </div>
 
-				<div class="col-md-8 settings-pane" style="display: none;" id="SettingsLogs">
-					{{> logs }}
-				</div>
-			</div>
-		{{/if}}
-	</div>
+        <div class="col-md-8 settings-pane" style="display: none;" id="SettingsLogs">
+          {{> logs }}
+        </div>
+      </div>
+    {{/if}}
+  </div>
 </template>

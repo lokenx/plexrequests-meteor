@@ -2,47 +2,48 @@
   <div class="row item">
     <div class="item-poster">
       <div class="col-sm-3">
-	{{#if posterExists}}
-		{{#if isTV}}
-                <img src="{{poster_path}}" class="img-responsive" alt="Poster">
-		{{/if}}
-		{{#if isMovie}}
-			<img src="https://image.tmdb.org/t/p/w184{{poster_path}}" class="img-responsive" alt="Poster">
-		{{/if}}
-	{{/if}}
+        {{#if posterExists}}
+            {{#if isTV}}
+                    <img src="{{poster_path}}" class="img-responsive" alt="Poster">
+            {{/if}}
+            {{#if isMovie}}
+                <img src="https://image.tmdb.org/t/p/w184{{poster_path}}" class="img-responsive" alt="Poster">
+            {{/if}}
+        {{/if}}
+      </div>
+    </div>
+    <div class="item-body">
+      <div class="col-sm-9">
+        <h4><a href="{{link}}" target="_blank">{{title}} ({{year}})</a></h4>
+        <p>
+          {{overview}}
+        </p>
+        <div class="item-buttons">
+          {{#if isRequested}}
+            <button class="btn btn-success-outline already-requested" disabled><i class="fa fa-check"></i> &nbsp; {{isRequested}}</button>
+          {{else}}
+            {{#if isTV}}
+              <div class="btn-group" role="group">
+                <button type="button" class="btn btn-primary-outline dropdown-toggle tv-request" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fa fa-plus"></i> &nbsp; Request
+                </button>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item add-request" href="#" value="false">Request New Episodes</a>
+                  <a class="dropdown-item add-request" href="#" value="true">Request All Episodes</a>
+                </div>
+              </div>
+            {{else}}
+              <button class="btn btn-primary-outline add-request"><i class="fa fa-plus"></i> &nbsp; Request</button>
+            {{/if}}
+          {{/if}}
+        </div>
+      </div>
+    </div>
   </div>
-</div>
-<div class="item-body">
-  <div class="col-sm-9">
-	<h4><a href="{{link}}" target="_blank">{{title}} ({{year}})</a></h4>
-	<p>
-	  {{overview}}
-	</p>
-	<div class="item-buttons">
-	  {{#if isRequested}}
-		<button class="btn btn-success-outline already-requested" disabled><i class="fa fa-check"></i> &nbsp; {{isRequested}}</button>
-	  {{else}}
-		{{#if isTV}}
-		  <div class="btn-group" role="group">
-			<button type="button" class="btn btn-primary-outline dropdown-toggle tv-request" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			  <i class="fa fa-plus"></i> &nbsp; Request
-			</button>
-			<div class="dropdown-menu">
-			  <a class="dropdown-item add-request" href="#" value="false">Request New Episodes</a>
-			  <a class="dropdown-item add-request" href="#" value="true">Request All Episodes</a>
-			</div>
-		  </div>
-		{{else}}
-		  <button class="btn btn-primary-outline add-request"><i class="fa fa-plus"></i> &nbsp; Request</button>
-		{{/if}}
-	  {{/if}}
-	</div>
+  
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="item-divider"></div>
+    </div>
   </div>
-</div>
-</div>
-<div class="row">
-<div class="col-xs-12">
-  <div class="item-divider"></div>
-</div>
-</div>
 </template>
