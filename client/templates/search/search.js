@@ -24,27 +24,27 @@ Template.search.onCreated(function () {
 });
 
 Template.search.helpers({
-	"searchOptions": function () {
+  'searchOptions': function () {
     return Session.get("searchOptions");
-	},
-  "firstSearchOption": function () {
+  },
+  'firstSearchOption': function () {
     return Session.get("searchOptions")[0];
   },
-  "searchDisabled": function () {
+  'searchDisabled': function () {
     if (Session.get("searchDisabled") == true) {
       return "disabled";
     }
   },
-	"error": function () {
-		return Template.instance().error.get();
-	},
-	"searching": function () {
-		return Template.instance().searching.get();
-	},
-	"searchType": function () {
-		return Template.instance().searchType.get();
-	},
-	'results': function () {
+  'error': function () {
+    return Template.instance().error.get();
+  },
+  'searching': function () {
+    return Template.instance().searching.get();
+  },
+  'searchType': function () {
+    return Template.instance().searchType.get();
+  },
+  'results': function () {
     return Template.instance().results.get();
   },
   'activeSearch' : function () {
@@ -131,6 +131,6 @@ Template.search.events({
     }
   },
   'click .go-to-top': function () {
-		$('body').animate({ scrollTop: 0 }, "slow")
-	}
+    $('body').animate({ scrollTop: 0 }, "slow")
+  }
 });
