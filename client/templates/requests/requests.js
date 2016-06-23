@@ -250,6 +250,28 @@ Template.requests.events({
     var type = $(event.target).text();
     template.searchType.set(type);
   },
+	// TODO: add 'click .profile-selector' event to handle selecting
+	// quality profiles for movie requests
+      
+	'click .profile-selector a' : function (event, template) {
+	      var s = Settings.findOne();
+	      var profile_list = JSON.parse(s.couchPotatoPROFILES);
+	      var profile = $(event.target).text();
+	      var this.profile_id = profile_list[profile];
+	      var title = this.title;
+
+	      Meteor.call("approveRequest", this, function(error, result) {
+		      if (error || !(result)) {
+			      //Alert error
+			      console.error("Error approving, please check server logs");
+			      Bert.alert("Unable to approve " + title +", please try again!", "danger");
+		      } else {
+			      // Alert success
+			      Bert.alert("Approved " + title +"!", "success");
+		      }
+	      });
+	},
+
 	'click .approve-item' : function (event, template) {
 		var title = this.title;
 		Meteor.call("approveRequest", this, function(error, result) {

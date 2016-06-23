@@ -32,7 +32,8 @@ Meteor.methods({
 			// Doesn't exist so try to add
 			if (settings.couchPotatoENABLED) {
 				try {
-					if (CouchPotato.movieAdd(request.imdb)) {
+					if (CouchPotato.movieAdd(request.imdb, request.profile_id) {
+						// TODO: add quality profile
 						Movies.update(request._id, {$set: {approval_status: 1}});
 						return true;
 					} else {
