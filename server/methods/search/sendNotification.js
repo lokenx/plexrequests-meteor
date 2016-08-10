@@ -5,13 +5,13 @@ Meteor.methods({
     var settings = Settings.find().fetch()[0];
     var type = (request.media_type === 'tv') ? 'TV Show' : 'Movie';
     var message = Meteor.call(
-		"setTestVARS", 
-		settings.customNotificationTITLE, 
-		settings.customNotificationTEXT, 
-		request
-		);
-    
-	if (request.notification_type === 'request') {
+      "setTestVARS",
+      settings.customNotificationTITLE,
+      settings.customNotificationTEXT,
+      request
+    );
+
+    if (request.notification_type === 'request') {
       if (settings.pushbulletENABLED) {
         Meteor.call("sendPushbulletNotification", settings, message.title, message.body)
       }
@@ -23,13 +23,13 @@ Meteor.methods({
       }
 
       if (settings.iftttENABLED){
-            try {
-                Meteor.call("sendIFTTT", settings, request)
-            
-            } catch (error) {
-                console.log(error);
-            }
+        try {
+          Meteor.call("sendIFTTT", settings, request)
+
+        } catch (error) {
+          console.log(error);
         }
+      }
     } else {
       if (settings.pushbulletENABLED) {
         Meteor.call(
@@ -56,8 +56,8 @@ Meteor.methods({
       }
       if (settings.iftttENABLED){
         request["notification_type"] = "issue";
-          console.log("IFTTT: Attempting to send...");
-          Meteor.call("sendIFTTT", settings, request)
+        console.log("IFTTT: Attempting to send...");
+        Meteor.call("sendIFTTT", settings, request)
       }
     }
   }
