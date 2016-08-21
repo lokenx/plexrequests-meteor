@@ -11,7 +11,8 @@ SyncedCron.add({
         Meteor.call('updateCP');
         Meteor.call('updateSickRage');
         Meteor.call('updateSonarr');
-        return 'Updating download status...';
+        logger.info('Updating download status');
+        return true;
     }
 });
 
