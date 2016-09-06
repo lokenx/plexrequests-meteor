@@ -2,3 +2,4 @@
 .meteor/meteorite
 _site
 *.log
+/data
