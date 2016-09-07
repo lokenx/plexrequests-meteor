@@ -45,6 +45,6 @@ npm-container
 
 lokenx:couchpotatowrapper
 lokenx:sickragewrapper
-lokenx:sonarrwrapper
+# lokenx:sonarrwrapper
 meteorhacks:npm
 davidyaha:collection2-migrations
