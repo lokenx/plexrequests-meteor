@@ -5,12 +5,12 @@ Meteor.methods({
       return false;
     }
 
-    var tv = TV.find({approved: true});
+    var tv = TV.find({approval_status: 1});
 
     tv.forEach(function (show) {
       var status = Sonarr.seriesStats(show.tvdb);
       if (status) {
-        TV.update(show, {$set: {status: status}});        
+        TV.update(show, {$set: {status: status}});
       }
     });
 

@@ -5,7 +5,7 @@ Meteor.methods({
       return false;
     }
 
-    var tv = TV.find({approved: true});
+    var tv = TV.find({approval_status: 1});
 
     tv.forEach(function (show) {
       var status = SickRage.statsShow(show.tvdb);
