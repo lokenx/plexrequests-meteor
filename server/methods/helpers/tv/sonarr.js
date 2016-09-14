@@ -151,7 +151,7 @@ Meteor.methods({
           "seasonFolder":seasonFolder,
           "rootFolderPath":rootFolderPath,
           "addOptions":options,
-          "image":[]
+          "images":[]
         }, timeout: 15000}
       );
     } catch (e) {
