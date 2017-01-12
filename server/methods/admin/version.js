@@ -1,6 +1,6 @@
 Meteor.methods({
   getBranch: function () {
-    return "master";
+    return "dev";
   },
   getVersion: function () {
     return "1.15.6";
