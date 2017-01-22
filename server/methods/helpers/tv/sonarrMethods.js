@@ -159,7 +159,7 @@ Meteor.methods({
       return false;
     }
 
-    return response.data ? true : false;
+    return !!response.data
   },
   seriesStats: function(tvdb) {
     try {

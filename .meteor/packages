@@ -43,8 +43,6 @@ multiply:iron-router-progress
 useraccounts:bootstrap
 npm-container
 
-lokenx:couchpotatowrapper
 lokenx:sickragewrapper
-# lokenx:sonarrwrapper
 meteorhacks:npm
 davidyaha:collection2-migrations
