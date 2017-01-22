@@ -119,56 +119,13 @@ radarrMovieGet: function(tmdbId) {
     var status = false;
 
     _.each(allMovies.data, function (movie) {
-        if (movie.tmdbid === tmdbId) {
+        if (movie.tmdbid === tmdbId && movie.downloaded === "false") {
             status = true;
         }
     });
 
     return status
-},
-    radarrMovieStats: function(tmdbId) {
-        try {
-            check(Radarr.url, String);
-            check(Radarr.port, Number);
-            check(Radarr.api, String);
-            check(tvdb, Number);
-        } catch (e) {
-            console.log("Radarr Movie Stats -> " + e.message);
-            return false;
-        }
+}
 
-        //Workaround to allow self-signed SSL certs, however can be dangerous and should not be used in production, looking into better way
-        //But it's possible there's nothing much I can do
-        process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-
-        try {
-            var allShows = HTTP.get(Radarr.url + ":" + Radarr.port + Radarr.directory + "/api/series/", {headers: {"X-Api-Key":Radarr.api}, timeout: 15000} );
-        } catch (e) {
-            console.log("Radarr Movie Stats -> " + e.message);
-            return false;
-        }
-
-        var radarrId ;
-
-        _.each(allShows.data, function (show) {
-            if (show.tmdbid === tmdbId) {
-                radarrId = show.id;
-            }
-        });
-
-        try {
-            var response = HTTP.get(Radarr.url + ":" + Radarr.port + Radarr.directory + "/api/series/" + radarrId, {headers: {"X-Api-Key":Radarr.api}, timeout: 15000} );
-        } catch (e) {
-            if (e.message.indexOf("NotFound") > -1) {
-                return {"downloaded" : 0, "total" : 0};
-            } else {
-                console.log("Radarr Movie Stats Individual Movie Info -> " + e.message);
-                console.log("Movie TMDB: " + tmdbId);
-                return false;
-            }
-        }
-
-        return {"downloaded" : response.data.episodeFileCount, "total" : response.data.episodeCount};
-    },
 });
 

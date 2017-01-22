@@ -70,8 +70,7 @@ Meteor.methods({
 			if (settings.radarrENABLED) {
 				try {
 					var checkRadarr = Radarr.radarrMovieGet(request.id);
-					status = checkRadarr.status == "done";
-					if (checkRadarr.status !== "false" && checkRadarr !== false) {
+					if (checkRadarr !== false) {
 						try {
 							Movies.insert({
 								title: request.title,
@@ -79,8 +78,8 @@ Meteor.methods({
 								imdb: imdb,
 								released: request.release_date,
 								user: request.user,
-								downloaded: status,
-								approval_status: 1,
+								downloaded: checkRadarr,
+								approval_status: 0,
 								poster_path: poster
 							});
 
