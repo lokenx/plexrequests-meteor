@@ -176,25 +176,25 @@ Meteor.methods({
         }
         logger.info('Slack tested successfully');
         return true;
-    }
+    },
 /*
 Unused at the moment, commenting out until implemented
  */
-    // updateSeasonCount: function() {
-     //    try {
-     //        var results = TV.find({seasons: -1}).fetch();
-	// 	    for(var i=0;i<results.length;i++){
-     //            var response = HTTP.call("GET", "http://api.tvmaze.com/shows/" + results[i].id + "/seasons", {});
-     //            var seasons = response.data;
-     //            logger.info(results[i].id + " | " + results[i].title + " | " + seasons.length);
-    //
-     //            TV.update({_id: results[i]._id}, { $set: {seasons: seasons.length}});
-     //        }
-     //    }
-     //    catch (error) {
-     //        logger.info(error);
-     //        return error.message;
-     //    }
-     //    return true;
-	// }
+    updateSeasonCount: function() {
+        try {
+            var results = TV.find({seasons: -1}).fetch();
+		    for(var i=0;i<results.length;i++){
+                var response = HTTP.call("GET", "http://api.tvmaze.com/shows/" + results[i].id + "/seasons", {});
+                var seasons = response.data;
+                logger.info(results[i].id + " | " + results[i].title + " | " + seasons.length);
+
+                TV.update({_id: results[i]._id}, { $set: {seasons: seasons.length}});
+            }
+        }
+        catch (error) {
+            logger.info(error);
+            return error.message;
+        }
+        return true;
+	}
 });
