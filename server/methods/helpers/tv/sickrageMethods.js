@@ -30,7 +30,7 @@ Meteor.methods({
     var status;
 
     if (response.data) {
-      status = (response.data.result == "success") ? true : false;
+      status = (response.data.result == "success");
     } else {
       status = false;
     }
@@ -59,8 +59,7 @@ Meteor.methods({
       return false;
     }
 
-    var status = (response.data) ? true : false;
-    return status;
+    return (response.data)
   },
 
   checkShow: function(tvdbid){
@@ -88,7 +87,7 @@ Meteor.methods({
     var status;
 
     if (response.data) {
-      status = (response.data.result == "success") ? true : false;
+      status = (response.data.result == "success");
     } else {
       status = false;
     }
@@ -121,7 +120,7 @@ Meteor.methods({
     var status;
 
     if (response.data) {
-      status = (response.data.result == "success") ? true : false;
+      status = (response.data.result == "success");
     } else {
       status = false;
     }
