@@ -1,3 +1,6 @@
+// TODO: Clean up the requestMovie method, much of the logic is duplicated throughout and can be simplified
+// TODO: Define what exactly gets returned by each clients "add movie" method for uniform, predictable returns
+
 Meteor.methods({
 	"requestMovie": function(request) {
 		check(request, Object);
@@ -70,7 +73,8 @@ Meteor.methods({
 			if (settings.radarrENABLED) {
 				try {
 					var checkRadarr = Radarr.radarrMovieGet(request.id);
-					if (checkRadarr !== false) {
+					logger.log('debug', "Radarr Movie info: \n" + JSON.stringify(checkRadarr));
+					if (checkRadarr) {
 						try {
 							Movies.insert({
 								title: request.title,
@@ -173,7 +177,7 @@ Meteor.methods({
 										imdb: imdb,
 										released: request.release_date,
 										user: request.user,
-										downloaded: status,
+										downloaded: add.downloaded,
 										approval_status: 1,
 										poster_path: poster
 									});

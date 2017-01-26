@@ -1,3 +1,6 @@
+// TODO: Clean up the approveRequest method. Approving the request should be a single action and client agnostic
+// TODO: Define what should be returned by the "movie info" methods of each client. Should be uniform across clients
+
 Meteor.methods({
 	"approveRequest": function(request) {
         check(request, Object);
@@ -35,11 +38,12 @@ Meteor.methods({
 					var checkRadarr = Radarr.radarrMovieGet(request.id);
 					if (checkRadarr) {
 
-						status = Radarr.ra(request.id);
+						status = Radarr.radarrMovieGet(request.id);
 						try {
 							Movies.update(request._id, {$set: {approval_status: 1, downloaded: status}});
 							return true;
 						} catch (error) {
+
 							logger.error(error.message);
 							return false;
 						}
@@ -55,7 +59,7 @@ Meteor.methods({
             if (settings.couchPotatoENABLED) {
                 try {
                     if (CouchPotato.movieAdd(request.imdb)) {
-                        Movies.update(request._id, {$set: {approval_status: 1}});
+                        Movies.update(request._id, {$set: {approval_status: 1, downloaded: false}});
                         return true;
                     } else {
                         return false;
@@ -70,7 +74,8 @@ Meteor.methods({
                 var RadarrRootFolderPath = settings.radarrROOTFOLDERPATH;
                 try {
                     if (Radarr.radarrMovieAdd(request.id, request.title, radarrQualityProfileId, RadarrRootFolderPath)) {
-                        Movies.update(request._id, {$set: {approval_status: 1}});
+                        console.log('Here she be');
+                        Movies.update(request._id, {$set: {approval_status: 1, downloaded: false}});
                         return true;
                     } else {
                         return false;
@@ -81,6 +86,7 @@ Meteor.methods({
                 }
             } else {
 				Movies.update(request._id, {$set: {approval_status: 1}});
+                console.log('Here she be');
 				return true;
 			}
 

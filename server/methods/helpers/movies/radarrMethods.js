@@ -66,8 +66,8 @@ Meteor.methods({
       console.log("Radarr Movie Post -> " + e.message);
       return false;
     }
-
-    return !!response.data
+    logger.log('debug', 'Radarr add response: \n' + JSON.stringify(response.data));
+    return response.data
   },
 
 radarrSystemStatus: function() {
@@ -123,7 +123,7 @@ radarrMovieGet: function(tmdbId) {
             status = true;
         }
     });
-
+    console.log(status);
     return status
 }
 
