@@ -69,6 +69,20 @@ AutoForm.hooks({
       Bert.alert('Update failed, please try again', 'danger');
     }
   },
+  updateRadarrSettingsForm: {
+      onSuccess: function(formType, result) {
+          if (result) {
+              Bert.alert('Updated successfully', 'success');
+              Meteor.call("settingsUpdate");
+          }
+          this.event.preventDefault();
+          return false;
+      },
+      onError: function(formType, error) {
+          console.error(error);
+          Bert.alert('Update failed, please try again', 'danger');
+      }
+  },
   updateNotificationsSettingsForm: {
     onSuccess: function(formType, result) {
       if (result) {
@@ -99,6 +113,14 @@ Template.admin.helpers({
         value: profile.id
       };
     });
+  },
+  radarrProfiles: function () {
+      return Template.instance().radarrProfiles.get().map(function (profile) {
+          return {
+              label: profile.name,
+              value: profile.id
+          };
+      });
   },
   version: function () {
     return Template.instance().version.get();
@@ -132,6 +154,7 @@ Template.admin.onCreated(function(){
   instance.version = new ReactiveVar("");
   instance.update = new ReactiveVar(false);
   instance.sonarrProfiles = new ReactiveVar([]);
+  instance.radarrProfiles = new ReactiveVar([]);
   instance.latestVersion = new ReactiveVar("");
   instance.latestNotes = new ReactiveVar("");
   instance.previousVersion = new ReactiveVar("");
@@ -164,13 +187,13 @@ Template.admin.onCreated(function(){
     instance.latestNotes.set(notesArray.filter(Boolean));
 
     instance.previousVersion.set(result.data[1].name);
-    var notesArray = result.data[1].body.split("- ");
+    notesArray = result.data[1].body.split("- ");
     instance.previousNotes.set(notesArray.filter(Boolean));
   });
 });
 
 Template.admin.events({
-  'click .list-group-item' : function (event, template) {
+  'click .list-group-item' : function (event) {
     var target = $(event.target);
     
   //Update permissions collection
@@ -184,10 +207,12 @@ Template.admin.events({
     $('.settings-pane').hide();
     $('#Settings' + target.text()).show();
   },
+
   'submit #updateSettingsForm' : function (event) {
     event.preventDefault();
     return false;
   },
+
   'click #usersSettingsSubmit' : function (event) {
     event.preventDefault();
   
@@ -200,6 +225,7 @@ Template.admin.events({
     Bert.alert('Update failed, please try again', 'danger');
   }
   },
+
   'click #couchPotatoTest' : function (event) {
     event.preventDefault();
     var btn = $(event.target);
@@ -214,6 +240,7 @@ Template.admin.events({
       }
     })
   },
+
   'click #sickRageTest' : function (event) {
     event.preventDefault();
     var btn = $(event.target);
@@ -228,6 +255,7 @@ Template.admin.events({
       }
     })
   },
+
   'click #sonarrTest' : function (event) {
     event.preventDefault();
     var btn = $(event.target);
@@ -242,6 +270,22 @@ Template.admin.events({
       }
     })
   },
+
+  'click #radarrTest' : function (event) {
+      event.preventDefault();
+      var btn = $(event.target);
+      btn.html("Testing... <i class='fa fa-spin fa-refresh'></i>").removeClass().addClass("btn btn-info-outline");
+      Meteor.call("testRadarr", function (error, result) {
+          if (error || !result) {
+              btn.removeClass("btn-info-outline").addClass("btn-danger-outline");
+              btn.html("Error!");
+          } else {
+              btn.removeClass("btn-info-outline").addClass("btn-success-outline");
+              btn.html("Success!");
+          }
+      })
+  },
+
   'click #iftttTest' : function (event) {
     event.preventDefault();
     var btn = $(event.target);
@@ -257,6 +301,7 @@ Template.admin.events({
       }
     })
   },
+
   'click #pushbulletTest' : function (event) {
     event.preventDefault();
     var btn = $(event.target);
@@ -272,6 +317,7 @@ Template.admin.events({
       }
     })
   },
+
   'click #pushoverTest' : function (event) {
     event.preventDefault();
     var btn = $(event.target);
@@ -287,6 +333,7 @@ Template.admin.events({
       }
     })
   },
+
   'click #slackTest' : function (event) {
     event.preventDefault();
     var btn = $(event.target);
@@ -302,6 +349,7 @@ Template.admin.events({
       }
     })
   },
+
   'click #plexsubmit' : function (event) {
     event.preventDefault();
     $('#plexsubmit').html("Getting Token... <i class='fa fa-spin fa-refresh'></i>");
@@ -323,7 +371,7 @@ Template.admin.events({
     event.preventDefault();
     var btn = $(event.target);
     btn.html("Get Profiles <i class='fa fa-spin fa-refresh'></i>").removeClass().addClass("btn btn-info-outline");
-    Meteor.call("sonarrProfiles", function (error, result) {
+    Meteor.call('SonarrProfiles', function (error, result) {
       if (result.length) {
         template.sonarrProfiles.set(result);
         Bert.alert('Retrieved Sonarr Profiles!', "success");
@@ -332,5 +380,20 @@ Template.admin.events({
       }
       btn.html("Get Profiles");
     });
+  },
+
+  'click #getRadarrProfiles': function (event, template) {
+      event.preventDefault();
+      var btn = $(event.target);
+      btn.html("Get Profiles <i class='fa fa-spin fa-refresh'></i>").removeClass().addClass("btn btn-info-outline");
+      Meteor.call("RadarrProfiles", function (error, result) {
+          if (result.length) {
+              template.radarrProfiles.set(result);
+              Bert.alert('Retrieved Radarr Profiles!', "success");
+          } else {
+              Bert.alert('Unable to retrieve Radarr Profiles!', "danger");
+          }
+          btn.html("Get Profiles");
+      });
   }
 });

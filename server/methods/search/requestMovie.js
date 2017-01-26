@@ -1,3 +1,6 @@
+// TODO: Clean up the requestMovie method, much of the logic is duplicated throughout and can be simplified
+// TODO: Define what exactly gets returned by each clients "add movie" method for uniform, predictable returns
+
 Meteor.methods({
 	"requestMovie": function(request) {
 		check(request, Object);
@@ -6,7 +9,6 @@ Meteor.methods({
 
 		request["notification_type"] = "request";
 		request["media_type"] = "Movie";
-
 		// Check user request limit
 		var date = Date.now() - 6.048e8;
 		var weeklyLimit = Settings.find({}).fetch()[0].movieWeeklyLimit;
@@ -68,6 +70,39 @@ Meteor.methods({
 					return false;
 				}
 			}
+			if (settings.radarrENABLED) {
+				try {
+					var checkRadarr = Radarr.radarrMovieGet(request.id);
+					logger.log('debug', "Radarr Movie info: \n" + JSON.stringify(checkRadarr));
+					if (checkRadarr) {
+						try {
+							Movies.insert({
+								title: request.title,
+								id: request.id,
+								imdb: imdb,
+								released: request.release_date,
+								user: request.user,
+								downloaded: checkRadarr,
+								approval_status: 0,
+								poster_path: poster
+							});
+
+							if (status) {
+								return 'exists';
+							} else {
+								return true;
+							}
+
+						} catch (error) {
+							logger.error(error.message);
+							return false;
+						}
+					}
+				} catch (error) {
+					logger.error("Error checking Radarr:", error.message);
+					return false;
+				}
+			}
 
 			//If approval needed and user does not have override permission
 			if (settings.movieApproval
@@ -126,25 +161,36 @@ Meteor.methods({
 						} else {
 							return false;
 						}
-					} else {
-						try {
-							Movies.insert({
-								title: request.title,
-								id: request.id,
-								imdb: imdb,
-								released: request.release_date,
-								user: request.user,
-								downloaded: false,
-								approval_status: 1,
-								poster_path: poster
-							});
-							Meteor.call("sendNotifications", request);
-							return true;
-						} catch (error) {
-							logger.error(error.message);
-							return false;
+					} else if (settings.radarrENABLED) {
+
+                            try {
+                            	add = Radarr.radarrMovieAdd(request.id, request.title, settings.radarrQUALITYPROFILEID, settings.radarrROOTFOLDERPATH);
+							} catch (error) {
+								logger.error("Error adding to Radarr:", error.message);
+								return false;
+							}
+                        	if (add) {
+                            	try {
+									Movies.insert({
+										title: request.title,
+										id: request.id,
+										imdb: imdb,
+										released: request.release_date,
+										user: request.user,
+										downloaded: add.downloaded,
+										approval_status: 1,
+										poster_path: poster
+									});
+								} catch (error) {
+									logger.error(error.message);
+									return false;
+								}
+								Meteor.call("sendNotifications", request);
+								return true;
+                            } else {
+                                return false;
+                            }
 						}
 					}
 				}
-			}
 		});

@@ -36,6 +36,13 @@ Meteor.startup(function () {
 	Sonarr.api = settings.sonarrAPI;
 	Sonarr.directory = settings.sonarrDIRECTORY || "";
 
+    //set Radarr on start-up
+    Radarr.url = (settings.radarrSSL) ? "https://" + settings.radarrURL : "http://" + settings.radarrURL;
+    Radarr.port = settings.radarrPORT;
+    Radarr.api = settings.radarrAPI;
+    Radarr.directory = settings.radarrDIRECTORY || "";
+
+
 	Meteor.call("updateSeasons");
 	Meteor.call("updateApproved");
 
