@@ -74,7 +74,6 @@ Meteor.methods({
                 var RadarrRootFolderPath = settings.radarrROOTFOLDERPATH;
                 try {
                     if (Radarr.radarrMovieAdd(request.id, request.title, radarrQualityProfileId, RadarrRootFolderPath)) {
-                        console.log('Here she be');
                         Movies.update(request._id, {$set: {approval_status: 1, downloaded: false}});
                         return true;
                     } else {

@@ -80,7 +80,7 @@ Meteor.methods({
             result.imdb = response.data.media.info.imdb || "";
             result.tmdb_id = response.data.media.info.tmdb_id || "";
         } else {
-            result.status = "false";
+            result = false;
         }
 
         return result;
@@ -106,8 +106,7 @@ Meteor.methods({
             console.log(e);
             return false;
         }
-
-        return response.data.success;
+        return response.data;
     }
 });/**
  * Created by rickygrassmuck on 1/21/17.
