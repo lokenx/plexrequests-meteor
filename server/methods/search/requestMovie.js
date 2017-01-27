@@ -1,5 +1,6 @@
 // TODO: Clean up the requestMovie method, much of the logic is duplicated throughout and can be simplified
 // TODO: Define what exactly gets returned by each clients "add movie" method for uniform, predictable returns
+// #td-done: Fix issue with not validating if movie exists in radarr
 
 Meteor.methods({
 	"requestMovie": function(request) {
@@ -14,6 +15,27 @@ Meteor.methods({
 		var weeklyLimit = Settings.find({}).fetch()[0].movieWeeklyLimit;
 		var userRequestTotal = Movies.find({user:request.user, createdAt: {"$gte": date} }).fetch().length;
 
+		// One function to rule them all!!
+        // Or just to simplify adding movies to the DB
+        function insertMovie(request, imdbid, dlStatus, approvalStatus, poster) {
+            try {
+                Movies.insert({
+                    title: request.title,
+                    id: request.id,
+                    imdb: imdbid,
+                    released: request.release_date,
+                    user: request.user,
+                    downloaded: dlStatus,
+                    approval_status: approvalStatus,
+                    poster_path: poster
+                });
+            } catch (error) {
+                logger.error(error.message);
+                return false;
+            }
+            return true;
+        }
+
 		if (weeklyLimit !== 0
 			&& (userRequestTotal >= weeklyLimit)
 			&& !(Meteor.user())
@@ -24,7 +46,7 @@ Meteor.methods({
 			}
 
 			// Movie Request only requires IMDB_ID
-			//Get IMDB ID
+			// Get IMDB ID
 			try {
 				var imdb = TMDBSearch.externalIds(request.id, "movie");
 				if (imdb.indexOf("tt") === -1) {
@@ -37,32 +59,20 @@ Meteor.methods({
 			}
 
 			// Check if it already exists in CouchPotato
+			// If it exists, insert into our collection
 			if (settings.couchPotatoENABLED) {
 				try {
 					var checkCP = CouchPotato.mediaGet(imdb);
 					var status = checkCP.status == "done";
 					if (checkCP.status !== "false" && checkCP !== false) {
-						try {
-							Movies.insert({
-								title: request.title,
-								id: request.id,
-								imdb: imdb,
-								released: request.release_date,
-								user: request.user,
-								downloaded: status,
-								approval_status: 1,
-								poster_path: poster
-							});
+						insertMovie(request, imdb, checkCP.status, 1, poster);
+						// Using these values to set client states
+                        // TODO: Look into alternate method for this
 
-							if (status) {
-								return 'exists';
-							} else {
-								return true;
-							}
-
-						} catch (error) {
-							logger.error(error.message);
-							return false;
+						if (status) {
+                            return "exists";
+                        } else {
+							return false
 						}
 					}
 				} catch (error) {
@@ -70,33 +80,21 @@ Meteor.methods({
 					return false;
 				}
 			}
+
+			// Check if it exists in Radarr
+			// Same deal here, check and bail on fail else continue on
 			if (settings.radarrENABLED) {
 				try {
+					// MovieGet returns false if not found or the data from radarr as a JSON object if it exists
+					// So here, just check if it's false and if so we can continue on
 					var checkRadarr = Radarr.radarrMovieGet(request.id);
 					logger.log('debug', "Radarr Movie info: \n" + JSON.stringify(checkRadarr));
-					if (checkRadarr) {
-						try {
-							Movies.insert({
-								title: request.title,
-								id: request.id,
-								imdb: imdb,
-								released: request.release_date,
-								user: request.user,
-								downloaded: checkRadarr,
-								approval_status: 0,
-								poster_path: poster
-							});
-
-							if (status) {
-								return 'exists';
-							} else {
-								return true;
-							}
-
-						} catch (error) {
-							logger.error(error.message);
-							return false;
-						}
+					if (checkRadarr !== false) {
+						logger.log('info', "Movie already present in Radarr");
+						insertMovie(request, imdb, checkRadarr.downloaded, 1, poster);
+						// Using these values to set client states
+						// TODO: Look into alternate method for this
+						return "exists"
 					}
 				} catch (error) {
 					logger.error("Error checking Radarr:", error.message);
@@ -104,54 +102,85 @@ Meteor.methods({
 				}
 			}
 
-			//If approval needed and user does not have override permission
+			/*
+			 |	Making it here means the media did not exist in either client so we proceed to handling the request
+			 |	based on the users permissions.
+			*/
+
+			// If approval needed and user does not have override permission
 			if (settings.movieApproval
+
 				//Check if user has override permission
 				&& (!settings.plexAuthenticationENABLED || !Permissions.find({permUSER: request.user}).fetch()[0].permAPPROVAL)) {
 
 					// Approval required
-					// Add to DB but not CP
+					// Add to DB but do NOT send to client
 					try {
-						Movies.insert({
-							title: request.title,
-							id: request.id,
-							imdb: imdb,
-							released: request.release_date,
-							user: request.user,
-							downloaded: false,
-							approval_status: 0,
-							poster_path: poster
-						});
-					} catch (error) {
+
+						var result = insertMovie(request, imdb, false, 0, poster);
+
+                    } catch (error) {
+
 						logger.error(error.message);
+						return false;
+
+					}
+
+					if (result) {
+                        Meteor.call("sendNotifications", request);
+                        return true;
+					}
+                    else {
+						logger.error('Error sending notification');
 						return false;
 					}
 
-					Meteor.call("sendNotifications", request);
-					return true;
-				} else {
-					// No approval required
+			} else {
+				// No approval required
 
-					if (settings.couchPotatoENABLED) {
+				if (settings.couchPotatoENABLED) {
+
+					// Were sending the request to CP here
+					try {
+						var add = CouchPotato.movieAdd(imdb);
+					} catch (error) {
+						logger.error("Error adding to Couch Potato:", error.message);
+						return false;
+					}
+
+					// If the request was successful, insert the movie into our collection
+					try {
+						if (add) {
+							result = insertMovie(request, imdb, false, 1, poster);
+						}
+					} catch (error) {
+
+						logger.error(error.message);
+						return false;
+
+					}
+					// If we added to our collection successfully, were ready to tell the world!
+					if (result) {
+						Meteor.call("sendNotifications", request);
+						return true;
+					}
+					else {
+						logger.error('Error sending notification');
+						return false;
+					}
+
+				// Radarr's turn now
+				} else if (settings.radarrENABLED) {
+						// So, standard practice here, send the request to client then insert then notify.
 						try {
-							var add = CouchPotato.movieAdd(imdb);
+							add = Radarr.radarrMovieAdd(request.id, request.title, settings.radarrQUALITYPROFILEID, settings.radarrROOTFOLDERPATH);
 						} catch (error) {
-							logger.error("Error adding to Couch Potato:", error.message);
+							logger.error("Error adding to Radarr:", error.message);
 							return false;
 						}
-
 						if (add) {
 							try {
-								Movies.insert({
-									title: request.title,
-									id: request.id,
-									imdb: imdb,
-									released: request.release_date,
-									user: request.user,
-									downloaded: false,
-									approval_status: 1,
-									poster_path: poster
-								});
+                                insertMovie(request, imdb, false, 1, poster);
 							} catch (error) {
 								logger.error(error.message);
 								return false;
@@ -161,36 +190,7 @@ Meteor.methods({
 						} else {
 							return false;
 						}
-					} else if (settings.radarrENABLED) {
-
-                            try {
-                            	add = Radarr.radarrMovieAdd(request.id, request.title, settings.radarrQUALITYPROFILEID, settings.radarrROOTFOLDERPATH);
-							} catch (error) {
-								logger.error("Error adding to Radarr:", error.message);
-								return false;
-							}
-                        	if (add) {
-                            	try {
-									Movies.insert({
-										title: request.title,
-										id: request.id,
-										imdb: imdb,
-										released: request.release_date,
-										user: request.user,
-										downloaded: add.downloaded,
-										approval_status: 1,
-										poster_path: poster
-									});
-								} catch (error) {
-									logger.error(error.message);
-									return false;
-								}
-								Meteor.call("sendNotifications", request);
-								return true;
-                            } else {
-                                return false;
-                            }
-						}
 					}
 				}
+			}
 		});
