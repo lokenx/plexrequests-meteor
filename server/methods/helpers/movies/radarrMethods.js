@@ -1,5 +1,3 @@
-
-
 Meteor.methods({
 
         radarrProfilesGet: function() {
@@ -146,6 +144,5 @@ Meteor.methods({
                 return false
             }
         }
-
 });
 

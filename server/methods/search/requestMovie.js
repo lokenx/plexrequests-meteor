@@ -2,6 +2,7 @@
 // TODO: Define what exactly gets returned by each clients "add movie" method for uniform, predictable returns
 // #td-done: Fix issue with not validating if movie exists in radarr
 
+
 Meteor.methods({
 	"requestMovie": function(request) {
 		check(request, Object);
@@ -77,6 +78,39 @@ Meteor.methods({
 					}
 				} catch (error) {
 					logger.error("Error checking Couch Potato:", error.message);
+					return false;
+				}
+			}
+			if (settings.radarrENABLED) {
+				try {
+					var checkRadarr = Radarr.radarrMovieGet(request.id);
+					logger.log('debug', "Radarr Movie info: \n" + JSON.stringify(checkRadarr));
+					if (checkRadarr) {
+						try {
+							Movies.insert({
+								title: request.title,
+								id: request.id,
+								imdb: imdb,
+								released: request.release_date,
+								user: request.user,
+								downloaded: checkRadarr,
+								approval_status: 0,
+								poster_path: poster
+							});
+
+							if (status) {
+								return 'exists';
+							} else {
+								return true;
+							}
+
+						} catch (error) {
+							logger.error(error.message);
+							return false;
+						}
+					}
+				} catch (error) {
+					logger.error("Error checking Radarr:", error.message);
 					return false;
 				}
 			}
@@ -194,3 +228,4 @@ Meteor.methods({
 				}
 			}
 		});
+

@@ -106,7 +106,6 @@ Meteor.methods({
             console.log(e);
             return false;
         }
-
         return response.data;
     }
 });/**

@@ -85,6 +85,7 @@ Meteor.methods({
                 }
             } else {
 				Movies.update(request._id, {$set: {approval_status: 1}});
+                console.log('Here she be');
 				return true;
 			}
 
