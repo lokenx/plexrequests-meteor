@@ -4,32 +4,31 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-http
+http@1.2.10
 iron:router
 peerlibrary:xml2js
 u2622:persistent-session
 aslagle:reactive-table
 percolate:synced-cron
-standard-minifiers
-meteor-base
-mobile-experience
-mongo
+meteor-base@1.0.4
+mobile-experience@1.0.4
+mongo@1.1.14
 blaze-html-templates
-session
-jquery
-tracker
-logging
-reload
-random
-ejson
+session@1.1.7
+jquery@1.11.10
+tracker@1.1.1
+logging@1.1.16
+reload@1.1.11
+random@1.0.10
+ejson@1.0.13
 spacebars
-check
+check@1.2.4
 aldeed:collection2
 aldeed:simple-schema
 iron:core
 fortawesome:fontawesome
-accounts-password
-reactive-var
+accounts-password@1.3.3
+reactive-var@1.0.11
 dburles:collection-helpers
 alanning:roles
 momentjs:moment
@@ -48,3 +47,6 @@ lokenx:sickragewrapper
 # lokenx:sonarrwrapper
 meteorhacks:npm
 davidyaha:collection2-migrations
+standard-minifier-css
+standard-minifier-js
+shell-server
