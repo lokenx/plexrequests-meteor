@@ -24,10 +24,8 @@ Meteor.methods({
 				if (stat === undefined) {
 					stat = {downloaded: 0, total: 0};
 				}
-
-				if (request.seasons){
-					var seasonList = request.seasons;
-				};
+				// We made the season info request it's own function which dramatically sped up searching!
+				var seasonList = Meteor.call('tvseasons', request.id);
 
 				TV.insert({
 					title: request.title,
@@ -43,8 +41,8 @@ Meteor.methods({
 					seasons: seasonList.length
 				});
 			}
-			request["notification_type"] = "request"
-			request["media_type"] = "TV Series"
+			request["notification_type"] = "request";
+			request["media_type"] = "TV Series";
 			// Check if it already exists in SickRage or Sonarr
 			try {
 				if (settings.sickRageENABLED) {
