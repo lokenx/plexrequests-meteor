@@ -33,6 +33,7 @@
               <a href="#"><li class="list-group-item">Users</li></a>
             {{/if}}
             <a href="#"><li class="list-group-item">CouchPotato</li></a>
+            <a href="#"><li class="list-group-item">Radarr</li></a>
             <a href="#"><li class="list-group-item">SickRage</li></a>
             <a href="#"><li class="list-group-item">Sonarr</li></a>
             <a href="#"><li class="list-group-item">Notifications</li></a>
@@ -174,6 +175,43 @@
             <button type="submit" class="btn btn-primary-outline btn-block">Update Settings</button>
           {{/autoForm}}
         </div>
+
+        <div class="col-md-8 settings-pane" style="display: none;" id="SettingsRadarr">
+          {{#autoForm collection="Settings" doc=settings id="updateRadarrSettingsForm" type="update" resetOnSuccess="false"}}
+              {{> afQuickField name='radarrENABLED'}}
+              <p class="text-muted">Enabled Radarr for automated tv downloading.</p>
+              <br>
+              <p><button class="btn btn-secondary-outline" id="radarrTest">Test Radar server</button></p>
+              <p class="text-muted">Test your Radarr server. Remember to save your settings first!</p>
+              <br>
+              {{> afQuickField name='radarrURL'}}
+              <p class="text-muted">Enter the IP address or Hostname of your Radarr server. Do not include http:// or any slashes.</p>
+              <br>
+              {{> afQuickField name='radarrPORT'}}
+              <p class="text-muted">Enter the port used by Radarr. The default is 8989.</p>
+              <br>
+              {{> afQuickField name='radarrAPI' size="40"}}
+              <p class="text-muted">Enter your API from Radarr. It can be found in Sonarr Settings -> General.</p>
+              <br>
+              {{> afQuickField name='radarrDIRECTORY' size="40"}}
+              <p class="text-muted">Enter your sub-directory for Radarr if used. It should also include the slash (/) at the start.</p>
+              <br>
+              {{> afQuickField name='radarrSSL'}}
+              <p class="text-muted">Enabled if you use SSL on your Radarr server.</p>
+              <br>
+              {{> afQuickField name='radarrQUALITYPROFILEID' type='select' options=radarrProfiles firstOption=false}}
+              <button class="btn btn-info-outline" id="getRadarrProfiles">Get Profiles</button>
+              <br>
+              <br>
+              <p class="text-muted">Select a Radarr Quality Profile.</p>
+              <br>
+              {{> afQuickField name='radarrROOTFOLDERPATH'}}
+              <p class="text-muted">Enter the root folder where movies are saved. For example C:\Media\TV.</p>
+              <br>
+              <button type="submit" class="btn btn-primary-outline btn-block">Update Settings</button>
+          {{/autoForm}}
+        </div>
+
 
         <div class="col-md-8 settings-pane" style="display: none;" id="SettingsSickRage">
           {{#autoForm collection="Settings" doc=settings id="updateSickRageSettingsForm" type="update" resetOnSuccess="false"}}

@@ -18,6 +18,12 @@ Meteor.methods({
     Sonarr.port = settings.sonarrPORT;
     Sonarr.api = settings.sonarrAPI;
     Sonarr.directory = settings.sonarrDIRECTORY || "";
+
+    //set Radarr on start-up
+    Radarr.url = (settings.radarrSSL) ? "https://" + settings.radarrURL : "http://" + settings.radarrURL;
+    Radarr.port = settings.radarrPORT;
+    Radarr.api = settings.radarrAPI;
+    Radarr.directory = settings.radarrDIRECTORY || "";
   },
   userCount : function () {
     return Meteor.users.find({}).count();

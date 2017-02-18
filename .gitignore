@@ -3,4 +3,4 @@
 _site
 *.log
 /data
-.idea/
+*.idea/
