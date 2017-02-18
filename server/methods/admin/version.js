@@ -1,5 +1,4 @@
 Meteor.methods({
-
     getBranch: function () {
         return "dev-testing";
     },
