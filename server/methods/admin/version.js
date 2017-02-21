@@ -1,10 +1,10 @@
 Meteor.methods({
     getBranch: function () {
-        return "dev-testing";
+        return "master";
     },
 
     getVersion: function () {
-        return "1.20.0";
+        return "1.20.1";
     },
 
     checkForUpdate : function () {

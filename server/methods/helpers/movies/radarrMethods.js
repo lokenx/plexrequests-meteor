@@ -32,16 +32,17 @@ Meteor.methods({
             });
         },
 
-        radarrMovieAdd: function(tmdbId, title, qualityProfileId, rootFolderPath) {
+        radarrMovieAdd: function(request, settings) {
             try {
                 check(Radarr.url, String);
                 check(Radarr.port, Number);
                 check(Radarr.api, String);
 
-                check(title, String);
-                check(tmdbId, Number);
-                check(qualityProfileId, Number);
-                check(rootFolderPath, String);
+                check(request.id, Number);
+                check(request.title, String);
+                check(request.year, String);
+                check(settings.radarrQUALITYPROFILEID, Number);
+                check(settings.radarrROOTFOLDERPATH, String);
 
             } catch (e) {
                 console.log("Radarr Movie Post -> " + e.message);
@@ -52,15 +53,17 @@ Meteor.methods({
             process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
             var options = {"searchForMovie": 'true'};
+
             try {
                 var response = HTTP.post(Radarr.url + ":" + Radarr.port + Radarr.directory + "/api/movie", {
                     headers: {"X-Api-Key":Radarr.api},
                     data: {
-                        "title": title,
-                        "tmdbId": tmdbId,
-                        "qualityProfileId": qualityProfileId,
-                        "rootFolderPath": rootFolderPath,
-                        "titleSlug": title,
+                        "title": request.title,
+                        "tmdbId":request.id,
+                        "year": request.year,
+                        "qualityProfileId": settings.radarrQUALITYPROFILEID,
+                        "rootFolderPath": settings.radarrROOTFOLDERPATH,
+                        "titleSlug": request.title,
                         "monitored": 'true',
                         "images": [],
                         "addOptions": options

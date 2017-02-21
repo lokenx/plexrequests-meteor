@@ -173,7 +173,7 @@ Meteor.methods({
 				} else if (settings.radarrENABLED) {
 						// So, standard practice here, send the request to client then insert then notify.
 						try {
-							add = Radarr.radarrMovieAdd(request.id, request.title, settings.radarrQUALITYPROFILEID, settings.radarrROOTFOLDERPATH);
+							add = Radarr.radarrMovieAdd(request, settings);
 						} catch (error) {
 							logger.error("Error adding to Radarr:", error.message);
 							return false;
