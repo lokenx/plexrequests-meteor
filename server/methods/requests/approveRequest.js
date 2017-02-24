@@ -73,7 +73,7 @@ Meteor.methods({
                 var radarrQualityProfileId = settings.radarrQUALITYPROFILEID;
                 var RadarrRootFolderPath = settings.radarrROOTFOLDERPATH;
                 try {
-                    if (Radarr.radarrMovieAdd(request.id, request.title, radarrQualityProfileId, RadarrRootFolderPath)) {
+                    if (Radarr.radarrMovieAdd(request, settings)) {
                         Movies.update(request._id, {$set: {approval_status: 1, downloaded: false}});
                         return true;
                     } else {
