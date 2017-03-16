@@ -23,6 +23,7 @@ Meteor.methods({
                     title: request.title,
                     id: request.id,
                     imdb: imdbid,
+                    year: request.year, 
                     released: request.release_date,
                     user: request.user,
                     downloaded: dlStatus,
