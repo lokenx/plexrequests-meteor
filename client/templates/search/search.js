@@ -130,6 +130,50 @@ Template.search.events({
       })
     }
   },
+  'click #inTheaters': function(event, template) {
+    var searchterm = 'discover';
+    var searchType = template.searchType.get();
+
+    if (searchterm.length > 1) {
+      template.searching.set(true);
+      template.error.set(false);
+      Meteor.call("searchContent", searchterm, searchType, function (error, result) {
+        if (error) {
+          console.error(error);
+          template.searching.set(false);
+          template.error.set(true);
+        } else if (result.length) {
+          template.searching.set(false);
+          template.results.set(result);
+        } else {
+          template.searching.set(false);
+          template.error.set(true);
+        }
+      });
+    }
+  },
+  'click #upcoming': function(event, template) {    
+    var searchterm = 'upcoming';
+    var searchType = template.searchType.get();
+
+    if (searchterm.length > 1) {
+      template.searching.set(true);
+      template.error.set(false);
+      Meteor.call("searchContent", searchterm, searchType, function (error, result) {
+        if (error) {
+          console.error(error);
+          template.searching.set(false);
+          template.error.set(true);
+        } else if (result.length) {
+          template.searching.set(false);
+          template.results.set(result);
+        } else {
+          template.searching.set(false);
+          template.error.set(true);
+        }
+      });
+    }
+  },
   'click .go-to-top': function () {
     $('body').animate({ scrollTop: 0 }, "slow")
   }
