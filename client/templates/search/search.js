@@ -58,6 +58,13 @@ Template.search.events({
     template.searchType.set(type);
     template.results.set([]);
     $('#search-input').trigger('keyup');
+
+    var btnGroup = $('#search-form .input-group-addon > .btn-group');
+    if (btnGroup.css('visibility') == 'hidden') {
+      btnGroup.css('visibility', 'visible');
+    } else {
+      btnGroup.css('visibility', 'hidden');
+    }
   },
   'keyup  #search-input': _.throttle(function (event, template) {
     var searchterm = $(event.target).val().trim();
@@ -130,8 +137,8 @@ Template.search.events({
       })
     }
   },
-  'click #inTheaters': function(event, template) {
-    var searchterm = 'discover';
+  'click #now_playing': function(event, template) {
+    var searchterm = 'now_playing';
     var searchType = template.searchType.get();
 
     if (searchterm.length > 1) {

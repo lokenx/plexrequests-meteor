@@ -249,6 +249,7 @@ Template.requests.events({
   'click .search-selector a' : function (event, template) {
     var type = $(event.target).text();
     template.searchType.set(type);
+    
   },
   'click .approve-item' : function (event, template) {
     var title = this.title;
