@@ -19,6 +19,9 @@ $error-color: #DB524B;
 @import "loading";
 @import "layout";
 
+.container {
+	padding-bottom: 70px;
+}
 // Reference Bootstrap grid sizes
 //
 //   Extra small screen / phone
