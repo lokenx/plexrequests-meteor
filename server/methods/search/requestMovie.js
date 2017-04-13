@@ -23,7 +23,7 @@ Meteor.methods({
                     title: request.title,
                     id: request.id,
                     imdb: imdbid,
-                    year: request.year, 
+                    year: request.year,
                     released: request.release_date,
                     user: request.user,
                     downloaded: dlStatus,
@@ -64,9 +64,9 @@ Meteor.methods({
 			if (settings.couchPotatoENABLED) {
 				try {
 					var checkCP = CouchPotato.mediaGet(imdb);
-					var status = checkCP.status == "done";
+					var status = checkCP.status === "done";
 					if (checkCP.status !== "false" && checkCP !== false) {
-						insertMovie(request, imdb, checkCP.status, 1, poster);
+						insertMovie(request, imdb, status, 1, poster);
 						// Using these values to set client states
                         // TODO: Look into alternate method for this
 
@@ -138,7 +138,6 @@ Meteor.methods({
 
 			} else {
 				// No approval required
-
 				if (settings.couchPotatoENABLED) {
 
 					// Were sending the request to CP here
@@ -191,6 +190,17 @@ Meteor.methods({
 						} else {
 							return false;
 						}
+					} else {
+						// Nothing enabled but still add to DB
+
+						try {
+							insertMovie(request, imdb, false, 1, poster);
+						} catch (error) {
+							logger.error(error.message);
+							return false;
+						}
+						Meteor.call("sendNotifications", request);
+						return true;
 					}
 				}
 			}
