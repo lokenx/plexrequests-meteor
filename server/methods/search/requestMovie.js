@@ -16,26 +16,26 @@ Meteor.methods({
 		var userRequestTotal = Movies.find({user:request.user, createdAt: {"$gte": date} }).fetch().length;
 
 		// One function to rule them all!!
-        // Or just to simplify adding movies to the DB
-        function insertMovie(request, imdbid, dlStatus, approvalStatus, poster) {
-            try {
-                Movies.insert({
-                    title: request.title,
-                    id: request.id,
-                    imdb: imdbid,
-                    year: request.year,
-                    released: request.release_date,
-                    user: request.user,
-                    downloaded: dlStatus,
-                    approval_status: approvalStatus,
-                    poster_path: poster
-                });
-            } catch (error) {
-                logger.error(error.message);
-                return false;
-            }
-            return true;
-        }
+		// Or just to simplify adding movies to the DB
+		function insertMovie(request, imdbid, dlStatus, approvalStatus, poster) {
+			try {
+				Movies.insert({
+					title: request.title,
+					id: request.id,
+					imdb: imdbid,
+					year: request.year,
+					released: request.release_date,
+					user: request.user,
+					downloaded: dlStatus,
+					approval_status: approvalStatus,
+					poster_path: poster
+				});
+			} catch (error) {
+				logger.error(error.message);
+				return false;
+			}
+			return true;
+		}
 
 		if (weeklyLimit !== 0
 			&& (userRequestTotal >= weeklyLimit)
@@ -68,11 +68,11 @@ Meteor.methods({
 					if (checkCP.status !== "false" && checkCP !== false) {
 						insertMovie(request, imdb, status, 1, poster);
 						// Using these values to set client states
-                        // TODO: Look into alternate method for this
+						// TODO: Look into alternate method for this
 
 						if (status) {
-                            return "exists";
-                        } else {
+							return "exists";
+						} else {
 							return false
 						}
 					}
@@ -104,8 +104,8 @@ Meteor.methods({
 			}
 
 			/*
-			 |	Making it here means the media did not exist in either client so we proceed to handling the request
-			 |	based on the users permissions.
+			|	Making it here means the media did not exist in either client so we proceed to handling the request
+			|	based on the users permissions.
 			*/
 
 			// If approval needed and user does not have override permission
@@ -120,46 +120,13 @@ Meteor.methods({
 
 						var result = insertMovie(request, imdb, false, 0, poster);
 
-                    } catch (error) {
-
-						logger.error(error.message);
-						return false;
-
-					}
-
-					if (result) {
-                        Meteor.call("sendNotifications", request);
-                        return true;
-					}
-                    else {
-						logger.error('Error sending notification');
-						return false;
-					}
-
-			} else {
-				// No approval required
-				if (settings.couchPotatoENABLED) {
-
-					// Were sending the request to CP here
-					try {
-						var add = CouchPotato.movieAdd(imdb);
-					} catch (error) {
-						logger.error("Error adding to Couch Potato:", error.message);
-						return false;
-					}
-
-					// If the request was successful, insert the movie into our collection
-					try {
-						if (add) {
-							result = insertMovie(request, imdb, false, 1, poster);
-						}
 					} catch (error) {
 
 						logger.error(error.message);
 						return false;
 
 					}
-					// If we added to our collection successfully, were ready to tell the world!
+
 					if (result) {
 						Meteor.call("sendNotifications", request);
 						return true;
@@ -169,8 +136,41 @@ Meteor.methods({
 						return false;
 					}
 
-				// Radarr's turn now
-				} else if (settings.radarrENABLED) {
+				} else {
+					// No approval required
+					if (settings.couchPotatoENABLED) {
+
+						// Were sending the request to CP here
+						try {
+							var add = CouchPotato.movieAdd(imdb);
+						} catch (error) {
+							logger.error("Error adding to Couch Potato:", error.message);
+							return false;
+						}
+
+						// If the request was successful, insert the movie into our collection
+						try {
+							if (add) {
+								result = insertMovie(request, imdb, false, 1, poster);
+							}
+						} catch (error) {
+
+							logger.error(error.message);
+							return false;
+
+						}
+						// If we added to our collection successfully, were ready to tell the world!
+						if (result) {
+							Meteor.call("sendNotifications", request);
+							return true;
+						}
+						else {
+							logger.error('Error sending notification');
+							return false;
+						}
+
+						// Radarr's turn now
+					} else if (settings.radarrENABLED) {
 						// So, standard practice here, send the request to client then insert then notify.
 						try {
 							add = Radarr.radarrMovieAdd(request, settings);
@@ -180,7 +180,7 @@ Meteor.methods({
 						}
 						if (add) {
 							try {
-                                insertMovie(request, imdb, false, 1, poster);
+								insertMovie(request, imdb, false, 1, poster);
 							} catch (error) {
 								logger.error(error.message);
 								return false;
