@@ -8,8 +8,8 @@ Meteor.methods({
     var movies = Movies.find({downloaded: false, approval_status: 1});
 
     movies.forEach(function (movie) {
-        var result = Radarr.mediaGet(movie.imdb);
-        var status = result.status == "done";
+        var result = Radarr.radarrMovieStatus(movie.id);
+        var status = result.status == true;
 
         if (result.status === "false") {
             // Not in Radarr anymore
@@ -18,5 +18,6 @@ Meteor.methods({
             Movies.update(movie, {$set: {downloaded: status}});
         }
     });
+    return true;
   }
 });
