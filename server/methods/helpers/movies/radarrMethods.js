@@ -182,7 +182,7 @@ Meteor.methods({
         });
 
         try {
-            var response = HTTP.call("GET", Radarr.url + ":" + Radarr.port + Radarr.directory + "/api/movie/" + radarrId, {headers: {"X-Api-Key":Radarr.api}, timeout: 50000} );
+            var response = HTTP.call("GET", Radarr.url + ":" + Radarr.port + Radarr.directory + "/api/movie/" + radarrId, {headers: {"X-Api-Key":Radarr.api}, timeout: 15000} );
         } catch (e) {
             console.log(e);
             return false;
