@@ -9,6 +9,7 @@ SyncedCron.add({
         },
     job: function() {
         Meteor.call('updateCP');
+        Meteor.call('updateRadarr');
         Meteor.call('updateSickRage');
         Meteor.call('updateSonarr');
         logger.info('Updating download status');
