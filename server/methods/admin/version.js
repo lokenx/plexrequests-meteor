@@ -1,6 +1,6 @@
 Meteor.methods({
     getBranch: function () {
-        return "master";
+        return "dev-testing";
     },
 
     getVersion: function () {
