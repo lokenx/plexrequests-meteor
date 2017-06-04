@@ -13,11 +13,9 @@
                 <li class="{{isActiveRoute 'requests.page'}} nav-item"><a href="{{pathFor 'requests.page'}}" class="nav-link">Requests</a></li>
                 {{#unless plexAuth}}
                 <li class="nav-item"><a href="{{pathFor 'home'}}" class="nav-link">Login</a></li>
-                {{/unless}} {{/if}} 
-                {{#if auth}}
+                {{/unless}} {{/if}} {{#if auth}}
                 <li class="{{isActiveRoute regex='support.page'}} nav-item"><a href="{{pathFor 'support.page'}}" class="nav-link">Support Us</a></li>
-                {{/if}}
-                {{#if plexAuth}}
+                {{/if}} {{#if plexAuth}}
                 <li class="nav-item"><a href="#" id="logoutUser" class="nav-link">Logout</a></li>
                 {{/if}}
             </ul>
@@ -71,8 +69,9 @@
     </div>
     <div class="navbar navbar-bottom navbar-inverse">
         <div class="text-center">
-        <p>Want Access? We kindly ask that you support our service</p>
-        <a href="/support">Click here to subscribe</a>
+            <p>{{#if plexAuth }}We kindly ask that you support our service, <a href="/support">Click here to subscribe</a>
+            {{else}} Want Access? <a href="/support">Click here to subscribe</a> {{/if}}
+            </p>
         </div>
     </div>
 </template>
