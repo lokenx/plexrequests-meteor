@@ -1,81 +1,74 @@
 <template name="layout">
-  <nav class="navbar navbar-dark" style="background-color: #000;">
-    <button class="navbar-toggler hidden-md-up" type="button" data-toggle="collapse" data-target="#navBarItems">
-      &#9776;
-    </button>
-    <div class="collapse navbar-toggleable-sm" id="navBarItems">
-      <a class="navbar-brand" href="{{pathFor 'home'}}"><i class="fa fa-play-circle logo-icon"></i> Plex Requests</a>
-      <a class="navbar-brand admin-link" href="{{pathFor 'admin.page'}}">Admin</a>
-      <ul class="nav navbar-nav pull-right">
-        {{#if plexAuth}}
-          <li class="{{isActiveRoute regex='search.page'}} nav-item"><a href="{{pathFor 'search.page'}}" class="nav-link">Search</a></li>
-        {{/if}}
-        {{#if auth}}
-          <li class="{{isActiveRoute 'requests.page'}} nav-item"><a href="{{pathFor 'requests.page'}}" class="nav-link">Requests</a></li>
-          {{#unless plexAuth}}
-            <li class="nav-item"><a href="{{pathFor 'home'}}" class="nav-link">Login</a></li>
-          {{/unless}}
-        {{/if}}
-        {{#if plexAuth}}
-          <li class="nav-item"><a href="#" id="logoutUser" class="nav-link">Logout</a></li>
-        {{/if}}
-      </ul>
+    <nav class="navbar navbar-dark" style="background-color: #000;">
+        <button class="navbar-toggler hidden-md-up" type="button" data-toggle="collapse" data-target="#navBarItems">
+            &#9776;
+        </button>
+        <div class="collapse navbar-toggleable-sm" id="navBarItems">
+            <a class="navbar-brand" href="{{pathFor 'home'}}"><i class="fa fa-play-circle logo-icon"></i> Plex Requests</a>
+            <a class="navbar-brand admin-link" href="{{pathFor 'admin.page'}}">Admin</a>
+            <ul class="nav navbar-nav pull-right">
+                {{#if plexAuth}}
+                <li class="{{isActiveRoute regex='search.page'}} nav-item"><a href="{{pathFor 'search.page'}}" class="nav-link">Search</a></li>
+                {{/if}} {{#if auth}}
+                <li class="{{isActiveRoute 'requests.page'}} nav-item"><a href="{{pathFor 'requests.page'}}" class="nav-link">Requests</a></li>
+                {{#unless plexAuth}}
+                <li class="nav-item"><a href="{{pathFor 'home'}}" class="nav-link">Login</a></li>
+                {{/unless}} {{/if}} {{#if plexAuth}}
+                <li class="nav-item"><a href="#" id="logoutUser" class="nav-link">Logout</a></li>
+                {{/if}}
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <!-- Search bar and results list -->
+        {{> yield}}
+        <div class="modal fade" id="first-run-modal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            <span class="sr-only">Close</span>
+                        </button>
+                        <h4 class="modal-title">Welcome to Plex Requests</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            <strong>Thank you for installing and using Plex Requests!</strong>
+                            <br>
+                            <br> Before you get started, please head over to the <a href="{{pathFor 'admin.page'}}">admin page</a> and create an account. You can then configure things and get going. Some highlights of the new version can be seen below:
+                            <br>
+                            <br>
+                            <ul>
+                                <li>
+                                    Approval system for requests
+                                </li>
+                                <li>
+                                    Enabled or disable search categories
+                                </li>
+                                <li>
+                                    Users can report issues with content
+                                </li>
+                                <li>
+                                    Improved visual style
+                                </li>
+                            </ul>
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary-outline" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
     </div>
-  </nav>
-
-  <div class="container">
-
-    <!-- Search bar and results list -->
-      {{> yield}}
-
-    <div class="modal fade" id="first-run-modal">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-              <span class="sr-only">Close</span>
-            </button>
-            <h4 class="modal-title">Welcome to Plex Requests</h4>
-          </div>
-          <div class="modal-body">
-            <p>
-              <strong>Thank you for installing and using Plex Requests!</strong>
-              <br>
-              <br>
-              Before you get started, please head over to the <a href="{{pathFor 'admin.page'}}">admin page</a> and create an account.
-              You can then configure things and get going. Some highlights of the new version can be seen below:
-              <br>
-              <br>
-              <ul>
-                <li>
-                  Approval system for requests
-                </li>
-                <li>
-                  Enabled or disable search categories
-                </li>
-                <li>
-                  Users can report issues with content
-                </li>
-                <li>
-                  Improved visual style
-                </li>
-              </ul>
-            </p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary-outline" data-dismiss="modal">Close</button>
-          </div>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-</div>
-  <div class="navbar navbar-bottom navbar-inverse">
-    <div class="text-center">
-      <p>If you want to support me in making our plex setup Harder Better Faster Stronger
-        <a href="https://www.paypal.me/AlexGriggs/1"><img src="buymecoffee.png" alt="Buy Me a Coffee" height="75" width="150" align="center" data-canonical-src="buymecoffee.png" style="max-width:100%;"></a> &nbsp;&nbsp; or &nbsp;&nbsp;
-        <a href="https://www.paypal.me/AlexGriggs/3"><img src="buymebeer.png" alt="Buy Me a Beer" height="50" width="100" align="center" data-canonical-src="buymebeer.png" style="max-width:100%;"></a>
-      </p>
+    <div class="navbar navbar-bottom navbar-inverse">
+        <div class="text-center">
+        We kindly ask that you support our service,
+        <a href="/support">Click here to subscribe</a>
+        </div>
     </div>
-  </div>
 </template>
