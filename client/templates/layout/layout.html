@@ -14,7 +14,7 @@
                 {{#unless plexAuth}}
                 <li class="nav-item"><a href="{{pathFor 'home'}}" class="nav-link">Login</a></li>
                 {{/unless}} {{/if}} 
-                {{#if plexAuth}}
+                {{#if auth}}
                 <li class="{{isActiveRoute regex='support.page'}} nav-item"><a href="{{pathFor 'support.page'}}" class="nav-link">Support Us</a></li>
                 {{/if}}
                 {{#if plexAuth}}
@@ -71,7 +71,7 @@
     </div>
     <div class="navbar navbar-bottom navbar-inverse">
         <div class="text-center">
-        We kindly ask that you support our service,
+        <p>Want Access? We kindly ask that you support our service</p>
         <a href="/support">Click here to subscribe</a>
         </div>
     </div>
