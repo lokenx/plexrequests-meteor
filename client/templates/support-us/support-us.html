@@ -1,0 +1,176 @@
+<template name="support">
+    <div class="support">
+        <div class="row">
+            <div class="col-md-offset-1 col-md-10">
+                <h1>Support Us!</h1>
+                <!-- <p>Below you can see yours and all other support, as well as their download and approval status.</p>
+                {{#if currentUser}} {{/if}} -->
+            </div>
+        </div>
+        <!-- Selector between Movies/TV/etc  and Sort/Filter Options-->
+        <div class="row selectors">
+            <div class="col-md-offset-1 col-md-8">
+                <!--  <ul class="search-selector">
+          {{#each searchOptions}}
+            <li><a href="#" class="{{#if activeSearch}}active-search{{/if}}">{{this}}</a></li>
+          {{/each}}
+        </ul> -->
+            </div>
+            <!-- <div class="col-md-2">
+        <div class="filter-sort">
+          <div class="btn-group">
+            <button type="button" class="btn btn-sm btn-secondary-outline dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Filter / Sort
+            </button>
+            <div class="dropdown-menu">
+              {{#each filterOptions}}
+                <a class="dropdown-item filter-select" href="#">{{{activeFilter}}}{{filter}}</a>
+              {{/each}}
+              <div class="dropdown-divider"></div>
+              {{#each sortOptions}}
+                <a class="dropdown-item sort-select" href="#">{{{activeSort}}}{{sort}}</a>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+      </div> -->
+        </div>
+        <!-- Deny model -->
+        <div class="modal fade" id="denyModel" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title" id="denyModelTitle">Deny</h4>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" value="" id="denyModelID" />
+                        <input type="text" class="form-control" id="denyModelReason" placeholder="Reason for denying request">
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-default btn-danger-outline deny-confirm">Deny</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- List of content -->
+        <!-- {{#each support}}
+    <div class="request-item">
+        <div class="row">
+          <div class="col-md-2 col-md-offset-1">
+
+        {{#if searchType 'TV Shows'}}
+            <img src="{{poster_path}}" class="img-responsive" alt="Poster">
+          {{/if}}
+        {{#if searchType 'Movies'}}
+            <img src="{{poster_path}}" class="img-responsive" alt="Poster">
+          {{/if}}
+                </div>
+          <div class="col-md-5">
+            <ul class="request-details-list">
+            {{#if searchType 'Movies'}}
+            <h4><li><a href="http://www.imdb.com/title/{{imdb}}" target="_blank"><strong>{{title}}</strong></a></li></h4>
+            {{/if}}
+            {{#if searchType 'TV Shows'}}
+            <h4> <li><a href="{{link}}" target="_blank"><strong>{{title}} ({{year}})</strong></a></li></h4>    
+            <li><strong>Seasons:</strong> {{season_count}}</li>
+            <li><strong>Type:</strong> {{episodes}}</li>
+            {{/if}}
+            <li><strong>Release date:</strong> {{release_date}}</li>
+              <li>{{{approval_status}}}</li>
+              <li><strong>Available:</strong> {{{download_status}}}</li>
+              {{{requesting_user}}}
+            <li><strong>Requested date:</strong> {{created_at}}</li>
+              <li><strong>Issues:</strong> {{issues}}</li>
+            </ul>
+          </div>
+          <div class="col-md-3 request-details-buttons">
+            {{#if currentUser}}
+            <p>
+              {{#if approved_show}}
+                <button class="btn btn-sm btn-success-outline approve-item">Approve</button>    
+              {{/if}}
+              {{#if denied_show}}
+                <button class="btn btn-sm btn-danger-outline deny-item" data-toggle="model" data-target="#denyModel">Deny</button>
+              {{/if}}
+            </p>
+              <p><button class="btn btn-sm btn-danger-outline delete-item">Delete</button></p>
+              <p><button class="btn btn-sm btn-info-outline clear-issues">Clear Issues</button></p>
+            {{#if searchType 'Movies'}}
+              {{#if available}}
+                <p><button class="btn btn-sm btn-secondary-outline mark-unavailable">Mark Unavailable</button></p>
+              {{else}}
+                <p><button class="btn btn-sm btn-success-outline mark-available">Mark Available</button></p>
+              {{/if}}
+              {{/if}}
+            {{/if}}
+            <p>
+            <div class="btn-group">
+              <button type="button" class="btn btn-sm btn-warning-outline dropdown-toggle report-item" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Report Issue <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a href="#" class="issue-select dropdown-item" data="Wrong Audio">Wrong audio</a></li>
+                <li><a href="#" class="issue-select dropdown-item" data="No Subtitles">No subtitles</a></li>
+                <li><a href="#" class="issue-select dropdown-item" data="Wrong Content">Wrong content</a></li>
+                <li><a href="#" class="issue-select dropdown-item" data="Playback issues">Playback issues</a></li>
+              </ul>
+            </div>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+          <div class="item-divider"></div>
+        </div>
+      </div>
+    {{/each}} -->
+        <div class="text-center">
+            <p>If you want to support me in making our plex setup, Harder Better Faster Stronger
+            </p>
+            <a href="https://www.paypal.me/AlexGriggs/1"><img src="buymecoffee.png" alt="Buy Me a Coffee" height="75" width="150" align="center" data-canonical-src="buymecoffee.png" style="max-width:100%;"></a> &nbsp;&nbsp; or &nbsp;&nbsp;
+            <a href="https://www.paypal.me/AlexGriggs/3"><img src="buymebeer.png" alt="Buy Me a Beer" height="50" width="100" align="center" data-canonical-src="buymebeer.png" style="max-width:100%;"></a>&nbsp;&nbsp;
+            <br/>
+        </div>
+        <br /><br />
+        <div class="text-center">
+        <p>What to really help out? Subscribe below!</p>
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+            <input type="hidden" name="cmd" value="_s-xclick">
+            <input type="hidden" name="hosted_button_id" value="UMRKXKNMHJMCQ">
+            <table style="margin: 8px auto;">
+                <tr>
+                    <td>
+                        <input type="hidden" name="on0" value="">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <select name="os0" style="color:#000 !important; background: white">
+                            <option value="Option 1">Option 1 : $5.00 CAD - monthly</option>
+                            <option value="Option 2">Option 2 : $50.00 CAD - yearly</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <input type="hidden" name="currency_code" value="CAD">
+            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_subscribeCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+            <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+        </form>
+        </div>
+        <!-- Go to top button -->
+        <div class="go-to-top">
+            <i class="fa fa-arrow-up"></i>
+        </div>
+        <!-- Load more event trigger -->
+        <div class="load-more" style="display:none;"></div>
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                {{#unless Template.subscriptionsReady}}
+                <h3 class="loading">Loading... <i class="fa fa-spin fa-refresh"></i></h3> {{/unless}}
+            </div>
+        </div>
+    </div>
+</template>
