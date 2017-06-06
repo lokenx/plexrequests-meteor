@@ -1,1 +1,1 @@
-FROM meteorhacks/meteord:onbuild
+FROM kadirahq/meteord:onbuild
