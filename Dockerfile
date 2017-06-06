@@ -1,1 +1,1 @@
-FROM jaaaco/meteor-build:1.4.4.2
+FROM jeroenpeeters/meteord:1.2.1
