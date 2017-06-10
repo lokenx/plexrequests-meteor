@@ -10,8 +10,12 @@ Meteor.methods({
     check(TMDBSearch.api, String);
     check(TMDBSearch.language, String);
 
-    try {
-      var response = HTTP.call("GET", "https://api.themoviedb.org/3/search/" + type + "?api_key=" + TMDBSearch.api + "&language=" + TMDBSearch.language + "&query=" + search, {});
+    try {      
+      if (search === 'upcoming' || search === 'now_playing') {
+        var response = HTTP.call("GET", "https://api.themoviedb.org/3/movie/" + search + "?api_key=" + TMDBSearch.api + "&language=" + TMDBSearch.language, {});
+      } else {
+        var response = HTTP.call("GET", "https://api.themoviedb.org/3/search/" + type + "?api_key=" + TMDBSearch.api + "&language=" + TMDBSearch.language + "&query=" + search, {});
+      }
     }
     catch (error) {
       console.log(error);
