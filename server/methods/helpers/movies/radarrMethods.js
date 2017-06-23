@@ -41,12 +41,14 @@ Meteor.methods({
                 check(request.id, Number);
                 check(request.title, String);
                 check(request.year, String);
+
                 check(settings.radarrQUALITYPROFILEID, Number);
                 check(settings.radarrROOTFOLDERPATH, String);
+                check(settings.radarrMINAVAILABILITY, String);
 
             } catch (e) {
                 console.log("Radarr Movie Post -> " + e.message);
-            return false;
+                return false;
             }
             //Workaround to allow self-signed SSL certs, however can be dangerous and should not be used in production, looking into better way
             //But it's possible there's nothing much I can do
@@ -55,6 +57,7 @@ Meteor.methods({
             var options = {"searchForMovie": 'true'};
 
             try {
+
                 var response = HTTP.post(Radarr.url + ":" + Radarr.port + Radarr.directory + "/api/movie", {
                     headers: {"X-Api-Key":Radarr.api},
                     data: {
@@ -63,6 +66,7 @@ Meteor.methods({
                         "year": request.year,
                         "qualityProfileId": settings.radarrQUALITYPROFILEID,
                         "rootFolderPath": settings.radarrROOTFOLDERPATH,
+                        "minimumAvailability": settings.radarrMINAVAILABILITY,
                         "titleSlug": request.title,
                         "monitored": 'true',
                         "images": [],
