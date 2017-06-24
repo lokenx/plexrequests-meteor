@@ -4,7 +4,7 @@ Meteor.methods({
     },
 
     getVersion: function () {
-        return "1.20.5";
+        return "1.20.6";
     },
 
     checkForUpdate : function () {
