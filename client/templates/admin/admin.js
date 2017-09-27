@@ -163,18 +163,24 @@ Template.admin.onCreated(function(){
     Meteor.call('getBranch', function (error, result) {
         if (result) {
             instance.branch.set(result)
+        } else {
+            logger.debug(error)
         }
     })
 
     Meteor.call('getVersion', function (error, result) {
         if (result) {
             instance.version.set(result)
+        } else {
+            logger.debug(error)
         }
     })
 
     Meteor.call('checkForUpdate', function (error, result) {
         if (result) {
             instance.update.set(result)
+        } else {
+            logger.debug(error)
         }
     })
 
