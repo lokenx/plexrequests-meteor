@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "winston": {
-      "version": "2.1.0",
+      "version": "2.3.1",
       "dependencies": {
         "async": {
           "version": "1.0.0"
@@ -18,11 +18,8 @@
         "isstream": {
           "version": "0.1.2"
         },
-        "pkginfo": {
-          "version": "0.3.1"
-        },
         "stack-trace": {
-          "version": "0.0.9"
+          "version": "0.0.10"
         }
       }
     }
