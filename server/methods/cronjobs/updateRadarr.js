@@ -7,28 +7,12 @@ Meteor.methods({
 
         var movies = Movies.find({downloaded: false, approval_status: 1})
 
-<<<<<<< HEAD
-    movies.forEach(function (movie) {
-        var result = Radarr.radarrMovieStatus(movie.id);
-        var status = result.status == true;
-=======
         movies.forEach(function (movie) {
             var result = Radarr.radarrMovieStatus(movie.id)
             var status = result.status === true
->>>>>>> pr/4
 
             if (result.status === 'false') {
             // Not in Radarr anymore
-<<<<<<< HEAD
-            Movies.update(movie, {$set: {approved: false}});
-        } else {
-            Movies.update(movie, {$set: {downloaded: status}});
-        }
-    });
-    return true;
-  }
-});
-=======
                 Movies.update(movie, {$set: {approved: false}})
             } else {
                 Movies.update(movie, {$set: {downloaded: status}})
@@ -37,4 +21,3 @@ Meteor.methods({
         return true
     }
 })
->>>>>>> pr/4
