@@ -1,0 +1,57 @@
+env:
+  browser: true
+  es6: true
+  node: true
+  meteor: true
+
+extends: 
+    - eslint:recommended
+    - plugin:meteor/recommended
+
+plugins:
+    - meteor
+
+parserOptions:
+  sourceType: module
+
+rules:
+  indent:
+    - error
+    - 4
+  linebreak-style:
+    - error
+    - unix
+  quotes:
+    - error
+    - single
+  semi: [2, 'never']
+  no-unexpected-multiline: 2
+  no-throw-literal: 0
+
+  # eslint-plugin-meteor
+  meteor/no-session: [0] # allow Session
+  meteor/prefer-session-equals: [2] # prefer Session.equals instead
+
+globals:
+  logger: true
+  TV: true
+  Settings: true
+  Movie: true
+  AdminConfig: true
+  Async: true
+  AutoForm: true
+  Bert: true
+  CouchPotato: true
+  media: true
+  moment: true
+  Movies: true
+  Radarr: true
+  request: true
+  SickRage: true
+  SimpleSchema: true
+  Sonarr: true
+  SyncedCron: true
+  tmdbId: true
+  TMDBSearch: true
+  xml2js: true
+  Permissions: true

@@ -1,0 +1,11 @@
+{
+  "name": "plexrequests-meteor",
+  "private": true,
+  "devDependencies": {
+    "eslint": "^4.7.2",
+    "eslint-plugin-meteor": "^4.1.4"
+  },
+  "dependencies": {
+    "winston": "^2.3.1"
+  }
+}

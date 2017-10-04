@@ -22,6 +22,30 @@
 
 #search-form {
   padding-top: 1rem;
+
+  .input-group-addon {
+    .btn-group {
+      position: absolute;
+      right: 45px;
+      z-index: 3;
+      top: 5px;
+      box-shadow: 0 0 0;
+    }
+
+    .dropdown-menu {
+      a {
+        display: block;
+        padding: 3px 20px;
+        clear: both;
+        line-height: 1.5;
+      }
+    }
+  }
+
+  .open > .btn-primary-outline.dropdown-toggle {
+    background-color: #FF8A01;
+    border-color: #FF8A01;
+  }
 }
 
 .search-selector {

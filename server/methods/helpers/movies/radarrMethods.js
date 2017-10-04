@@ -1,204 +1,201 @@
-
-
 Meteor.methods({
     radarrProfilesGet: function() {
         try {
-            check(Radarr.url, String);
-            check(Radarr.port, Number);
-            check(Radarr.api, String);
+            check(Radarr.url, String)
+            check(Radarr.port, Number)
+            check(Radarr.api, String)
         } catch (e) {
-            console.log("Radarr Profiles Get -> " + e.message);
-            return [];
+            logger.debug('Radarr Profiles Get -> ' + e.message)
+            return []
         }
 
         //Workaround to allow self-signed SSL certs, however can be dangerous and should not be used in production, looking into better way
         //But it's possible there's nothing much I can do
-        process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+        process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 
-        var allProfiles;
+        var allProfiles
         try {
-            allProfiles = HTTP.get(Radarr.url + ":" + Radarr.port + Radarr.directory + "/api/profile", {headers: {"X-Api-Key":Radarr.api}, timeout: 15000} );
+            allProfiles = HTTP.get(Radarr.url + ':' + Radarr.port + Radarr.directory + '/api/profile', {headers: {'X-Api-Key':Radarr.api}, timeout: 15000} )
         } catch (e) {
-            console.log("Radarr Profiles Get -> " + e.message);
-            return [];
+            logger.debug('Radarr Profiles Get -> ' + e.message)
+            return []
         }
 
         return _.map(allProfiles.data, function (profile) {
             return {
                 id: profile.id,
                 name: profile.name
-            };
-        });
+            }
+        })
     },
 
     radarrMovieAdd: function(request, settings) {
         try {
-            check(Radarr.url, String);
-            check(Radarr.port, Number);
-            check(Radarr.api, String);
+            check(Radarr.url, String)
+            check(Radarr.port, Number)
+            check(Radarr.api, String)
 
-            check(request.id, Number);
-            check(request.title, String);
-            check(request.year, String);
-            check(settings.radarrQUALITYPROFILEID, Number);
-            check(settings.radarrROOTFOLDERPATH, String);
+            check(request.id, Number)
+            check(request.title, String)
+            check(request.year, String)
+            check(settings.radarrQUALITYPROFILEID, Number)
+            check(settings.radarrROOTFOLDERPATH, String)
 
         } catch (e) {
-            console.log("Radarr Movie Post -> " + e.message);
-        return false;
+            logger.debug('Radarr Movie Post -> ' + e.message)
+            return false
         }
         //Workaround to allow self-signed SSL certs, however can be dangerous and should not be used in production, looking into better way
         //But it's possible there's nothing much I can do
-        process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+        process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 
-        var options = {"searchForMovie": 'true'};
+        var options = {'searchForMovie': 'true'}
 
         try {
-            var response = HTTP.post(Radarr.url + ":" + Radarr.port + Radarr.directory + "/api/movie", {
-                headers: {"X-Api-Key":Radarr.api},
+            var response = HTTP.post(Radarr.url + ':' + Radarr.port + Radarr.directory + '/api/movie', {
+                headers: {'X-Api-Key':Radarr.api},
                 data: {
-                    "title": request.title,
-                    "tmdbId":request.id,
-                    "year": request.year,
-                    "qualityProfileId": settings.radarrQUALITYPROFILEID,
-                    "rootFolderPath": settings.radarrROOTFOLDERPATH,
-                    "titleSlug": request.title,
-                    "monitored": 'true',
-                    "images": [],
-                    "addOptions": options
+                    'title': request.title,
+                    'tmdbId':request.id,
+                    'year': request.year,
+                    'qualityProfileId': settings.radarrQUALITYPROFILEID,
+                    'rootFolderPath': settings.radarrROOTFOLDERPATH,
+                    'titleSlug': request.title,
+                    'monitored': 'true',
+                    'images': [],
+                    'addOptions': options
                 },
                 timeout: 15000
-                }
-            );
+            })
 
         } catch (e) {
-            console.log("Radarr Movie Post -> " + e.message);
-            return false;
+            logger.debug('Radarr Movie Post -> ' + e.message)
+            return false
         }
-            logger.log('debug', 'Radarr add response: \n' + JSON.stringify(response.data));
-            return response.data
+        logger.log('debug', 'Radarr add response: \n' + JSON.stringify(response.data))
+        return response.data
     },
 
     radarrSystemStatus: function() {
         try {
-            check(Radarr.url, String);
-            check(Radarr.port, Number);
-            check(Radarr.api, String);
+            check(Radarr.url, String)
+            check(Radarr.port, Number)
+            check(Radarr.api, String)
         } catch (e) {
-            console.log("Radarr Status -> " + e.message);
-            return false;
+            logger.debug('Radarr Status -> ' + e.message)
+            return false
         }
 
         //Workaround to allow self-signed SSL certs, however can be dangerous and should not be used in production, looking into better way
         //But it's possible there's nothing much I can do
-        process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+        process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 
         try {
-            var response = HTTP.get(Radarr.url + ":" + Radarr.port + Radarr.directory + "/api/system/status", {headers: {"X-Api-Key":Radarr.api}, timeout: 15000} );
+            var response = HTTP.get(Radarr.url + ':' + Radarr.port + Radarr.directory + '/api/system/status', {headers: {'X-Api-Key':Radarr.api}, timeout: 15000} )
         } catch (e) {
-            console.log("Radarr Status -> " + e.message);
-            return false;
+            logger.debug('Radarr Status -> ' + e.message)
+            return false
         }
 
 
-        return !!(response.data);
+        return !!(response.data)
     },
 
     radarrMovieGet: function(tmdbId) {
         /*
-            Returns JSON object of movie data if found
-            else:
-              false if not
-        */
+         Returns JSON object of movie data if found
+         else:
+         false if not
+         */
         try {
-            check(Radarr.url, String);
-            check(Radarr.port, Number);
-            check(Radarr.api, String);
-            check(tmdbId, Number);
+            check(Radarr.url, String)
+            check(Radarr.port, Number)
+            check(Radarr.api, String)
+            check(tmdbId, Number)
         } catch (e) {
-            console.log("Radarr Movie Get -> " + e.message);
-            return false;
+            logger.debug('Radarr Movie Get -> ' + e.message)
+            return false
         }
 
         //Workaround to allow self-signed SSL certs, however can be dangerous and should not be used in production, looking into better way
         //But it's possible there's nothing much I can do
-        process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+        process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 
         try {
-            var allMovies = HTTP.get(Radarr.url + ":" + Radarr.port + Radarr.directory + "/api/movie", {headers: {"X-Api-Key":Radarr.api}, timeout: 15000} );
+            var allMovies = HTTP.get(Radarr.url + ':' + Radarr.port + Radarr.directory + '/api/movie', {headers: {'X-Api-Key':Radarr.api}, timeout: 15000} )
         } catch (e) {
-            console.log("Radarr Movie Get -> " + e.message);
-            return false;
+            logger.debug('Radarr Movie Get -> ' + e.message)
+            return false
         }
 
-        var parsed = JSON.parse(allMovies.content);
-        var data;
+        var parsed = JSON.parse(allMovies.content)
+        var data
         _.each(parsed, function (movie) {
             if (movie.tmdbId === tmdbId) {
-                logger.log('debug', 'Movie found: \n' + movie.title);
-                data = movie;
+                logger.log('debug', 'Movie found: \n' + movie.title)
+                data = movie
             }
-        });
+        })
 
         if (data) {
-            logger.log('debug', 'Returned data');
-            return data;
+            logger.log('debug', 'Returned data')
+            return data
         } else {
-            logger.log('debug', 'Returned false');
+            logger.log('debug', 'Returned false')
             return false
         }
     },
 
     radarrMovieStatus: function(tmdbId) {
         try {
-            check(Radarr.url, String);
-            check(Radarr.port, Number);
-            check(Radarr.api, String);
-            check(tmdbId, Number);
+            check(Radarr.url, String)
+            check(Radarr.port, Number)
+            check(Radarr.api, String)
+            check(tmdbId, Number)
         } catch (e) {
-            console.log("Radarr Movie Get -> " + e.message);
-            return false;
+            logger.debug('Radarr Movie Get -> ' + e.message)
+            return false
         }
 
-        var result = {};
+        var result = {}
 
         //Workaround to allow self-signed SSL certs, however can be dangerous and should not be used in production, looking into better way
         //But it's possible there's nothing much I can do
-        process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+        process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 
         try {
-            var allMovies = HTTP.get(Radarr.url + ":" + Radarr.port + Radarr.directory + "/api/movie", {headers: {"X-Api-Key":Radarr.api}, timeout: 15000} );
+            var allMovies = HTTP.get(Radarr.url + ':' + Radarr.port + Radarr.directory + '/api/movie', {headers: {'X-Api-Key':Radarr.api}, timeout: 15000} )
         } catch (e) {
-            console.log("Radarr Movie Get -> " + e.message);
-            return false;
+            logger.debug('Radarr Movie Get -> ' + e.message)
+            return false
         }
 
-        var radarrId;
+        var radarrId
 
         _.each(allMovies.data, function (movie) {
             if (movie.tmdbId === tmdbId) {
-                radarrId = movie.id;
+                radarrId = movie.id
             }
-        });
+        })
 
         try {
-            var response = HTTP.call("GET", Radarr.url + ":" + Radarr.port + Radarr.directory + "/api/movie/" + radarrId, {headers: {"X-Api-Key":Radarr.api}, timeout: 50000} );
+            var response = HTTP.call('GET', Radarr.url + ':' + Radarr.port + Radarr.directory + '/api/movie/' + radarrId, {headers: {'X-Api-Key':Radarr.api}, timeout: 15000} )
         } catch (e) {
-            console.log(e);
-            return false;
+            logger.debug(e)
+            return false
         }
 
         if (response.data.downloaded) {
-            result.status = response.data.downloaded;
-            result.title = response.data.title;
-            result.year = response.data.year || "";
-            result.id = response.data.id;
-            result.imdb = response.data.imdbId || "";
-            result.tmdb_id = response.data.tmdbId || "";
+            result.status = response.data.downloaded
+            result.title = response.data.title
+            result.year = response.data.year || ''
+            result.id = response.data.id
+            result.imdb = response.data.imdbId || ''
+            result.tmdb_id = response.data.tmdbId || ''
         } else {
-            result = false;
+            result = false
         }
 
-        return result;
+        return result
     }
-});
+})

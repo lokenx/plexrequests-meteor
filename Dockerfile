@@ -1,1 +1,1 @@
-FROM meteorhacks/meteord:onbuild
+FROM jeroenpeeters/meteord:1.2.1

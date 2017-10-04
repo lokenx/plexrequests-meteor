@@ -1,18 +1,25 @@
 Meteor.methods({
-  'updateRadarr' : function () {
-    if (!(Settings.find({}).fetch()[0].radarrENABLED)) {
-      // logger.error("Can't update CouchPotato status if it's not enabled");
-      return false;
-    }
+    'updateRadarr' : function () {
+        if (!(Settings.find({}).fetch()[0].radarrENABLED)) {
+            // logger.error("Can't update CouchPotato status if it's not enabled");
+            return false
+        }
 
-    var movies = Movies.find({downloaded: false, approval_status: 1});
+        var movies = Movies.find({downloaded: false, approval_status: 1})
 
+<<<<<<< HEAD
     movies.forEach(function (movie) {
         var result = Radarr.radarrMovieStatus(movie.id);
         var status = result.status == true;
+=======
+        movies.forEach(function (movie) {
+            var result = Radarr.radarrMovieStatus(movie.id)
+            var status = result.status === true
+>>>>>>> pr/4
 
-        if (result.status === "false") {
+            if (result.status === 'false') {
             // Not in Radarr anymore
+<<<<<<< HEAD
             Movies.update(movie, {$set: {approved: false}});
         } else {
             Movies.update(movie, {$set: {downloaded: status}});
@@ -21,3 +28,13 @@ Meteor.methods({
     return true;
   }
 });
+=======
+                Movies.update(movie, {$set: {approved: false}})
+            } else {
+                Movies.update(movie, {$set: {downloaded: status}})
+            }
+        })
+        return true
+    }
+})
+>>>>>>> pr/4

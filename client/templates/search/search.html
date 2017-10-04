@@ -8,8 +8,17 @@
         <form class="form-inline" id="search-form">
           <div class="form-group">
             <div class="input-group">
-              <input type="text" class="form-control" id="search-input" size="35" placeholder="Search" {{searchDisabled}} autofocus="">
+              <input type="text" class="form-control" id="search-input" size="55" placeholder="Search" {{searchDisabled}} autofocus="">
               <div class="input-group-addon">
+                <div class="btn-group">
+                  <a href="#" class="btn btn-sm btn-primary-outline dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    Suggestions
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a id="upcoming" href="#">Coming Soon</a></li>
+                    <li><a id="now_playing" href="#">In Theaters</a></li>
+                  </ul>
+                </div>
                 {{#if searching}}
                   <i class="fa fa-spinner fa-pulse"></i>
                 {{else}}
