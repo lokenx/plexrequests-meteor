@@ -1,7 +1,7 @@
 Meteor.methods({
     setIFTTTVARS: function(settings, request) {
         check(settings, Object)
-        check(request, Object)
+        check(request, String)
         var tags = {
             title: '<title>',
             type: '<type>',
