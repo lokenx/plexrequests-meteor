@@ -74,8 +74,8 @@ Meteor.methods({
    didn't need to be called for every search result. This may change when granular season
    selection gets implemented but either way it should be it's own function call.
   */
-    // tvseasons:function(id){
-    //     var seasonSearch = HTTP.get('http://api.tvmaze.com/shows' + '/' + id + '/seasons', {})
-    //     return seasonSearch.data
-    // }
+    tvseasons:function(id){
+        var seasonSearch = HTTP.get('http://api.tvmaze.com/shows' + '/' + id + '/seasons', {})
+        return seasonSearch.data
+    }
 })
