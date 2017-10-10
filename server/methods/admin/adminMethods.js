@@ -137,7 +137,7 @@ Meteor.methods({
     
     testIFTTT: function () {
         var settings = Settings.find().fetch()[0]
-        console.log('Testing IFTTT Maker...')
+        logger.info('Testing IFTTT Maker...')
         try {
             var req = {test: true}
             Meteor.call('sendIFTTT', settings, req)
