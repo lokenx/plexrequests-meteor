@@ -13,7 +13,7 @@ Meteor.methods({
         }
 
 
-        if (request === 'test') {
+        if (request.test === true) {
             var req = {
                 title: 'A Test Movie',
                 media_type: 'Movie',
@@ -67,6 +67,10 @@ Meteor.methods({
     },
 
     setTestVARS: function (t, b, request) {
+        check(t, String)
+        check(b, String)
+        check(request, Object)
+
         var tags = {
             title: '<title>',
             m_type: '<type>',
@@ -76,7 +80,7 @@ Meteor.methods({
             link: '<link>'
         }
 
-        if (request === 'test') {
+        if (request.test === true) {
             var req = {
                 title: 'A Test Movie',
                 media_type: 'Movie',
@@ -135,7 +139,8 @@ Meteor.methods({
         var settings = Settings.find().fetch()[0]
         console.log('Testing IFTTT Maker...')
         try {
-            Meteor.call('sendIFTTT', settings, request='test')
+            var req = {test: true}
+            Meteor.call('sendIFTTT', settings, req)
             logger.info('IFTTT Maker tested successfully')
         } catch (error) {
             throw new Meteor.Error('401', error)
@@ -146,7 +151,8 @@ Meteor.methods({
     testPushbulllet: function () {
         var settings = Settings.find().fetch()[0]
         try {
-            var message = Meteor.call('setTestVARS', settings.customNotificationTITLE, settings.customNotificationTEXT, request = 'test')
+            var req = {test: true}
+            var message = Meteor.call('setTestVARS', settings.customNotificationTITLE, settings.customNotificationTEXT, req)
             Meteor.call('sendPushbulletNotification', settings, message.title, message.body)
             logger.info('Pushbullet tested successfully')
         } catch (error) {

@@ -6,7 +6,8 @@ Meteor.methods({
     getVersion: function () {
         // parse the version.txt file and return the contents
         var fs = Npm.require('fs')
-        return 'v' + fs.readFileSync(process.env.PWD + '/version.txt','utf8')
+        var version = fs.readFileSync(process.env.PWD + '/version.txt','utf8')
+        return 'v' + version.replace(/\n/,'')
     },
 
     checkForUpdate : function () {
