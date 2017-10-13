@@ -31,48 +31,53 @@ Meteor.methods({
 
     radarrMovieAdd: function(request, settings) {
         try {
-            check(Radarr.url, String)
-            check(Radarr.port, Number)
-            check(Radarr.api, String)
+            check(Radarr.url, String);
+            check(Radarr.port, Number);
+            check(Radarr.api, String);
 
-            check(request.id, Number)
-            check(request.title, String)
-            check(request.year, String)
-            check(settings.radarrQUALITYPROFILEID, Number)
-            check(settings.radarrROOTFOLDERPATH, String)
+            check(request.id, Number);
+            check(request.title, String);
+            check(request.year, String);
+
+            check(settings.radarrQUALITYPROFILEID, Number);
+            check(settings.radarrROOTFOLDERPATH, String);
+            check(settings.radarrMINAVAILABILITY, String);
 
         } catch (e) {
-            logger.debug('Radarr Movie Post -> ' + e.message)
-            return false
+            console.log("Radarr Movie Post -> " + e.message);
+            return false;
         }
         //Workaround to allow self-signed SSL certs, however can be dangerous and should not be used in production, looking into better way
         //But it's possible there's nothing much I can do
-        process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
+        process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
-        var options = {'searchForMovie': 'true'}
+        var options = {"searchForMovie": 'true'};
 
         try {
-            var response = HTTP.post(Radarr.url + ':' + Radarr.port + Radarr.directory + '/api/movie', {
-                headers: {'X-Api-Key':Radarr.api},
-                data: {
-                    'title': request.title,
-                    'tmdbId':request.id,
-                    'year': request.year,
-                    'qualityProfileId': settings.radarrQUALITYPROFILEID,
-                    'rootFolderPath': settings.radarrROOTFOLDERPATH,
-                    'titleSlug': request.title,
-                    'monitored': 'true',
-                    'images': [],
-                    'addOptions': options
-                },
-                timeout: 15000
-            })
+
+            var response = HTTP.post(Radarr.url + ":" + Radarr.port + Radarr.directory + "/api/movie", {
+                    headers: {"X-Api-Key":Radarr.api},
+                    data: {
+                        "title": request.title,
+                        "tmdbId":request.id,
+                        "year": request.year,
+                        "qualityProfileId": settings.radarrQUALITYPROFILEID,
+                        "rootFolderPath": settings.radarrROOTFOLDERPATH,
+                        "minimumAvailability": settings.radarrMINAVAILABILITY,
+                        "titleSlug": request.title,
+                        "monitored": 'true',
+                        "images": [],
+                        "addOptions": options
+                    },
+                    timeout: 15000
+                }
+            );
 
         } catch (e) {
-            logger.debug('Radarr Movie Post -> ' + e.message)
-            return false
+            console.log("Radarr Movie Post -> " + e.message);
+            return false;
         }
-        logger.log('debug', 'Radarr add response: \n' + JSON.stringify(response.data))
+        logger.log('debug', 'Radarr add response: \n' + JSON.stringify(response.data));
         return response.data
     },
 

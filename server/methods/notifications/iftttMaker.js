@@ -7,10 +7,7 @@ Meteor.methods({
         var channel_tag = settings.iftttMAKERCHANNEL
         var values = Meteor.call('setIFTTTVARS', settings, request)
         var ifttt_url = 'https://maker.ifttt.com/trigger/' + channel_tag + '/with/key/' + access_token
-    
-        console.log(ifttt_url)
 
-        console.log(values)
         var data = { 
             data: {
                 'value1': values.value1,
