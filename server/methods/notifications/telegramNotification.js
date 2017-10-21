@@ -13,7 +13,8 @@ Meteor.methods({
                 telegram_url,
                 {
                     params: {
-                        text: text
+                        text: text,
+                        parse_mode: "Markdown"
                     },
                     timeout: 4000
                 }

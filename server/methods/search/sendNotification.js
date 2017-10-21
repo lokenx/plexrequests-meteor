@@ -22,7 +22,7 @@ Meteor.methods({
                 Meteor.call('sendSlackNotification', settings, message.title + ':\n' + message.body)
             }
             if (settings.telegramENABLED) {
-                Meteor.call('sendTelegramNotification', settings, message.title + ':\n' + message.body)
+                Meteor.call('sendTelegramNotification', settings, '*' + message.title + '*:\n' + message.body)
             }
             if (settings.iftttENABLED){
                 try {
