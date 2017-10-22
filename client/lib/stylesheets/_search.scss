@@ -40,6 +40,13 @@
         line-height: 1.5;
       }
     }
+
+    .fa-search {
+      color: white;
+    }
+
+    background-color: #FF8A01;
+    border-color: #FF8A01;
   }
 
   .open > .btn-primary-outline.dropdown-toggle {
@@ -49,12 +56,12 @@
 }
 
 .search-selector {
-	list-style: none;
+  list-style: none;
   padding-left: 0;
   font-weight: 300;
 
   li {
-  	display: inline;
+    display: inline;
     padding-right: 2.5rem;
   }
 
@@ -84,4 +91,8 @@
 
 #search-results {
   padding-top: 2rem;
+}
+
+#search-input {
+  border-color: white;
 }
