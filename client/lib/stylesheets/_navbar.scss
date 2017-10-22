@@ -54,5 +54,11 @@
 
 // Toggle
 .navbar-toggler {
-  color: rgba(255, 255, 255, .7);
+  color: white;
+  position: absolute;
+  right: -12px;
+}
+
+#navbar-header {
+  padding: 0;
 }
