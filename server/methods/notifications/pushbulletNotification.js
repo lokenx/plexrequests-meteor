@@ -8,37 +8,60 @@ Meteor.methods({
 
         var access_token = settings.pushbulletAPI
         var channel_tag = settings.pushbulletChannel
+        var device_id = settings.pushbulletDeviceID
         var pushbullet_url = 'https://api.pushbullet.com/v2/pushes'
         var payload = {}
 
         //////// Create JSON object of http.post Parameters
         if(typeof channel_tag === 'undefined' ) {
-            payload = {
-                headers: {
-                    'Access-Token': access_token
-                },
-                params: {
-                    type: 'note',
-                    title: title,
-                    body: body
-                },
-                timeout: 4000
+            if(typeof device_id === 'undefined') {
+                payload = {
+                    headers: {
+                        'Access-Token': access_token
+                    },
+                    params: {
+                        type: 'note',
+                        title: title,
+                        body: body
+                    },
+                    timeout: 4000
+                }
+                logger.debug("Pushbullet: Empty Channel and Device ID")
+            } else {
+                payload = {
+                    headers: {
+                        'Access-Token': access_token
+                    },
+                    params: {
+                        type: 'note',
+                        title: title,
+                        body: body,
+                        device_iden: device_id
+                    },
+                    timeout: 4000
+                }
             }
-            logger.debug('Empty Channel')
+            logger.debug('Pushbullet: Empty Channel')
         } else {
-            payload = {
-                headers: {
-                    'Access-Token': access_token
-                },
-                params: {
-                    type: 'note',
-                    title: title,
-                    body: body,
-                    channel_tag: channel_tag
-                },
-                timeout: 4000
+            if(typeof device_id === 'undefined') {
+                payload = {
+                    headers: {
+                        'Access-Token': access_token
+                    },
+                    params: {
+                        type: 'note',
+                        title: title,
+                        body: body,
+                        channel_tag: channel_tag
+                    },
+                    timeout: 4000
+                }
+                logger.debug("Pushbullet: Empty Device ID")
+            } else {
+                var err = 'Please only use either a channel or a device ID in Pushbullet!'
+                logger.error('Pushbullet notification error: ' + err)
+                throw err
             }
-            logger.debug('channel_tag: ' + channel_tag)
         }
 
         ////// Attempt to send notification with HTTP.post()
