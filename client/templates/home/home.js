@@ -31,6 +31,7 @@ Template.home.events({
             } else {
                 Session.setAuth('auth', 'true')
                 Session.setAuth('user', plexUsername)
+                Session.setAuth('fulluser', plexUsername)
                 Bert.alert( 'Successfully logged in!', 'success')
                 Router.go('search.page')
             }
