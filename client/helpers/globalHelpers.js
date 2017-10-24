@@ -1,5 +1,5 @@
 Template.registerHelper('plexUser', function () {
-    return Session.get('user')
+    return Session.get('fulluser')
 })
 
 Template.registerHelper('auth', function () {

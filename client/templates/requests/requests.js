@@ -204,7 +204,7 @@ Template.requests.helpers({
     },
     'requesting_user' : function () {
         if (Meteor.user()) {
-            return '<li><strong>User:</strong> ' + this.user + '</li>'
+            return '<li><strong>User:</strong> ' + this.user.split(":")[0] + '</li>'
         }
     },
     'season_count' : function () {
@@ -322,7 +322,7 @@ Template.requests.events({
     'click .issue-select' : function (event, template) {
         var issue = event.target.text
         var request = this
-        request.user = Session.get('user')
+        request.user = Session.get('fulluser')
         Meteor.call('addIssue', request, issue, function(error, result) {
             if (error || !(result)) {
                 //Alert error

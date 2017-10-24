@@ -21,7 +21,9 @@ Meteor.methods({
             if (settings.slackENABLED) {
                 Meteor.call('sendSlackNotification', settings, message.title + ':\n' + message.body)
             }
-
+            if (settings.telegramENABLED) {
+                Meteor.call('sendTelegramNotification', settings, '*' + message.title + '*:\n' + message.body)
+            }
             if (settings.iftttENABLED){
                 try {
                     Meteor.call('sendIFTTT', settings, request)
@@ -50,6 +52,13 @@ Meteor.methods({
             if (settings.slackENABLED) {
                 Meteor.call(
                     'sendSlackNotification',
+                    settings,
+                    request.title + ' Issues: ' + request.issues.toString() + ' (' + request.user + ')'
+                )
+            }
+            if (settings.telegramENABLED) {
+                Meteor.call(
+                    'sendTelegramNotification',
                     settings,
                     request.title + ' Issues: ' + request.issues.toString() + ' (' + request.user + ')'
                 )

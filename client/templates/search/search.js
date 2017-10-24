@@ -96,7 +96,7 @@ Template.search.events({
         var tvBtn = $(event.target).parent().parent().children().first()
         var requestTitle = this.title
         var request = this
-        request.user = Session.get('user')
+        request.user = Session.get('fulluser')
         request.episodes = $(event.target).attr('value') === 'true'
 
         if (this.media_type === 'movie') {
