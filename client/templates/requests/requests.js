@@ -204,7 +204,7 @@ Template.requests.helpers({
     },
     'requesting_user' : function () {
         if (Meteor.user()) {
-            return '<li><strong>User:</strong> ' + this.user + '</li>'
+            return '<li><strong>User:</strong> ' + this.user.split(":")[0] + '</li>'
         }
     },
     'season_count' : function () {
