@@ -34,11 +34,11 @@ Meteor.methods({
 
         //If it is in the array, will return the username, if not, returns false
         function isInArray(value, array) {
-          for(var i = 0; i < friendsList.length; i++) {
-            var user = friendsList[i].split(":");
+          for(var i = 0; i < array.length; i++) {
+            var user = array[i].split(":");
             for(var j = 0; j < user.length; j++) {
               if(value.toLowerCase() === user[j].toLowerCase()) {
-                return user[0];
+                return array[i];
               }
             }
           }

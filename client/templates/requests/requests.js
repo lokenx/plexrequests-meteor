@@ -322,7 +322,7 @@ Template.requests.events({
     'click .issue-select' : function (event, template) {
         var issue = event.target.text
         var request = this
-        request.user = Session.get('user')
+        request.user = Session.get('fulluser')
         Meteor.call('addIssue', request, issue, function(error, result) {
             if (error || !(result)) {
                 //Alert error

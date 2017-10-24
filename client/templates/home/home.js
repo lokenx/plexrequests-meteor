@@ -18,7 +18,8 @@ Template.home.events({
                         Session.setAuth('auth', 'false')
                     } else if (typeof result === 'string') {
                         Session.setAuth('auth', 'true')
-                        Session.setAuth('user', result)
+                        Session.setAuth('user', result.split(":")[0])
+                        Session.setAuth('fulluser', result)
                         Bert.alert( 'Successfully logged in!', 'success')
                         Router.go('search.page')
                     } else if (result === false) {
