@@ -3,7 +3,7 @@ Template.home.events({
 
         $('#submitButton').html('<i class="fa fa-cog fa-spin  fa-fw"></i>  Signing In')
 
-        var plexUsername = $('#plex-username').val().toLowerCase()
+        var plexUsername = $('#plex-username').val()
         var plexPassword = $('#plex-password').val() || ''
 
         Meteor.call('checkPlexAuthentication', function(error, data) {
@@ -16,9 +16,9 @@ Template.home.events({
                         Bert.alert( error.message, 'danger')
                         $('#submitButton').html('<i class="fa fa-user fa-fw"></i> Sign In')
                         Session.setAuth('auth', 'false')
-                    } else if (result === true) {
+                    } else if (typeof result === 'string') {
                         Session.setAuth('auth', 'true')
-                        Session.setAuth('user', plexUsername)
+                        Session.setAuth('user', result)
                         Bert.alert( 'Successfully logged in!', 'success')
                         Router.go('search.page')
                     } else if (result === false) {

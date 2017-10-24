@@ -122,6 +122,10 @@ Template.admin.helpers({
             }
         })
     },
+    username: function () {
+        var user = this.permUSER;
+        return user.substring(0,user.indexOf(":"));
+    },
     version: function () {
         return Template.instance().version.get()
     },

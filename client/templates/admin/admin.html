@@ -126,7 +126,7 @@
               {{#autoForm collection="Permissions" doc=this id=makeUniqueID type="update" resetOnSuccess="false"}}
                 <div class="row">
                   <div class="col-md-3" align="center">
-                    <p>{{{permUSER}}}</p>
+                    <p>{{username}}</p>
                   </div>
                   <div class="col-md-3">
                     {{> afQuickField name='permAPPROVAL'}}
@@ -321,6 +321,7 @@
             <br>
             {{> afQuickField name='pushbulletChannel' size="40"}}
             <p class="text-muted"> Push Notifications to a channel (optional). Must be the owner of the channel, click <a href="https://www.pushbullet.com/my-channel"> here </a> to create a new channel. <i>Cannot be used in conjunction with a device ID.</i></p>
+            <br>
             {{> afQuickField name='pushbulletDeviceID' size="40"}}
             <p class="text-muted"> Push Notifications to a specific device (optional). <i>Cannot be used in conjunction with a channel tag.</i></p>
             <br>

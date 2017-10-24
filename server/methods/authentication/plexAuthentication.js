@@ -11,9 +11,9 @@ Meteor.methods({
             // If passwords are required check full login
 
             function authHeaderVal(username, password) {
-		    var authString = username + ':' + password
-		    var buffer = new Buffer(authString.toString(), 'binary')
-		    return 'Basic ' + buffer.toString('base64')
+      		    var authString = username + ':' + password
+      		    var buffer = new Buffer(authString.toString(), 'binary')
+      		    return 'Basic ' + buffer.toString('base64')
             }
 
             var headers = {
@@ -32,21 +32,26 @@ Meteor.methods({
             }
         }
 
+        //If it is in the array, will return the username, if not, returns false
         function isInArray(value, array) {
-		  return array.indexOf(value) > -1
+          for(var i = 0; i < friendsList.length; i++) {
+            var user = friendsList[i].split(":");
+            for(var j = 0; j < user.length; j++) {
+              if(value.toLowerCase() === user[j].toLowerCase()) {
+                return user[0];
+              }
+            }
+          }
+          return false
         }
 
-        function checkArray(value, array) {
-		  return array.indexOf(value)
-        }
-		
         //Update users in permissions
         Meteor.call('permissionsUpdateUsers')
 		
         //Get friendslist and bannedlist
         var friendsList = Meteor.call('getPlexFriendlist')
         var bannedList = Permissions.find({permBANNED: true}, {fields: {_id: 0, permUSER: 1, permBANNED: 1}}).fetch()
-		
+
         //Remove banned users
         for(var i = 0; i < bannedList.length; i++) {
             friendsList.splice(friendsList.indexOf(bannedList[i].permUSER), 1)
@@ -79,7 +84,6 @@ Meteor.methods({
             throw new Meteor.Error(401, response.errors.error[0])
         }
 
-
         //Bad authentication comes back as 401, will need to add error handles, for now it just assumes that and lets user know
         if (plexstatus.statusCode==201) {
 		  var results = xml2js.parseStringSync(plexstatus.content)
@@ -109,8 +113,8 @@ Meteor.methods({
             users = result['MediaContainer']['User']
         })
 
-        xml2js.parseString(accountXML.content, {mergeAttrs : true, explicitArray : false} ,function (err, result) {
-            admintitle = result['user']['title'].toLowerCase()
+        xml2js.parseString(accountXML.content, {explicitArray : false} ,function (err, result) {
+            admintitle = result['user']['username'] + ":" + result['user']['email']
         })
 
         var friendsList = []
@@ -119,11 +123,11 @@ Meteor.methods({
         if (typeof users !== 'undefined'){
             if (users.length) {
                 for (var i = 0; i < users.length; i++) {
-                    friendsList.push( users[i].title.toLowerCase() )
+                  friendsList.push( users[i].title + ":" + users[i].email)
                 }
             } else if (users.title) {
-                friendsList.push( users.title.toLowerCase() )
-            }	  
+                friendsList.push( users.title + ":" + users.email)
+            }
         }
 
         //Add admin username to the list
