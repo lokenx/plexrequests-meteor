@@ -183,6 +183,17 @@ Meteor.methods({
         logger.info('Slack tested successfully')
         return true
     },
+    testTelegram: function () {
+        var settings = Settings.find().fetch()[0]
+        try {
+            Meteor.call('sendTelegramNotification', settings, 'Plex Requests Test notification')
+            logger.info('Telegram tested successfully')
+        } catch (error) {
+            throw new Meteor.Error('401', error)
+        }
+        logger.info('Telegram tested successfully')
+        return true
+    },
     /*
 Unused at the moment, commenting out until implemented
  */
