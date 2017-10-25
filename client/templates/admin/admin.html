@@ -320,7 +320,10 @@
             <p class="text-muted">Enter your API from Pushbullet. It can be found in Pushbullet Settings -> Access Token.</p>
             <br>
             {{> afQuickField name='pushbulletChannel' size="40"}}
-            <p class="text-muted"> Push Notifications to a channel. Must be the owner of the channel, click <a href="https://www.pushbullet.com/my-channel"> here </a> to create a new channel.</p>
+            <p class="text-muted"> Push Notifications to a channel (optional). Must be the owner of the channel, click <a href="https://www.pushbullet.com/my-channel"> here </a> to create a new channel. <i>Cannot be used in conjunction with a device ID.</i></p>
+            <br>
+            {{> afQuickField name='pushbulletDeviceID' size="40"}}
+            <p class="text-muted"> Push Notifications to a specific device (optional). <i>Cannot be used in conjunction with a channel tag.</i></p>
             <br>
 
             <p><button class="btn btn-secondary-outline" id="pushbulletTest">Test Pushbullet</button></p>
@@ -353,19 +356,6 @@
             <br>
             <p><button class="btn btn-secondary-outline" id="slackTest">Test Slack</button></p>
             <p class="text-muted">Test your Slack settings. Remember to save your settings first!</p>
-            <br>
-
-            {{> afQuickField name='telegramENABLED'}}
-            <p class="text-muted">Enabled Telegram to receive alerts.</p>
-            <br>
-            {{> afQuickField name='telegramAPI' size="40"}}
-            <p class="text-muted">Enter your bot API key from Telegram. Click <a href="https://core.telegram.org/bots#6-botfather"> here </a> to learn how to create a new bot.</p>
-            <br>
-            {{> afQuickField name='telegramCHAT' size="40"}}
-            <p class="text-muted">Enter your chat ID from Telegram. Click <a href="https://telegram.me/get_id_bot"> here </a> for a bot to acquire your chat ID, or add the bot to a group chat to acquire your group chat ID.</p>
-            <br>
-            <p><button class="btn btn-secondary-outline" id="telegramTest">Test Telegram</button></p>
-            <p class="text-muted">Test your Telegram settings. Remember to save your settings first!</p>
             <br>
 
             <button type="submit" class="btn btn-primary-outline btn-block">Update Settings</button>
