@@ -1,11 +1,13 @@
 <template name="layout">
   <nav class="navbar navbar-dark" style="background-color: #000;">
-    <button class="navbar-toggler hidden-md-up" type="button" data-toggle="collapse" data-target="#navBarItems">
+    <div class="container col-xs-12 col-md-6" id="navbar-header">
+      <button class="navbar-toggler hidden-md-up" type="button" data-toggle="collapse" data-target="#navBarItems">
       &#9776;
-    </button>
-    <div class="collapse navbar-toggleable-sm" id="navBarItems">
+      </button>
       <a class="navbar-brand" href="{{pathFor 'home'}}"><i class="fa fa-play-circle logo-icon"></i> Plex Requests</a>
       <a class="navbar-brand admin-link" href="{{pathFor 'admin.page'}}">Admin</a>
+    </div>
+    <div class="collapse navbar-toggleable-sm" id="navBarItems">
       <ul class="nav navbar-nav pull-right">
         {{#if plexAuth}}
           <li class="{{isActiveRoute regex='search.page'}} nav-item"><a href="{{pathFor 'search.page'}}" class="nav-link">Search</a></li>
