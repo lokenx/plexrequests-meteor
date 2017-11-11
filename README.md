@@ -11,8 +11,6 @@
 
    Meteor recently updated to 1.3, and while we don't expect any issues we advise you don't update your installation yet. You will get prompted to run `meteor update` once the update has downloaded in the background. Please refrain from running it, until we can confirm everything will continue to work.
 
-   **Interested in a cross platform .Net Plex Requests? Check out [Plex Requests.Net](https://github.com/tidusjar/PlexRequests.Net)!**
-
 ---
 
 ## Overview
