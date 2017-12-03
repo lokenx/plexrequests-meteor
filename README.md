@@ -26,6 +26,7 @@
    * **[CouchPotato](https://couchpota.to/)** Automated Movie Download Application
    * **[SickRage](https://github.com/SickRage/SickRage)** Automated TV Series Download Application
    * **[Sonarr](https://sonarr.tv/)** Automated TV Series Download Application
+   * **[Radarr](https://radarr.video/)** Automated Movie Download Application
 
 ## Notifications
 
