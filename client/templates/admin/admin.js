@@ -160,6 +160,22 @@ Template.admin.onCreated(function(){
     instance.previousVersion = new ReactiveVar('')
     instance.previousNotes = new ReactiveVar('')
 
+    Meteor.call('SonarrProfiles', function (error, result) {
+        if(result) {
+            instance.sonarrProfiles.set(result)
+        } else {
+            logger.debug(error)
+        }
+    })
+
+    Meteor.call('RadarrProfiles', function (error, result) {
+        if(result) {
+            instance.radarrProfiles.set(result)
+        } else {
+            logger.debug(error)
+        }
+    })
+
     Meteor.call('getBranch', function (error, result) {
         if (result) {
             instance.branch.set(result)
@@ -230,6 +246,22 @@ Template.admin.events({
             logger.error(error)
             Bert.alert('Update failed, please try again', 'danger')
         }
+    },
+
+    'click #refreshFriends': function (event) {
+        event.preventDefault()
+        var btn = $(event.target)
+        btn.html('Refreshing Friends List <i class=\'fa fa-spin fa-refresh\'></i>').removeClass().addClass('btn btn-info-outline')
+        Meteor.call('getPlexFriendlist', function (error, result) {
+            if (result.length) {
+                btn.removeClass('btn-info-outline').addClass('btn-success-outline')
+                btn.html('Updated!')
+            } else {
+                btn.removeClass('btn-info-outline').addClass('btn-danger-outline')
+                btn.html('Error Updating!')
+            }
+        })
+        return false
     },
 
     'click #couchPotatoTest' : function (event) {

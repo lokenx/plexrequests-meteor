@@ -91,8 +91,8 @@
             <br>
             <div class="row">
               <div class="col-sm-4">
-                <label class="sr-only" for="plexuser">Plex Username</label>
-                <input type="email" class="form-control" id="plexuser" placeholder="Plex Username">
+                <label class="sr-only" for="plexuser">Plex Login</label>
+                <input type="email" class="form-control" id="plexuser" placeholder="Plex Login">
               </div>
               <div class="col-sm-4">
                 <label class="sr-only" for="plexpassword">Password</label>
@@ -115,6 +115,8 @@
                 <p class="text-muted">No Approval: This user will always have their requests automatically approved</p>
                 <p class="text-muted">No Limit: No request limits apply to this user</p>
                 <p class="text-muted">Banned: Banned users are prevented from logging in</p>
+                  <p><button class="btn btn-secondary-outline" id="refreshFriends">Refresh Friends List</button></p>
+
               </div>
             </div>
             <div class="row">
@@ -199,7 +201,7 @@
               {{> afQuickField name='radarrSSL'}}
               <p class="text-muted">Enabled if you use SSL on your Radarr server.</p>
               <br>
-              {{> afQuickField name='radarrQUALITYPROFILEID' type='select' options=radarrProfiles firstOption=false}}
+              {{> afQuickField name='radarrQUALITYPROFILEID' type='select' options=radarrProfiles }}
               <button class="btn btn-info-outline" id="getRadarrProfiles">Get Profiles</button>
               <br>
               <br>
@@ -266,7 +268,7 @@
             {{> afQuickField name='sonarrSSL'}}
             <p class="text-muted">Enabled if you use SSL on your Sonarr server.</p>
             <br>
-            {{> afQuickField name='sonarrQUALITYPROFILEID' type='select' options=sonarrProfiles firstOption=false}}
+            {{> afQuickField name='sonarrQUALITYPROFILEID' type='select' options=sonarrProfiles }}
             <button class="btn btn-info-outline" id="getSonarrProfiles">Get Profiles</button>
             <br>
             <br>
