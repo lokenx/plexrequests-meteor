@@ -30,7 +30,7 @@ Meteor.startup(function () {
 	movies.forEach(function(movie) {
 	    Movies.update(movie._id, {
 		    $set: {
-			    'poster_path': movie.poster_path.replace(/\/w154\//, '/w342/')
+			    'poster_path': movie.poster_path.replace(/\/w184\//, '/w342/')
 		    }
 	    })
         });
