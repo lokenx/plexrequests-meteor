@@ -23,7 +23,7 @@ Meteor.methods({
                 try {
                     var result = Meteor.call('TMDBSearch', searchterm, type)
                     var tmp = result.link
-                    result.link = 'https://image.tmdb.org/t/p/w184' + tmp
+                    result.link = 'https://image.tmdb.org/t/p/w342' + tmp
 
                 } catch (error) {
                     logger.error('TMDBSearch Error -> ' + error.message)
