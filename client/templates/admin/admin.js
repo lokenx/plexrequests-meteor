@@ -150,8 +150,9 @@ Template.admin.helpers({
 
 Template.admin.onCreated(function(){
     var instance = this
-    instance.branch = new ReactiveVar('')
+    var settings = Settings.find({}).fetch()
     instance.version = new ReactiveVar('')
+    instance.branch = new ReactiveVar('')
     instance.update = new ReactiveVar(false)
     instance.sonarrProfiles = new ReactiveVar([])
     instance.radarrProfiles = new ReactiveVar([])
@@ -160,22 +161,24 @@ Template.admin.onCreated(function(){
     instance.previousVersion = new ReactiveVar('')
     instance.previousNotes = new ReactiveVar('')
 
-    Meteor.call('SonarrProfiles', function (error, result) {
-        if(result) {
-            instance.sonarrProfiles.set(result)
-        } else {
-            logger.debug(error)
-        }
-    })
-
-    Meteor.call('RadarrProfiles', function (error, result) {
-        if(result) {
-            instance.radarrProfiles.set(result)
-        } else {
-            logger.debug(error)
-        }
-    })
-
+    if (Settings.find({ sonarrENABLED: true }).fetch()[0]){
+        Meteor.call('SonarrProfiles', function (error, result) {
+            if(result) {
+                instance.sonarrProfiles.set(result)
+            } else {
+                logger.debug("Template: " + error)
+            }
+        })
+    }
+    if (Settings.find({ radarrENABLED: true }).fetch()[0]){
+        Meteor.call('RadarrProfiles', function (error, result) {
+            if(result) {
+                instance.radarrProfiles.set(result)
+            } else {
+                logger.debug(error)
+            }
+        })
+    }
     Meteor.call('getBranch', function (error, result) {
         if (result) {
             instance.branch.set(result)
@@ -191,7 +194,6 @@ Template.admin.onCreated(function(){
             logger.debug(error)
         }
     })
-
     Meteor.call('checkForUpdate', function (error, result) {
         if (result) {
             instance.update.set(result)

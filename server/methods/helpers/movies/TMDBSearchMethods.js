@@ -33,7 +33,7 @@ Meteor.methods({
                 var year = (release_date != 0) ? release_date.slice(0,4) : 0
                 var overview = response.data.results[i].overview || 'No overview found.'
                 overview = (overview.length > 250) ? overview.slice(0,250) + '...' : overview
-                var poster_path = response.data.results[i].poster_path || ''
+                var poster_path = "https://image.tmdb.org/t/p/w342" + response.data.results[i].poster_path || ''
                 var link = 'https://www.themoviedb.org/' + type + '/' + id
                 var media_type = type
                 var index = i

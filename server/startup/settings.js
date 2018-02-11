@@ -24,6 +24,21 @@ Meteor.startup(function () {
         settings = Settings.find().fetch()[0]
         logger.info('First run complete')
     }
+    // This will go through and repair any existing imdb poster links
+    if (settings.tmdbFix === false) {
+	var movies = Movies.find()
+	movies.forEach(function(movie) {
+	    Movies.update(movie._id, {
+		    $set: {
+			    'poster_path': movie.poster_path.replace(/\/w154\//, '/w342/')
+		    }
+	    })
+        });
+    	Settings.update(settings._id, {$set: {tmdbFix: true}})
+	settings = Settings.find().fetch()[0]
+	logger.info("Updated TMDB image links")
+    }
+
     //set Couch Potato on start-up
     CouchPotato.url = (settings.couchPotatoSSL) ? 'https://' + settings.couchPotatoURL : 'http://' + settings.couchPotatoURL
     CouchPotato.port = settings.couchPotatoPORT
