@@ -32,11 +32,16 @@ Meteor.methods({
                 var title = s.name || name || 'Unknown'
                 var release_date = s.premiered || 0
                 var year = (release_date != 0) ? release_date.slice(0, 4) : 0
-                var overview = s.summary.replace(/<(?:.|\n)*?>/gm, '') || 'No overview.'
-                overview = (overview.length > 250) ? overview.slice(0, 250) + '...' : overview
                 var link = s.url || 'https://www.tvmaze.com/' + id + '/' + title
                 var media_type = type || 'undefined'
                 var index = i
+
+                if (s.summary !== null && s.summary !== undefined) {
+                    var overview = s.summary.replace(/<(?:.|\n)*?>/gm, '')
+                    overview = (overview.length > 250) ? overview.slice(0, 250) + '...' : overview
+                } else {
+                    overview = 'No overview.'
+                }
 
                 if (s.image !== null) {
                     var poster_path = s.image.medium || s.image.original || '/'
