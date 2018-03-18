@@ -93,7 +93,7 @@ Template.search.events({
     },
     'click .add-request': function (event) {
         var btn = $(event.target)
-        var tvBtn = $(event.target).parent().parent().children().first()
+        var tvBtn = $( "button.tv-request" )
         var requestTitle = this.title
         var request = this
         request.user = Session.get('user')
