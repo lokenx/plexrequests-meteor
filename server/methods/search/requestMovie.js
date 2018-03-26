@@ -137,6 +137,7 @@ Meteor.methods({
             }
 
         } else {
+	    request['imdb'] = imdb
             // No approval required
             if (settings.couchPotatoENABLED) {
 
