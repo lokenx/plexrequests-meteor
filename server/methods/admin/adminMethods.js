@@ -7,7 +7,8 @@ Meteor.methods({
         user: "<user>",
         issues: "<issues>",
         year: "<year>",
-        link: "<link>"
+        link: "<link>",
+        imdb: '<imdb>' 
 	    };
 
 
@@ -18,7 +19,8 @@ Meteor.methods({
                 notification_type: "request",
 				user: "test_user",
 				year: "2020",
-				link: "https://plex.tv"
+				link: "https://plex.tv",
+				imdb: 'tt0068646'
 			};
             logger.info("Request type is test");
 
@@ -35,6 +37,8 @@ Meteor.methods({
 		    var v_1 = v_1.replace(tags.issues, req.issues);
 		    var v_1 = v_1.replace(tags.year, req.year);
 		    var v_1 = v_1.replace(tags.link, req.link);
+		    var v_1 = v_1.replace(tags.imdb, req.imdb);
+
             r["value1"] = v_1;
         }
 
@@ -46,6 +50,7 @@ Meteor.methods({
 		    var v_2 = v_2.replace(tags.issues, req.issues);
 		    var v_2 = v_2.replace(tags.year, req.year);
 		    var v_2 = v_2.replace(tags.link, req.link);
+		    var v_2 = v_2.replace(tags.imdb, req.imdb);
             r["value2"] = v_2;
         }
         
@@ -57,6 +62,7 @@ Meteor.methods({
 		    var v_3 = v_3.replace(tags.issues, req.issues);
 		    var v_3 = v_3.replace(tags.year, req.year);
 		    var v_3 = v_3.replace(tags.link, req.link);
+		    var v_3 = v_3.replace(tags.imdb, req.imdb);
             r["value3"] = v_3;
         }
 
@@ -72,7 +78,8 @@ Meteor.methods({
         user: "<user>",
         issues: "<issues>",
         release: "<year>",
-        link: "<link>"
+        link: "<link>",
+        imdb: 'tt0068646'
 	    };
 		
 		if (request === 'test') {
@@ -92,6 +99,7 @@ Meteor.methods({
 		var message_title = message_title.replace(tags.issues, req.issues);
 		var message_title = message_title.replace(tags.release, req.release);
 		var message_title = message_title.replace(tags.link, req.link);
+	        var message_title = message_title.replace(tags.imdb, req.imdb);
 
 		var message_body = b.replace(tags.title, req.title);
 		var message_body = message_body.replace(tags.type, req.media_type);
@@ -99,7 +107,8 @@ Meteor.methods({
 		var message_body = message_body.replace(tags.issues, req.issues);
 		var message_body = message_body.replace(tags.release, req.release);
 		var message_body = message_body.replace(tags.link, req.link);
-		
+		var message_body = message_body.replace(tags.imdb, req.imdb);
+
 		var r = {title: message_title, body: message_body}
 		return r
   },	  
