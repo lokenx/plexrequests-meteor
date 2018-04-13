@@ -2,3 +2,6 @@
 .meteor/meteorite
 _site
 *.log
+/data
+*.idea/
+*.msg

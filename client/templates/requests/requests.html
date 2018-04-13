@@ -1,157 +1,157 @@
 <template name="requests">
-	<div class="requests">
-		<div class="row">
-			<div class="col-md-offset-1 col-md-10">
-			  <h1>Requests</h1>
-				<p>Below you can see yours and all other requests, as well as their download and approval status.</p>
-				{{#if currentUser}}
-				<p>
-					Movies and TV:  <button class="btn btn-secondary-outline btn-sm" id="approveAll">Approve All</button>  <button class="btn btn-secondary-outline btn-sm" id="denyAll">Deny All</button>
-				</p>
-				{{/if}}
-			</div>
-		</div>
+  <div class="requests">
+    <div class="row">
+      <div class="col-md-offset-1 col-md-10">
+        <h1>Requests</h1>
+        <p>Below you can see yours and all other requests, as well as their download and approval status.</p>
+        {{#if currentUser}}
+        <p>
+          Movies and TV:  <button class="btn btn-secondary-outline btn-sm" id="approveAll">Approve All</button>  <button class="btn btn-secondary-outline btn-sm" id="denyAll">Deny All</button>
+        </p>
+        {{/if}}
+      </div>
+    </div>
 
-	<!-- Selector between Movies/TV/etc  and Sort/Filter Options-->
-		<div class="row selectors">
-			<div class="col-md-offset-1 col-md-8">
-				<ul class="search-selector">
-			  	{{#each searchOptions}}
-			  		<li><a href="#" class="{{#if activeSearch}}active-search{{/if}}">{{this}}</a></li>
-			  	{{/each}}
-				</ul>
-			</div>
-			<div class="col-md-2">
-				<div class="filter-sort">
-					<div class="btn-group">
-					  <button type="button" class="btn btn-sm btn-secondary-outline dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					    Filter / Sort
-					  </button>
-					  <div class="dropdown-menu">
-							{{#each filterOptions}}
-					    	<a class="dropdown-item filter-select" href="#">{{{activeFilter}}}{{filter}}</a>
-							{{/each}}
-					    <div class="dropdown-divider"></div>
-							{{#each sortOptions}}
-								<a class="dropdown-item sort-select" href="#">{{{activeSort}}}{{sort}}</a>
-							{{/each}}
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		
-		
-		<!-- Deny model -->
-		<div class="modal fade" id="denyModel" role="dialog">
-			<div class="modal-dialog">
+  <!-- Selector between Movies/TV/etc  and Sort/Filter Options-->
+    <div class="row selectors">
+      <div class="col-md-offset-1 col-md-8">
+        <ul class="search-selector">
+          {{#each searchOptions}}
+            <li><a href="#" class="{{#if activeSearch}}active-search{{/if}}">{{this}}</a></li>
+          {{/each}}
+        </ul>
+      </div>
+      <div class="col-md-2">
+        <div class="filter-sort">
+          <div class="btn-group">
+            <button type="button" class="btn btn-sm btn-secondary-outline dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Filter / Sort
+            </button>
+            <div class="dropdown-menu">
+              {{#each filterOptions}}
+                <a class="dropdown-item filter-select" href="#">{{{activeFilter}}}{{filter}}</a>
+              {{/each}}
+              <div class="dropdown-divider"></div>
+              {{#each sortOptions}}
+                <a class="dropdown-item sort-select" href="#">{{{activeSort}}}{{sort}}</a>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <!-- Deny model -->
+    <div class="modal fade" id="denyModel" role="dialog">
+      <div class="modal-dialog">
 
-			  <!-- Modal content-->
-			  <div class="modal-content">
-				<div class="modal-header">
-				  <button type="button" class="close" data-dismiss="modal">&times;</button>
-				  <h4 class="modal-title" id="denyModelTitle">Deny</h4>
-				</div>
-				<div class="modal-body">
-				  <input type="hidden" value="" id="denyModelID" />
-				  <input type="text" class="form-control" id="denyModelReason" placeholder="Reason for denying request">
-				</div>
-				<div class="modal-footer">
-				  <button class="btn btn-default btn-danger-outline deny-confirm">Deny</button>  
-				</div>
-			  </div>
-			</div>
-		</div>
+        <!-- Modal content-->
+        <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" id="denyModelTitle">Deny</h4>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" value="" id="denyModelID" />
+          <input type="text" class="form-control" id="denyModelReason" placeholder="Reason for denying request">
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-default btn-danger-outline deny-confirm">Deny</button>  
+        </div>
+        </div>
+      </div>
+    </div>
 
-	<!-- List of content -->
+  <!-- List of content -->
 
-	  {{#each requests}}
-	  <div class="request-item">
-		  	<div class="row">
-		  		<div class="col-md-2 col-md-offset-1">
+    {{#each requests}}
+    <div class="request-item">
+        <div class="row">
+          <div class="col-md-2 col-md-offset-1">
 
-				{{#if searchType 'TV Shows'}}
-		  			<img src="{{poster_path}}" class="img-responsive" alt="Poster">
-		  		{{/if}}
-				{{#if searchType 'Movies'}}
-		  			<img src="https://image.tmdb.org/t/p/w154{{poster_path}}" class="img-responsive" alt="Poster">
-		  		{{/if}}
+        {{#if searchType 'TV Shows'}}
+            <img src="{{poster_path}}" class="img-responsive" alt="Poster">
+          {{/if}}
+        {{#if searchType 'Movies'}}
+            <img src="{{poster_path}}" class="img-responsive" alt="Poster">
+          {{/if}}
                 </div>
-		  		<div class="col-md-5">
-		  			<ul class="request-details-list">
-						{{#if searchType 'Movies'}}
-						<h4><li><a href="http://www.imdb.com/title/{{imdb}}" target="_blank"><strong>{{title}}</strong></a></li></h4>
-						{{/if}}
-						{{#if searchType 'TV Shows'}}
-						<h4> <li><a href="{{link}}" target="_blank"><strong>{{title}} ({{year}})</strong></a></li></h4>		
-						<li><strong>Seasons:</strong> {{season_count}}</li>
-						<li><strong>Type:</strong> {{episodes}}</li>
-						{{/if}}
-						<li><strong>Release date:</strong> {{release_date}}</li>
-			  			<li>{{{approval_status}}}</li>
-			  			<li><strong>Available:</strong> {{{download_status}}}</li>
-			  			{{{requesting_user}}}
-						<li><strong>Requested date:</strong> {{created_at}}</li>
-			  			<li><strong>Issues:</strong> {{issues}}</li>
-		  			</ul>
-		  		</div>
-		  		<div class="col-md-3 request-details-buttons">
-		  			{{#if currentUser}}
-						<p>
-							{{#if approved_show}}
-								<button class="btn btn-sm btn-success-outline approve-item">Approve</button>    
-							{{/if}}
-							{{#if denied_show}}
-								<button class="btn btn-sm btn-danger-outline deny-item" data-toggle="model" data-target="#denyModel">Deny</button>
-							{{/if}}
-						</p>
-			  			<p><button class="btn btn-sm btn-danger-outline delete-item">Delete</button></p>
-			  			<p><button class="btn btn-sm btn-info-outline clear-issues">Clear Issues</button></p>
-						{{#if searchType 'Movies'}}
-							{{#if available}}
-								<p><button class="btn btn-sm btn-secondary-outline mark-unavailable">Mark Unavailable</button></p>
-							{{else}}
-								<p><button class="btn btn-sm btn-success-outline mark-available">Mark Available</button></p>
-							{{/if}}
-			  			{{/if}}
-		  			{{/if}}
-			  		<p>
-						<div class="btn-group">
-						  <button type="button" class="btn btn-sm btn-warning-outline dropdown-toggle report-item" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							Report Issue <span class="caret"></span>
-						  </button>
-						  <ul class="dropdown-menu">
-							<li><a href="#" class="issue-select dropdown-item" data="Wrong Audio">Wrong audio</a></li>
-							<li><a href="#" class="issue-select dropdown-item" data="No Subtitles">No subtitles</a></li>
-							<li><a href="#" class="issue-select dropdown-item" data="Wrong Content">Wrong content</a></li>
-							<li><a href="#" class="issue-select dropdown-item" data="Playback issues">Playback issues</a></li>
-						  </ul>
-						</div>
-			  		</p>
-		  		</div>
-		  	</div>
-	  	</div>
-			<div class="row">
-		    <div class="col-md-10 col-md-offset-1">
-		      <div class="item-divider"></div>
-		    </div>
-			</div>
-		{{/each}}
+          <div class="col-md-5">
+            <ul class="request-details-list">
+            {{#if searchType 'Movies'}}
+            <h4><li><a href="http://www.imdb.com/title/{{imdb}}" target="_blank"><strong>{{title}}</strong></a></li></h4>
+            {{/if}}
+            {{#if searchType 'TV Shows'}}
+            <h4> <li><a href="{{link}}" target="_blank"><strong>{{title}} ({{year}})</strong></a></li></h4>    
+            <li><strong>Seasons:</strong> {{season_count}}</li>
+            <li><strong>Type:</strong> {{episodes}}</li>
+            {{/if}}
+            <li><strong>Release date:</strong> {{release_date}}</li>
+              <li>{{{approval_status}}}</li>
+              <li><strong>Available:</strong> {{{download_status}}}</li>
+              {{{requesting_user}}}
+            <li><strong>Requested date:</strong> {{created_at}}</li>
+              <li><strong>Issues:</strong> {{issues}}</li>
+            </ul>
+          </div>
+          <div class="col-md-3 request-details-buttons">
+            {{#if currentUser}}
+            <p>
+              {{#if approved_show}}
+                <button class="btn btn-sm btn-success-outline approve-item">Approve</button>    
+              {{/if}}
+              {{#if denied_show}}
+                <button class="btn btn-sm btn-danger-outline deny-item" data-toggle="model" data-target="#denyModel">Deny</button>
+              {{/if}}
+            </p>
+              <p><button class="btn btn-sm btn-danger-outline delete-item">Delete</button></p>
+              <p><button class="btn btn-sm btn-info-outline clear-issues">Clear Issues</button></p>
+            {{#if searchType 'Movies'}}
+              {{#if available}}
+                <p><button class="btn btn-sm btn-secondary-outline mark-unavailable">Mark Unavailable</button></p>
+              {{else}}
+                <p><button class="btn btn-sm btn-success-outline mark-available">Mark Available</button></p>
+              {{/if}}
+              {{/if}}
+            {{/if}}
+            <p>
+            <div class="btn-group">
+              <button type="button" class="btn btn-sm btn-warning-outline dropdown-toggle report-item" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Report Issue <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a href="#" class="issue-select dropdown-item" data="Wrong Audio">Wrong audio</a></li>
+                <li><a href="#" class="issue-select dropdown-item" data="No Subtitles">No subtitles</a></li>
+                <li><a href="#" class="issue-select dropdown-item" data="Wrong Content">Wrong content</a></li>
+                <li><a href="#" class="issue-select dropdown-item" data="Playback issues">Playback issues</a></li>
+              </ul>
+            </div>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+          <div class="item-divider"></div>
+        </div>
+      </div>
+    {{/each}}
 
-		<!-- Go to top button -->
-		<div class="go-to-top">
-  		<i class="fa fa-arrow-up"></i>
-		</div>
+    <!-- Go to top button -->
+    <div class="go-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
 
-		<!-- Load more event trigger -->
-		<div class="load-more" style="display:none;"></div>
+    <!-- Load more event trigger -->
+    <div class="load-more" style="display:none;"></div>
 
-		<div class="row">
-			<div class="col-md-10 col-md-offset-1">
-				{{#unless Template.subscriptionsReady}}
-					<h3 class="loading">Loading... <i class="fa fa-spin fa-refresh"></i></h3>
-				{{/unless}}
-			</div>
-		</div>
-	</div>
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        {{#unless Template.subscriptionsReady}}
+          <h3 class="loading">Loading... <i class="fa fa-spin fa-refresh"></i></h3>
+        {{/unless}}
+      </div>
+    </div>
+  </div>
 </template>

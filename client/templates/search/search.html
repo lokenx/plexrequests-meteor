@@ -1,59 +1,68 @@
 <template name="search">
-	<div class="search">
-		<div class="row">
-			<div class="col-md-10 col-md-offset-1">
-				<h1>Search</h1>
-				<p>Want to watch something but it's not currently on Plex? Select an option below and do a quick search!</p>
+  <div class="search">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        <h1>Search</h1>
+        <p>Want to watch something but it's not currently on Plex? Select an option below and do a quick search!</p>
 
-				<form class="form-inline" id="search-form">
-					<div class="form-group">
-						<div class="input-group">
-							<input type="text" class="form-control" id="search-input" size="35" placeholder="Search" {{searchDisabled}} autofocus="">
-							<div class="input-group-addon">
-								{{#if searching}}
-								<i class="fa fa-spinner fa-pulse"></i>
-								{{else}}
-								<i class="fa fa-search"></i>
-								{{/if}}
-							</div>
-						</div>
-					</div>
-					{{#if searchDisabled}}
-					<br>
-					<br>
-					<div class="alert alert-danger" role="alert">
-						Searching has been disabled.
-					</div>
-					{{/if}}
-				</form>
+        <form class="form-inline" id="search-form">
+          <div class="form-group">
+            <div class="input-group">
+              <input type="text" class="form-control" id="search-input" size="55" placeholder="Search" {{searchDisabled}} autofocus="">
+              <div class="input-group-addon">
+                <div class="btn-group">
+                  <a href="#" class="btn btn-sm btn-primary-outline dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    Suggestions
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a id="upcoming" href="#">Coming Soon</a></li>
+                    <li><a id="now_playing" href="#">In Theaters</a></li>
+                  </ul>
+                </div>
+                {{#if searching}}
+                  <i class="fa fa-spinner fa-pulse"></i>
+                {{else}}
+                  <i class="fa fa-search"></i>
+                {{/if}}
+              </div>
+            </div>
+          </div>
+          {{#if searchDisabled}}
+            <br>
+            <br>
+            <div class="alert alert-danger" role="alert">
+              Searching has been disabled.
+            </div>
+          {{/if}}
+        </form>
 
-				<!-- Search selector -->
-				<ul class="search-selector">
-					{{#each searchOptions}}
-					<li><a href="#" class="{{#if activeSearch}}active-search{{/if}}">{{this}}</a></li>
-					{{/each}}
-				</ul>
+        <!-- Search selector -->
+        <ul class="search-selector">
+          {{#each searchOptions}}
+            <li><a href="#" class="{{#if activeSearch}}active-search{{/if}}">{{this}}</a></li>
+          {{/each}}
+        </ul>
 
-			</div>
-		</div>
-		<div class="row">
-			<div id="search-results" class="col-md-10 col-md-offset-1">
-				{{#each results}}
-					{{> item}}
-				{{/each}}
-			</div>
+      </div>
+    </div>
+    <div class="row">
+      <div id="search-results" class="col-md-10 col-md-offset-1">
+        {{#each results}}
+          {{> item}}
+        {{/each}}
+      </div>
 
-			{{#if error}}
-			<div class="col-sm-4 col-md-offset-1">
-				<div class="alert alert-warning" role="alert">No results found</div>
-			</div>
-			{{/if}}
-		</div>
+      {{#if error}}
+        <div class="col-sm-4 col-md-offset-1">
+          <div class="alert alert-warning" role="alert">No results found</div>
+        </div>
+      {{/if}}
+    </div>
 
-		<!-- Go to top button -->
-		<div class="go-to-top">
-  		<i class="fa fa-arrow-up"></i>
-		</div>
+    <!-- Go to top button -->
+    <div class="go-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
 
-	</div>
+  </div>
 </template>

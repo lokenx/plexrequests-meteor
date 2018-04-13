@@ -1,14 +1,19 @@
 # docker-compose.yml
+version: '2'
+services:
+  dashboard:
+    image: lokenx/plexrequests-meteor
+    restart: always
+    ports:
+     - "8989:80"
+    links:
+     - mongo
+    environment:
+     - MONGO_URL=mongodb://mongo:27017/plexrequests
+     - ROOT_URL=http://localhost/
 
-dashboard:
-  image: lokenx/plexrequests-meteor
-  ports:
-   - "8989:80"
-  links:
-   - mongo
-  environment:
-   - MONGO_URL=mongodb://mongo:27017/plexrequests
-   - ROOT_URL=http://localhost/
-
-mongo:
-  image: mongo:latest
+  mongo:
+    image: mongo:latest
+    restart: always
+    volumes:
+      - ./data:/data/db

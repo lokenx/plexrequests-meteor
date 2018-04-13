@@ -11,8 +11,6 @@
 
    Meteor recently updated to 1.3, and while we don't expect any issues we advise you don't update your installation yet. You will get prompted to run `meteor update` once the update has downloaded in the background. Please refrain from running it, until we can confirm everything will continue to work.
 
-   **Interested in a cross platform .Net Plex Requests? Check out [Plex Requests.Net](https://github.com/tidusjar/PlexRequests.Net)!**
-
 ---
 
 ## Overview
@@ -28,6 +26,7 @@
    * **[CouchPotato](https://couchpota.to/)** Automated Movie Download Application
    * **[SickRage](https://github.com/SickRage/SickRage)** Automated TV Series Download Application
    * **[Sonarr](https://sonarr.tv/)** Automated TV Series Download Application
+   * **[Radarr](https://radarr.video/)** Automated Movie Download Application
 
 ## Notifications
 
@@ -35,10 +34,16 @@
       1. **[Pushbullet](https://www.pushbullet.com/)**
       2. **[Pushover](https://pushover.net/)**
       3. **[Slack](https://slack.com/)**
+      4. **[Telegram](https://telegram.org/)**
 
    * **Pushbullet Channels**
       * You can now push notifications to a custom channel to easily notify others whenever new content is requested and added. Users only need to subscribe to the channel to start recieving notifications.
       * Visit the **[Channel Creation Page](https://www.pushbullet.com/my-channel)** to learn more about how to create and distribute your own channel.
+
+  * **Telegram Bot Notifications**
+    * You can now push notifications using a Telegram bot to either a personal chat, or a bot added into a group chat.
+    *  A bot API key can be acquired through messaging the official Telegram bot, **[BotFather](https://telegram.me/BotFather)**. 
+    *  Your group chat or personal chat ID can be acquired **[using one of the methods here](https://stackoverflow.com/questions/32423837/telegram-bot-how-to-get-a-group-chat-id)**, or more easily through **[another bot, found here](https://telegram.me/get_id_bot)**.
 
    * **Custom Notifications**
       * Users can customize both the Notifications Title as well as the Notifications body. You can access this from the "Notifications" section of the admin panel.
