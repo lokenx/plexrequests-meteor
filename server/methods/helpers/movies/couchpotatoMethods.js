@@ -5,7 +5,7 @@ Meteor.methods({
             check(CouchPotato.port, Number)
             check(CouchPotato.api, String)
         } catch (e) {
-            console.log(e.message)
+            logger.debug(e.message)
             return false
         }
 
@@ -16,7 +16,7 @@ Meteor.methods({
         try {
             var response = HTTP.call('GET', CouchPotato.url + ':' + CouchPotato.port + CouchPotato.directory + '/api/' + CouchPotato.api + '/app.available', {timeout: 2000} )
         } catch (e) {
-            console.log(e)
+            logger.debug(e)
             return false
         }
         return (response.data) ? response.data.success : false
@@ -29,7 +29,7 @@ Meteor.methods({
             check(CouchPotato.api, String)
             check(media, String)
         } catch (e) {
-            console.log(e.message)
+            logger.debug(e.message)
             return false
         }
 
@@ -40,10 +40,10 @@ Meteor.methods({
         try {
             var response = HTTP.call('GET', CouchPotato.url + ':' + CouchPotato.port + CouchPotato.directory + '/api/' + CouchPotato.api + '/movie.delete?id=' + media + '&delete_from=wanted', {timeout: 2000} )
         } catch (e) {
-            console.log(e)
+            logger.debug(e)
             return false
         }
-        console.log(response)
+        logger.debug(response)
         return response.data.success
     },
 
@@ -54,7 +54,7 @@ Meteor.methods({
             check(CouchPotato.api, String)
             check(media, String)
         } catch (e) {
-            console.log(e.message)
+            logger.debug(e.message)
             return false
         }
 
@@ -67,10 +67,10 @@ Meteor.methods({
         try {
             var response = HTTP.call('GET', CouchPotato.url + ':' + CouchPotato.port + CouchPotato.directory + '/api/' + CouchPotato.api + '/media.get?id=' + media, {timeout: 2000} )
         } catch (e) {
-            console.log(e)
+            logger.debug(e)
             return false
         }
-        // console.log(response.data.media.info);
+        // logger.debug(response.data.media.info);
 
         if (response.data.success) {
             result.status = response.data.media.status
@@ -92,7 +92,7 @@ Meteor.methods({
             check(CouchPotato.api, String)
             check(media, String)
         } catch (e) {
-            console.log(e.message)
+            logger.debug(e.message)
             return false
         }
 
@@ -103,7 +103,7 @@ Meteor.methods({
         try {
             var response = HTTP.call('GET', CouchPotato.url + ':' + CouchPotato.port + CouchPotato.directory + '/api/' + CouchPotato.api + '/movie.add?identifier=' + media, {timeout: 2000} )
         } catch (e) {
-            console.log(e)
+            logger.debug(e)
             return false
         }
 

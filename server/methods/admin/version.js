@@ -4,15 +4,7 @@ Meteor.methods({
     },
 
     getVersion: function () {
-        // parse the version.txt file and return the contents
-        var fs = Npm.require('fs')
-        var version = fs.readFileSync(process.env.PWD + '/version.txt','utf8')
-	if (version === '') {
-            return "version.txt not found"
-	} else {
-	    return 'v' + version.replace(/\n/,'')
-	}
-
+        return 'v1.21.2'
     },
 
     checkForUpdate : function () {
