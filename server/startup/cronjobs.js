@@ -8,11 +8,20 @@ SyncedCron.add({
         return parser.text('every 1 hour')
     },
     job: function() {
-        Meteor.call('updateCP')
-        Meteor.call('updateRadarr')
-        Meteor.call('updateSickRage')
-        Meteor.call('updateSonarr')
-        logger.info('Updating download status')
+        var settings = Settings.findOne()
+        if(settings.couchPotatoENABLED) {
+            Meteor.call('updateCP')
+        }
+        if(settings.radarrENABLED) {
+            Meteor.call('updateRadarr')
+        }
+        if(settings.sickRageENABLED) {
+            Meteor.call('updateSickRage')
+        }
+        if(settings.sonarrENABLED) {
+            Meteor.call('updateSonarr')
+        }
+
         return true
     }
 })

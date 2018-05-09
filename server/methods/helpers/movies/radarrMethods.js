@@ -1,12 +1,13 @@
 Meteor.methods({
     radarrProfilesGet: function() {
-        try {
-            check(Radarr.url, String)
-            check(Radarr.port, Number)
-            check(Radarr.api, String)
-        } catch (e) {
-            logger.debug('Radarr Profiles Get -> ' + e.message)
-            return []
+        var status = Meteor.call('checksWrapper', {
+            radarrUrl: {val: Radarr.url, type: String},
+            radarrPort: {val: Radarr.port, type: Number},
+            radarrApi: {val: Radarr.api, type: String}
+        })
+        if(status !== true){
+            Radarr.log('error', status)
+            return false
         }
 
         //Workaround to allow self-signed SSL certs, however can be dangerous and should not be used in production, looking into better way
@@ -17,7 +18,7 @@ Meteor.methods({
         try {
             allProfiles = HTTP.get(Radarr.url + ':' + Radarr.port + Radarr.directory + '/api/profile', {headers: {'X-Api-Key':Radarr.api}, timeout: 15000} )
         } catch (e) {
-            logger.debug('Radarr Profiles Get -> ' + e.message)
+            Radarr.log('error', 'Error fetching profiles: ' + e.message)
             return []
         }
 
@@ -30,64 +31,64 @@ Meteor.methods({
     },
 
     radarrMovieAdd: function(request, settings) {
-        try {
-            check(Radarr.url, String);
-            check(Radarr.port, Number);
-            check(Radarr.api, String);
+        var status = Meteor.call('checksWrapper', {
+            radarrUrl: {val: Radarr.url, type: String},
+            radarrPort: {val: Radarr.port, type: Number},
+            radarrApi: {val: Radarr.api, type: String},
+            requestId: {val: request.id, type: Number},
+            requestTitle: {val: request.title, type: String},
+            requestYear: {val: request.year, type: String},
+            profileId: {val: settings.radarrQUALITYPROFILEID, type: Number},
+            rootFolder: {val: settings.radarrROOTFOLDERPATH, type: String},
+            minAvailability: {val: settings.radarrMINAVAILABILITY, type: String}
+        })
 
-            check(request.id, Number);
-            check(request.title, String);
-            check(request.year, String);
-
-            check(settings.radarrQUALITYPROFILEID, Number);
-            check(settings.radarrROOTFOLDERPATH, String);
-            check(settings.radarrMINAVAILABILITY, String);
-
-        } catch (e) {
-            console.log("Radarr Movie Post -> " + e.message);
-            return false;
+        if(status !== true){
+            Radarr.log('error', status)
+            return []
         }
+
         //Workaround to allow self-signed SSL certs, however can be dangerous and should not be used in production, looking into better way
         //But it's possible there's nothing much I can do
-        process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+        process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 
-        var options = {"searchForMovie": 'true'};
+        var options = {'searchForMovie': 'true'}
 
         try {
 
-            var response = HTTP.post(Radarr.url + ":" + Radarr.port + Radarr.directory + "/api/movie", {
-                    headers: {"X-Api-Key":Radarr.api},
-                    data: {
-                        "title": request.title,
-                        "tmdbId":request.id,
-                        "year": request.year,
-                        "qualityProfileId": settings.radarrQUALITYPROFILEID,
-                        "rootFolderPath": settings.radarrROOTFOLDERPATH,
-                        "minimumAvailability": settings.radarrMINAVAILABILITY,
-                        "titleSlug": request.title,
-                        "monitored": 'true',
-                        "images": [],
-                        "addOptions": options
-                    },
-                    timeout: 15000
-                }
-            );
+            var response = HTTP.post(Radarr.url + ':' + Radarr.port + Radarr.directory + '/api/movie', {
+                headers: {'X-Api-Key':Radarr.api},
+                data: {
+                    'title': request.title,
+                    'tmdbId':request.id,
+                    'year': request.year,
+                    'qualityProfileId': settings.radarrQUALITYPROFILEID,
+                    'rootFolderPath': settings.radarrROOTFOLDERPATH,
+                    'minimumAvailability': settings.radarrMINAVAILABILITY,
+                    'titleSlug': request.title,
+                    'monitored': 'true',
+                    'images': [],
+                    'addOptions': options
+                },
+                timeout: 15000
+            }
+            )
 
         } catch (e) {
-            console.log("Radarr Movie Post -> " + e.message);
-            return false;
+            Radarr.log('error', 'Post Error: ' + e.message)
+            return false
         }
-        logger.log('debug', 'Radarr add response: \n' + JSON.stringify(response.data));
         return response.data
     },
 
     radarrSystemStatus: function() {
-        try {
-            check(Radarr.url, String)
-            check(Radarr.port, Number)
-            check(Radarr.api, String)
-        } catch (e) {
-            logger.debug('Radarr Status -> ' + e.message)
+        var status = Meteor.call('checksWrapper', {
+            radarrUrl: {val: Radarr.url, type: String},
+            radarrPort: {val: Radarr.port, type: Number},
+            radarrApi: {val: Radarr.api, type: String}
+        })
+        if(status !== true){
+            Radarr.log('error', status)
             return false
         }
 
@@ -98,7 +99,7 @@ Meteor.methods({
         try {
             var response = HTTP.get(Radarr.url + ':' + Radarr.port + Radarr.directory + '/api/system/status', {headers: {'X-Api-Key':Radarr.api}, timeout: 15000} )
         } catch (e) {
-            logger.debug('Radarr Status -> ' + e.message)
+            Radarr.log('error', 'Status Check Error: ' + e.message)
             return false
         }
 
@@ -112,13 +113,14 @@ Meteor.methods({
          else:
          false if not
          */
-        try {
-            check(Radarr.url, String)
-            check(Radarr.port, Number)
-            check(Radarr.api, String)
-            check(tmdbId, Number)
-        } catch (e) {
-            logger.debug('Radarr Movie Get -> ' + e.message)
+        var status = Meteor.call('checksWrapper', {
+            radarrUrl: {val: Radarr.url, type: String},
+            radarrPort: {val: Radarr.port, type: Number},
+            radarrApi: {val: Radarr.api, type: String},
+            tmdbId: {val: tmdbId, type: Number}
+        })
+        if(status !== true){
+            Radarr.log('error', status)
             return false
         }
 
@@ -129,41 +131,34 @@ Meteor.methods({
         try {
             var allMovies = HTTP.get(Radarr.url + ':' + Radarr.port + Radarr.directory + '/api/movie', {headers: {'X-Api-Key':Radarr.api}, timeout: 15000} )
         } catch (e) {
-            logger.debug('Radarr Movie Get -> ' + e.message)
+            Radarr.log('error', 'Error fetching movie: ' + e.message)
             return false
         }
 
         var parsed = JSON.parse(allMovies.content)
-        var data
+        var data = ''
         _.each(parsed, function (movie) {
             if (movie.tmdbId === tmdbId) {
-                logger.log('debug', 'Movie found: \n' + movie.title)
+                Radarr.log('debug', 'Movie found: ' + movie.title)
                 data = movie
             }
         })
-
-        if (data) {
-            logger.log('debug', 'Returned data')
-            return data
-        } else {
-            logger.log('debug', 'Returned false')
-            return false
-        }
+        
+        return data || false
     },
 
     radarrMovieStatus: function(tmdbId) {
-        try {
-            check(Radarr.url, String)
-            check(Radarr.port, Number)
-            check(Radarr.api, String)
-            check(tmdbId, Number)
-        } catch (e) {
-            logger.debug('Radarr Movie Get -> ' + e.message)
+        var status = Meteor.call('checksWrapper', {
+            radarrUrl: {val: Radarr.url, type: String},
+            radarrPort: {val: Radarr.port, type: Number},
+            radarrApi: {val: Radarr.api, type: String},
+            tmdbId: {val: tmdbId, type: Number}
+        })
+        if(status !== true){
+            Radarr.log('error', status)
             return false
         }
-
-        var result = {}
-
+        
         //Workaround to allow self-signed SSL certs, however can be dangerous and should not be used in production, looking into better way
         //But it's possible there's nothing much I can do
         process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
@@ -171,7 +166,7 @@ Meteor.methods({
         try {
             var allMovies = HTTP.get(Radarr.url + ':' + Radarr.port + Radarr.directory + '/api/movie', {headers: {'X-Api-Key':Radarr.api}, timeout: 15000} )
         } catch (e) {
-            logger.debug('Radarr Movie Get -> ' + e.message)
+            Radarr.log('error', 'Error getting movie list: ' + e.message)
             return false
         }
 
@@ -186,21 +181,18 @@ Meteor.methods({
         try {
             var response = HTTP.call('GET', Radarr.url + ':' + Radarr.port + Radarr.directory + '/api/movie/' + radarrId, {headers: {'X-Api-Key':Radarr.api}, timeout: 15000} )
         } catch (e) {
-            logger.debug(e)
+            Radarr.log('error', 'Error finding movie ID: ' + radarrId + ': ' + e.message)
             return false
         }
+        
+        return (response.data.downloaded ? {
+            status: response.data.downloaded,
+            title: response.data.title,
+            year: response.data.year || '',
+            id: response.data.id,
+            imdb: response.data.imdbId || '',
+            tmdb_id: response.data.tmdbId || ''
+        } : false)
 
-        if (response.data.downloaded) {
-            result.status = response.data.downloaded
-            result.title = response.data.title
-            result.year = response.data.year || ''
-            result.id = response.data.id
-            result.imdb = response.data.imdbId || ''
-            result.tmdb_id = response.data.tmdbId || ''
-        } else {
-            result = false
-        }
-
-        return result
     }
 })

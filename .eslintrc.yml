@@ -31,6 +31,7 @@ rules:
   # eslint-plugin-meteor
   meteor/no-session: [0] # allow Session
   meteor/prefer-session-equals: [2] # prefer Session.equals instead
+  meteor/audit-argument-checks: [0]
 
 globals:
   logger: true
@@ -55,3 +56,4 @@ globals:
   TMDBSearch: true
   xml2js: true
   Permissions: true
+  Plexrequests: true

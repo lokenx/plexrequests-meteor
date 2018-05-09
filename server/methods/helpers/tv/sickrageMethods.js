@@ -8,7 +8,7 @@ Meteor.methods({
             check(tvdbid, Number)
             check(episodes, Number)
         } catch (e) {
-            console.log(e.message)
+            logger.debug(e.message)
             return false
         }
 
@@ -23,14 +23,14 @@ Meteor.methods({
                 SickRage.url + ':' + SickRage.port + SickRage.directory + '/api/' + SickRage.api + '?cmd=show.addnew&tvdbid=' + tvdbid + episodeStatus,
                 {timeout: 2000} )
         } catch (e) {
-            console.log(e.message)
+            logger.debug(e.message)
             return false
         }
 
         var status
 
         if (response.data) {
-            status = (response.data.result == 'success')
+            status = (response.data.result === 'success')
         } else {
             status = false
         }
@@ -44,7 +44,7 @@ Meteor.methods({
             check(SickRage.port, Number)
             check(SickRage.api, String)
         } catch (e) {
-            console.log(e.message)
+            logger.debug(e.message)
             return false
         }
 
@@ -55,7 +55,7 @@ Meteor.methods({
         try {
             var response = HTTP.call('GET', SickRage.url + ':' + SickRage.port + SickRage.directory + '/api/' + SickRage.api + '/?cmd=sb.ping', {timeout: 2000} )
         } catch (e) {
-            console.log(e.message)
+            logger.debug(e.message)
             return false
         }
 
@@ -69,7 +69,7 @@ Meteor.methods({
             check(SickRage.api, String)
             check(tvdbid, Number)
         } catch (e) {
-            console.log(e.message)
+            logger.debug(e.message)
             return false
         }
 
@@ -80,14 +80,14 @@ Meteor.methods({
         try {
             var response = HTTP.call('GET', SickRage.url + ':' + SickRage.port + SickRage.directory + '/api/' + SickRage.api + '?cmd=show&tvdbid=' + tvdbid, {timeout: 2000} )
         } catch (e) {
-            console.log(e.message)
+            logger.debug(e.message)
             return false
         }
 
         var status
 
         if (response.data) {
-            status = (response.data.result == 'success')
+            status = (response.data.result === 'success')
         } else {
             status = false
         }
@@ -102,7 +102,7 @@ Meteor.methods({
             check(SickRage.api, String)
             check(tvdbid, Number)
         } catch (e) {
-            console.log(e.message)
+            logger.debug(e.message)
             return false
         }
 
@@ -113,14 +113,14 @@ Meteor.methods({
         try {
             var response = HTTP.call('GET', SickRage.url + ':' + SickRage.port + SickRage.directory + '/api/' + SickRage.api + '?cmd=show.delete&tvdbid=' + tvdbid, {timeout: 2000} )
         } catch (e) {
-            console.log(e.message)
+            logger.debug(e.message)
             return false
         }
 
         var status
 
         if (response.data) {
-            status = (response.data.result == 'success')
+            status = (response.data.result === 'success')
         } else {
             status = false
         }
@@ -135,7 +135,7 @@ Meteor.methods({
             check(SickRage.api, String)
             check(tvdbid, Number)
         } catch (e) {
-            console.log(e.message)
+            logger.debug(e.message)
             return false
         }
 
@@ -146,7 +146,7 @@ Meteor.methods({
         try {
             var response = HTTP.call('GET', SickRage.url + ':' + SickRage.port + SickRage.directory + '/api/' + SickRage.api + '?cmd=show.stats&tvdbid=' + tvdbid, {timeout: 2000} )
         } catch (e) {
-            console.log(e.message)
+            logger.debug(e.message)
             return false
         }
 

@@ -1,0 +1,15 @@
+# Update all logger.x calls to use the new Module log wrappers.
+
+- server.methods
+  - helpers
+  - notifications
+  - permissions
+  - requests
+  - search
+
+- client.templates
+  - Pretty much all of them.
+
+# Add refresh functionality to the Logs interface
+  - Option 1: Create a refresh button           ** (Short term solution)
+  - Option 2: Log to MongoDB and make reactive  ** (Long term solution)

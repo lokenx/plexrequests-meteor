@@ -8,7 +8,7 @@ Meteor.methods({
             until: new Date,
             limit: limit,
             order: 'desc',
-            fields: ['message', 'level', 'timestamp']
+            fields: ['message', 'level', 'timestamp', 'module']
         }
 
         function query (start, limit, callback) {
@@ -24,5 +24,9 @@ Meteor.methods({
         var wrapperLogQuery = Async.wrap(query)
 
         return wrapperLogQuery(0, 10)
+    },
+    logWrapper: function(mod, level, msg) {
+        logger.log(level, msg, {module: mod})
+        return true
     }
 })

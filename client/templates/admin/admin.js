@@ -60,12 +60,13 @@ AutoForm.hooks({
             if (result) {
                 Bert.alert('Updated successfully', 'success')
                 Meteor.call('settingsUpdate')
+                Sonarr.logSonarr('info', 'Settings Updated')
             }
             this.event.preventDefault()
             return false
         },
         onError: function(formType, error) {
-            logger.error(error)
+            Sonarr.log('error', error)
             Bert.alert('Update failed, please try again', 'danger')
         }
     },
@@ -150,7 +151,6 @@ Template.admin.helpers({
 
 Template.admin.onCreated(function(){
     var instance = this
-    var settings = Settings.find({}).fetch()
     instance.version = new ReactiveVar('')
     instance.branch = new ReactiveVar('')
     instance.update = new ReactiveVar(false)
@@ -305,6 +305,7 @@ Template.admin.events({
                 btn.removeClass('btn-info-outline').addClass('btn-danger-outline')
                 btn.html('Error!')
             } else {
+                Sonarr.log('info', 'Connection test successful')
                 btn.removeClass('btn-info-outline').addClass('btn-success-outline')
                 btn.html('Success!')
             }
@@ -320,6 +321,7 @@ Template.admin.events({
                 btn.removeClass('btn-info-outline').addClass('btn-danger-outline')
                 btn.html('Error!')
             } else {
+                Radarr.log('info', 'Connection test successful')
                 btn.removeClass('btn-info-outline').addClass('btn-success-outline')
                 btn.html('Success!')
             }
@@ -430,6 +432,7 @@ Template.admin.events({
         Meteor.call('SonarrProfiles', function (error, result) {
             if (result.length) {
                 templateInstance.sonarrProfiles.set(result)
+                Sonarr.log('info', 'Quality profiles retrieved')
                 Bert.alert('Retrieved Sonarr Profiles!', 'success')
             } else {
                 Bert.alert('Unable to retrieve Sonarr Profiles!', 'danger')
@@ -445,6 +448,7 @@ Template.admin.events({
         Meteor.call('RadarrProfiles', function (error, result) {
             if (result.length) {
                 templateInstance.radarrProfiles.set(result)
+                Radarr.log('info', 'Quality profiles retrieved')
                 Bert.alert('Retrieved Radarr Profiles!', 'success')
             } else {
                 Bert.alert('Unable to retrieve Radarr Profiles!', 'danger')

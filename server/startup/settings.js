@@ -1,15 +1,15 @@
 Meteor.startup(function () {
-
+    
     if (Settings.findOne({_id: 'couchpotatosetting'})) {
-        logger.error(Settings.find({}).fetch())
-        logger.error('Removing old settings')
+        Plexrequests.log('debug', Settings.find({}).fetch())
+        Plexrequests.log('info', 'Removing old settings')
         Settings.remove({})
-        logger.error('Adding new settings')
+        Plexrequests.log('info', 'Adding new settings')
         Settings.insert({})
     }
 
     if (Settings.find().count() === 0) {
-        logger.error('Adding default settings')
+        Plexrequests.log('info', 'Adding default settings')
         Settings.insert({})
     }
 
@@ -22,21 +22,21 @@ Meteor.startup(function () {
     if (settings.firstRun === true) {
         Settings.update(settings._id, {$set: {firstRun: false}})
         settings = Settings.find().fetch()[0]
-        logger.info('First run complete')
+        Plexrequests.log('info', 'First run complete')
     }
     // This will go through and repair any existing imdb poster links
     if (settings.tmdbFix === false) {
-	var movies = Movies.find()
-	movies.forEach(function(movie) {
-	    Movies.update(movie._id, {
-		    $set: {
-			    'poster_path': movie.poster_path.replace(/\/w184\//, '/w342/')
-		    }
-	    })
-        });
-    	Settings.update(settings._id, {$set: {tmdbFix: true}})
-	settings = Settings.find().fetch()[0]
-	logger.info("Updated TMDB image links")
+        var movies = Movies.find()
+        movies.forEach(function(movie) {
+            Movies.update(movie._id, {
+                $set: {
+                    'poster_path': movie.poster_path.replace(/\/w184\//, '/w342/')
+                }
+            })
+        })
+        Settings.update(settings._id, {$set: {tmdbFix: true}})
+        settings = Settings.find().fetch()[0]
+        Plexrequests.log('info', 'Updated TMDB image links')
     }
 
     //set Couch Potato on start-up

@@ -10,6 +10,7 @@ Template.logs.helpers({
             class: 'table col-sm-12',
             fields: [
                 { key: 'level', label: 'Level' },
+                { key: 'module', label: 'Module'},
                 { key: 'message', label: 'Message' },
                 { key: 'timestamp', label: 'Time', sortDirection: 'descending', sortOrder: 0, fn: function (value) {
                     return new Spacebars.SafeString(moment(value).format('YYYY/MM/D HH:mm:ss'))

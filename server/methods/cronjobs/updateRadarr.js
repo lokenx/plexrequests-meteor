@@ -1,10 +1,5 @@
 Meteor.methods({
     'updateRadarr' : function () {
-        if (!(Settings.find({}).fetch()[0].radarrENABLED)) {
-            // logger.error("Can't update CouchPotato status if it's not enabled");
-            return false
-        }
-
         var movies = Movies.find({downloaded: false, approval_status: 1})
 
         movies.forEach(function (movie) {
@@ -18,6 +13,7 @@ Meteor.methods({
                 Movies.update(movie, {$set: {downloaded: status}})
             }
         })
+        Radarr.log('info', 'Movie update check run successfully')
         return true
     }
 })

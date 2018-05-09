@@ -1,10 +1,5 @@
 Meteor.methods({
     'updateSonarr' : function () {
-        if (!(Settings.find({}).fetch()[0].sonarrENABLED)) {
-            // logger.error("Can't update CouchPotato status if it's not enabled");
-            return false
-        }
-
         var tv = TV.find({approval_status: 1})
 
         tv.forEach(function (show) {
@@ -13,7 +8,7 @@ Meteor.methods({
                 TV.update(show, {$set: {status: status}})
             }
         })
-
+        Sonarr.log('info', 'Series update check run successfully')
         return true
     }
 })

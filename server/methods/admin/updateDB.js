@@ -7,13 +7,13 @@ Meteor.methods({
                 var seasons = response.data
                 TV.update({_id: results[i]._id}, { $set: {seasons: seasons.length}})
             } catch (e) {
-                logger.warn('[Not Found]: Couldn\'t update seasons for', results[i].title)
+                Plexrequests.log('warn', '[Not Found]: Couldn\'t update seasons for ', results[i].title)
             }
         }
+        Plexrequests.log('info', 'Series with missing seasons data updated')
     },
     'updateApproved': function() {
-		
-		
+        
         //Update documents using deprecitated 'approved'
         var movies = Movies.find({approval_status: -1}).fetch()
         var tv = TV.find({approval_status: -1}).fetch()
@@ -26,7 +26,9 @@ Meteor.methods({
                 Movies.update({_id: movies[i]._id}, { $set: {approval_status: 0}})
             }
         }
-		
+        
+        Plexrequests.log('info', 'Movies with depricated approval status updated')
+        
         for(i = 0; i < tv.length; i++) {
             if(tv[i].approved) {
                 TV.update({_id: tv[i]._id}, { $set: {approval_status: 1}})
@@ -35,5 +37,7 @@ Meteor.methods({
                 TV.update({_id: tv[i]._id}, { $set: {approval_status: 0}})
             }
         }
+        
+        Plexrequests.log('info', 'Movies with depricated approval status updated')
     }
 })

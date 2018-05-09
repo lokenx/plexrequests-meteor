@@ -1,13 +1,14 @@
 Meteor.methods({
     profilesGet: function() {
-        try {
-            check(Sonarr.url, String)
-            check(Sonarr.port, Number)
-            check(Sonarr.api, String)
-        } catch (e) {
-            console.log('Sonarr Profiles Get -> ' + e.message)
-            return []
-        }
+        // var status = Meteor.call('checksWrapper', {
+        //     sonarrUrl: {val: Sonarr.url, type: String},
+        //     sonarrPort: {val: Sonarr.port, type: Number},
+        //     sonarrApi: {val: Sonarr.api, type: String}
+        // })
+        // if(status !== true){
+        //     Sonarr.log('error', status)
+        //     return {}
+        // }
 
         //Workaround to allow self-signed SSL certs, however can be dangerous and should not be used in production, looking into better way
         //But it's possible there's nothing much I can do
@@ -15,27 +16,32 @@ Meteor.methods({
 
         var allProfiles
         try {
-            allProfiles = HTTP.call('GET', Sonarr.url + ':' + Sonarr.port + Sonarr.directory + '/api/profile', {headers: {'X-Api-Key':Sonarr.api}, timeout: 15000} )
+            allProfiles = HTTP.call('GET', Sonarr.fullUrl('/api/profile'), {
+                headers: {'X-Api-Key':Sonarr.api},
+                timeout: 15000
+            })
         } catch (e) {
-            console.log('Sonarr Profiles Get -> ' + e.message)
-            return []
+            var eMsg = 'Error Fetching Profiles: ' + e.message
+            Sonarr.log('error', eMsg)
+            return {}
         }
 
         return _.map(allProfiles.data, function (profile) {
             return {
                 id: profile.id,
-                name: profile.name,
+                name: profile.name
             }
         })
     },
     seriesDelete: function(tvdb) {
-        try {
-            check(Sonarr.url, String)
-            check(Sonarr.port, Number)
-            check(Sonarr.api, String)
-            check(tvdb, Number)
-        } catch (e) {
-            console.log('Sonarr Series Delete -> ' + e.message)
+        var argCheck = Meteor.call('checksWrapper',  {
+            sonarrUrl: {val: Sonarr.url, type: String},
+            sonarrPort: {val: Sonarr.port, type: Number},
+            sonarrApi: {val: Sonarr.api, type: String},
+            tvdbID: {val: tvdb, type: Number}
+        })
+        if(argCheck !== true){
+            Sonarr.log('error', argCheck)
             return false
         }
 
@@ -44,9 +50,12 @@ Meteor.methods({
         process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 
         try {
-            var allShows = HTTP.call('GET', Sonarr.url + ':' + Sonarr.port + Sonarr.directory + '/api/series/', {headers: {'X-Api-Key':Sonarr.api}, timeout: 15000} )
+            var allShows = HTTP.call('GET', Sonarr.fullUrl('/api/series/'), {
+                headers: {'X-Api-Key':Sonarr.api},
+                timeout: 15000
+            })
         } catch (e) {
-            console.log('Sonarr Series Delete -> ' + e.message)
+            Sonarr.log('error', 'Error fetching series list: ' + e.message)
             return false
         }
 
@@ -61,25 +70,27 @@ Meteor.methods({
 
         if (sonarrId !== 0) {
             try {
-                var response = HTTP.call('DELETE', Sonarr.url + ':' + Sonarr.port + Sonarr.directory + '/api/series/' + sonarrId, {headers: {'X-Api-Key':Sonarr.api}, timeout: 2000} )
+                var response = HTTP.call('DELETE', Sonarr.fullUrl('/api/series/' + sonarrId), {
+                    headers: {'X-Api-Key':Sonarr.api},
+                    timeout: 2000
+                })
             } catch (e) {
-                console.log('Sonarr Series Delete -> ' + e.message)
+                Sonarr.log('error', 'Error deleting series id ' + sonarrId + ': ' + e.message)
                 return false
             }
         }
 
-        var status = (response) ? true : false
-
-        return status
+        return !!(response)
     },
     seriesGet: function(tvdb) {
-        try {
-            check(Sonarr.url, String)
-            check(Sonarr.port, Number)
-            check(Sonarr.api, String)
-            check(tvdb, Number)
-        } catch (e) {
-            console.log('Sonarr Series Get -> ' + e.message)
+        var argCheck = Meteor.call('checksWrapper',  {
+            sonarrUrl: {val: Sonarr.url, type: String},
+            sonarrPort: {val: Sonarr.port, type: Number},
+            sonarrApi: {val: Sonarr.api, type: String},
+            tvdbID: {val: tvdb, type: Number}
+        })
+        if(argCheck !== true){
+            Sonarr.log('error', argCheck)
             return false
         }
 
@@ -88,9 +99,9 @@ Meteor.methods({
         process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 
         try {
-            var allShows = HTTP.call('GET', Sonarr.url + ':' + Sonarr.port + Sonarr.directory + '/api/series/', {headers: {'X-Api-Key':Sonarr.api}, timeout: 15000} )
+            var allShows = HTTP.call('GET', Sonarr.fullUrl('/api/series/'), {headers: {'X-Api-Key':Sonarr.api}, timeout: 15000} )
         } catch (e) {
-            console.log('Sonarr Series Get -> ' + e.message)
+            Sonarr.log('error', 'Error fetching series list: ' + e.message)
             return false
         }
 
@@ -98,6 +109,7 @@ Meteor.methods({
 
         _.each(allShows.data, function (show) {
             if (show.tvdbId === tvdb) {
+                Sonarr.log('info', 'Series ' + show.title + ' already added')
                 status = true
             }
         })
@@ -105,20 +117,19 @@ Meteor.methods({
         return status
     },
     seriesPost: function(tvdb, title, qualityProfileId, seasonFolder, rootFolderPath, episodes) {
-        try {
-            check(Sonarr.url, String)
-            check(Sonarr.port, Number)
-            check(Sonarr.api, String)
-
-            check(tvdb, Number)
-            check(title, String)
-            check(qualityProfileId, Number)
-            check(seasonFolder, Boolean)
-            check(rootFolderPath, String)
-            check(episodes, Boolean)
-
-        } catch (e) {
-            console.log('Sonarr Series Post -> ' + e.message)
+        var status = Meteor.call('checksWrapper', {
+            sonarrUrl: {val: Sonarr.url, type: String},
+            sonarrPort: {val: Sonarr.port, type: Number},
+            sonarrApi: {val: Sonarr.api, type: String},
+            tvdbID: {val: tvdb, type: Number},
+            seriesTitle: {val: title, type: String},
+            profileId: {val: qualityProfileId, type: Number},
+            seasonFolder: {val: seasonFolder, type: Boolean},
+            rootFolder: {val: rootFolderPath, type: String},
+            dlEpisodes:{val: episodes, type: Boolean}
+        })
+        if(status !== true) {
+            Sonarr.log('error', status)
             return false
         }
 
@@ -126,49 +137,42 @@ Meteor.methods({
         //But it's possible there's nothing much I can do
         process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 
-        var options = []
-        if (episodes === false) {
-            options = ({
-                'ignoreEpisodesWithFiles': true,
-                'ignoreEpisodesWithoutFiles': true,
-                'searchForMissingEpisodes': false
-            })
-        } else {
-            options = ({
-                'ignoreEpisodesWithFiles': false,
-                'ignoreEpisodesWithoutFiles': false,
-                'searchForMissingEpisodes': true
-            })
+        // Since episodes is either true or false, just use its state to determine the values needed for each option.
+        var options = {
+            'ignoreEpisodesWithFiles': !episodes,
+            'ignoreEpisodesWithoutFiles': !episodes,
+            'searchForMissingEpisodes': episodes
         }
 
         try {
-            var response = HTTP.call('POST', Sonarr.url + ':' + Sonarr.port + Sonarr.directory + '/api/series/', {headers: {'X-Api-Key':Sonarr.api},
+            var response = HTTP.call('POST', Sonarr.fullUrl('/api/series/'), {headers: {'X-Api-Key':Sonarr.api},
                 data: {
-                    'tvdbId':tvdb,
-                    'title':title,
-                    'qualityProfileId':qualityProfileId,
-                    'seasons':[],
-                    'seasonFolder':seasonFolder,
-                    'rootFolderPath':rootFolderPath,
-                    'addOptions':options,
-                    'images':[]
+                    'tvdbId': tvdb,
+                    'title': title,
+                    'qualityProfileId': qualityProfileId,
+                    'seasons': [],
+                    'seasonFolder': seasonFolder,
+                    'rootFolderPath': rootFolderPath,
+                    'addOptions': options,
+                    'images': []
                 }, timeout: 15000}
             )
         } catch (e) {
-            console.log('Sonarr Series Post -> ' + e.message)
+            Sonarr.log('error', e.message)
             return false
         }
 
-        return !!response.data
+        return !!(response.data)
     },
     seriesStats: function(tvdb) {
-        try {
-            check(Sonarr.url, String)
-            check(Sonarr.port, Number)
-            check(Sonarr.api, String)
-            check(tvdb, Number)
-        } catch (e) {
-            console.log('Sonarr Series Stats -> ' + e.message)
+        var status = Meteor.call('checksWrapper', {
+            sonarrUrl: {val: Sonarr.url, type: String},
+            sonarrPort: {val: Sonarr.port, type: Number},
+            sonarrApi: {val: Sonarr.api, type: String},
+            tvdbID: {val: tvdb, type: Number}
+        })
+        if(status !== true) {
+            Sonarr.log('error', status)
             return false
         }
 
@@ -177,28 +181,38 @@ Meteor.methods({
         process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 
         try {
-            var allShows = HTTP.call('GET', Sonarr.url + ':' + Sonarr.port + Sonarr.directory + '/api/series/', {headers: {'X-Api-Key':Sonarr.api}, timeout: 15000} )
+            var allShows = HTTP.call('GET', Sonarr.fullUrl('/api/series/'), {
+                headers: {'X-Api-Key':Sonarr.api},
+                timeout: 15000
+            })
         } catch (e) {
-            console.log('Sonarr Series Stats -> ' + e.message)
+            Sonarr.log('error', 'Error fetching series list: ' + e.message)
             return false
         }
 
-        var sonarrId 
+        var match = null
 
         _.each(allShows.data, function (show) {
             if (show.tvdbId === tvdb) {
-                sonarrId = show.id
+                match = {sonarrId: show.id, seriesTitle: show.title}
             }
         })
 
         try {
-            var response = HTTP.call('GET', Sonarr.url + ':' + Sonarr.port + Sonarr.directory + '/api/series/' + sonarrId, {headers: {'X-Api-Key':Sonarr.api}, timeout: 15000} )
+            if (match !== null) {
+                var response = HTTP.call('GET', Sonarr.fullUrl('/api/series/' + match.sonarrId) , {
+                    headers: {'X-Api-Key': Sonarr.api},
+                    timeout: 15000
+                })
+            } else {
+                Sonarr.log('error', 'No series found matching TVDB ID ' + tvdb)
+                return false
+            }
         } catch (e) {
             if (e.message.indexOf('NotFound') > -1) {
                 return {'downloaded' : 0, 'total' : 0}
             } else {
-                console.log('Sonarr Series Stats Individual Show Info -> ' + e.message)
-                console.log('Show TVDB: ' + tvdb)
+                Sonarr.log('error', 'Error fetching download status of ' + match.seriesTitle + ': ' + e.message)
                 return false
             }
         }
@@ -206,12 +220,14 @@ Meteor.methods({
         return {'downloaded' : response.data.episodeFileCount, 'total' : response.data.episodeCount}
     },
     systemStatus: function() {
-        try {
-            check(Sonarr.url, String)
-            check(Sonarr.port, Number)
-            check(Sonarr.api, String)
-        } catch (e) {
-            console.log('Sonarr Status -> ' + e.message)
+        var checks = {
+            sonarrUrl: {val: Sonarr.url, type: String},
+            sonarrPort: {val: Sonarr.port, type: Number},
+            sonarrApi: {val: Sonarr.api, type: String}
+        }
+        var status = Meteor.call('checksWrapper', checks)
+        if(status !== true){
+            Sonarr.log('error', status)
             return false
         }
 
@@ -220,13 +236,12 @@ Meteor.methods({
         process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 
         try {
-            var response = HTTP.call('GET', Sonarr.url + ':' + Sonarr.port + Sonarr.directory + '/api/system/status', {headers: {'X-Api-Key':Sonarr.api}, timeout: 15000} )
+            var response = HTTP.call('GET', Sonarr.fullUrl('/api/system/status'), {headers: {'X-Api-Key':Sonarr.api}, timeout: 15000} )
         } catch (e) {
-            console.log('Sonarr Status -> ' + e.message)
+            Sonarr.log('error', 'Error fetching service status: ' + e.message)
             return false
         }
 
-        var status = (response.data) ? true : false
-        return status
+        return !!(response.data)
     }
 })
