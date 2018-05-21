@@ -149,6 +149,12 @@ Template.admin.helpers({
     }
 })
 
+Template.admin.onRendered(function(){
+    if (Meteor.users.find({}).count() === 0) {
+        this.$('div.at-signup-link').addClass('hidden')
+    }
+})
+
 Template.admin.onCreated(function(){
     var instance = this
     instance.version = new ReactiveVar('')
@@ -166,7 +172,7 @@ Template.admin.onCreated(function(){
             if(result) {
                 instance.sonarrProfiles.set(result)
             } else {
-                logger.debug("Template: " + error)
+                logger.debug('Template: ' + error)
             }
         })
     }
@@ -215,6 +221,7 @@ Template.admin.onCreated(function(){
         instance.previousNotes.set(notesArray.filter(Boolean))
     })
 })
+
 
 Template.admin.events({
     'click .list-group-item' : function (event) {
