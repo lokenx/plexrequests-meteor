@@ -24,9 +24,10 @@ Template.logs.onCreated(function () {
     var instance = this
     instance.logs = new ReactiveVar()
 
+    // Yeah yeah, I know, I'm logging an error about not being able to retrieve log entries.
     Meteor.call('getLogs', 0, 100, function (error, data) {
         if (error) {
-            console.error(error)
+            Plexrequests.log('error', error)
         }
 
         instance.logs.set(data)

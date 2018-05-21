@@ -9,7 +9,7 @@ AutoForm.hooks({
             return false
         },
         onError: function(formType, error) {
-            logger.error(error)
+            Plexrequests.log('error', error)
             Bert.alert('Update failed, please try again', 'danger')
         }
     },
@@ -23,7 +23,7 @@ AutoForm.hooks({
             return false
         },
         onError: function(formType, error) {
-            logger.error(error)
+            Plexrequests.log('error', error)
             Bert.alert('Update failed, please try again', 'danger')
         }
     },
@@ -37,7 +37,7 @@ AutoForm.hooks({
             return false
         },
         onError: function(formType, error) {
-            logger.error(error)
+            CouchPotato.log('error', error)
             Bert.alert('Update failed, please try again', 'danger')
         }
     },
@@ -51,7 +51,7 @@ AutoForm.hooks({
             return false
         },
         onError: function(formType, error) {
-            logger.error(error)
+            SickRage.log('error', error)
             Bert.alert('Update failed, please try again', 'danger')
         }
     },
@@ -60,7 +60,7 @@ AutoForm.hooks({
             if (result) {
                 Bert.alert('Updated successfully', 'success')
                 Meteor.call('settingsUpdate')
-                Sonarr.logSonarr('info', 'Settings Updated')
+                Sonarr.log('info', 'Settings Updated')
             }
             this.event.preventDefault()
             return false
@@ -80,7 +80,7 @@ AutoForm.hooks({
             return false
         },
         onError: function(formType, error) {
-            logger.error(error)
+            Radarr.log('error', error)
             Bert.alert('Update failed, please try again', 'danger')
         }
     },
@@ -94,7 +94,7 @@ AutoForm.hooks({
             return false
         },
         onError: function(formType, error) {
-            logger.error(error)
+            Plexrequests.log('error', error)
             Bert.alert('Update failed, please try again', 'danger')
         }
     }
@@ -172,7 +172,7 @@ Template.admin.onCreated(function(){
             if(result) {
                 instance.sonarrProfiles.set(result)
             } else {
-                logger.debug('Template: ' + error)
+                Plexrequests.log('error', 'Template: ' + error)
             }
         })
     }
@@ -181,7 +181,7 @@ Template.admin.onCreated(function(){
             if(result) {
                 instance.radarrProfiles.set(result)
             } else {
-                logger.debug(error)
+                Plexrequests.log('error', error)
             }
         })
     }
@@ -189,7 +189,7 @@ Template.admin.onCreated(function(){
         if (result) {
             instance.branch.set(result)
         } else {
-            logger.debug(error)
+            Plexrequests.log('error', error)
         }
     })
 
@@ -197,20 +197,20 @@ Template.admin.onCreated(function(){
         if (result) {
             instance.version.set(result)
         } else {
-            logger.debug(error)
+            Plexrequests.log('error', error)
         }
     })
     Meteor.call('checkForUpdate', function (error, result) {
         if (result) {
             instance.update.set(result)
         } else {
-            logger.debug(error)
+            Plexrequests.log('debug', error)
         }
     })
 
     HTTP.get('https://api.github.com/repos/lokenx/plexrequests-meteor/releases', function (error, result) {
         if (error) {
-            logger.error('Error retrieving release notes: ' + error)
+            Plexrequests.log('error', 'Error retrieving release notes: ' + error)
         }
         instance.latestVersion.set(result.data[0].name)
         var notesArray = result.data[0].body.split('- ')
@@ -252,7 +252,7 @@ Template.admin.events({
             Bert.alert('Updated successfully', 'success')
         }
         catch(error) {
-            logger.error(error)
+            Plexrequests.log('error', error)
             Bert.alert('Update failed, please try again', 'danger')
         }
     },
