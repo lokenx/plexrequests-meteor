@@ -44,13 +44,13 @@ Meteor.methods({
 
     },
 
-    'checkPlexUser': function (plexLogin, plexPassword) {
-        check(plexLogin, String)
+    'checkPlexUser': function (plexUsername, plexPassword) {
+        check(plexUsername, String)
         check(plexPassword, String)
 
         if (Settings.find({}).fetch()[0].plexAuthenticationPASSWORDS) {
             // If passwords are required check full login
-            var userInfo = Meteor.call('plexLogin', plexLogin, plexPassword)
+            var userInfo = Meteor.call('plexLogin', plexUsername, plexPassword)
             var plexUsername = userInfo.username
         }
 
